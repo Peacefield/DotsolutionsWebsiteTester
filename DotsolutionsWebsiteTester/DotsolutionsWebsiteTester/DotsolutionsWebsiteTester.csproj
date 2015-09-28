@@ -142,6 +142,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="ProcessTest.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Custom\default.js" />
@@ -195,6 +196,7 @@
     <Content Include="TestTools\Printability.aspx" />
     <Content Include="TestTools\ServerBehaviour.aspx" />
     <Content Include="TestTools\SocialInterest.aspx" />
+    <Content Include="TestTools\Start.aspx" />
     <Content Include="TestTools\Twitter.aspx" />
     <Content Include="TestTools\UrlFormat.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -236,6 +238,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessTest.aspx.cs">
+      <DependentUpon>ProcessTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProcessTest.aspx.designer.cs">
+      <DependentUpon>ProcessTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
@@ -370,6 +379,13 @@
     </Compile>
     <Compile Include="TestTools\SocialInterest.aspx.designer.cs">
       <DependentUpon>SocialInterest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\Start.aspx.cs">
+      <DependentUpon>Start.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\Start.aspx.designer.cs">
+      <DependentUpon>Start.aspx</DependentUpon>
     </Compile>
     <Compile Include="TestTools\Twitter.aspx.cs">
       <DependentUpon>Twitter.aspx</DependentUpon>

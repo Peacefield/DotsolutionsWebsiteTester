@@ -16,6 +16,7 @@ namespace DotsolutionsWebsiteTester
         {
 
         }
+
         protected void StartScanBtn_Click(Object sender, EventArgs e)
         {
             // Check if the entered Url is valid
@@ -34,7 +35,7 @@ namespace DotsolutionsWebsiteTester
         /// Check to see if the entered Url is in a valid format
         /// </summary>
         /// <param name="url">To be tested Url</param>
-        /// <returns>boolean</returns>
+        /// <returns>True when url is a valid Url</returns>
         private bool IsValidUrl(string url)
         {
             if (url == "" || url == "http://" || url == "https://")

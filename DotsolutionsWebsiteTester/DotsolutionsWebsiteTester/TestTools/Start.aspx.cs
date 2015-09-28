@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester.TestTools
 {
-    public partial class ServerBehaviour : System.Web.UI.Page
+    public partial class Start : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

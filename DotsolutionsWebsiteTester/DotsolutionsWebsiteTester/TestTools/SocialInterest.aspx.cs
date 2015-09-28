@@ -11,7 +11,15 @@ namespace DotsolutionsWebsiteTester.TestTools
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            try
+            {
+                Session["MainUrl"].ToString();
+            }
+            catch (NullReferenceException)
+            {
+                Response.Redirect("~/Default.aspx");
+                return;
+            }
         }
     }
 }
