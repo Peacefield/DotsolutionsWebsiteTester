@@ -13,5 +13,9 @@ namespace DotsolutionsWebsiteTester
         {
 
         }
+        protected void StartScanBtn_Click(Object sender, EventArgs e)
+        {
+
+        }
     }
 }

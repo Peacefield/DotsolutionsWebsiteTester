@@ -68,5 +68,6 @@
         </div>
 
     </form>
+    <%: Scripts.Render("~/bundles/jqueryui") %>
 </body>
 </html>

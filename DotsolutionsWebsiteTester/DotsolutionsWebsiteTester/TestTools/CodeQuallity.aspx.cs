@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace DotsolutionsWebsiteTester
+namespace DotsolutionsWebsiteTester.TestTools
 {
-    public partial class Contact : Page
+    public partial class CodeQuallity : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

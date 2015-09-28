@@ -98,11 +98,44 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.aspx" />
-    <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="ErrorPages\404.aspx" />
+    <Content Include="ErrorPages\GeneralError.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -111,8 +144,11 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Custom\default.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -142,6 +178,25 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
+    <Content Include="TestTools\AmountOfContent.aspx" />
+    <Content Include="TestTools\Analytics.aspx" />
+    <Content Include="TestTools\CodeQuallity.aspx" />
+    <Content Include="TestTools\Facebook.aspx" />
+    <Content Include="TestTools\Freshness.aspx" />
+    <Content Include="TestTools\GooglePlus.aspx" />
+    <Content Include="TestTools\Headings.aspx" />
+    <Content Include="TestTools\Images.aspx" />
+    <Content Include="TestTools\IncomingLinks.aspx" />
+    <Content Include="TestTools\InternalLinks.aspx" />
+    <Content Include="TestTools\MetaTags.aspx" />
+    <Content Include="TestTools\MobileCompatibility.aspx" />
+    <Content Include="TestTools\PageTitles.aspx" />
+    <Content Include="TestTools\Popularity.aspx" />
+    <Content Include="TestTools\Printability.aspx" />
+    <Content Include="TestTools\ServerBehaviour.aspx" />
+    <Content Include="TestTools\SocialInterest.aspx" />
+    <Content Include="TestTools\Twitter.aspx" />
+    <Content Include="TestTools\UrlFormat.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -157,27 +212,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="About.aspx.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="About.aspx.designer.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Contact.aspx.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contact.aspx.designer.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorPages\404.aspx.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPages\404.aspx.designer.cs">
+      <DependentUpon>404.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorPages\GeneralError.aspx.cs">
+      <DependentUpon>GeneralError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPages\GeneralError.aspx.designer.cs">
+      <DependentUpon>GeneralError.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -196,6 +251,139 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\AmountOfContent.aspx.cs">
+      <DependentUpon>AmountOfContent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\AmountOfContent.aspx.designer.cs">
+      <DependentUpon>AmountOfContent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\Analytics.aspx.cs">
+      <DependentUpon>Analytics.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\Analytics.aspx.designer.cs">
+      <DependentUpon>Analytics.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\CodeQuallity.aspx.cs">
+      <DependentUpon>CodeQuallity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\CodeQuallity.aspx.designer.cs">
+      <DependentUpon>CodeQuallity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\Facebook.aspx.cs">
+      <DependentUpon>Facebook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\Facebook.aspx.designer.cs">
+      <DependentUpon>Facebook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\Freshness.aspx.cs">
+      <DependentUpon>Freshness.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\Freshness.aspx.designer.cs">
+      <DependentUpon>Freshness.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\GooglePlus.aspx.cs">
+      <DependentUpon>GooglePlus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\GooglePlus.aspx.designer.cs">
+      <DependentUpon>GooglePlus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\Headings.aspx.cs">
+      <DependentUpon>Headings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\Headings.aspx.designer.cs">
+      <DependentUpon>Headings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\Images.aspx.cs">
+      <DependentUpon>Images.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\Images.aspx.designer.cs">
+      <DependentUpon>Images.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\IncomingLinks.aspx.cs">
+      <DependentUpon>IncomingLinks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\IncomingLinks.aspx.designer.cs">
+      <DependentUpon>IncomingLinks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\InternalLinks.aspx.cs">
+      <DependentUpon>InternalLinks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\InternalLinks.aspx.designer.cs">
+      <DependentUpon>InternalLinks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\MetaTags.aspx.cs">
+      <DependentUpon>MetaTags.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\MetaTags.aspx.designer.cs">
+      <DependentUpon>MetaTags.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\MobileCompatibility.aspx.cs">
+      <DependentUpon>MobileCompatibility.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\MobileCompatibility.aspx.designer.cs">
+      <DependentUpon>MobileCompatibility.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\PageTitles.aspx.cs">
+      <DependentUpon>PageTitles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\PageTitles.aspx.designer.cs">
+      <DependentUpon>PageTitles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\Popularity.aspx.cs">
+      <DependentUpon>Popularity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\Popularity.aspx.designer.cs">
+      <DependentUpon>Popularity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\Printability.aspx.cs">
+      <DependentUpon>Printability.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\Printability.aspx.designer.cs">
+      <DependentUpon>Printability.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\ServerBehaviour.aspx.cs">
+      <DependentUpon>ServerBehaviour.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\ServerBehaviour.aspx.designer.cs">
+      <DependentUpon>ServerBehaviour.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\SocialInterest.aspx.cs">
+      <DependentUpon>SocialInterest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\SocialInterest.aspx.designer.cs">
+      <DependentUpon>SocialInterest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\Twitter.aspx.cs">
+      <DependentUpon>Twitter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\Twitter.aspx.designer.cs">
+      <DependentUpon>Twitter.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestTools\UrlFormat.aspx.cs">
+      <DependentUpon>UrlFormat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestTools\UrlFormat.aspx.designer.cs">
+      <DependentUpon>UrlFormat.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

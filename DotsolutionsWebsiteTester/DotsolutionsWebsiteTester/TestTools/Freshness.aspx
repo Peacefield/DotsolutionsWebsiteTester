@@ -1,0 +1,6 @@
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Freshness.aspx.cs" Inherits="DotsolutionsWebsiteTester.TestTools.Freshness" %>
+
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+
+
+</asp:Content>
