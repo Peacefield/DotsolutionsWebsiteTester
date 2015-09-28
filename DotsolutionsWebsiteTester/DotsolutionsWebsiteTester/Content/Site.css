@@ -61,13 +61,56 @@ textarea {
         font-size: 16px;
     }
 }
+
 @media screen and (min-width: 901px) and (max-width: 1079px) {
     .jumbotron {
         font-size: 15px;
     }
 }
+
 @media screen and (max-width: 900px) {
     .jumbotron {
         font-size: 10px;
     }
 }
+
+/**
+ * Loading div on ProcessTest
+ */
+#overlay {
+    display: block;
+    position: absolute;
+    background: #fff;
+}
+#loadingGIF, #TestProgress {
+    position: absolute;
+}
+#performedTestshidden {
+    display: none;
+}
+#TestsInProgress, #TestsComplete {
+    list-style-type: none;
+}
+.progress {
+    position: relative;
+}
+
+    .progress span {
+        position: absolute;
+        display: block;
+        width: 100%;
+        color: black;
+    }
+/**
+ * Back to top button
+ */
+#back-to-top {
+    position: fixed;
+    bottom: 1%;
+    top: 90%;
+    right: 1%;
+}
+
+    #back-to-top img {
+        cursor: pointer;
+    }

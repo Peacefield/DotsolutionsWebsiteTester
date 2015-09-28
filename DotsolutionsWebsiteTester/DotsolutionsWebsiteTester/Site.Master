@@ -12,7 +12,7 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
@@ -57,6 +57,12 @@
             </div>
         </div>
         <div class="container body-content">
+            <div class="hidden" id="adblocker">
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span> Adblocker gedetecteerd, sommige tests kunnen niet worden uitgevoerd.
+                </div>
+            </div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
@@ -67,5 +73,11 @@
 
     </form>
     <%: Scripts.Render("~/bundles/jqueryui") %>
+    <script type="text/javascript" src="Scripts/Custom/ads.js"></script>
+    <script>
+        if (window.canRunAds == undefined) {
+            $("#adblocker").removeClass("hidden");
+        }
+    </script>
 </body>
 </html>

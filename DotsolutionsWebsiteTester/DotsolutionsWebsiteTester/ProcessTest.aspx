@@ -1,12 +1,6 @@
 ﻿<%@ Page Title="Aan het testen..." Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProcessTest.aspx.cs" Inherits="DotsolutionsWebsiteTester.ProcessTest" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="hidden" id="adblocker">
-        <div class="alert alert-danger" role="alert">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Error:</span> Adblocker gedetecteerd, sommige tests kunnen niet worden uitgevoerd.
-        </div>
-    </div>
 
     <div id="overlay">
         <div id="progressbar" class="progress progress-striped active">
@@ -56,5 +50,5 @@
     <span id="back-to-top">
         <img src='Content/images/up-arrow.png' width="64" height="64"/>
     </span>
-    <script type="text/javascript" src="Scripts/TestingJS.js"></script>
+    <script type="text/javascript" src="Scripts/Custom/processTest.js"></script>
 </asp:Content>
