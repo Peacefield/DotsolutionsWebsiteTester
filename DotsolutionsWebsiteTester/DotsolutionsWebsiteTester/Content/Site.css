@@ -27,7 +27,7 @@ textarea {
 }
 
 .btn {
-    margin-bottom: 5px;
+    margin-bottom: 5px !important;
 }
 
 #testsjumbotron {
@@ -128,11 +128,11 @@ textarea {
     }
 /**
  * Back to top button
+    Not perfected for smaller screens
  */
 #back-to-top {
     position: fixed;
-    bottom: 1%;
-    top: 90%;
+    top: 95%;
     right: 1%;
 }
 

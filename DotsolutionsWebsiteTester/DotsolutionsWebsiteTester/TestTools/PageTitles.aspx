@@ -3,7 +3,13 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="result">
 
-
+        <div id="PageTitles">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Pagina titels</div>
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
 
     </div>
 </asp:Content>

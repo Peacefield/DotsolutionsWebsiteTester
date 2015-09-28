@@ -3,7 +3,13 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="result">
 
-
+        <div id="MetaTags">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Meta tags</div>
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
 
     </div>
 </asp:Content>
