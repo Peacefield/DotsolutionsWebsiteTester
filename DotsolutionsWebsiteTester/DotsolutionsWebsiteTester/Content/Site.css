@@ -20,31 +20,54 @@ textarea {
 
 .jumbotron {
     margin-top: 20px;
-    font-size: 16px;
 }
+
 .body-content {
     padding: 0;
 }
+
 .btn {
     margin-bottom: 5px;
 }
+
 #testsjumbotron {
     margin-top: 10%;
 }
+
 #MainContent_TestsCheckBoxList1,
 #MainContent_TestsCheckBoxList2,
 #MainContent_TestsCheckBoxList3 {
     margin-left: 30%;
 }
+
 #MainContent_StartScanBtn,
 #MainContent_UrlTextBox {
     max-width: 100%;
     width: 100%;
 }
+
 .checkboxlistrow,
 .urlTextBoxRow {
     padding-bottom: 10px;
 }
+
 #CheckboxHolder {
     display: block;
+}
+
+
+@media screen and (min-width: 1080px) {
+    .jumbotron {
+        font-size: 16px;
+    }
+}
+@media screen and (min-width: 901px) and (max-width: 1079px) {
+    .jumbotron {
+        font-size: 15px;
+    }
+}
+@media screen and (max-width: 900px) {
+    .jumbotron {
+        font-size: 10px;
+    }
 }

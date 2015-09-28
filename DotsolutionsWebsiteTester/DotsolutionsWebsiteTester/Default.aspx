@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="DotsolutionsWebsiteTester._Default" %>
+﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="DotsolutionsWebsiteTester._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     
@@ -50,7 +50,7 @@
                         TextAlign="right">
                         <asp:ListItem Text="Code kwaliteit" Value="CodeQuality" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Pagina titels" Value="PageTitles" Enabled="false" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Mobiele <br/>compatibiliteit" Value="MobileCompatibility" Enabled="false" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Mobiele compatibiliteit" Value="MobileCompatibility" Enabled="false" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Headers" Value="Headings" Enabled="false" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Interne links" Value="InternalLinks" Enabled="true" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="URL formaat" Value="UrlFormat" Enabled="false" Selected="false"></asp:ListItem>
@@ -64,7 +64,7 @@
                         <asp:ListItem Text="Twitter Pagina" Value="Twitter" Enabled="false" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Sociale interesse" Value="SocialInterest" Enabled="false" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Populariteit" Value="Popularity" Enabled="false" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Hoeveelheid <br/> content" Value="AmountOfContent" Enabled="false" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Hoeveelheid content" Value="AmountOfContent" Enabled="false" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Afbeeldingen" Value="Images" Enabled="false" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>
                 </div>
