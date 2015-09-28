@@ -10,7 +10,7 @@
 namespace DotsolutionsWebsiteTester.TestTools {
     
     
-    public partial class CodeQuallity {
+    public partial class CodeQuality {
         
         /// <summary>
         /// w3ErrorsFound control.

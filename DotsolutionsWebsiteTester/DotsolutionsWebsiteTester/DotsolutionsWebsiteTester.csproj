@@ -181,7 +181,7 @@
     <Content Include="Site.Master" />
     <Content Include="TestTools\AmountOfContent.aspx" />
     <Content Include="TestTools\Analytics.aspx" />
-    <Content Include="TestTools\CodeQuallity.aspx" />
+    <Content Include="TestTools\CodeQuality.aspx" />
     <Content Include="TestTools\Facebook.aspx" />
     <Content Include="TestTools\Freshness.aspx" />
     <Content Include="TestTools\GooglePlus.aspx" />
@@ -275,12 +275,12 @@
     <Compile Include="TestTools\Analytics.aspx.designer.cs">
       <DependentUpon>Analytics.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TestTools\CodeQuallity.aspx.cs">
-      <DependentUpon>CodeQuallity.aspx</DependentUpon>
+    <Compile Include="TestTools\CodeQuality.aspx.cs">
+      <DependentUpon>CodeQuality.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TestTools\CodeQuallity.aspx.designer.cs">
-      <DependentUpon>CodeQuallity.aspx</DependentUpon>
+    <Compile Include="TestTools\CodeQuality.aspx.designer.cs">
+      <DependentUpon>CodeQuality.aspx</DependentUpon>
     </Compile>
     <Compile Include="TestTools\Facebook.aspx.cs">
       <DependentUpon>Facebook.aspx</DependentUpon>
