@@ -89,6 +89,8 @@ textarea {
 #progressbar{
     width:100%;
     top: 30%;
+    right:0;
+    left:0;
 }
 #loadingGIF, #TestProgress {
     position: absolute;

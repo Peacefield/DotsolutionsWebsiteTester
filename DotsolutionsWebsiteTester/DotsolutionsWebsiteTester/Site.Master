@@ -14,6 +14,8 @@
 
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
 </head>
 <body>
@@ -24,7 +26,7 @@
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
-                <asp:ScriptReference Name="bootstrap" />
+                <%--<asp:ScriptReference Name="bootstrap" />--%>
                 <asp:ScriptReference Name="respond" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
                 <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
@@ -49,11 +51,11 @@
                     </button>
                     <a class="navbar-brand" runat="server" href="~/">Website tester</a>
                 </div>
-                <div class="navbar-collapse collapse">
+                <%--<div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
                     </ul>
-                </div>
+                </div>--%>
             </div>
         </div>
         <div class="container body-content">
@@ -73,6 +75,7 @@
 
     </form>
     <%: Scripts.Render("~/bundles/jqueryui") %>
+    <script type="text/javascript" src="Scripts/Custom/ads.js"></script>
     <script type="text/javascript" src="Scripts/Custom/ads.js"></script>
     <script>
         if (window.canRunAds == undefined) {
