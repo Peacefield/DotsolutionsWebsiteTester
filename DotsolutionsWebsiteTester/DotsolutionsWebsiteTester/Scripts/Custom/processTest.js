@@ -3,10 +3,11 @@
     $t = $(".body-content");
 
     $("#overlay").css({
-        opacity: 0.8,
+        opacity: 0.7,
         top: $t.offset().top,
         width: $t.outerWidth(),
-        height: $t.outerHeight()
+        height: $t.outerHeight(),
+        right: "auto"
     });
 
     $("#progressbar").css({
@@ -20,7 +21,6 @@
     });
 
     $("#TestProgress").css({
-
         top: ($t.height() / 2) + $("#progressbar").height() + $("#loadingGIF").height(),
         width: $t.outerWidth()
         //left: ($t.width() / 2.5)
@@ -33,84 +33,91 @@ window.onresize = function () {
 
 // Execute on window.onload
 window.onload = function () {
-    var url = $("#MainContent_UrlTesting").text();
-    if (url != "") {
 
-        var array = new Array();
-        var finishedTests = 0;
+    $("#overlay").fadeIn();
 
-        setup_loading();
+    setup_loading();
 
-        // Get everything ready for automatic testing
-        $.ajax({
-            url: "/TestTools/Start.aspx",
-            cache: false,
-            async: false,
-            success: function (response) {
-                // Do something
-                $("#result").append($(response).find('#result').html());
-                $("#overlay").css("height", $t.outerHeight());
-            },
-            error: function (response) {
-                // Show error within results
-                $("#result").append($(response).text);
-            }
-        });
+    //setTimeout(function () {
+        var url = $("#MainContent_UrlTesting").text();
+        if (url != "") {
 
-        // Start automatic testing
-        $("#MainContent_performedTests li").each(function (index) {
-            var test = $(this).text().replace(" ", "");
-            array.push(test);
+            var array = new Array();
+            var finishedTests = 0;
 
-            $("#TestsInProgress").append("<li>" + test + "</li>");
-        });
 
-        if (window.canRunAds == undefined) {
-            var removeItem = "Analytics";
-            array = jQuery.grep(array, function (value) {
-                return value != removeItem;
-            });
-        }
-
-        if (array.length > 0) {
-            // Show loading div
-            $("#overlay").fadeIn();
-        }
-
-        $.each(array, function (index, value) {
+            // Get everything ready for automatic testing
             $.ajax({
-                url: "/TestTools/" + value + ".aspx",
+                url: "/TestTools/Start.aspx",
                 cache: false,
-                async: true,
+                async: false,
                 success: function (response) {
                     // Do something
-                    finishedTests++;
-                    var progress = ((finishedTests / array.length) * 100).toFixed(0);
-
                     $("#result").append($(response).find('#result').html());
-                    $("#testprogress").css("width", progress + "%");
-                    $("#progresstext").text(progress + "% compleet");
                     $("#overlay").css("height", $t.outerHeight());
-
-                    $("#TestsInProgress li:contains(" + value + ")").remove();
-                    $("#TestsComplete").append("<li>" + value + "</li>");
-
-                    if (progress == 100) {
-                        setTimeout(function () {
-                            $("#overlay").fadeOut();
-                            $("#progressbar").css("display", "none");
-                            $("#MainContent_CreatePdfBtn").css("display", "block");
-                            $("#performedTestshidden").css("display", "block");
-                        }, 500);
-                    }
                 },
                 error: function (response) {
                     // Show error within results
                     $("#result").append($(response).text);
                 }
             });
-        });
-    }
+
+            // Start automatic testing
+            $("#MainContent_performedTests li").each(function (index) {
+                var test = $(this).text().replace(" ", "");
+                array.push(test);
+
+                $("#TestsInProgress").append("<li>" + test + "</li>");
+            });
+
+            // Remove Analytics from array since it will be blocked because of adblockers
+            // Other tests will still be performed and Analytics will still be shown in the list of performed tests
+            if (window.canRunAds == undefined) {
+                var removeItem = "Analytics";
+                array = jQuery.grep(array, function (value) {
+                    return value != removeItem;
+                });
+            }
+
+            if (array.length > 0) {
+                // Show loading div
+                $("#overlay").fadeIn();
+            }
+
+            $.each(array, function (index, value) {
+                $.ajax({
+                    url: "/TestTools/" + value + ".aspx",
+                    cache: false,
+                    async: true,
+                    success: function (response) {
+                        // Do something
+                        finishedTests++;
+                        var progress = ((finishedTests / array.length) * 100).toFixed(0);
+
+                        $("#result").append($(response).find('#result').html());
+                        $("#testprogressbar").css("width", progress + "%");
+                        $("#progresstext").text(progress + "% compleet");
+                        $("#overlay").css("height", $t.outerHeight());
+
+                        $("#TestsInProgress li:contains(" + value + ")").remove();
+                        $("#TestsComplete").append("<li>" + value + "</li>");
+
+                        if (progress == 100) {
+                            setTimeout(function () {
+                                $("#overlay").fadeOut();
+                                $("#MainContent_CreatePdfBtn").css("display", "block");
+                                $("#performedTestshidden").css("display", "block");
+                            }, 500);
+                        }
+                    },
+                    error: function (response) {
+                        // Show error within results
+                        $("#result").append($(response).text);
+                    }
+                });
+            });
+        }
+    //}, 500);
 };
 
 // Hide Back to top button

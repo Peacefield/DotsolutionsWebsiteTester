@@ -4,7 +4,7 @@
 
     <div id="overlay">
         <div id="progressbar" class="progress progress-striped active">
-            <div id="testprogress" class="progress-bar" style="width: 0%">
+            <div id="testprogressbar" class="progress-bar" style="width: 0%">
                 <span id="progresstext">0% Compleet</span>
             </div>
         </div>

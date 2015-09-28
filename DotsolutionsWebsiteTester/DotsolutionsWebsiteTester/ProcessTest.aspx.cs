@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,6 +12,7 @@ namespace DotsolutionsWebsiteTester
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine(">>>>> Page_Load ProcessTest");
             try
             {
                 Session["MainUrl"].ToString();
@@ -20,15 +22,16 @@ namespace DotsolutionsWebsiteTester
                 Response.Redirect("~/Default.aspx");
                 return;
             }
+
             UrlTesting.InnerText = Session["MainUrl"].ToString();
 
             string userAgent = "Mozilla/5.0 (Quality test, http://www.example.net)";
             Session["userAgent"] = userAgent;
 
-            System.Threading.ThreadStart ths = new System.Threading.ThreadStart(GetTestList);
-            System.Threading.Thread th = new System.Threading.Thread(ths);
+            ThreadStart ths = new ThreadStart(GetTestList);
+            Thread th = new Thread(ths);
             th.Start();
-            System.Threading.Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
             th.Join();
         }
