@@ -11,5 +11,41 @@ namespace DotsolutionsWebsiteTester.TestTools {
     
     
     public partial class Analytics {
+        
+        /// <summary>
+        /// AnalyticsResults control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AnalyticsResults;
+        
+        /// <summary>
+        /// AnalyticsTableHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AnalyticsTableHidden;
+        
+        /// <summary>
+        /// AnalyticsTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table AnalyticsTable;
+        
+        /// <summary>
+        /// TableHeaderRow2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TableHeaderRow TableHeaderRow2;
     }
 }
