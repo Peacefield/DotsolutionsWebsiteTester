@@ -40,15 +40,19 @@
         <h3>Uitgevoerde tests:</h3>
         <ul id="performedTestsName" runat="server"></ul>
     </div>
+    <div class="well well-sm">
+        <h3>Geteste sites:</h3>
+        <ul id="testedsiteslist" runat="server"></ul>
+    </div>
 
     <div class="hidden">
         <ul id="performedTests" runat="server"></ul>
     </div>
 
     <div id="result"></div>
-    
+
     <span id="back-to-top">
-        <img src='Content/images/up-arrow.png' width="64" height="64"/>
+        <img src='Content/images/up-arrow.png' width="64" height="64" />
     </span>
     <script type="text/javascript" src="Scripts/Custom/processTest.js"></script>
 </asp:Content>

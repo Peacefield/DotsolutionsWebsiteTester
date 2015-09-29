@@ -1,17 +1,22 @@
 ﻿function setup_loading() {
     // Set-up loading div
     $t = $(".body-content");
+    
+    var right = parseInt($t.css("padding-right"));
+    var left = parseInt($t.css("padding-left"));
+    var outerWidth = parseInt($t.outerWidth());
+    var width = outerWidth - (right + left);
 
     $("#overlay").css({
         opacity: 0.7,
         top: $t.offset().top,
-        width: $t.outerWidth(),
+        width: width,
         height: $t.outerHeight(),
         right: "auto"
     });
 
     $("#progressbar").css({
-        width: $t.outerWidth(),
+        width: width,
         top: ($t.height() / 2)
     });
 
@@ -22,13 +27,12 @@
 
     $("#TestProgress").css({
         top: ($t.height() / 2) + $("#progressbar").height() + $("#loadingGIF").height(),
-        width: $t.outerWidth()
+        width: width,
         //left: ($t.width() / 2.5)
     });
 }
 
-function animateTo(identifier)
-{
+function animateTo(identifier) {
     var target = document.getElementById(identifier);
     $('body').animate({
         scrollTop: target.offsetTop
@@ -42,94 +46,87 @@ window.onresize = function () {
 // Execute on window.onload
 window.onload = function () {
 
-    $("#overlay").fadeIn();
+    var url = $("#MainContent_UrlTesting").text();
+    if (url != "") {
 
-    setup_loading();
-
-    //setTimeout(function () {
-        var url = $("#MainContent_UrlTesting").text();
-        if (url != "") {
-
-            var array = new Array();
-            var finishedTests = 0;
+        var array = new Array();
+        var finishedTests = 0;
 
 
-            // Get everything ready for automatic testing
+        //// Get everything ready for automatic testing
+        //$.ajax({
+        //    url: "/TestTools/Start.aspx",
+        //    cache: false,
+        //    async: false,
+        //    success: function (response) {
+        //        // Do something
+        //        $("#result").append($(response).find('#result').html());
+        //        $("#overlay").css("height", $t.outerHeight());
+        //    },
+        //    error: function (response) {
+        //        // Show error within results
+        //        $("#result").append($(response).text);
+        //    }
+        //});
+
+        // Start automatic testing
+        $("#MainContent_performedTests li").each(function (index) {
+            var test = $(this).text().replace(" ", "");
+            array.push(test);
+
+            $("#TestsInProgress").append("<li>" + test + "</li>");
+        });
+
+        // Remove Analytics from array since it will be blocked because of adblockers
+        // Other tests will still be performed and Analytics will still be shown in the list of performed tests
+        if (window.canRunAds == undefined) {
+            var removeItem = "Analytics";
+            array = jQuery.grep(array, function (value) {
+                return value != removeItem;
+            });
+        }
+
+        $.each(array, function (index, value) {
             $.ajax({
-                url: "/TestTools/Start.aspx",
+                url: "/TestTools/" + value + ".aspx",
                 cache: false,
-                async: false,
+                async: true,
                 success: function (response) {
                     // Do something
+                    finishedTests++;
+                    var progress = ((finishedTests / array.length) * 100).toFixed(0);
+
                     $("#result").append($(response).find('#result').html());
+                    $("#testprogressbar").css("width", progress + "%");
+                    $("#progresstext").text(progress + "% compleet");
                     $("#overlay").css("height", $t.outerHeight());
+
+                    $("#TestsInProgress li:contains(" + value + ")").remove();
+                    $("#TestsComplete").append("<li>" + value + "</li>");
+
+                    if (progress == 100) {
+                        setTimeout(function () {
+                            $("#overlay").fadeOut();
+                            $("#performedTestshidden").css("display", "block");
+                            document.title = 'Resultaten - Website tester';
+                        }, 500);
+                    }
                 },
                 error: function (response) {
                     // Show error within results
                     $("#result").append($(response).text);
                 }
             });
-
-            // Start automatic testing
-            $("#MainContent_performedTests li").each(function (index) {
-                var test = $(this).text().replace(" ", "");
-                array.push(test);
-
-                $("#TestsInProgress").append("<li>" + test + "</li>");
-            });
-
-            // Remove Analytics from array since it will be blocked because of adblockers
-            // Other tests will still be performed and Analytics will still be shown in the list of performed tests
-            if (window.canRunAds == undefined) {
-                var removeItem = "Analytics";
-                array = jQuery.grep(array, function (value) {
-                    return value != removeItem;
-                });
-            }
-
-            if (array.length > 0) {
-                // Show loading div
-                $("#overlay").fadeIn();
-            }
-
-            $.each(array, function (index, value) {
-                $.ajax({
-                    url: "/TestTools/" + value + ".aspx",
-                    cache: false,
-                    async: true,
-                    success: function (response) {
-                        // Do something
-                        finishedTests++;
-                        var progress = ((finishedTests / array.length) * 100).toFixed(0);
-
-                        $("#result").append($(response).find('#result').html());
-                        $("#testprogressbar").css("width", progress + "%");
-                        $("#progresstext").text(progress + "% compleet");
-                        $("#overlay").css("height", $t.outerHeight());
-
-                        $("#TestsInProgress li:contains(" + value + ")").remove();
-                        $("#TestsComplete").append("<li>" + value + "</li>");
-
-                        if (progress == 100) {
-                            setTimeout(function () {
-                                $("#overlay").fadeOut();
-                                $("#performedTestshidden").css("display", "block");
-                                document.title = 'Resultaten - Website tester';
-                            }, 500);
-                        }
-                    },
-                    error: function (response) {
-                        // Show error within results
-                        $("#result").append($(response).text);
-                    }
-                });
-            });
-        }
-    //}, 500);
+        });
+    }
 };
 
 // Hide Back to top button
 $(document).ready(function () {
+    $("#overlay").fadeIn();
+
+    setup_loading();
+
     $("#back-to-top").hide();
     $(window).scroll(function () {
         if ($(window).scrollTop() > 200) {
