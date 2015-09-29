@@ -51,24 +51,7 @@ window.onload = function () {
 
         var array = new Array();
         var finishedTests = 0;
-
-
-        //// Get everything ready for automatic testing
-        //$.ajax({
-        //    url: "/TestTools/Start.aspx",
-        //    cache: false,
-        //    async: false,
-        //    success: function (response) {
-        //        // Do something
-        //        $("#result").append($(response).find('#result').html());
-        //        $("#overlay").css("height", $t.outerHeight());
-        //    },
-        //    error: function (response) {
-        //        // Show error within results
-        //        $("#result").append($(response).text);
-        //    }
-        //});
-
+        
         // Start automatic testing
         $("#MainContent_performedTests li").each(function (index) {
             var test = $(this).text().replace(" ", "");

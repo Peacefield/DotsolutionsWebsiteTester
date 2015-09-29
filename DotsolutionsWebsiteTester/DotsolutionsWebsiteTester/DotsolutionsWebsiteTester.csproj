@@ -204,7 +204,6 @@
     <Content Include="TestTools\Printability.aspx" />
     <Content Include="TestTools\ServerBehaviour.aspx" />
     <Content Include="TestTools\SocialInterest.aspx" />
-    <Content Include="TestTools\Start.aspx" />
     <Content Include="TestTools\Twitter.aspx" />
     <Content Include="TestTools\UrlFormat.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -394,13 +393,6 @@
     </Compile>
     <Compile Include="TestTools\SocialInterest.aspx.designer.cs">
       <DependentUpon>SocialInterest.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="TestTools\Start.aspx.cs">
-      <DependentUpon>Start.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TestTools\Start.aspx.designer.cs">
-      <DependentUpon>Start.aspx</DependentUpon>
     </Compile>
     <Compile Include="TestTools\Twitter.aspx.cs">
       <DependentUpon>Twitter.aspx</DependentUpon>
