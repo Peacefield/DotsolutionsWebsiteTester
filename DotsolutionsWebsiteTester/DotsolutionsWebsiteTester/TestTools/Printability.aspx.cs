@@ -20,6 +20,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Response.Redirect("~/Default.aspx");
                 return;
             }
+            var sb = new System.Text.StringBuilder();
+            PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
+
+            Session["Printability"] = htmlstring;
         }
     }
 }

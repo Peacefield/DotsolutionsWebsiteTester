@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.UI;
@@ -50,12 +52,14 @@ namespace DotsolutionsWebsiteTester
                 // Set list for ajax requests
                 performedTests.InnerHtml += "<li>" + selectedTests[i] + "</li>";
                 // Display name for user
-                performedTestsName.InnerHtml += "<li><a href='#" + selectedTests[i] + "' >" + selectedTestsName[i] + "</a></li>";
+                //performedTestsName.InnerHtml += "<li><a href='#" + selectedTests[i] + "' >" + selectedTestsName[i] + "</a></li>";
+                performedTestsName.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
             }
         }
         protected void CreatePdfBtn_Click(object sender, EventArgs e)
         {
-            //Response.Redirect("PdfTemplate.aspx");
+            Response.Redirect("PdfTemplate.aspx");
+
             return;
         }
     }

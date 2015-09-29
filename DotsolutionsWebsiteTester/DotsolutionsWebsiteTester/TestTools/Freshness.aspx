@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="Freshness">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="FreshnessSession" runat="server">
                 <div class="panel-heading">Versheid</div>
                 <div class="panel-body">
                 </div>

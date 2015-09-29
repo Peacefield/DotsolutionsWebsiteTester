@@ -5,7 +5,7 @@
 
         
         <div id="Facebook">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="FacebookSession" runat="server">
                 <div class="panel-heading">Facebook</div>
                 <div class="panel-body">
                 </div>

@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="GooglePlus">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="GooglePlusSession" runat="server">
                 <div class="panel-heading">Google+</div>
                 <div class="panel-body">
                 </div>

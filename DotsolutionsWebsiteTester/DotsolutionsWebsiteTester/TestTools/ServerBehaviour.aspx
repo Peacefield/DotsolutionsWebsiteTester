@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="ServerBehaviour">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="ServerBehaviourSession" runat="server">
                 <div class="panel-heading">Server gedrag</div>
                 <div class="panel-body">
                 </div>

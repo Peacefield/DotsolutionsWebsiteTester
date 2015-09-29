@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="Analytics">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="AnalyticsSession" runat="server">
                 <div class="panel-heading">Analytics</div>
                 <div id="AnalyticsResults" runat="server"></div>
                 <div class="panel-body">

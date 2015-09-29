@@ -20,6 +20,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Response.Redirect("~/Default.aspx");
                 return;
             }
+            var sb = new System.Text.StringBuilder();
+            SocialInterestSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
+
+            Session["SocialInterest"] = htmlstring;
         }
     }
 }

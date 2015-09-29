@@ -39,6 +39,13 @@ namespace DotsolutionsWebsiteTester.TestTools
             th.Start();
 
             th.Join();
+
+            var sb = new System.Text.StringBuilder();
+            CodeQualitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
+
+            Session["CodeQuality"] = htmlstring;
+            System.Diagnostics.Debug.WriteLine(Session["CodeQuality".ToString()]);
         }
 
         private void TestCodeQuality()
@@ -120,17 +127,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> " + errorCnt + " W3C meldingen gevonden.</span></div>";
             }
-
-            // Add dictionary containing errors and warnings to session
-            Session["W3ErrorDict"] = errorDictionary;
-            // Add error count to session
-            Session["W3ErrorCnt"] = errorCnt;
-            // Add warning count to session
-            Session["W3WarningCnt"] = warningCnt;
-
-            // Add List of pages that might use table as layout to session
-            Session["TableLayOutList"] = TableLayOutList;
-            Session["NoSemanticList"] = NoSemanticList;
         }
 
         private void W3CValidate(string url)

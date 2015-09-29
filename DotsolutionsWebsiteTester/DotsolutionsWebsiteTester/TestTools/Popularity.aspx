@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="Popularity">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="PopularitySession" runat="server">
                 <div class="panel-heading">Populariteit</div>
                 <div class="panel-body">
                 </div>

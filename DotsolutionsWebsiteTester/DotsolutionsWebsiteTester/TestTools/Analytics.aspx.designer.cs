@@ -13,6 +13,15 @@ namespace DotsolutionsWebsiteTester.TestTools {
     public partial class Analytics {
         
         /// <summary>
+        /// AnalyticsSession control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AnalyticsSession;
+        
+        /// <summary>
         /// AnalyticsResults control.
         /// </summary>
         /// <remarks>

@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="PageTitles">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="PageTitlesSession" runat="server">
                 <div class="panel-heading">Pagina titels</div>
                 <div class="panel-body">
                 </div>

@@ -69,13 +69,12 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Dotsolutions Website Tester</p>
             </footer>
         </div>
 
     </form>
     <%: Scripts.Render("~/bundles/jqueryui") %>
-    <script type="text/javascript" src="Scripts/Custom/ads.js"></script>
     <script type="text/javascript" src="Scripts/Custom/ads.js"></script>
     <script>
         if (window.canRunAds == undefined) {

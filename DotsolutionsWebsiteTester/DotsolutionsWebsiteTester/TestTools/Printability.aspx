@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="Printability">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="PrintabilitySession" runat="server">
                 <div class="panel-heading">Printbaarheid</div>
                 <div class="panel-body">
                 </div>

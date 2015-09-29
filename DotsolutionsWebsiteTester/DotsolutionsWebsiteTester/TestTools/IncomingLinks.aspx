@@ -4,8 +4,8 @@
     <div id="result">
 
         <div id="IncomingLinks">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Inkomende Links</div>
+            <div class="panel panel-primary" id="IncomingLinksSession" runat="server">
+                <div class="panel-heading">Binnenkomende links</div>
                 <div class="panel-body">
                 </div>
             </div>

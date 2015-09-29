@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="InternalLinks">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="InternalLinksSession" runat="server">
                 <div class="panel-heading">Interne links</div>
 
                 <div id="internalLinksErrorsFound" runat="server"></div>

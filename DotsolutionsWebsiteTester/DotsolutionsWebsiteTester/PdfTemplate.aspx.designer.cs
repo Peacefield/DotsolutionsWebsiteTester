@@ -7,54 +7,45 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DotsolutionsWebsiteTester.TestTools {
+namespace DotsolutionsWebsiteTester {
     
     
-    public partial class CodeQuality {
+    public partial class PdfTemplate {
         
         /// <summary>
-        /// CodeQualitySession control.
+        /// UrlTesting control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CodeQualitySession;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl UrlTesting;
         
         /// <summary>
-        /// w3ErrorsFound control.
+        /// performedTests control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl w3ErrorsFound;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl performedTests;
         
         /// <summary>
-        /// W3ResultsTableHidden control.
+        /// testedsiteslist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl W3ResultsTableHidden;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl testedsiteslist;
         
         /// <summary>
-        /// table control.
+        /// results control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table table;
-        
-        /// <summary>
-        /// TableHeaderRow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TableHeaderRow TableHeaderRow;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl results;
     }
 }

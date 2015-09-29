@@ -4,7 +4,7 @@
     <div id="result">
         
         <div id="CodeQuality">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" id="CodeQualitySession" runat="server">
                 <div class="panel-heading">Code quality</div>
                 <div id="w3ErrorsFound" runat="server"></div>
                 <div class="panel-body">

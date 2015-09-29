@@ -27,6 +27,14 @@
     });
 }
 
+function animateTo(identifier)
+{
+    var target = document.getElementById(identifier);
+    $('body').animate({
+        scrollTop: target.offsetTop
+    }, 1000);
+}
+
 window.onresize = function () {
     setup_loading();
 }
@@ -105,8 +113,8 @@ window.onload = function () {
                         if (progress == 100) {
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
-                                $("#MainContent_CreatePdfBtn").css("display", "block");
                                 $("#performedTestshidden").css("display", "block");
+                                document.title = 'Resultaten';
                             }, 500);
                         }
                     },

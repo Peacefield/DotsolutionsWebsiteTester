@@ -33,6 +33,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             th.Start();
 
             th.Join();
+
+            var sb = new System.Text.StringBuilder();
+            AnalyticsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
+
+            Session["Analytics"] = htmlstring;
         }
 
         /// <summary>
@@ -43,7 +49,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             System.Diagnostics.Debug.WriteLine(">>>> Analytics");
             List<string> sitemap = (List<string>)Session["selectedSites"];
-            // List for session
             List<KeyValuePair<string, string>> analyticslist = new List<KeyValuePair<string, string>>();
 
 
@@ -100,16 +105,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                 string nothing = "";
 
                 foreach (var item in noAnalytics)
-                    nothing += "<li><a href='" + item + "' target='blank'>" + item + "</li>";
+                    nothing += "<li><a href='" + item + "' target='blank'>" + item + "</a></li>";
 
                 AnalyticsResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                     + "<span>Geen analytics software gevonden op volgende pagina's</span>"
                     + "<ul>" + nothing + "</ul></div>";
             }
-
-            Session["noAnalytics"] = noAnalytics;
-            Session["analyticslist"] = analyticslist;
         }
 
         private void TestSite(int index, string url)
@@ -125,7 +127,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // if type from list is detected do this
                     if (node.InnerHtml.Contains(analyticTypes[index].Key))
                     {
-                        System.Diagnostics.Debug.WriteLine(">>>>>>>>>>>>> Gevonden >>>>>>>>>>>>> " + analyticTypes[index].Value);
                         found++;
                         // Add to list that tested positive to some kind of analytics software if it's not already in there
                         if (!yesAnalytics.Contains(url))
