@@ -12,10 +12,8 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class CodeQuality : System.Web.UI.Page
     {
         private List<string> sitemap;
-        private int i = 0;
         private int errorCnt = 0;
         private int warningCnt = 0;
-        private Dictionary<int, List<KeyValuePair<string, string>>> errorDictionary = new Dictionary<int, List<KeyValuePair<string, string>>>();
 
         private List<System.Threading.Thread> ThreadList = new List<System.Threading.Thread>();
 
@@ -146,7 +144,6 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             foreach (var item in messages)
             {
-                List<KeyValuePair<string, string>> templist = null;
                 if (item["type"].ToString() == "error")
                 {
                     errorCnt++;
@@ -154,17 +151,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         // add error message to table
                         AddToTable(url, item["type"].ToString(), item["lastLine"].ToString(), item["lastColumn"].ToString(), item["message"].ToString());
-
-                        // add error message to keyvaluepair
-                        templist = new List<KeyValuePair<string, string>>()
-                        {
-                            new KeyValuePair<string, string>("url", url),
-                            new KeyValuePair<string, string>("type", item["type"].ToString()),
-                            new KeyValuePair<string, string>("lastLine", item["lastLine"].ToString()),
-                            new KeyValuePair<string, string>("lastColumn", item["lastColumn"].ToString()),
-                            new KeyValuePair<string, string>("message", item["message"].ToString()),
-                        };
-
                     }
                     catch (NullReferenceException nre)
                     {
@@ -183,16 +169,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                             {
                                 // add warning message to table
                                 AddToTable(url, item["subType"].ToString(), "", "", item["message"].ToString());
-
-                                // add warning message to keyvaluepair
-                                templist = new List<KeyValuePair<string, string>>()
-                                {
-                                    new KeyValuePair<string, string>("url", url),
-                                    new KeyValuePair<string, string>("type", item["type"].ToString()),
-                                    new KeyValuePair<string, string>("lastLine", ""),
-                                    new KeyValuePair<string, string>("lastColumn", ""),
-                                    new KeyValuePair<string, string>("message", item["message"].ToString()),
-                                };
                             }
                             catch (NullReferenceException nrex)
                             {
@@ -204,12 +180,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         System.Diagnostics.Debug.WriteLine("Just an info message, not a warning so subType is not available: " + nre.Message);
                     }
-                }
-
-                if (templist != null)
-                {
-                    errorDictionary.Add(i, templist);
-                    i++;
                 }
             }
 
