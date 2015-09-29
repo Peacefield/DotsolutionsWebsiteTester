@@ -206,14 +206,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 //    || response.StatusCode == HttpStatusCode.Redirect
                 //    || response.StatusCode == HttpStatusCode.Moved
                 //    || response.StatusCode == HttpStatusCode.MovedPermanently);
-                System.Diagnostics.Debug.WriteLine("StatusDescription" + response.StatusDescription);
+                //System.Diagnostics.Debug.WriteLine("StatusDescription" + response.StatusDescription);
                 response.Dispose();
                 return true;
             }
             catch (WebException we)
             {
-                //Any exception will returns false.
-                //System.Diagnostics.Debug.WriteLine("WebException " + we.Message + " <><><><><> met link: " + link + " en Status: " + we.Status);
+                //Any webexception will return true unless it's a 404.
+                System.Diagnostics.Debug.WriteLine("WebException " + we.Message + " <><><><><> met link: " + link + " en Status: " + we.Status);
 
                 if (we.Message.Contains("404"))
                 {
@@ -223,6 +223,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             catch (Exception e)
             {
+                //Any exception will return false
                 //System.Diagnostics.Debug.WriteLine("Algemene fout " + e.Message);
                 return false;
             }
