@@ -60,7 +60,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 HtmlWeb Webget = new HtmlWeb();
                 HtmlDocument doc = Webget.Load(url);
 
-                if (IsTableLayout(url, doc))
+                if (IsTableLayout(doc))
                 {
                     w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
@@ -69,7 +69,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     TableLayOutList.Add(url);
                 }
 
-                if (!IsUsingSemantics(url, doc))
+                if (!IsUsingSemantics(doc))
                 {
                     NoSemanticList.Add(url);
                 }
@@ -224,7 +224,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             table.Rows.Add(tRow);
         }
 
-        private bool IsTableLayout(string url, HtmlDocument doc)
+        private bool IsTableLayout(HtmlDocument doc)
         {
             // Check every url in sitemap for analytics software for the current analytictype
             if (doc.DocumentNode.SelectNodes("//table[not(ancestor::table)]") != null)
@@ -239,7 +239,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
 
-        private bool IsUsingSemantics(string url, HtmlDocument doc)
+        private bool IsUsingSemantics(HtmlDocument doc)
         {
             System.Diagnostics.Debug.WriteLine("IsUsingSemantics <<<<<");
 
