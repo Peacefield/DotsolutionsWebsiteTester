@@ -39,8 +39,8 @@ namespace DotsolutionsWebsiteTester
                 performedTests.InnerHtml += "<li><a href='#" + selectedTests[i] + "' >" + selectedTestsName[i] + "</a></li>";
 
             // Append HTML to the results div
-            foreach (var item in selectedTests)
-                results.InnerHtml += Session[item].ToString();
+            foreach (string test in selectedTests)
+                results.InnerHtml += Session[test].ToString();
         }
 
 

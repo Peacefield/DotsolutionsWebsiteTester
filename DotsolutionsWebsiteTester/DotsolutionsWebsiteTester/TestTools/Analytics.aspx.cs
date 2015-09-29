@@ -77,8 +77,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 foreach (System.Threading.Thread thread in ThreadList)
                     thread.Join();
 
-
-
                 string percentage = "0%";
                 if (found > 0)
                 {
@@ -108,7 +106,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 string nothing = "";
 
-                foreach (var item in noAnalytics)
+                foreach (string item in noAnalytics)
                     nothing += "<li><a href='" + item + "' target='blank'>" + item + "</a></li>";
 
                 AnalyticsResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
@@ -164,15 +162,13 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             TableRow tRow = new TableRow();
 
-            TableCell tCellUrl = new TableCell();
-            tCellUrl.Text = type;
-            tCellUrl.CssClass = "col-md-10";
-            tRow.Cells.Add(tCellUrl);
-
             TableCell tCellType = new TableCell();
-            tCellType.Text = percentage;
-            tCellType.CssClass = "col-md-2";
+            tCellType.Text = type;
             tRow.Cells.Add(tCellType);
+
+            TableCell tCellPerc = new TableCell();
+            tCellPerc.Text = percentage;
+            tRow.Cells.Add(tCellPerc);
 
             AnalyticsTable.Rows.Add(tRow);
         }

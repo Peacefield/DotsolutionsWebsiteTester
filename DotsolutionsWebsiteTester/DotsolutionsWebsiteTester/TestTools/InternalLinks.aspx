@@ -12,9 +12,9 @@
                     <div class="hidden" id="IntLinksHiddenTable" runat="server">
                         <asp:Table ID="IntLinksTable" CssClass="table table-hover" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow1" BackColor="LightBlue" runat="server">
-                                <asp:TableHeaderCell Scope="Column" Text="Link van URL" />
-                                <asp:TableHeaderCell Scope="Column" Text="Melding" />
-                                <asp:TableHeaderCell Scope="Column" Text="Op pagina" />
+                                <asp:TableHeaderCell Scope="Column" Text="Link van URL" CssClass="col-md-6"/>
+                                <asp:TableHeaderCell Scope="Column" Text="Melding" CssClass="col-md-4"/>
+                                <asp:TableHeaderCell Scope="Column" Text="Op pagina" CssClass="col-md-2"/>
                             </asp:TableHeaderRow>
                         </asp:Table>
                     </div>

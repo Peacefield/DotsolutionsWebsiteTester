@@ -233,20 +233,17 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             TableRow tRow = new TableRow();
 
-            TableCell tCellUrl = new TableCell();
-            tCellUrl.Text = link;
-            tCellUrl.CssClass = "col-md-6";
-            tRow.Cells.Add(tCellUrl);
+            TableCell tCellLink = new TableCell();
+            tCellLink.Text = link;
+            tRow.Cells.Add(tCellLink);
 
-            TableCell tCellType = new TableCell();
-            tCellType.Text = text;
-            tCellType.CssClass = "col-md-4";
-            tRow.Cells.Add(tCellType);
+            TableCell tCellMsg = new TableCell();
+            tCellMsg.Text = text;
+            tRow.Cells.Add(tCellMsg);
 
-            TableCell tCellLine = new TableCell();
-            tCellLine.Text = "<a href='" + page + "' target='_blank'>" + page + "</a>";
-            tCellLine.CssClass = "col-md-2";
-            tRow.Cells.Add(tCellLine);
+            TableCell tCellPage = new TableCell();
+            tCellPage.Text = "<a href='" + page + "' target='_blank'>" + page + "</a>";
+            tRow.Cells.Add(tCellPage);
 
             IntLinksTable.Rows.Add(tRow);
         }

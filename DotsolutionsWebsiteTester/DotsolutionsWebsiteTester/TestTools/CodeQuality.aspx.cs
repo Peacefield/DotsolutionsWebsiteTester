@@ -142,7 +142,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             JObject w3Validate = JObject.Parse(responseFromServer);
             IList<JToken> messages = w3Validate["messages"].Children().ToList();
 
-            foreach (var item in messages)
+            foreach (JToken item in messages)
             {
                 if (item["type"].ToString() == "error")
                 {
@@ -203,27 +203,22 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             TableCell tCellUrl = new TableCell();
             tCellUrl.Text = url;
-            tCellUrl.CssClass = "col-md-3";
             tRow.Cells.Add(tCellUrl);
 
             TableCell tCellType = new TableCell();
             tCellType.Text = type;
-            tCellType.CssClass = "col-md-1";
             tRow.Cells.Add(tCellType);
 
             TableCell tCellLine = new TableCell();
             tCellLine.Text = line;
-            tCellLine.CssClass = "col-md-1";
             tRow.Cells.Add(tCellLine);
 
             TableCell tCellClmn = new TableCell();
             tCellClmn.Text = column;
-            tCellClmn.CssClass = "col-md-1";
             tRow.Cells.Add(tCellClmn);
 
             TableCell tCellMsg = new TableCell();
             tCellMsg.Text = msg;
-            tCellMsg.CssClass = "col-md-6";
             tRow.Cells.Add(tCellMsg);
 
             table.Rows.Add(tRow);
@@ -255,7 +250,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (doc.DocumentNode.SelectSingleNode("//body") != null)
             {
-                foreach (var item in semantics)
+                foreach (string item in semantics)
                 {
                     if (doc.DocumentNode.SelectSingleNode("//body").InnerHtml.Contains(item))
                         return true;

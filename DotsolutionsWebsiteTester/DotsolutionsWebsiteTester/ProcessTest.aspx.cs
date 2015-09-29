@@ -102,7 +102,7 @@ namespace DotsolutionsWebsiteTester
 
             if (results.Count != 0)
             {
-                foreach (var item in results)
+                foreach (JToken item in results)
                     sitemap.Add(item["url"].ToString());
             }
             else

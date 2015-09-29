@@ -11,11 +11,11 @@
                     <div class="hidden" id="W3ResultsTableHidden" runat="server">
                         <asp:Table ID="table" CssClass="table table-hover" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow" BackColor="LightBlue" runat="server">
-                                <asp:TableHeaderCell Scope="Column" Text="Pagina" />
-                                <asp:TableHeaderCell Scope="Column" Text="Type" />
-                                <asp:TableHeaderCell Scope="Column" Text="Regel" />
-                                <asp:TableHeaderCell Scope="Column" Text="Kolom" />
-                                <asp:TableHeaderCell Scope="Column" Text="Melding" />
+                                <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-3" />
+                                <asp:TableHeaderCell Scope="Column" Text="Type" CssClass="col-md-1"/>
+                                <asp:TableHeaderCell Scope="Column" Text="Regel" CssClass="col-md-1"/>
+                                <asp:TableHeaderCell Scope="Column" Text="Kolom" CssClass="col-md-1"/>
+                                <asp:TableHeaderCell Scope="Column" Text="Melding" CssClass="col-md-6"/>
                             </asp:TableHeaderRow>
                         </asp:Table>
                     </div>

@@ -11,8 +11,8 @@
                     <div class="hidden" id="AnalyticsTableHidden" runat="server">
                         <asp:Table ID="AnalyticsTable" CssClass="table table-hover" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow2" BackColor="LightBlue" runat="server">
-                                <asp:TableHeaderCell Scope="Column" Text="Type analytics software" />
-                                <asp:TableHeaderCell Scope="Column" Text="Percentage gevonden" />
+                                <asp:TableHeaderCell Scope="Column" Text="Type analytics software" CssClass="col-md-10"/>
+                                <asp:TableHeaderCell Scope="Column" Text="Percentage gevonden" CssClass="col-md-2"/>
                             </asp:TableHeaderRow>
                         </asp:Table>
                     </div>
