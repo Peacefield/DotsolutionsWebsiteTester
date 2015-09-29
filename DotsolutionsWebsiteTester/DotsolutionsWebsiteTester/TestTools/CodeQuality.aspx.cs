@@ -45,7 +45,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             string htmlstring = sb.ToString();
 
             Session["CodeQuality"] = htmlstring;
-            System.Diagnostics.Debug.WriteLine(Session["CodeQuality".ToString()]);
         }
 
         private void TestCodeQuality()
@@ -57,11 +56,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 System.Threading.ThreadStart ths = new System.Threading.ThreadStart(() => W3CValidate(url));
                 System.Threading.Thread th = new System.Threading.Thread(ths);
-                th.Start();
-
                 ThreadList.Add(th);
-                System.Threading.Thread.Sleep(10);
-
+                th.Start();
+                
                 HtmlWeb Webget = new HtmlWeb();
                 HtmlDocument doc = Webget.Load(url);
 

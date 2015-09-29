@@ -18,7 +18,7 @@ namespace DotsolutionsWebsiteTester
         {
             try
             {
-                Session["MainUrl"].ToString();
+                UrlTesting.InnerText = Session["MainUrl"].ToString();
             }
             catch (NullReferenceException)
             {
@@ -26,37 +26,21 @@ namespace DotsolutionsWebsiteTester
                 return;
             }
 
-            UrlTesting.InnerText = Session["MainUrl"].ToString();
-
             this.selectedSites = (List<string>)Session["selectedSites"];
             this.selectedTests = (List<string>)Session["selectedTests"];
             this.selectedTestsName = (List<string>)Session["selectedTestsName"];
-
+            
+            // Add a list of links to the tested pages
             foreach (string item in selectedSites)
                 testedsiteslist.InnerHtml += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
 
+            // Add a list of performed tests with navigation option
             for (int i = 0; i < selectedTests.Count; i++)
                 performedTests.InnerHtml += "<li><a href='#" + selectedTests[i] + "' >" + selectedTestsName[i] + "</a></li>";
 
+            // Append HTML to the results div
             foreach (var item in selectedTests)
-            {
-                //results.InnerHtml += Session[item].ToString();
-
-                try
-                {
-                    //Create div with item/testname to put html into so the list of tests can redirect to that div
-                    results.InnerHtml += "<div id='" + item + "'> " + Session[item].ToString() + "</div>";
-                }
-                catch (NullReferenceException)
-                {
-                    System.Diagnostics.Debug.WriteLine(item + " bestaat nog niet in Session");
-                    //Response.Redirect("Default.aspx");
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                }
-            }
+                results.InnerHtml += Session[item].ToString();
         }
 
 

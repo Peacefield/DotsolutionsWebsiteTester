@@ -114,7 +114,7 @@ window.onload = function () {
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
                                 $("#performedTestshidden").css("display", "block");
-                                document.title = 'Resultaten';
+                                document.title = 'Resultaten - Website tester';
                             }, 500);
                         }
                     },

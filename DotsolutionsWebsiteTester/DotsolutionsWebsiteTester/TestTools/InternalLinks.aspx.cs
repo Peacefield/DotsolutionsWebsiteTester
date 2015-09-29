@@ -104,7 +104,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             // Making sure we only test urls, instead of also including mailto: tel: javascript: etc.
             if (link.Attributes["href"].Value.Contains("/") && !link.Attributes["href"].Value.Contains("intent://"))
             {
-                List<KeyValuePair<string, string>> templist = null;
 
                 // Check that there is a description
                 if (link.InnerText != "")
@@ -116,14 +115,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         errorCnt++;
                         found = true;
-                        AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst is te lang", url);
-                        // add message to keyvaluepair
-                        templist = new List<KeyValuePair<string, string>>()
-                                {
-                                    new KeyValuePair<string, string>("link", link.Attributes["href"].Value),
-                                    new KeyValuePair<string, string>("text", "Beschrijvende tekst is te lang"),
-                                    new KeyValuePair<string, string>("page", url)
-                                };
+                        AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
                     }
                 }
                 // If the link is an image there is no need for a description
@@ -132,13 +124,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     errorCnt++;
                     found = true;
                     AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst van de URL is leeg", url);
-                    // add message to keyvaluepair
-                    templist = new List<KeyValuePair<string, string>>()
-                            {
-                                new KeyValuePair<string, string>("link", link.Attributes["href"].Value),
-                                new KeyValuePair<string, string>("text", "Beschrijvende tekst van de URL is leeg"),
-                                new KeyValuePair<string, string>("page", url)
-                            };
                 }
 
                 if (found)
@@ -162,13 +147,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                         else
                             tablelink = "<a href='" + MainUrl + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
                     }
-                    // add message to keyvaluepair
-                    templist = new List<KeyValuePair<string, string>>()
-                            {
-                                new KeyValuePair<string, string>("link", tablelink),
-                                new KeyValuePair<string, string>("text", "Link werkt niet"),
-                                new KeyValuePair<string, string>("page", url)
-                            };
                     // add message to table
                     AddToTable(tablelink, "Link werkt niet", url);
 
