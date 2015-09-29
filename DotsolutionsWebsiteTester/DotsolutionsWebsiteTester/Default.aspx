@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <div id="CheckboxHolder">
+        <div id="CheckboxHolder" class="noselect">
             <div class="row checkboxlistrow text-left">
                 <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4">
                     <asp:CheckBoxList ID="TestsCheckBoxList1"
