@@ -2,9 +2,11 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester.TestTools
@@ -15,7 +17,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private int errorCnt = 0;
         private int warningCnt = 0;
 
-        private List<System.Threading.Thread> ThreadList = new List<System.Threading.Thread>();
+        private List<Thread> ThreadList = new List<Thread>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,10 +32,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             this.sitemap = (List<string>)Session["selectedSites"];
 
-            System.Diagnostics.Debug.WriteLine(">>>> CodeQuality");
+            Debug.WriteLine(">>>> CodeQuality");
 
-            System.Threading.ThreadStart ths = new System.Threading.ThreadStart(TestCodeQuality);
-            System.Threading.Thread th = new System.Threading.Thread(ths);
+            ThreadStart ths = new ThreadStart(TestCodeQuality);
+            Thread th = new Thread(ths);
             th.Start();
 
             th.Join();
@@ -52,8 +54,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             foreach (string url in this.sitemap)
             {
-                System.Threading.ThreadStart ths = new System.Threading.ThreadStart(() => W3CValidate(url));
-                System.Threading.Thread th = new System.Threading.Thread(ths);
+                ThreadStart ths = new ThreadStart(() => W3CValidate(url));
+                Thread th = new Thread(ths);
                 ThreadList.Add(th);
                 th.Start();
                 
@@ -105,7 +107,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             // Join Threads
-            foreach (System.Threading.Thread thread in ThreadList)
+            foreach (Thread thread in ThreadList)
                 thread.Join();
 
             // Show table when errors are found 
@@ -126,8 +128,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void W3CValidate(string url)
         {
-            System.Diagnostics.Debug.WriteLine("W3CValidate <<<<<");
-            System.Diagnostics.Debug.WriteLine("Performing code quality check on: " + url);
+            Debug.WriteLine("W3CValidate <<<<<");
+            Debug.WriteLine("Performing code quality check on: " + url);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/check?uri=" + url + "&output=json");
             request.UserAgent = Session["userAgent"].ToString();
             // Get the response.
@@ -154,8 +156,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                     catch (NullReferenceException nre)
                     {
-                        System.Diagnostics.Debug.WriteLine("W3CValidate nullreference exception");
-                        System.Diagnostics.Debug.WriteLine(nre.Message);
+                        Debug.WriteLine("W3CValidate nullreference exception");
+                        Debug.WriteLine(nre.Message);
                     }
                 }
                 else if (item["type"].ToString() == "info")
@@ -172,13 +174,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                             }
                             catch (NullReferenceException nrex)
                             {
-                                System.Diagnostics.Debug.WriteLine("Could not add to table or list<keyvaluepair> due to: " + nrex.Message);
+                                Debug.WriteLine("Could not add to table or list<keyvaluepair> due to: " + nrex.Message);
                             }
                         }
                     }
                     catch (NullReferenceException nre)
                     {
-                        System.Diagnostics.Debug.WriteLine("Just an info message, not a warning so subType is not available: " + nre.Message);
+                        Debug.WriteLine("Just an info message, not a warning so subType is not available: " + nre.Message);
                     }
                 }
             }
@@ -241,7 +243,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private bool IsUsingSemantics(HtmlDocument doc)
         {
-            System.Diagnostics.Debug.WriteLine("IsUsingSemantics <<<<<");
+            Debug.WriteLine("IsUsingSemantics <<<<<");
 
             List<string> semantics = new List<string>()
             {

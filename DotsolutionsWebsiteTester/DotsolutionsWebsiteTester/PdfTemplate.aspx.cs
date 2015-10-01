@@ -29,7 +29,7 @@ namespace DotsolutionsWebsiteTester
             this.selectedSites = (List<string>)Session["selectedSites"];
             this.selectedTests = (List<string>)Session["selectedTests"];
             this.selectedTestsName = (List<string>)Session["selectedTestsName"];
-            
+
             // Add a list of links to the tested pages
             foreach (string item in selectedSites)
                 testedsiteslist.InnerHtml += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
@@ -40,7 +40,18 @@ namespace DotsolutionsWebsiteTester
 
             // Append HTML to the results div
             foreach (string test in selectedTests)
-                results.InnerHtml += "<div id='"+test+"'>" + Session[test].ToString() + "</div>";
+            {
+                try
+                {
+                    results.InnerHtml += "<div id='" + test + "'>" + Session[test].ToString() + "</div>";
+                }
+                catch (NullReferenceException)
+                {
+                    results.InnerHtml += "<div class = 'panel panel-danger' id='" + test + "'>"
+                        + "<div class = 'panel-heading'>" + test + "</div>"
+                        + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>";
+                }
+            }
         }
 
 

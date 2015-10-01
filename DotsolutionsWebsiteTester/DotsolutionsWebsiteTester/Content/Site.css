@@ -1,7 +1,18 @@
-﻿/* Move down content because we have a fixed navbar that is 50px tall */
+﻿html {
+    /*height: 100%;*/
+}
+
+/* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+}
+body { 
+    background-image: URL("/Content/images/bckgnd.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 /* Wrapping element */
@@ -134,7 +145,7 @@ textarea {
 #back-to-top {
     position: fixed;
     top: 99%;
-    margin-top:-50px;
+    margin-top: -50px;
     right: 1%;
 }
 
@@ -181,6 +192,10 @@ textarea {
     cursor: pointer;
 }
 
-#MainContent_performedTestsName li {
+#MainContent_performedTestsName li a {
     cursor: pointer;
+}
+
+#MainContent_CreatePdfBtn {
+    display: none;
 }

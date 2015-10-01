@@ -1,14 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester
 {
@@ -72,8 +69,9 @@ namespace DotsolutionsWebsiteTester
             List<string> sitemap = new List<string>();
             string url = Session["MainUrl"].ToString();
             string userAgent = Session["userAgent"].ToString();
+            bool isPresent = false;
 
-            System.Diagnostics.Debug.WriteLine(">>>> GetSiteList >>> " + url);
+            Debug.WriteLine(">>>> GetSiteList >>> " + url);
 
             //sitemap.Add(url);
             //testedsiteslist.InnerHtml += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
@@ -102,7 +100,13 @@ namespace DotsolutionsWebsiteTester
             if (results.Count != 0)
             {
                 foreach (JToken item in results)
+                {
                     sitemap.Add(item["url"].ToString());
+                    if (item["url"].Contains(url))
+                        isPresent = true;
+                }
+                if (!isPresent)
+                    sitemap.Add(url);
             }
             else
                 sitemap.Add(url);

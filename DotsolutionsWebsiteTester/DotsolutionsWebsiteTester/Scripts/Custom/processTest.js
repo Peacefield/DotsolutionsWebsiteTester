@@ -1,7 +1,7 @@
 ﻿function setup_loading() {
     // Set-up loading div
     $t = $(".body-content");
-    
+
     var right = parseInt($t.css("padding-right"));
     var left = parseInt($t.css("padding-left"));
     var outerWidth = parseInt($t.outerWidth());
@@ -47,11 +47,11 @@ window.onresize = function () {
 window.onload = function () {
 
     var url = $("#MainContent_UrlTesting").text();
-    if (url != "") {
+    if (url !== "") {
 
         var array = new Array();
         var finishedTests = 0;
-        
+
         // Start automatic testing
         $("#MainContent_performedTests li").each(function (index) {
             var test = $(this).text().replace(" ", "");
@@ -62,45 +62,57 @@ window.onload = function () {
 
         // Remove Analytics from array since it will be blocked because of adblockers
         // Other tests will still be performed and Analytics will still be shown in the list of performed tests
-        if (window.canRunAds == undefined) {
+        if (window.canRunAds === undefined) {
             var removeItem = "Analytics";
             array = jQuery.grep(array, function (value) {
                 return value != removeItem;
             });
+
+            $("#result").append("<div class = 'panel panel-danger' id='" + removeItem + "'>"
+                + "<div class = 'panel-heading'>" + removeItem + "</div>"
+                + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>");
         }
 
-        $.each(array, function (index, value) {
-            $.ajax({
-                url: "/TestTools/" + value + ".aspx",
-                cache: false,
-                async: true,
-                success: function (response) {
-                    // Do something
-                    finishedTests++;
-                    var progress = ((finishedTests / array.length) * 100).toFixed(0);
+        if (array.length !== 0) {
+            $.each(array, function (index, value) {
+                $.ajax({
+                    url: "/TestTools/" + value + ".aspx",
+                    cache: false,
+                    async: true,
+                    success: function (response) {
+                        // Do something
+                        finishedTests++;
+                        var progress = ((finishedTests / array.length) * 100).toFixed(0);
 
-                    $("#result").append($(response).find('#result').html());
-                    $("#testprogressbar").css("width", progress + "%");
-                    $("#progresstext").text(progress + "% compleet");
-                    $("#overlay").css("height", $t.outerHeight());
+                        $("#result").append($(response).find('#result').html());
+                        $("#testprogressbar").css("width", progress + "%");
+                        $("#progresstext").text(progress + "% compleet");
+                        $("#overlay").css("height", $t.outerHeight());
 
-                    $("#TestsInProgress li:contains(" + value + ")").remove();
-                    $("#TestsComplete").append("<li>" + value + "</li>");
+                        $("#TestsInProgress li:contains(" + value + ")").remove();
+                        $("#TestsComplete").append("<li>" + value + "</li>");
 
-                    if (progress == 100) {
-                        setTimeout(function () {
-                            $("#overlay").fadeOut();
-                            $("#performedTestshidden").css("display", "block");
-                            document.title = 'Resultaten - Website tester';
-                        }, 500);
+                        if (progress == 100) {
+                            setTimeout(function () {
+                                $("#overlay").fadeOut();
+                                $("#performedTestshidden").css("display", "block");
+                                $("#MainContent_CreatePdfBtn").css("display", "block");
+                                document.title = 'Resultaten - Website tester';
+                            }, 500);
+                        }
+                    },
+                    error: function (response) {
+                        // Show error within results
+                        $("#result").append($(response).text);
                     }
-                },
-                error: function (response) {
-                    // Show error within results
-                    $("#result").append($(response).text);
-                }
+                });
             });
-        });
+        }
+        else {
+            $("#overlay").fadeOut();
+            $("#performedTestshidden").css("display", "block");
+            document.title = 'Resultaten - Website tester';
+        }
     }
 };
 

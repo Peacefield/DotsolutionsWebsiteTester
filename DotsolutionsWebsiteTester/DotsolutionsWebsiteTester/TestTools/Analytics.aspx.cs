@@ -1,13 +1,15 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class Analytics : System.Web.UI.Page
     {
-        private List<System.Threading.Thread> ThreadList = new List<System.Threading.Thread>();
+        private List<Thread> ThreadList = new List<Thread>();
         // List for checking different types of analytics software
         // Currently only checking the most widely used one: google analytics
         private List<KeyValuePair<string, string>> analyticTypes = new List<KeyValuePair<string, string>>();
@@ -28,8 +30,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            System.Threading.ThreadStart ths = new System.Threading.ThreadStart(TestAnalytics);
-            System.Threading.Thread th = new System.Threading.Thread(ths);
+            ThreadStart ths = new ThreadStart(TestAnalytics);
+            Thread th = new Thread(ths);
             th.Start();
 
             th.Join();
@@ -46,14 +48,14 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// Currently only checking for google-analytics
         /// </summary>
         private void TestAnalytics()
-        {
-            System.Diagnostics.Debug.WriteLine(">>>> Analytics");
+        {            
+            Debug.WriteLine(">>>> Analytics");
             List<string> sitemap = (List<string>)Session["selectedSites"];
             List<KeyValuePair<string, string>> analyticslist = new List<KeyValuePair<string, string>>();
 
 
-            analyticTypes.Add(new KeyValuePair<string, string>("google-analytics", "Google Analytics"));
-            analyticTypes.Add(new KeyValuePair<string, string>("wp-statistics", "WordPress stats plugin")); // Not sure if this one works
+            analyticTypes.Add(new KeyValuePair<string, string>("google-analytics.com", "Google Analytics"));
+            analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
             //analyticTypes.Add(new KeyValuePair<string, string>("placeholder-type", "placeholder-name"));
 
             // List for gathering
@@ -65,16 +67,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Check every url in sitemap for analytics software for the current analytictype
                 foreach (string url in sitemap)
                 {
-                    System.Threading.ThreadStart ths = new System.Threading.ThreadStart(() => TestSite(i, url));
-                    System.Threading.Thread th = new System.Threading.Thread(ths);
+                    ThreadStart ths = new ThreadStart(() => TestSite(i, url));
+                    Thread th = new Thread(ths);
                     th.Start();
 
                     ThreadList.Add(th);
-                    System.Threading.Thread.Sleep(10);
                 }
 
                 // Join Threads
-                foreach (System.Threading.Thread thread in ThreadList)
+                foreach (Thread thread in ThreadList)
                     thread.Join();
 
                 string percentage = "0%";
@@ -118,18 +119,21 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void TestSite(int index, string url)
         {
-
-            var Webget = new HtmlWeb();
-            var doc = Webget.Load(url);
+            HtmlWeb Webget = new HtmlWeb();
+            HtmlDocument doc = Webget.Load(url);
+            bool done = false;
 
             if (doc.DocumentNode.SelectNodes("//script") != null)
             {
+                Debug.WriteLine(doc.DocumentNode.SelectSingleNode("//script").InnerHtml);
                 foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//script"))
                 {
                     // if type from list is detected do this
                     if (node.InnerHtml.Contains(analyticTypes[index].Key))
                     {
                         found++;
+                        done = true;
+                        Debug.WriteLine("Done naar true <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
                         // Add to list that tested positive to some kind of analytics software if it's not already in there
                         if (!yesAnalytics.Contains(url))
                         {
@@ -143,6 +147,31 @@ namespace DotsolutionsWebsiteTester.TestTools
                         }
                         // Break incase they added the same type in multiple forms, e.g. //www.google-analytics.com/analytics.js and https://ssl.google-analytics.com/ga.js
                         break;
+                    }
+                }
+            }
+
+            if (!done && doc.DocumentNode.SelectSingleNode("//html") != null)
+            {
+                HtmlNode node = doc.DocumentNode.SelectSingleNode("//html");
+                Debug.WriteLine("HTML <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
+                Debug.WriteLine(node.InnerHtml);
+
+                // if type from list is detected do this
+                if (node.InnerHtml.Contains(analyticTypes[index].Key))
+                {
+                    Debug.WriteLine("Gevonden <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
+                    found++;
+                    // Add to list that tested positive to some kind of analytics software if it's not already in there
+                    if (!yesAnalytics.Contains(url))
+                    {
+                        yesAnalytics.Add(url);
+                    }
+
+                    // remove url from noAnalytics list since current analytics search found something
+                    if (noAnalytics.Contains(url))
+                    {
+                        noAnalytics.Remove(url);
                     }
                 }
             }

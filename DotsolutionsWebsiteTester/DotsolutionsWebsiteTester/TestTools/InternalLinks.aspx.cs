@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Web.UI.WebControls;
@@ -10,7 +11,7 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class InternalLinks : System.Web.UI.Page
     {
         private int errorCnt = 0;
-        private List<System.Threading.Thread> ThreadList = new List<System.Threading.Thread>();
+        private List<Thread> ThreadList = new List<Thread>();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -46,7 +47,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             List<string> sitemap = (List<string>)Session["selectedSites"];
             foreach (string url in sitemap)
             {
-                System.Diagnostics.Debug.WriteLine("Link check op -> " + url);
+                Debug.WriteLine("Link check op -> " + url);
 
                 var Webget = new HtmlWeb();
                 var doc = Webget.Load(url);
@@ -148,7 +149,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 string requestString = "";
                 if (link.Contains("http://") || link.Contains("https://"))
                 {
-                    //System.Diagnostics.Debug.WriteLine("Testing http--->>> " + link);
+                    //Debug.WriteLine("Testing http--->>> " + link);
                     requestString = link;
                 }
                 else
@@ -156,12 +157,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (mainurl.EndsWith("/"))
                     {
                         string temp = mainurl.Remove(mainurl.Length - 1);
-                        //System.Diagnostics.Debug.WriteLine("Testing endswith --->>> " + temp + link);
+                        //Debug.WriteLine("Testing endswith --->>> " + temp + link);
                         requestString = temp + link;
                     }
                     else
                     {
-                        //System.Diagnostics.Debug.WriteLine("Testing --->>> " + mainurl + link);
+                        //Debug.WriteLine("Testing --->>> " + mainurl + link);
                         requestString = mainurl + link;
                     }
                 }
@@ -183,14 +184,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 //    || response.StatusCode == HttpStatusCode.Redirect
                 //    || response.StatusCode == HttpStatusCode.Moved
                 //    || response.StatusCode == HttpStatusCode.MovedPermanently);
-                //System.Diagnostics.Debug.WriteLine("StatusDescription" + response.StatusDescription);
+                //Debug.WriteLine("StatusDescription" + response.StatusDescription);
                 response.Dispose();
                 return true;
             }
             catch (WebException we)
             {
                 //Any webexception will return true unless it's a 404.
-                System.Diagnostics.Debug.WriteLine("WebException " + we.Message + " <><><><><> met link: " + link + " en Status: " + we.Status);
+                Debug.WriteLine("WebException " + we.Message + " <><><><><> met link: " + link + " en Status: " + we.Status);
 
                 if (we.Message.Contains("404"))
                 {
@@ -201,7 +202,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             catch (Exception e)
             {
                 //Any exception will return false
-                //System.Diagnostics.Debug.WriteLine("Algemene fout " + e.Message);
+                //Debug.WriteLine("Algemene fout " + e.Message);
                 return false;
             }
         }

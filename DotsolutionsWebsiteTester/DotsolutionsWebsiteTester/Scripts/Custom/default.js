@@ -34,7 +34,7 @@ window.onload = function () {
         })
     }
 
-    CheckAll();
+    //CheckAll();
 
     CheckAllCheckboxes.onclick = function () {
         if ($(this).text() === "Alles selecteren")
