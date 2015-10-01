@@ -50,9 +50,13 @@
     </div>
 
     <div id="result"></div>
+        
+    <div id="back-to-top">
+        <div class="btn btn-primary btn-md" id="ToTopBtn">
+        <span aria-hidden="true" class="glyphicon glyphicon-arrow-up"></span>
+            Terug naar boven
+        </div>
+    </div>
 
-    <span id="back-to-top">
-        <img src='Content/images/up-arrow.png' width="64" height="64" />
-    </span>
     <script type="text/javascript" src="Scripts/Custom/processTest.js"></script>
 </asp:Content>

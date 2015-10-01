@@ -133,7 +133,8 @@ textarea {
  */
 #back-to-top {
     position: fixed;
-    top: 90%;
+    top: 99%;
+    margin-top:-50px;
     right: 1%;
 }
 

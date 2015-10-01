@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="DotsolutionsWebsiteTester._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    
+
     <div class="jumbotron text-center center-block" id="testsjumbotron">
 
         <h1>Website tester</h1>
@@ -23,7 +23,7 @@
                 <i class="glyphicon glyphicon-exclamation-sign glyphicons-lg"></i><span class="" id="invalidUrl" runat="server"></span>
             </div>
         </div>
-                
+
         <div class="row">
             <div class="col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4 col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4">
                 <asp:Button ID="StartScanBtn"
@@ -33,7 +33,7 @@
                     runat="server" />
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-5 col-xs-5 col-sm-5 col-lg-5"></div>
             <div class="col-md-2 col-xs-2 col-sm-2 col-lg-2 btn btn-default btn-sm" id="ShowCheckboxes">

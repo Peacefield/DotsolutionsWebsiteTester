@@ -118,7 +118,7 @@ $(document).ready(function () {
             $('#back-to-top').fadeOut();
         }
     });
-    $('#back-to-top img').click(function () {
+    $('#back-to-top').click(function () {
         $('body').animate({
             scrollTop: 0
         }, 1000);
