@@ -1,10 +1,8 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.UI;
+using System.Threading;
 using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester.TestTools
@@ -12,7 +10,6 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class InternalLinks : System.Web.UI.Page
     {
         private int errorCnt = 0;
-        private int i = 0;
         private List<System.Threading.Thread> ThreadList = new List<System.Threading.Thread>();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,8 +23,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            System.Threading.ThreadStart ths = new System.Threading.ThreadStart(TestInternalLinks);
-            System.Threading.Thread th = new System.Threading.Thread(ths);
+            ThreadStart ths = new ThreadStart(TestInternalLinks);
+            Thread th = new Thread(ths);
             th.Start();
 
             th.Join();
@@ -41,7 +38,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
 
         /// <summary>
-        /// Check per page the links that are present
+        /// Check per page the links that are declared
         /// Checks for length and initiates a check to see if the link is working
         /// </summary>
         private void TestInternalLinks()
@@ -61,22 +58,17 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         //TestLink(link, url);
 
-                        System.Threading.ThreadStart ths = new System.Threading.ThreadStart(() => TestLink(link, url));
-                        System.Threading.Thread th = new System.Threading.Thread(ths);
+                        ThreadStart ths = new ThreadStart(() => TestLink(link, url));
+                        Thread th = new Thread(ths);
                         ThreadList.Add(th);
                         th.Start();
-
-                        System.Threading.Thread.Sleep(10);
                     }
                 }
 
             }
-            // Join Threads
-            foreach (System.Threading.Thread thread in ThreadList)
-            {
+            // Join Threads that were executing TestLink
+            foreach (Thread thread in ThreadList)
                 thread.Join();
-                System.Threading.Thread.Sleep(10);
-            }
 
             // Show message with findings
             if (errorCnt > 0)
@@ -99,12 +91,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             string MainUrl = Session["MainUrl"].ToString();
 
-            bool found = false;
-
             // Making sure we only test urls, instead of also including mailto: tel: javascript: etc.
             if (link.Attributes["href"].Value.Contains("/") && !link.Attributes["href"].Value.Contains("intent://"))
             {
-
                 // Check that there is a description
                 if (link.InnerText != "")
                 {
@@ -114,7 +103,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (words.Length > 40)
                     {
                         errorCnt++;
-                        found = true;
                         AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
                     }
                 }
@@ -122,14 +110,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 else if (!link.InnerHtml.Contains("img") && !link.InnerHtml.Contains("figure") && !link.InnerHtml.Contains("i"))
                 {
                     errorCnt++;
-                    found = true;
                     AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst van de URL is leeg", url);
-                }
-
-                if (found)
-                {
-                    i++;
-                    found = false;
                 }
 
                 // Test if the link does not return an errorcode
@@ -151,11 +132,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     AddToTable(tablelink, "Link werkt niet", url);
 
                     errorCnt++;
-                    found = true;
                 }
-
-                if (found)
-                    i++;
             }
         }
 
@@ -229,6 +206,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Adds result to table IntLinksTable
+        /// </summary>
+        /// <param name="link">Tested link</param>
+        /// <param name="text">Description of the error</param>
+        /// <param name="page">Page of origin</param>
         private void AddToTable(string link, string text, string page)
         {
             TableRow tRow = new TableRow();

@@ -16,7 +16,6 @@ namespace DotsolutionsWebsiteTester
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(">>>>> Page_Load ProcessTest");
             try
             {
                 Session["MainUrl"].ToString();
@@ -74,7 +73,7 @@ namespace DotsolutionsWebsiteTester
             string url = Session["MainUrl"].ToString();
             string userAgent = Session["userAgent"].ToString();
 
-            System.Diagnostics.Debug.WriteLine(">>>> Start >>> " + url);
+            System.Diagnostics.Debug.WriteLine(">>>> GetSiteList >>> " + url);
 
             //sitemap.Add(url);
             //testedsiteslist.InnerHtml += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";

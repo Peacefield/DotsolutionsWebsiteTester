@@ -40,7 +40,7 @@ namespace DotsolutionsWebsiteTester
 
             // Append HTML to the results div
             foreach (string test in selectedTests)
-                results.InnerHtml += Session[test].ToString();
+                results.InnerHtml += "<div id='"+test+"'>" + Session[test].ToString() + "</div>";
         }
 
 
