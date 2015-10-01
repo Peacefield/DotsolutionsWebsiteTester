@@ -26,8 +26,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Response.Redirect("~/Default.aspx");
                 return;
             }
-            this.sitemap = (List<string>)Session["selectedSites"];
 
+            this.sitemap = (List<string>)Session["selectedSites"];
 
             foreach (string url in sitemap)
             {
@@ -48,14 +48,13 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (printablePages >= sitemap.Count)
                 PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span>Er is rekening gehouden met de printbaarheid van de webiste.</span></div>";
+                    + "<span>Er is rekening gehouden met de printbaarheid van de website.</span></div>";
 
             if (printablePages < sitemap.Count)
                 PrintResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>Er is geen rekening gehouden met de printbaarheid van de webiste in de aangetroffen CSS op de volgende pagina's:</span></div>";
-
-
+                    + "<span>Er is geen rekening gehouden met de printbaarheid van de website in de aangetroffen CSS op " 
+                    + (sitemap.Count - printablePages) + " van de " + sitemap.Count + " pagina's</span></div>";
 
             var sb = new System.Text.StringBuilder();
             PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -71,7 +70,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void TestPrintability(string url)
         {
             Debug.WriteLine("Printbaarheid test op ---> " + url);
-            
+
             List<Thread> SubThreadList = new List<Thread>();
             List<string> cssList = new List<string>();
             var Webget = new HtmlWeb();
