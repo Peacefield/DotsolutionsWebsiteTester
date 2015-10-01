@@ -42,6 +42,10 @@
         </div>
 
         <div id="CheckboxHolder" class="noselect">
+            <div class="row">
+                <div class="col-md-5 col-xs-5 col-sm-5 col-lg-5"></div>
+                <div class="col-md-2 col-xs-2 col-sm-2 col-lg-2 btn btn-default btn-sm" id="CheckAllCheckboxes">Niks selecteren</div>
+            </div>
             <div class="row checkboxlistrow text-left">
                 <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4">
                     <asp:CheckBoxList ID="TestsCheckBoxList1"
@@ -74,7 +78,7 @@
                         <asp:ListItem Text="Printbaarheid" Value="Printability" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Freshness" Value="Freshness" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Binnenkomende links" Value="IncomingLinks" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Analytics" Value="Analytics" Enabled="True" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Analytics" Value="Analytics" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Meta tags" Value="MetaTags" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>
                 </div>

@@ -1,5 +1,28 @@
-﻿window.onload = function () {
-    var ShowCheckboxes = document.getElementById("ShowCheckboxes")
+﻿function CheckAll() {
+    $("#MainContent_TestsCheckBoxList1 td input").each(function (index) {
+        $(this).prop("checked", true);
+    });
+    $("#MainContent_TestsCheckBoxList2 td input").each(function (index) {
+        $(this).prop("checked", true);
+    });
+    $("#MainContent_TestsCheckBoxList3 td input").each(function (index) {
+        $(this).prop("checked", true);
+    });
+}
+function CheckNone() {
+    $("#MainContent_TestsCheckBoxList1 td input").each(function (index) {
+        $(this).prop("checked", false);
+    });
+    $("#MainContent_TestsCheckBoxList2 td input").each(function (index) {
+        $(this).prop("checked", false);
+    });
+    $("#MainContent_TestsCheckBoxList3 td input").each(function (index) {
+        $(this).prop("checked", false);
+    });
+}
+window.onload = function () {
+    var ShowCheckboxes = document.getElementById("ShowCheckboxes");
+    var CheckAllCheckboxes = document.getElementById("CheckAllCheckboxes");
     var UrlTextBox = document.getElementById("MainContent_UrlTextBox");
 
     ShowCheckboxes.onclick = function () {
@@ -11,11 +34,24 @@
         })
     }
 
+    CheckAll();
+
+    CheckAllCheckboxes.onclick = function () {
+        if ($(this).text() === "Alles selecteren")
+            CheckAll();
+        else if ($(this).text() === "Niks selecteren")
+            CheckNone();
+
+        $(this).text(function (i, text) {
+            return text === "Niks selecteren" ? "Alles selecteren" : "Niks selecteren";
+        })
+    }
+
     UrlTextBox.onkeyup = function () {
-        if (UrlTextBox.value.indexOf("http") == -1 && UrlTextBox.value.indexOf("https") == -1) {
+        if (UrlTextBox.value.indexOf("http") === -1 && UrlTextBox.value.indexOf("https") === -1) {
             //alert();
             var temp = "";
-            if (UrlTextBox.value != "") {
+            if (UrlTextBox.value !== "") {
                 temp = UrlTextBox.value;
             }
             UrlTextBox.value = "http://www." + temp;
@@ -28,5 +64,4 @@ $(document).ready(function () {
         this.selectionStart = this.selectionEnd = this.value.length;
     });
     $('#MainContent_UrlTextBox').select();
-
 });
