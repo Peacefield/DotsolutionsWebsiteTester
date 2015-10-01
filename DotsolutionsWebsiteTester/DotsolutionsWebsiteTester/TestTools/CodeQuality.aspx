@@ -6,8 +6,8 @@
         <div id="CodeQuality">
             <div class="panel panel-primary" id="CodeQualitySession" runat="server">
                 <div class="panel-heading">Code quality</div>
-                <div id="w3ErrorsFound" runat="server"></div>
                 <div class="panel-body">
+                <div id="w3ErrorsFound" runat="server"></div>
                     <div class="hidden" id="W3ResultsTableHidden" runat="server">
                         <asp:Table ID="table" CssClass="table table-hover" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow" BackColor="LightBlue" runat="server">

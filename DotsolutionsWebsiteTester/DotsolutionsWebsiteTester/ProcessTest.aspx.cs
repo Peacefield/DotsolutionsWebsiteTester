@@ -102,7 +102,7 @@ namespace DotsolutionsWebsiteTester
                 foreach (JToken item in results)
                 {
                     sitemap.Add(item["url"].ToString());
-                    if (item["url"].Contains(url))
+                    if (item["url"].ToString() == url || item["url"].ToString() == (url + "/"))
                         isPresent = true;
                 }
                 if (!isPresent)

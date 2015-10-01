@@ -7,8 +7,8 @@
             <div class="panel panel-primary" id="InternalLinksSession" runat="server">
                 <div class="panel-heading">Interne links</div>
 
-                <div id="internalLinksErrorsFound" runat="server"></div>
                 <div class="panel-body">
+                <div id="internalLinksErrorsFound" runat="server"></div>
                     <div class="hidden" id="IntLinksHiddenTable" runat="server">
                         <asp:Table ID="IntLinksTable" CssClass="table table-hover" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow1" BackColor="LightBlue" runat="server">

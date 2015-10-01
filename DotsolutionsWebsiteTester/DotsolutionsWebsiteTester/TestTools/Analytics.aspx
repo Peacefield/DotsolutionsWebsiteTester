@@ -6,8 +6,8 @@
         <div id="Analytics">
             <div class="panel panel-primary" id="AnalyticsSession" runat="server">
                 <div class="panel-heading">Analytics</div>
-                <div id="AnalyticsResults" runat="server"></div>
                 <div class="panel-body">
+                <div id="AnalyticsResults" runat="server"></div>
                     <div class="hidden" id="AnalyticsTableHidden" runat="server">
                         <asp:Table ID="AnalyticsTable" CssClass="table table-hover" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow2" BackColor="LightBlue" runat="server">
