@@ -77,6 +77,7 @@ namespace DotsolutionsWebsiteTester
             //testedsiteslist.InnerHtml += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
             //// Add tested sites to session
             //Session["selectedSites"] = sitemap;
+            //return;
 
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=5&q=site:" + url + "%20" + url);
@@ -124,6 +125,7 @@ namespace DotsolutionsWebsiteTester
             // Add tested sites to session
             Session["selectedSites"] = sitemap;
         }
+
         protected void CreatePdfBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("PdfTemplate.aspx");

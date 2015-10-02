@@ -89,9 +89,10 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void TestLink(HtmlNode link, string url)
         {
             string MainUrl = Session["MainUrl"].ToString();
+            string InternalLink = link.Attributes["href"].Value;
 
             // Making sure we only test urls, instead of also including mailto: tel: javascript: intent: etc.
-            if (!link.Attributes["href"].Value.Contains("/") && link.Attributes["href"].Value.Contains("intent://"))
+            if (!InternalLink.Contains("/") || InternalLink.Contains("intent://"))
                 return;
 
             // Check that there is a description
@@ -103,33 +104,40 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (words.Length > 40)
                 {
                     errorCnt++;
-                    AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
+                    AddToTable(InternalLink, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
                 }
             }
             // If the link is an image there is no need for a description
             else if (!link.InnerHtml.Contains("img") && !link.InnerHtml.Contains("figure") && !link.InnerHtml.Contains("i"))
             {
                 errorCnt++;
-                AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst van de URL is leeg", url);
+                AddToTable(InternalLink, "Beschrijvende tekst van de URL is leeg", url);
             }
 
             // Test if the link does not return an errorcode
-            if (!LinkWorks(MainUrl, link.Attributes["href"].Value))
+            int httpcode = LinkWorks(MainUrl, InternalLink);
+            if (httpcode != 200)
             {
                 string tablelink;
-                if (link.Attributes["href"].Value.Contains("http://") || link.Attributes["href"].Value.Contains("https://"))
+                if (InternalLink.Contains("http:/") || InternalLink.Contains("https:/"))
                 {
-                    tablelink = "<a href='" + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
+                    tablelink = "<a href='" + InternalLink + "' target='_blank'>" + InternalLink + "</a>";
                 }
                 else
                 {
                     if (MainUrl.EndsWith("/"))
-                        tablelink = "<a href='" + MainUrl.Remove(MainUrl.Length - 1) + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
+                        tablelink = "<a href='" + MainUrl.Remove(MainUrl.Length - 1) + InternalLink + "' target='_blank'>" + InternalLink + "</a>";
                     else
-                        tablelink = "<a href='" + MainUrl + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
+                        tablelink = "<a href='" + MainUrl + InternalLink + "' target='_blank'>" + InternalLink + "</a>";
                 }
+
                 // add message to table
-                AddToTable(tablelink, "Link werkt niet", url);
+                if (httpcode > 0)
+                    AddToTable(tablelink, "Link werkt niet (HTTP Status Code: " + httpcode + ")", url);
+                else if (httpcode == 0)
+                    AddToTable(tablelink, "Link werkt niet", url);
+                else if (httpcode == -1)
+                    AddToTable(tablelink, "Link werkt niet (Timeout)", url);
 
                 errorCnt++;
             }
@@ -141,12 +149,12 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         /// <param name="url">URL to be tested</param>
         /// <returns></returns>
-        private bool LinkWorks(string mainurl, string link)
+        private int LinkWorks(string mainurl, string link)
         {
             try
             {
                 string requestString = "";
-                if (link.Contains("http://") || link.Contains("https://"))
+                if (link.Contains("http:/") || link.Contains("https:/"))
                 {
                     //Debug.WriteLine("Testing http--->>> " + link);
                     requestString = link;
@@ -167,42 +175,46 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
 
                 if (requestString == "")
-                    return false;
+                    return 0;
 
                 //Creating the HttpWebRequest
-                //HttpWebRequest request = null;
                 HttpWebRequest request = WebRequest.Create(requestString) as HttpWebRequest;
                 request.Timeout = 10000; // Set timout of 10 seconds so to not waste time
-                request.Method = "HEAD";
+                request.Method = "GET";
                 request.UnsafeAuthenticatedConnectionSharing = true;
-                //Getting the Web Response.
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
-                //Returns TRUE if the Status code == 200
-                //return (response.StatusCode == HttpStatusCode.OK
-                //    || response.StatusCode == HttpStatusCode.Redirect
-                //    || response.StatusCode == HttpStatusCode.Moved
-                //    || response.StatusCode == HttpStatusCode.MovedPermanently);
-                //Debug.WriteLine("StatusDescription" + response.StatusDescription);
+                int httpcode = (int)response.StatusCode;
                 response.Dispose();
-                return true;
+                return httpcode;
             }
             catch (WebException we)
             {
                 //Any webexception will return true unless it's a 404.
                 Debug.WriteLine("WebException " + we.Message + " <><><><><> met link: " + link + " en Status: " + we.Status);
 
-                if (we.Message.Contains("404"))
+                HttpWebResponse response = we.Response as HttpWebResponse;
+                if (response != null)
                 {
-                    return false;
+                    int httpcode = (int)response.StatusCode;
+                    Debug.WriteLine("HTTP Status Code: " + httpcode);
+                    return httpcode;
                 }
-                return true;
+                else if(we.Status == WebExceptionStatus.Timeout)
+                {
+                    // no http status code available
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                //Any exception will return false
+                //Any exception will return 0
                 //Debug.WriteLine("Algemene fout " + e.Message);
-                return false;
+                return 0;
             }
         }
 
