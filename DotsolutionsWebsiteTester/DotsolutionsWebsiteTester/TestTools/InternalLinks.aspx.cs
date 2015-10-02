@@ -134,10 +134,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // add message to table
                 if (httpcode > 0)
                     AddToTable(tablelink, "Link werkt niet (HTTP Status Code: " + httpcode + ")", url);
-                else if (httpcode == 0)
-                    AddToTable(tablelink, "Link werkt niet", url);
                 else if (httpcode == -1)
                     AddToTable(tablelink, "Link werkt niet (Timeout)", url);
+                else if (httpcode == 0)
+                    AddToTable(tablelink, "Link werkt niet", url);
 
                 errorCnt++;
             }
@@ -181,6 +181,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 HttpWebRequest request = WebRequest.Create(requestString) as HttpWebRequest;
                 request.Timeout = 10000; // Set timout of 10 seconds so to not waste time
                 request.Method = "GET";
+                request.Credentials = CredentialCache.DefaultCredentials;
                 request.UnsafeAuthenticatedConnectionSharing = true;
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 

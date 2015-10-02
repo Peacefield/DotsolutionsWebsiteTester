@@ -8,11 +8,11 @@
     var width = outerWidth - (right + left);
 
     $("#overlay").css({
-        opacity: 0.7,
+        opacity: 0.9,
         top: $t.offset().top,
         width: width,
         height: $t.outerHeight(),
-        right: "auto"
+        right: "auto",
     });
 
     $("#progressbar").css({
