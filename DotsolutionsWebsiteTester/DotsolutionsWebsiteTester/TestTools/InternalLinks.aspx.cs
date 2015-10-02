@@ -57,16 +57,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]"))
                     {
-                        //TestLink(link, url);
-
                         ThreadStart ths = new ThreadStart(() => TestLink(link, url));
                         Thread th = new Thread(ths);
                         ThreadList.Add(th);
                         th.Start();
                     }
                 }
-
             }
+
             // Join Threads that were executing TestLink
             foreach (Thread thread in ThreadList)
                 thread.Join();
@@ -92,49 +90,50 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             string MainUrl = Session["MainUrl"].ToString();
 
-            // Making sure we only test urls, instead of also including mailto: tel: javascript: etc.
-            if (link.Attributes["href"].Value.Contains("/") && !link.Attributes["href"].Value.Contains("intent://"))
+            // Making sure we only test urls, instead of also including mailto: tel: javascript: intent: etc.
+            if (!link.Attributes["href"].Value.Contains("/") && link.Attributes["href"].Value.Contains("intent://"))
+                return;
+
+            // Check that there is a description
+            if (link.InnerText != "")
             {
-                // Check that there is a description
-                if (link.InnerText != "")
-                {
-                    // Check if the description is not too long
-                    string[] words = link.InnerText.Split(new char[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                // Check if the description is not too long
+                string[] words = link.InnerText.Split(new char[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    if (words.Length > 40)
-                    {
-                        errorCnt++;
-                        AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
-                    }
-                }
-                // If the link is an image there is no need for a description
-                else if (!link.InnerHtml.Contains("img") && !link.InnerHtml.Contains("figure") && !link.InnerHtml.Contains("i"))
+                if (words.Length > 40)
                 {
                     errorCnt++;
-                    AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst van de URL is leeg", url);
-                }
-
-                // Test if the link does not return an errorcode
-                if (!LinkWorks(MainUrl, link.Attributes["href"].Value))
-                {
-                    string tablelink;
-                    if (link.Attributes["href"].Value.Contains("http://") || link.Attributes["href"].Value.Contains("https://"))
-                    {
-                        tablelink = "<a href='" + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
-                    }
-                    else
-                    {
-                        if (MainUrl.EndsWith("/"))
-                            tablelink = "<a href='" + MainUrl.Remove(MainUrl.Length - 1) + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
-                        else
-                            tablelink = "<a href='" + MainUrl + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
-                    }
-                    // add message to table
-                    AddToTable(tablelink, "Link werkt niet", url);
-
-                    errorCnt++;
+                    AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
                 }
             }
+            // If the link is an image there is no need for a description
+            else if (!link.InnerHtml.Contains("img") && !link.InnerHtml.Contains("figure") && !link.InnerHtml.Contains("i"))
+            {
+                errorCnt++;
+                AddToTable(link.Attributes["href"].Value, "Beschrijvende tekst van de URL is leeg", url);
+            }
+
+            // Test if the link does not return an errorcode
+            if (!LinkWorks(MainUrl, link.Attributes["href"].Value))
+            {
+                string tablelink;
+                if (link.Attributes["href"].Value.Contains("http://") || link.Attributes["href"].Value.Contains("https://"))
+                {
+                    tablelink = "<a href='" + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
+                }
+                else
+                {
+                    if (MainUrl.EndsWith("/"))
+                        tablelink = "<a href='" + MainUrl.Remove(MainUrl.Length - 1) + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
+                    else
+                        tablelink = "<a href='" + MainUrl + link.Attributes["href"].Value + "' target='_blank'>" + link.Attributes["href"].Value + "</a>";
+                }
+                // add message to table
+                AddToTable(tablelink, "Link werkt niet", url);
+
+                errorCnt++;
+            }
+
         }
 
         /// <summary>
