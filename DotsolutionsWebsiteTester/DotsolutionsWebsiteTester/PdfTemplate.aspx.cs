@@ -54,7 +54,6 @@ namespace DotsolutionsWebsiteTester
             }
         }
 
-
         #region PDF conversion
         /// <summary>
         /// Add a 0 to the start of an integer if it's less than 10 to improve readability
@@ -72,7 +71,7 @@ namespace DotsolutionsWebsiteTester
         /// <summary>
         /// Overriding Render to intercept html when page_load is ready so we can use it for HTML to PDF conversion
         /// </summary>
-        /// <param name="writer"></param>
+        /// <param name="writer">HtmlTextWriter</param>
         protected override void Render(HtmlTextWriter writer)
         {
             StringBuilder sbOut = new StringBuilder();

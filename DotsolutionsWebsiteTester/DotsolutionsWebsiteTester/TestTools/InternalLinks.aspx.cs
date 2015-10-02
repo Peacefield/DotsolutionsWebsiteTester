@@ -86,6 +86,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="link"></param>
+        /// <param name="url"></param>
         private void TestLink(HtmlNode link, string url)
         {
             string MainUrl = Session["MainUrl"].ToString();
@@ -101,7 +106,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Check if the description is not too long
                 string[] words = link.InnerText.Split(new char[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
-                if (words.Length > 40)
+                if (words.Length > 25)
                 {
                     errorCnt++;
                     AddToTable(InternalLink, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
@@ -181,8 +186,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 HttpWebRequest request = WebRequest.Create(requestString) as HttpWebRequest;
                 request.Timeout = 10000; // Set timout of 10 seconds so to not waste time
                 request.Method = "GET";
-                request.Credentials = CredentialCache.DefaultCredentials;
-                request.UnsafeAuthenticatedConnectionSharing = true;
+                //request.Credentials = CredentialCache.DefaultCredentials;
+                request.UnsafeAuthenticatedConnectionSharing = false;
+                request.UseDefaultCredentials = true;
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
                 int httpcode = (int)response.StatusCode;

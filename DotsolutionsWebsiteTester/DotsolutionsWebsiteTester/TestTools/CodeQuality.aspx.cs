@@ -47,6 +47,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["CodeQuality"] = htmlstring;
         }
 
+        /// <summary>
+        /// Initiate tests regarding Code Quality on all found pages
+        /// </summary>
         private void TestCodeQuality()
         {
             List<string> TableLayOutList = new List<string>();
@@ -126,11 +129,19 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Get W3C validation results of a single page
+        /// </summary>
+        /// <param name="url">To be tested URL</param>
         private void W3CValidate(string url)
         {
             Debug.WriteLine("W3CValidate <<<<<");
             Debug.WriteLine("Performing code quality check on: " + url);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/check?uri=" + url + "&output=json");
+
+            string encoded = WebUtility.UrlEncode(url);
+            Debug.WriteLine("Performing code quality check on: " + encoded);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/check?uri=" + encoded + "&output=json");
             request.UserAgent = Session["userAgent"].ToString();
             request.Credentials = CredentialCache.DefaultCredentials;
             // Get the response.
@@ -173,15 +184,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                                 // add warning message to table
                                 AddToTable(url, item["subType"].ToString(), "", "", item["message"].ToString());
                             }
-                            catch (NullReferenceException nrex)
+                            catch (NullReferenceException /*nrex*/)
                             {
-                                Debug.WriteLine("Could not add to table or list<keyvaluepair> due to: " + nrex.Message);
+                                //Debug.WriteLine("Could not add to table or list<keyvaluepair> due to: " + nrex.Message);
                             }
                         }
                     }
-                    catch (NullReferenceException nre)
+                    catch (NullReferenceException /*nre*/)
                     {
-                        Debug.WriteLine("Just an info message, not a warning so subType is not available: " + nre.Message);
+                        //Debug.WriteLine("Just an info message, not a warning so subType is not available: " + nre.Message);
                     }
                 }
             }
@@ -227,21 +238,33 @@ namespace DotsolutionsWebsiteTester.TestTools
             table.Rows.Add(tRow);
         }
 
+        /// <summary>
+        /// Test if page is using table for lay-out
+        /// </summary>
+        /// <param name="doc">HtmlDocument</param>
+        /// <returns>false if no table is being used for lay-out</returns>
         private bool IsTableLayout(HtmlDocument doc)
         {
             // Check every url in sitemap for analytics software for the current analytictype
-            if (doc.DocumentNode.SelectNodes("//table[not(ancestor::table)]") != null)
+            if (doc.DocumentNode.SelectNodes("//table[parent::body][not(ancestor::table)]") != null)
             {
-                if (doc.DocumentNode.SelectNodes("//table[not(ancestor::table)]").Count == 1)
+                if (doc.DocumentNode.SelectNodes("//table[parent::body][not(ancestor::table)]").Count == 1)
                     return true; // Only one table found at upper level. May be used for layout
                 else
                     return false; // Not null so tables are used at upper level, but multiple tables are used separately so it's probably proper use
             }
             else
+            {
+                Debug.Write(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> null <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
                 return false; // No table found in upper level
+            }
         }
 
-
+        /// <summary>
+        /// Test if page is using semantic HTML elements
+        /// </summary>
+        /// <param name="doc">HtmlDocument</param>
+        /// <returns>false if not using semantic HTML elements</returns>
         private bool IsUsingSemantics(HtmlDocument doc)
         {
             Debug.WriteLine("IsUsingSemantics <<<<<");

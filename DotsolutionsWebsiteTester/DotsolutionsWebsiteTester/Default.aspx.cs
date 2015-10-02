@@ -17,6 +17,11 @@ namespace DotsolutionsWebsiteTester
 
         }
 
+        /// <summary>
+        /// Click event handler that initiates the test if everything is ready
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void StartScanBtn_Click(Object sender, EventArgs e)
         {
             // Check if the entered Url is valid

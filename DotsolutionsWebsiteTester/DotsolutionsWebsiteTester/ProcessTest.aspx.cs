@@ -124,6 +124,11 @@ namespace DotsolutionsWebsiteTester
             Session["selectedSites"] = sitemap;
         }
 
+        /// <summary>
+        /// Click event handler to initiate Pdf creation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void CreatePdfBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("PdfTemplate.aspx");

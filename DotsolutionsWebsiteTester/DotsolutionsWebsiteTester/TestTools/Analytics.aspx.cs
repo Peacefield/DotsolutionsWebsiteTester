@@ -117,6 +117,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Test a single page on a specific type of analytics tool
+        /// </summary>
+        /// <param name="index">Index of analytics tool in analyticTypes</param>
+        /// <param name="url">URL to be tested</param>
         private void TestSite(int index, string url)
         {
             HtmlWeb Webget = new HtmlWeb();
