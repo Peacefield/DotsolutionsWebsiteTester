@@ -12,6 +12,8 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class Printability : System.Web.UI.Page
     {
         private List<string> sitemap;
+        private List<string> printable = new List<string>();
+        private List<string> notPrintable = new List<string>();
         private List<Thread> ThreadList = new List<Thread>();
         int printablePages = 0;
 
@@ -43,15 +45,36 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             if (printablePages >= sitemap.Count)
+            {
+                string printablelist = "";
+                foreach (string item in printable)
+                {
+                    printablelist += "<li>" + item + "</li>";
+                }
                 PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span>Er is rekening gehouden met de printbaarheid van de website.</span></div>";
+                    + "<span>Er is rekening gehouden met de printbaarheid van de volgende pagina's:</span>"
+                    + "<ul>" + printablelist + "</ul></div>";
+            }
 
             if (printablePages < sitemap.Count)
+            {
+                string notprintablelist = "";
+                foreach (string item in notPrintable)
+                {
+                    notprintablelist += "<li>" + item + "</li>";
+                }
+                string amount = "";
+                if ((sitemap.Count - printablePages) > 1)
+                    amount = "bevatten " + (sitemap.Count - printablePages) + " pagina's";
+                else
+                    amount = "bevat " + (sitemap.Count - printablePages) + " pagina";
+
                 PrintResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>Er is geen rekening gehouden met de printbaarheid van de website in de aangetroffen CSS op "
-                    + (sitemap.Count - printablePages) + " van de " + sitemap.Count + " pagina's</span></div>";
+                    + "<span>Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de printbaarheid:</span>"
+                    + "<ul>" + notprintablelist + "</ul></div>";
+            }
 
             var sb = new System.Text.StringBuilder();
             PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -81,32 +104,40 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (node.Attributes["rel"].Value == "stylesheet")
                     {
-                        if (node.Attributes["href"].Value.Contains("//"))
+                        string hrefstring = node.Attributes["href"].Value;
+
+                        Uri uri = new Uri(Session["MainUrl"].ToString());
+                        string scheme = uri.Scheme;
+                        string host = uri.Host;
+                        string baseUrl = scheme + "://" + host + "/";
+
+                        if (hrefstring.Contains("//"))
                         {
-                            if (node.Attributes["href"].Value.Contains("https://") || node.Attributes["href"].Value.Contains("http://"))
+                            if (hrefstring.Contains("https://") || hrefstring.Contains("http://"))
                             {
                                 stylesheet = node.Attributes["href"].Value;
-                                //System.Diagnostics.Debug.WriteLine(Session["MainUrl"].ToString() + node.Attributes["href"].Value);
                             }
-                            else
+                            else if (!hrefstring.Contains("https://") && !hrefstring.Contains("http://"))
                             {
-                                stylesheet = node.Attributes["href"].Value.Replace("//", "http://");
+                                try
+                                {
+                                    Debug.WriteLine("Proberen in TestPrintability ---> " + hrefstring);
+                                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(hrefstring);
+                                    stylesheet = hrefstring;
+                                }
+                                catch (InvalidCastException icex)
+                                {
+                                    Debug.WriteLine("InvalidCastException in TestPrintability ---> " + icex.Message);
+                                    //add baseurl since it apparently is not external
+                                    stylesheet = hrefstring.Replace("//", scheme + "://");
+                                    Debug.WriteLine("stylesheet in TestPrintability ---> " + stylesheet);
+                                }
                             }
                         }
                         else
                         {
-                            stylesheet = Session["MainUrl"].ToString() + node.Attributes["href"].Value;
+                            stylesheet = baseUrl + hrefstring;
                         }
-
-                        //if (!node.Attributes["href"].Value.Contains("https://") && !node.Attributes["href"].Value.Contains("http://"))
-                        //{
-                        //    stylesheet = Session["MainUrl"].ToString() + node.Attributes["href"].Value;
-                        //    //System.Diagnostics.Debug.WriteLine(Session["MainUrl"].ToString() + node.Attributes["href"].Value);
-                        //}
-                        //else
-                        //{
-                        //    stylesheet = node.Attributes["href"].Value;
-                        //}
 
                         if (!cssList.Contains(stylesheet) && stylesheet.Length > 0)
                         {
@@ -120,6 +151,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (!found)
             {
                 AddToTable("Geen CSS aangetroffen en er wordt hierdoor waarschijnlijk geen rekening gehouden met de printbaarheid van de pagina.", url, "-");
+                notPrintable.Add(url);
             }
             else
             {
@@ -143,6 +175,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void TestCss(string url, string cssUrl)
         {
             Debug.WriteLine("Getting content of: " + cssUrl + " from: " + url);
+            //string encoded = WebUtility.UrlEncode(cssUrl);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(cssUrl);
             request.UserAgent = Session["userAgent"].ToString();
@@ -158,11 +191,18 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (!responseFromServer.Contains("@media print"))
             {
-                AddToTable("Er is geen rekening gehouden met de printbaarheid van de webiste in de aangetroffen CSS.", url, cssUrl);
+                AddToTable("Er is geen rekening gehouden met de printbaarheid in de aangetroffen CSS.", url, cssUrl);
+                if (!printable.Contains(url))
+                    notPrintable.Add(url);
             }
             else
             {
                 printablePages++;
+                printable.Add(url);
+
+                if (notPrintable.Contains(url))
+                    notPrintable.Remove(url);
+
             }
         }
 
@@ -179,7 +219,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             tRow.Cells.Add(tCellUrl);
 
             TableCell tCellCssUrl = new TableCell();
-            tCellCssUrl.Text = cssUrl;
+            tCellCssUrl.Text = "<a href='" + cssUrl + "' target='_blank' >" + cssUrl + "</a>";
             tRow.Cells.Add(tCellCssUrl);
 
             PrintabilityTable.Rows.Add(tRow);

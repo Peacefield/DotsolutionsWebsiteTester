@@ -182,8 +182,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (requestString == "")
                     return 0;
 
+                string encoded = WebUtility.UrlEncode(requestString);
+
                 //Creating the HttpWebRequest
-                HttpWebRequest request = WebRequest.Create(requestString) as HttpWebRequest;
+                HttpWebRequest request = WebRequest.Create(encoded) as HttpWebRequest;
                 request.Timeout = 10000; // Set timout of 10 seconds so to not waste time
                 request.Method = "GET";
                 //request.Credentials = CredentialCache.DefaultCredentials;
