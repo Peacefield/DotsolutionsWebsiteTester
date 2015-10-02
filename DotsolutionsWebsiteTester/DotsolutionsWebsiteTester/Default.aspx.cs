@@ -89,21 +89,21 @@ namespace DotsolutionsWebsiteTester
         /// </summary>
         private bool IsTestAvailable()
         {
-            List<CheckBoxList> CheckBoxLists = new List<CheckBoxList>();
-            List<string> ListItems = new List<string>();
+            List<CheckBoxList> checkBoxLists = new List<CheckBoxList>();
+            List<string> listItems = new List<string>();
 
-            CheckBoxLists.Add(TestsCheckBoxList1);
-            CheckBoxLists.Add(TestsCheckBoxList2);
-            CheckBoxLists.Add(TestsCheckBoxList3);
+            checkBoxLists.Add(TestsCheckBoxList1);
+            checkBoxLists.Add(TestsCheckBoxList2);
+            checkBoxLists.Add(TestsCheckBoxList3);
 
-            for (int i = 0; i < CheckBoxLists.Count; i++)
+            for (int i = 0; i < checkBoxLists.Count; i++)
             {
-                for (int j = 0; j < CheckBoxLists[i].Items.Count; j++)
+                for (int j = 0; j < checkBoxLists[i].Items.Count; j++)
                 {
-                    if (CheckBoxLists[i].Items[j].Selected)
+                    if (checkBoxLists[i].Items[j].Selected)
                     {
-                        this.selectedTests.Add(CheckBoxLists[i].Items[j].Value);
-                        this.selectedTestsName.Add(CheckBoxLists[i].Items[j].Text);
+                        this.selectedTests.Add(checkBoxLists[i].Items[j].Value);
+                        this.selectedTestsName.Add(checkBoxLists[i].Items[j].Text);
                     }
                 }
             }

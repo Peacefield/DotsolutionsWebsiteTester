@@ -14,8 +14,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         private List<string> sitemap;
         private List<string> printable = new List<string>();
         private List<string> notPrintable = new List<string>();
-        private List<Thread> ThreadList = new List<Thread>();
-        int printablePages = 0;
+        private List<Thread> threadList = new List<Thread>();
+        private int printablePages = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,11 +35,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 ThreadStart ths = new ThreadStart(() => TestPrintability(url));
                 Thread th = new Thread(ths);
-                ThreadList.Add(th);
+                threadList.Add(th);
                 th.Start();
             }
 
-            foreach (Thread th in ThreadList)
+            foreach (Thread th in threadList)
             {
                 th.Join();
             }
@@ -91,17 +91,17 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         /// <summary>
-        /// Test a single page
+        /// Test a single page on printability
         /// </summary>
         /// <param name="url"></param>
         private void TestPrintability(string url)
         {
             Debug.WriteLine("Printbaarheid test op ---> " + url);
 
-            List<Thread> SubThreadList = new List<Thread>();
+            List<Thread> subThreadList = new List<Thread>();
             List<string> cssList = new List<string>();
-            var Webget = new HtmlWeb();
-            var doc = Webget.Load(url);
+            HtmlWeb webget = new HtmlWeb();
+            HtmlDocument doc = webget.Load(url);
             string stylesheet = "";
             bool found = false;
 
@@ -167,12 +167,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     ThreadStart ths = new ThreadStart(() => TestCss(url, cssUrl));
                     Thread th = new Thread(ths);
-                    SubThreadList.Add(th);
+                    subThreadList.Add(th);
                     th.Start();
                 }
 
 
-                foreach (Thread th in SubThreadList)
+                foreach (Thread th in subThreadList)
                 {
                     th.Join();
                 }

@@ -11,7 +11,7 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class InternalLinks : System.Web.UI.Page
     {
         private int errorCnt = 0;
-        private List<Thread> ThreadList = new List<Thread>();
+        private List<Thread> threadList = new List<Thread>();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -49,8 +49,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 Debug.WriteLine("Link check op -> " + url);
 
-                var Webget = new HtmlWeb();
-                var doc = Webget.Load(url);
+                HtmlWeb Webget = new HtmlWeb();
+                HtmlDocument doc = Webget.Load(url);
 
                 // Test every internal link on current page from sitmap
                 if (doc.DocumentNode.SelectNodes("//a[@href]") != null)
@@ -59,14 +59,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         ThreadStart ths = new ThreadStart(() => TestLink(link, url));
                         Thread th = new Thread(ths);
-                        ThreadList.Add(th);
+                        threadList.Add(th);
                         th.Start();
                     }
                 }
             }
 
             // Join Threads that were executing TestLink
-            foreach (Thread thread in ThreadList)
+            foreach (Thread thread in threadList)
                 thread.Join();
 
             // Show message with findings
@@ -93,11 +93,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="url"></param>
         private void TestLink(HtmlNode link, string url)
         {
-            string MainUrl = Session["MainUrl"].ToString();
-            string InternalLink = link.Attributes["href"].Value;
+            string mainUrl = Session["MainUrl"].ToString();
+            string internalLink = link.Attributes["href"].Value;
 
             // Making sure we only test urls, instead of also including mailto: tel: javascript: intent: etc.
-            if (!InternalLink.Contains("/") || InternalLink.Contains("intent://"))
+            if (!internalLink.Contains("/") || internalLink.Contains("intent://"))
                 return;
 
             // Check that there is a description
@@ -109,31 +109,31 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (words.Length > 25)
                 {
                     errorCnt++;
-                    AddToTable(InternalLink, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
+                    AddToTable(internalLink, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
                 }
             }
             // If the link is an image there is no need for a description
             else if (!link.InnerHtml.Contains("img") && !link.InnerHtml.Contains("figure") && !link.InnerHtml.Contains("i"))
             {
                 errorCnt++;
-                AddToTable(InternalLink, "Beschrijvende tekst van de URL is leeg", url);
+                AddToTable(internalLink, "Beschrijvende tekst van de URL is leeg", url);
             }
 
             // Test if the link does not return an errorcode
-            int httpcode = LinkWorks(MainUrl, InternalLink);
+            int httpcode = LinkWorks(mainUrl, internalLink);
             if (httpcode != 200)
             {
                 string tablelink;
-                if (InternalLink.Contains("http:/") || InternalLink.Contains("https:/"))
+                if (internalLink.Contains("http:/") || internalLink.Contains("https:/"))
                 {
-                    tablelink = "<a href='" + InternalLink + "' target='_blank'>" + InternalLink + "</a>";
+                    tablelink = "<a href='" + internalLink + "' target='_blank'>" + internalLink + "</a>";
                 }
                 else
                 {
-                    if (MainUrl.EndsWith("/"))
-                        tablelink = "<a href='" + MainUrl.Remove(MainUrl.Length - 1) + InternalLink + "' target='_blank'>" + InternalLink + "</a>";
+                    if (mainUrl.EndsWith("/"))
+                        tablelink = "<a href='" + mainUrl.Remove(mainUrl.Length - 1) + internalLink + "' target='_blank'>" + internalLink + "</a>";
                     else
-                        tablelink = "<a href='" + MainUrl + InternalLink + "' target='_blank'>" + InternalLink + "</a>";
+                        tablelink = "<a href='" + mainUrl + internalLink + "' target='_blank'>" + internalLink + "</a>";
                 }
 
                 // add message to table

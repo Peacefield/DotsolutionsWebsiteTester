@@ -9,7 +9,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class Analytics : System.Web.UI.Page
     {
-        private List<Thread> ThreadList = new List<Thread>();
+        private List<Thread> threadList = new List<Thread>();
         // List for checking different types of analytics software
         // Currently only checking the most widely used one: google analytics
         private List<KeyValuePair<string, string>> analyticTypes = new List<KeyValuePair<string, string>>();
@@ -53,7 +53,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             List<string> sitemap = (List<string>)Session["selectedSites"];
             List<KeyValuePair<string, string>> analyticslist = new List<KeyValuePair<string, string>>();
 
-
             analyticTypes.Add(new KeyValuePair<string, string>("google-analytics.com", "Google Analytics"));
             analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
             //analyticTypes.Add(new KeyValuePair<string, string>("placeholder-type", "placeholder-name"));
@@ -71,11 +70,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                     Thread th = new Thread(ths);
                     th.Start();
 
-                    ThreadList.Add(th);
+                    threadList.Add(th);
                 }
 
                 // Join Threads
-                foreach (Thread thread in ThreadList)
+                foreach (Thread thread in threadList)
                     thread.Join();
 
                 string percentage = "0%";

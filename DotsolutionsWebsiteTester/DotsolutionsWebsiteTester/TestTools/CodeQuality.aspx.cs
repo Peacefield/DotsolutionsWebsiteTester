@@ -17,7 +17,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private int errorCnt = 0;
         private int warningCnt = 0;
 
-        private List<Thread> ThreadList = new List<Thread>();
+        private List<Thread> threadList = new List<Thread>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -52,14 +52,14 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void TestCodeQuality()
         {
-            List<string> TableLayOutList = new List<string>();
-            List<string> NoSemanticList = new List<string>();
+            List<string> tableLayOutList = new List<string>();
+            List<string> noSemanticList = new List<string>();
 
             foreach (string url in this.sitemap)
             {
                 ThreadStart ths = new ThreadStart(() => W3CValidate(url));
                 Thread th = new Thread(ths);
-                ThreadList.Add(th);
+                threadList.Add(th);
                 th.Start();
                 
                 HtmlWeb Webget = new HtmlWeb();
@@ -71,23 +71,23 @@ namespace DotsolutionsWebsiteTester.TestTools
                         + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                         + "<span>Pagina " + url + " gebruikt misschien een tabel voor layout. Dit wordt over het algemeen beschouwd als bad practice.</span></div>";
 
-                    TableLayOutList.Add(url);
+                    tableLayOutList.Add(url);
                 }
 
                 if (!IsUsingSemantics(doc))
                 {
-                    NoSemanticList.Add(url);
+                    noSemanticList.Add(url);
                 }
             }
 
-            if (TableLayOutList.Count == 0)
+            if (tableLayOutList.Count == 0)
             {
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span>Er wordt op alle pagina's waarschijnlijk geen tabel gebruikt voor layout.</span></div>";
             }
 
-            if (NoSemanticList.Count == 0)
+            if (noSemanticList.Count == 0)
             {
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
@@ -97,7 +97,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 string unorderedlist = "<ul>";
 
-                foreach (string item in NoSemanticList)
+                foreach (string item in noSemanticList)
                 {
                     unorderedlist += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
                 }
@@ -110,7 +110,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             // Join Threads
-            foreach (Thread thread in ThreadList)
+            foreach (Thread thread in threadList)
                 thread.Join();
 
             // Show table when errors are found 
