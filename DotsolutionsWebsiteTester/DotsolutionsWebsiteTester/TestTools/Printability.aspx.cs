@@ -42,9 +42,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 th.Join();
             }
 
-            Debug.WriteLine("Hier kom ik nog wel!");
-            Debug.WriteLine("printablePages =======> " + printablePages);
-
             if (printablePages >= sitemap.Count)
                 PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
@@ -53,7 +50,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (printablePages < sitemap.Count)
                 PrintResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>Er is geen rekening gehouden met de printbaarheid van de website in de aangetroffen CSS op " 
+                    + "<span>Er is geen rekening gehouden met de printbaarheid van de website in de aangetroffen CSS op "
                     + (sitemap.Count - printablePages) + " van de " + sitemap.Count + " pagina's</span></div>";
 
             var sb = new System.Text.StringBuilder();
@@ -84,11 +81,33 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (node.Attributes["rel"].Value == "stylesheet")
                     {
-                        if (!node.Attributes["href"].Value.Contains("https://") && !node.Attributes["href"].Value.Contains("http://"))
+                        if (node.Attributes["href"].Value.Contains("//"))
+                        {
+                            if (node.Attributes["href"].Value.Contains("https://") || node.Attributes["href"].Value.Contains("http://"))
+                            {
+                                stylesheet = node.Attributes["href"].Value;
+                                //System.Diagnostics.Debug.WriteLine(Session["MainUrl"].ToString() + node.Attributes["href"].Value);
+                            }
+                            else
+                            {
+                                stylesheet = node.Attributes["href"].Value.Replace("//", "http://");
+                            }
+                        }
+                        else
                         {
                             stylesheet = Session["MainUrl"].ToString() + node.Attributes["href"].Value;
-                            //System.Diagnostics.Debug.WriteLine(Session["MainUrl"].ToString() + node.Attributes["href"].Value);
                         }
+
+                        //if (!node.Attributes["href"].Value.Contains("https://") && !node.Attributes["href"].Value.Contains("http://"))
+                        //{
+                        //    stylesheet = Session["MainUrl"].ToString() + node.Attributes["href"].Value;
+                        //    //System.Diagnostics.Debug.WriteLine(Session["MainUrl"].ToString() + node.Attributes["href"].Value);
+                        //}
+                        //else
+                        //{
+                        //    stylesheet = node.Attributes["href"].Value;
+                        //}
+
                         if (!cssList.Contains(stylesheet) && stylesheet.Length > 0)
                         {
                             cssList.Add(stylesheet);
@@ -113,13 +132,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                     th.Start();
                 }
 
-                Debug.WriteLine("ergens in een thread");
 
                 foreach (Thread th in SubThreadList)
                 {
                     th.Join();
                 }
-                Debug.WriteLine("ergens na een thread");
             }
         }
 
