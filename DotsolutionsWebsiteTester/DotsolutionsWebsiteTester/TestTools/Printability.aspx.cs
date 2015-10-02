@@ -146,6 +146,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(cssUrl);
             request.UserAgent = Session["userAgent"].ToString();
+            request.Credentials = CredentialCache.DefaultCredentials;
             // Get the response.
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             // Get the stream containing content returned by the server.

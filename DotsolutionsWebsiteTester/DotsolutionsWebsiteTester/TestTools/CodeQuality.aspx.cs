@@ -132,6 +132,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine("Performing code quality check on: " + url);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/check?uri=" + url + "&output=json");
             request.UserAgent = Session["userAgent"].ToString();
+            request.Credentials = CredentialCache.DefaultCredentials;
             // Get the response.
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             // Get the stream containing content returned by the server.
