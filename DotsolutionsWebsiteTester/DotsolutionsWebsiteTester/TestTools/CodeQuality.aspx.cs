@@ -69,7 +69,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        + "<span>Pagina " + url + " gebruikt misschien een tabel voor layout. Dit wordt over het algemeen beschouwd als bad practice.</span></div>";
+                        + "<span>Pagina " + url + " gebruikt misschien een tabel voor lay-out. Dit wordt over het algemeen beschouwd als bad practice.</span></div>";
 
                     tableLayOutList.Add(url);
                 }
@@ -84,7 +84,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span>Er wordt op alle pagina's waarschijnlijk geen tabel gebruikt voor layout.</span></div>";
+                    + "<span>Er wordt op alle pagina's waarschijnlijk geen tabel gebruikt voor lay-out.</span></div>";
             }
 
             if (noSemanticList.Count == 0)
@@ -135,11 +135,10 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="url">To be tested URL</param>
         private void W3CValidate(string url)
         {
-            Debug.WriteLine("W3CValidate <<<<<");
             Debug.WriteLine("Performing code quality check on: " + url);
 
             string encoded = WebUtility.UrlEncode(url);
-            Debug.WriteLine("Performing code quality check on: " + encoded);
+            Debug.WriteLine("Encoded: " + encoded);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/check?uri=" + encoded + "&output=json");
             request.UserAgent = Session["userAgent"].ToString();
@@ -163,10 +162,18 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (item["type"].ToString() == "error")
                     {
                         errorCnt++;
+
                         try
                         {
                             // add error message to table
-                            AddToTable(url, item["type"].ToString(), item["lastLine"].ToString(), item["lastColumn"].ToString(), item["message"].ToString());
+                            if (item["lastLine"] != null)
+                            {
+                                AddToTable(url, item["type"].ToString(), item["lastLine"].ToString(), item["lastColumn"].ToString(), item["message"].ToString());
+                            }
+                            else
+                            {
+                                AddToTable(url, item["type"].ToString(), "", "", item["message"].ToString());
+                            }
                         }
                         catch (NullReferenceException nre)
                         {
@@ -176,25 +183,29 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                     else if (item["type"].ToString() == "info")
                     {
-                        try
+                        if (item["subType"] != null)
                         {
                             if (item["subType"].ToString() == "warning")
                             {
                                 warningCnt++;
                                 try
                                 {
+                                    if (item["subType"] == null)
+                                    {
+                                        Debug.WriteLine("item[subType] is null");
+                                    }
+                                    if (item["message"] == null)
+                                    {
+                                        Debug.WriteLine("item[message] is null");
+                                    }
                                     // add warning message to table
                                     AddToTable(url, item["subType"].ToString(), "", "", item["message"].ToString());
                                 }
-                                catch (NullReferenceException /*nrex*/)
+                                catch (NullReferenceException nrex)
                                 {
-                                    //Debug.WriteLine("Could not add to table or list<keyvaluepair> due to: " + nrex.Message);
+                                    Debug.WriteLine("Could not add to table due to: " + nrex.Message);
                                 }
                             }
-                        }
-                        catch (NullReferenceException /*nre*/)
-                        {
-                            //Debug.WriteLine("Just an info message, not a warning so subType is not available: " + nre.Message);
                         }
                     }
                 }
@@ -223,7 +234,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var tRow = new TableRow();
 
             var tCellUrl = new TableCell();
-            tCellUrl.Text = url;
+            tCellUrl.Text = "<a href='" + url + "' target='_blank'>" + url + "</a>";
             tRow.Cells.Add(tCellUrl);
 
             var tCellType = new TableCell();
@@ -262,7 +273,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                Debug.WriteLine(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> null <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
                 return false; // No table found in upper level
             }
         }
@@ -274,8 +284,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns>false if not using semantic HTML elements</returns>
         private bool IsUsingSemantics(HtmlDocument doc)
         {
-            Debug.WriteLine("IsUsingSemantics <<<<<");
-
             var semantics = new List<string>()
             {
                 "article>", "aside>", "details>", "figcaption>", "figure>", "footer>", "form>", "header>", "img>", "main>", "mark>", "nav>", "section>", "summary>", "table>", "time>"

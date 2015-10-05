@@ -29,6 +29,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            return;
+
+
             this.sitemap = (List<string>)Session["selectedSites"];
 
             foreach (var url in sitemap)

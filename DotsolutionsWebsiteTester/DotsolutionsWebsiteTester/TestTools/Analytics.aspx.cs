@@ -30,6 +30,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            return;
+
+
             var ths = new ThreadStart(TestAnalytics);
             var th = new Thread(ths);
             th.Start();

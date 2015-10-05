@@ -1,34 +1,35 @@
 ﻿function setup_loading() {
     // Set-up loading div
-    $t = $(".body-content");
+    $bc = $(".body-content");
+    $html = $("html");
 
-    var right = parseInt($t.css("padding-right"));
-    var left = parseInt($t.css("padding-left"));
-    var outerWidth = parseInt($t.outerWidth());
+    var right = parseInt($bc.css("padding-right"));
+    var left = parseInt($bc.css("padding-left"));
+    var outerWidth = parseInt($bc.outerWidth());
     var width = outerWidth - (right + left);
 
     $("#overlay").css({
         opacity: 0.8,
-        top: $t.offset().top,
+        top: $bc.offset().top,
         width: width,
-        height: $t.outerHeight(),
+        height: $html.outerHeight,
         right: "auto"
     });
 
     $("#progressbar").css({
         width: width,
-        top: ($t.height() / 2)
+        top: ($bc.height() / 2)
     });
 
     $("#loadingGIF").css({
-        top: ($t.height() / 2) + $("#progressbar").height(),
-        left: ($t.width() / 2) - ($(".loadingmid").width())
+        top: ($bc.height() / 2) + $("#progressbar").height(),
+        left: ($bc.width() / 2) - ($(".loadingmid").width())
     });
 
     $("#TestProgress").css({
-        top: ($t.height() / 2) + $("#progressbar").height() + $("#loadingGIF").height(),
+        top: ($bc.height() / 2) + $("#progressbar").height() + $("#loadingGIF").height(),
         width: width,
-        //left: ($t.width() / 2.5)
+        //left: ($bc.width() / 2.5)
     });
 }
 
@@ -87,7 +88,7 @@ window.onload = function () {
                         $("#result").append($(response).find('#result').html());
                         $("#testprogressbar").css("width", progress + "%");
                         $("#progresstext").text(progress + "% compleet");
-                        $("#overlay").css("height", $t.outerHeight());
+                        $("#overlay").css("height", $html.outerHeight());
 
                         $("#TestsInProgress li:contains(" + value + ")").remove();
                         $("#TestsComplete").append("<li>" + value + "</li>");
