@@ -54,7 +54,6 @@ namespace DotsolutionsWebsiteTester
             }
         }
 
-        #region PDF conversion
         /// <summary>
         /// Add a 0 to the start of an integer if it's less than 10 to improve readability
         /// </summary>
@@ -134,6 +133,5 @@ namespace DotsolutionsWebsiteTester
 
             writer.Write(sOut);
         }
-        #endregion
     }
 }

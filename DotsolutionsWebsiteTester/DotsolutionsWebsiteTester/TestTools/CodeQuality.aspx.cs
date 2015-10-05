@@ -14,6 +14,7 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class CodeQuality : System.Web.UI.Page
     {
         private List<string> sitemap;
+        private List<string> notW3cCompliant = new List<string>();
         private int errorCnt = 0;
         private int warningCnt = 0;
 
@@ -30,10 +31,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Response.Redirect("~/Default.aspx");
                 return;
             }
-            this.sitemap = (List<string>)Session["selectedSites"];
-
             Debug.WriteLine(">>>> CodeQuality");
 
+            this.sitemap = (List<string>)Session["selectedSites"];
+            
             var ths = new ThreadStart(TestCodeQuality);
             var th = new Thread(ths);
             th.Start();
@@ -66,27 +67,32 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var doc = Webget.Load(url);
 
                 if (IsTableLayout(doc))
-                {
-                    w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        + "<span>Pagina " + url + " gebruikt misschien een tabel voor lay-out. Dit wordt over het algemeen beschouwd als bad practice.</span></div>";
-
                     tableLayOutList.Add(url);
-                }
 
                 if (!IsUsingSemantics(doc))
-                {
                     noSemanticList.Add(url);
-                }
             }
 
+            // Show results from IsTableLayout()
             if (tableLayOutList.Count == 0)
             {
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span>Er wordt op alle pagina's waarschijnlijk geen tabel gebruikt voor lay-out.</span></div>";
             }
+            else
+            {
+                var unorderedlist = "<ul>";
+                foreach (var url in tableLayOutList)
+                    unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
+                unorderedlist += "</ul>";
 
+                w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                    + "<span>De volgende pagina's gebruiken misschien een tabel voor lay-out. Dit wordt over het algemeen beschouwd als bad practice.</span>" + unorderedlist + "</div>";
+            }
+
+            // Show results from IsUsingSemantics()
             if (noSemanticList.Count == 0)
             {
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
@@ -95,9 +101,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                string unorderedlist = "<ul>";
+                var unorderedlist = "<ul>";
 
-                foreach (string item in noSemanticList)
+                foreach (var item in noSemanticList)
                 {
                     unorderedlist += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
                 }
@@ -113,19 +119,45 @@ namespace DotsolutionsWebsiteTester.TestTools
             foreach (var thread in threadList)
                 thread.Join();
 
-            // Show table when errors are found 
-            if (errorCnt > 0 || warningCnt > 0)
-            {
-                W3ResultsTableHidden.Attributes.Remove("class");
-                w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>" + errorCnt + " errors en " + warningCnt + " waarschuwingen gevonden.</span></div>";
-            }
-            else
+            // Show results from W3CValidate()
+            if (notW3cCompliant.Count == 0)
             {
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> " + errorCnt + " W3C meldingen gevonden.</span></div>";
+                    + "<span>Alle geteste pagina's zijn W3C compliant</span></div>";
+            }
+            else
+            {
+                var unorderedlist = "<ul>";
+                foreach (var url in notW3cCompliant)
+                    unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
+                unorderedlist += "</ul>";
+
+                w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                    + "<span>De volgende pagina's zijn niet W3C compliant.</span>" + unorderedlist + "</div>";
+            }
+
+            // Show table when W3C notifications are encountered 
+            if (errorCnt > 0 || warningCnt > 0)
+            {
+                W3ResultsTableHidden.Attributes.Remove("class");
+                var errorString = "";
+                var warningString = "";
+
+                // Uphold grammar
+                if (errorCnt == 1)
+                    errorString = errorCnt + " error";
+                else
+                    errorString = errorCnt + " errors";
+                if (warningCnt == 1)
+                    warningString = warningCnt + " waarschuwing";
+                else
+                    warningString = warningCnt + " waarschuwingen";
+
+                w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                    + "<span>" + errorString + " en " + warningString + " gevonden.</span></div>";
             }
         }
 
@@ -162,6 +194,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (item["type"].ToString() == "error")
                     {
                         errorCnt++;
+                        if(!notW3cCompliant.Contains(url))
+                            notW3cCompliant.Add(url);
 
                         try
                         {
@@ -188,6 +222,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                             if (item["subType"].ToString() == "warning")
                             {
                                 warningCnt++;
+                                if (!notW3cCompliant.Contains(url))
+                                    notW3cCompliant.Add(url);
                                 try
                                 {
                                     if (item["subType"] == null)
