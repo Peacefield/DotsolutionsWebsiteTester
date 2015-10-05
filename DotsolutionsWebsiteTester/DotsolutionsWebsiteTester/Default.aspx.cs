@@ -89,8 +89,8 @@ namespace DotsolutionsWebsiteTester
         /// </summary>
         private bool IsTestAvailable()
         {
-            List<CheckBoxList> checkBoxLists = new List<CheckBoxList>();
-            List<string> listItems = new List<string>();
+            var checkBoxLists = new List<CheckBoxList>();
+            var listItems = new List<string>();
 
             checkBoxLists.Add(TestsCheckBoxList1);
             checkBoxLists.Add(TestsCheckBoxList2);

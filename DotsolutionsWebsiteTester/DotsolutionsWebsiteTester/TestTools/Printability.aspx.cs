@@ -31,15 +31,15 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             this.sitemap = (List<string>)Session["selectedSites"];
 
-            foreach (string url in sitemap)
+            foreach (var url in sitemap)
             {
-                ThreadStart ths = new ThreadStart(() => TestPrintability(url));
-                Thread th = new Thread(ths);
+                var ths = new ThreadStart(() => TestPrintability(url));
+                var th = new Thread(ths);
                 threadList.Add(th);
                 th.Start();
             }
 
-            foreach (Thread th in threadList)
+            foreach (var th in threadList)
             {
                 th.Join();
             }
@@ -67,7 +67,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (printablePages < sitemap.Count)
             {
                 string notprintablelist = "";
-                foreach (string item in notPrintable)
+                foreach (var item in notPrintable)
                 {
                     notprintablelist += "<li>" + item + "</li>";
                 }
@@ -98,16 +98,16 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             Debug.WriteLine("Printbaarheid test op ---> " + url);
 
-            List<Thread> subThreadList = new List<Thread>();
-            List<string> cssList = new List<string>();
-            HtmlWeb webget = new HtmlWeb();
-            HtmlDocument doc = webget.Load(url);
+            var subThreadList = new List<Thread>();
+            var cssList = new List<string>();
+            var webget = new HtmlWeb();
+            var doc = webget.Load(url);
             string stylesheet = "";
             bool found = false;
 
             if (doc.DocumentNode.SelectNodes("//link[@rel]") != null)
             {
-                foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//link[@rel]"))
+                foreach (var node in doc.DocumentNode.SelectNodes("//link[@rel]"))
                 {
                     if (node.Attributes["rel"].Value == "stylesheet")
                     {
@@ -163,10 +163,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             else
             {
                 // Check if CSS has option for @media print
-                foreach (string cssUrl in cssList)
+                foreach (var cssUrl in cssList)
                 {
-                    ThreadStart ths = new ThreadStart(() => TestCss(url, cssUrl));
-                    Thread th = new Thread(ths);
+                    var ths = new ThreadStart(() => TestCss(url, cssUrl));
+                    var th = new Thread(ths);
                     subThreadList.Add(th);
                     th.Start();
                 }
@@ -192,7 +192,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             // Get the stream containing content returned by the server.
             Stream dataStream = response.GetResponseStream();
             // Open the stream using a StreamReader for easy access.
-            StreamReader reader = new StreamReader(dataStream);
+            var reader = new StreamReader(dataStream);
             // Read the content. 
             string responseFromServer = reader.ReadToEnd();
 
@@ -216,17 +216,17 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void AddToTable(string msg, string url, string cssUrl)
         {
-            TableRow tRow = new TableRow();
+            var tRow = new TableRow();
 
-            TableCell tCellMsg = new TableCell();
+            var tCellMsg = new TableCell();
             tCellMsg.Text = msg;
             tRow.Cells.Add(tCellMsg);
 
-            TableCell tCellUrl = new TableCell();
+            var tCellUrl = new TableCell();
             tCellUrl.Text = url;
             tRow.Cells.Add(tCellUrl);
 
-            TableCell tCellCssUrl = new TableCell();
+            var tCellCssUrl = new TableCell();
             tCellCssUrl.Text = "<a href='" + cssUrl + "' target='_blank' >" + cssUrl + "</a>";
             tRow.Cells.Add(tCellCssUrl);
 

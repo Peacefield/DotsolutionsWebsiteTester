@@ -24,8 +24,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            ThreadStart ths = new ThreadStart(TestInternalLinks);
-            Thread th = new Thread(ths);
+            var ths = new ThreadStart(TestInternalLinks);
+            var th = new Thread(ths);
             th.Start();
 
             th.Join();
@@ -44,21 +44,21 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void TestInternalLinks()
         {
-            List<string> sitemap = (List<string>)Session["selectedSites"];
-            foreach (string url in sitemap)
+            var sitemap = (List<string>)Session["selectedSites"];
+            foreach (var url in sitemap)
             {
                 Debug.WriteLine("Link check op -> " + url);
 
-                HtmlWeb Webget = new HtmlWeb();
-                HtmlDocument doc = Webget.Load(url);
+                var Webget = new HtmlWeb();
+                var doc = Webget.Load(url);
 
                 // Test every internal link on current page from sitmap
                 if (doc.DocumentNode.SelectNodes("//a[@href]") != null)
                 {
-                    foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]"))
+                    foreach (var link in doc.DocumentNode.SelectNodes("//a[@href]"))
                     {
-                        ThreadStart ths = new ThreadStart(() => TestLink(link, url));
-                        Thread th = new Thread(ths);
+                        var ths = new ThreadStart(() => TestLink(link, url));
+                        var th = new Thread(ths);
                         threadList.Add(th);
                         th.Start();
                     }
@@ -66,7 +66,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             // Join Threads that were executing TestLink
-            foreach (Thread thread in threadList)
+            foreach (var thread in threadList)
                 thread.Join();
 
             // Show message with findings
@@ -235,17 +235,17 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="page">Page of origin</param>
         private void AddToTable(string link, string text, string page)
         {
-            TableRow tRow = new TableRow();
+            var tRow = new TableRow();
 
-            TableCell tCellLink = new TableCell();
+            var tCellLink = new TableCell();
             tCellLink.Text = link;
             tRow.Cells.Add(tCellLink);
 
-            TableCell tCellMsg = new TableCell();
+            var tCellMsg = new TableCell();
             tCellMsg.Text = text;
             tRow.Cells.Add(tCellMsg);
 
-            TableCell tCellPage = new TableCell();
+            var tCellPage = new TableCell();
             tCellPage.Text = "<a href='" + page + "' target='_blank'>" + page + "</a>";
             tRow.Cells.Add(tCellPage);
 

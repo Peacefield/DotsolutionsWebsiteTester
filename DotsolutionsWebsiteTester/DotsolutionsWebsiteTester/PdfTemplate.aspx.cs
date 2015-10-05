@@ -31,7 +31,7 @@ namespace DotsolutionsWebsiteTester
             this.selectedTestsName = (List<string>)Session["selectedTestsName"];
 
             // Add a list of links to the tested pages
-            foreach (string item in selectedSites)
+            foreach (var item in selectedSites)
                 testedsiteslist.InnerHtml += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
 
             // Add a list of performed tests with navigation option
@@ -39,7 +39,7 @@ namespace DotsolutionsWebsiteTester
                 performedTests.InnerHtml += "<li><a href='#" + selectedTests[i] + "' >" + selectedTestsName[i] + "</a></li>";
 
             // Append HTML to the results div
-            foreach (string test in selectedTests)
+            foreach (var test in selectedTests)
             {
                 try
                 {
@@ -74,9 +74,9 @@ namespace DotsolutionsWebsiteTester
         /// <param name="writer">HtmlTextWriter</param>
         protected override void Render(HtmlTextWriter writer)
         {
-            StringBuilder sbOut = new StringBuilder();
-            StringWriter swOut = new StringWriter(sbOut);
-            HtmlTextWriter htwOut = new HtmlTextWriter(swOut);
+            var sbOut = new StringBuilder();
+            var swOut = new StringWriter(sbOut);
+            var htwOut = new HtmlTextWriter(swOut);
             base.Render(htwOut);
             string sOut = sbOut.ToString();
 

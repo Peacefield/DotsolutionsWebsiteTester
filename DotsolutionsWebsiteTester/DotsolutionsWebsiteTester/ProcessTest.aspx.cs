@@ -28,12 +28,12 @@ namespace DotsolutionsWebsiteTester
             string userAgent = "Mozilla/5.0 (Quality test, http://www.example.net)";
             Session["userAgent"] = userAgent;
 
-            ThreadStart ths = new ThreadStart(GetTestList);
-            Thread th = new Thread(ths);
+            var ths = new ThreadStart(GetTestList);
+            var th = new Thread(ths);
             th.Start();
 
-            ThreadStart ths2 = new ThreadStart(GetSiteList);
-            Thread th2 = new Thread(ths2);
+            var ths2 = new ThreadStart(GetSiteList);
+            var th2 = new Thread(ths2);
             th2.Start();
 
             th.Join();
@@ -46,8 +46,8 @@ namespace DotsolutionsWebsiteTester
         /// </summary>
         private void GetTestList()
         {
-            List<string> selectedTests = (List<string>)Session["selectedTests"];
-            List<string> selectedTestsName = (List<string>)Session["selectedTestsName"];
+            var selectedTests = (List<string>)Session["selectedTests"];
+            var selectedTestsName = (List<string>)Session["selectedTestsName"];
 
             for (int i = 0; i < selectedTests.Count; i++)
             {
@@ -64,7 +64,7 @@ namespace DotsolutionsWebsiteTester
         /// </summary>
         private void GetSiteList()
         {
-            List<string> sitemap = new List<string>();
+            var sitemap = new List<string>();
             string url = Session["MainUrl"].ToString();
             string userAgent = Session["userAgent"].ToString();
             bool isPresent = false;
@@ -88,7 +88,7 @@ namespace DotsolutionsWebsiteTester
             // Get the stream containing content returned by the server.
             Stream dataStream = response.GetResponseStream();
             // Open the stream using a StreamReader for easy access.
-            StreamReader reader = new StreamReader(dataStream);
+            var reader = new StreamReader(dataStream);
             // Read the content. 
             string responseFromServer = reader.ReadToEnd();
 

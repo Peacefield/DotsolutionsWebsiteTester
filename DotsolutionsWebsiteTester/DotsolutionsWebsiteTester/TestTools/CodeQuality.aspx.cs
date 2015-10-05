@@ -34,8 +34,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             Debug.WriteLine(">>>> CodeQuality");
 
-            ThreadStart ths = new ThreadStart(TestCodeQuality);
-            Thread th = new Thread(ths);
+            var ths = new ThreadStart(TestCodeQuality);
+            var th = new Thread(ths);
             th.Start();
 
             th.Join();
@@ -52,18 +52,18 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void TestCodeQuality()
         {
-            List<string> tableLayOutList = new List<string>();
-            List<string> noSemanticList = new List<string>();
+            var tableLayOutList = new List<string>();
+            var noSemanticList = new List<string>();
 
             foreach (string url in this.sitemap)
             {
-                ThreadStart ths = new ThreadStart(() => W3CValidate(url));
-                Thread th = new Thread(ths);
+                var ths = new ThreadStart(() => W3CValidate(url));
+                var th = new Thread(ths);
                 threadList.Add(th);
                 th.Start();
-                
-                HtmlWeb Webget = new HtmlWeb();
-                HtmlDocument doc = Webget.Load(url);
+
+                var Webget = new HtmlWeb();
+                var doc = Webget.Load(url);
 
                 if (IsTableLayout(doc))
                 {
@@ -110,7 +110,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             // Join Threads
-            foreach (Thread thread in threadList)
+            foreach (var thread in threadList)
                 thread.Join();
 
             // Show table when errors are found 
@@ -149,58 +149,65 @@ namespace DotsolutionsWebsiteTester.TestTools
             // Get the stream containing content returned by the server.
             Stream dataStream = response.GetResponseStream();
             // Open the stream using a StreamReader for easy access.
-            StreamReader reader = new StreamReader(dataStream);
+            var reader = new StreamReader(dataStream);
             // Read the content. 
             string responseFromServer = reader.ReadToEnd();
 
-            JObject w3Validate = JObject.Parse(responseFromServer);
-            IList<JToken> messages = w3Validate["messages"].Children().ToList();
-
-            foreach (JToken item in messages)
+            try
             {
-                if (item["type"].ToString() == "error")
+                JObject w3Validate = JObject.Parse(responseFromServer);
+                IList<JToken> messages = w3Validate["messages"].Children().ToList();
+
+                foreach (JToken item in messages)
                 {
-                    errorCnt++;
-                    try
+                    if (item["type"].ToString() == "error")
                     {
-                        // add error message to table
-                        AddToTable(url, item["type"].ToString(), item["lastLine"].ToString(), item["lastColumn"].ToString(), item["message"].ToString());
-                    }
-                    catch (NullReferenceException nre)
-                    {
-                        Debug.WriteLine("W3CValidate nullreference exception");
-                        Debug.WriteLine(nre.Message);
-                    }
-                }
-                else if (item["type"].ToString() == "info")
-                {
-                    try
-                    {
-                        if (item["subType"].ToString() == "warning")
+                        errorCnt++;
+                        try
                         {
-                            warningCnt++;
-                            try
-                            {
-                                // add warning message to table
-                                AddToTable(url, item["subType"].ToString(), "", "", item["message"].ToString());
-                            }
-                            catch (NullReferenceException /*nrex*/)
-                            {
-                                //Debug.WriteLine("Could not add to table or list<keyvaluepair> due to: " + nrex.Message);
-                            }
+                            // add error message to table
+                            AddToTable(url, item["type"].ToString(), item["lastLine"].ToString(), item["lastColumn"].ToString(), item["message"].ToString());
+                        }
+                        catch (NullReferenceException nre)
+                        {
+                            Debug.WriteLine("W3CValidate nullreference exception");
+                            Debug.WriteLine(nre.Message);
                         }
                     }
-                    catch (NullReferenceException /*nre*/)
+                    else if (item["type"].ToString() == "info")
                     {
-                        //Debug.WriteLine("Just an info message, not a warning so subType is not available: " + nre.Message);
+                        try
+                        {
+                            if (item["subType"].ToString() == "warning")
+                            {
+                                warningCnt++;
+                                try
+                                {
+                                    // add warning message to table
+                                    AddToTable(url, item["subType"].ToString(), "", "", item["message"].ToString());
+                                }
+                                catch (NullReferenceException /*nrex*/)
+                                {
+                                    //Debug.WriteLine("Could not add to table or list<keyvaluepair> due to: " + nrex.Message);
+                                }
+                            }
+                        }
+                        catch (NullReferenceException /*nre*/)
+                        {
+                            //Debug.WriteLine("Just an info message, not a warning so subType is not available: " + nre.Message);
+                        }
                     }
                 }
-            }
 
-            // Cleanup the streams and the response.
-            reader.Close();
-            dataStream.Close();
-            response.Close();
+                // Cleanup the streams and the response.
+                reader.Close();
+                dataStream.Close();
+                response.Close();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         /// <summary>
@@ -213,25 +220,25 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="msg">Additional error/warning message</param>
         private void AddToTable(string url, string type, string line, string column, string msg)
         {
-            TableRow tRow = new TableRow();
+            var tRow = new TableRow();
 
-            TableCell tCellUrl = new TableCell();
+            var tCellUrl = new TableCell();
             tCellUrl.Text = url;
             tRow.Cells.Add(tCellUrl);
 
-            TableCell tCellType = new TableCell();
+            var tCellType = new TableCell();
             tCellType.Text = type;
             tRow.Cells.Add(tCellType);
 
-            TableCell tCellLine = new TableCell();
+            var tCellLine = new TableCell();
             tCellLine.Text = line;
             tRow.Cells.Add(tCellLine);
 
-            TableCell tCellClmn = new TableCell();
+            var tCellClmn = new TableCell();
             tCellClmn.Text = column;
             tRow.Cells.Add(tCellClmn);
 
-            TableCell tCellMsg = new TableCell();
+            var tCellMsg = new TableCell();
             tCellMsg.Text = msg;
             tRow.Cells.Add(tCellMsg);
 
@@ -255,7 +262,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                Debug.Write(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> null <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
+                Debug.WriteLine(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> null <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
                 return false; // No table found in upper level
             }
         }
@@ -269,14 +276,14 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             Debug.WriteLine("IsUsingSemantics <<<<<");
 
-            List<string> semantics = new List<string>()
+            var semantics = new List<string>()
             {
                 "article>", "aside>", "details>", "figcaption>", "figure>", "footer>", "form>", "header>", "img>", "main>", "mark>", "nav>", "section>", "summary>", "table>", "time>"
             };
 
             if (doc.DocumentNode.SelectSingleNode("//body") != null)
             {
-                foreach (string item in semantics)
+                foreach (var item in semantics)
                 {
                     if (doc.DocumentNode.SelectSingleNode("//body").InnerHtml.Contains(item))
                         return true;

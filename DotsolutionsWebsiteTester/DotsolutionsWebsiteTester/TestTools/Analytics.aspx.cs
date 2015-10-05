@@ -30,8 +30,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            ThreadStart ths = new ThreadStart(TestAnalytics);
-            Thread th = new Thread(ths);
+            var ths = new ThreadStart(TestAnalytics);
+            var th = new Thread(ths);
             th.Start();
 
             th.Join();
@@ -50,15 +50,15 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void TestAnalytics()
         {            
             Debug.WriteLine(">>>> Analytics");
-            List<string> sitemap = (List<string>)Session["selectedSites"];
-            List<KeyValuePair<string, string>> analyticslist = new List<KeyValuePair<string, string>>();
+            var sitemap = (List<string>)Session["selectedSites"];
+            var analyticslist = new List<KeyValuePair<string, string>>();
 
             analyticTypes.Add(new KeyValuePair<string, string>("google-analytics.com", "Google Analytics"));
             analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
             //analyticTypes.Add(new KeyValuePair<string, string>("placeholder-type", "placeholder-name"));
 
             // List for gathering
-            List<string> analytics = new List<string>();
+            var analytics = new List<string>();
 
             for (int i = 0; i < analyticTypes.Count; i++)
             {
@@ -66,15 +66,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Check every url in sitemap for analytics software for the current analytictype
                 foreach (string url in sitemap)
                 {
-                    ThreadStart ths = new ThreadStart(() => TestSite(i, url));
-                    Thread th = new Thread(ths);
+                    var ths = new ThreadStart(() => TestSite(i, url));
+                    var th = new Thread(ths);
                     th.Start();
 
                     threadList.Add(th);
                 }
 
                 // Join Threads
-                foreach (Thread thread in threadList)
+                foreach (var thread in threadList)
                     thread.Join();
 
                 string percentage = "0%";
@@ -106,7 +106,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 string nothing = "";
 
-                foreach (string item in noAnalytics)
+                foreach (var item in noAnalytics)
                     nothing += "<li><a href='" + item + "' target='blank'>" + item + "</a></li>";
 
                 AnalyticsResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
@@ -123,14 +123,14 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="url">URL to be tested</param>
         private void TestSite(int index, string url)
         {
-            HtmlWeb Webget = new HtmlWeb();
-            HtmlDocument doc = Webget.Load(url);
+            var Webget = new HtmlWeb();
+            var doc = Webget.Load(url);
             bool done = false;
 
             if (doc.DocumentNode.SelectNodes("//script") != null)
             {
                 Debug.WriteLine(doc.DocumentNode.SelectSingleNode("//script").InnerHtml);
-                foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//script"))
+                foreach (var node in doc.DocumentNode.SelectNodes("//script"))
                 {
                     // if type from list is detected do this
                     if (node.InnerHtml.Contains(analyticTypes[index].Key))
@@ -157,7 +157,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (!done && doc.DocumentNode.SelectSingleNode("//html") != null)
             {
-                HtmlNode node = doc.DocumentNode.SelectSingleNode("//html");
+                var node = doc.DocumentNode.SelectSingleNode("//html");
                 Debug.WriteLine("HTML <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
                 Debug.WriteLine(node.InnerHtml);
 
@@ -193,13 +193,13 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="percentage">Percentage of the amount found across all pages checked</param>
         private void AddToTable(string type, string percentage)
         {
-            TableRow tRow = new TableRow();
+            var tRow = new TableRow();
 
-            TableCell tCellType = new TableCell();
+            var tCellType = new TableCell();
             tCellType.Text = type;
             tRow.Cells.Add(tCellType);
 
-            TableCell tCellPerc = new TableCell();
+            var tCellPerc = new TableCell();
             tCellPerc.Text = percentage;
             tRow.Cells.Add(tCellPerc);
 
