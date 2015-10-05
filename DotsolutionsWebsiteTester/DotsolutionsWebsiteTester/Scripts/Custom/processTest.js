@@ -68,7 +68,7 @@ window.onload = function () {
             array = jQuery.grep(array, function (value) {
                 return value != removeItem;
             });
-
+            alert(removeItem);
             $("#result").append("<div class = 'panel panel-danger' id='" + removeItem + "'>"
                 + "<div class = 'panel-heading'>" + removeItem + "</div>"
                 + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>");
@@ -79,7 +79,7 @@ window.onload = function () {
                 $.ajax({
                     url: "/TestTools/" + value + ".aspx",
                     cache: false,
-                    async: true,
+                    async: false,
                     success: function (response) {
                         // Do something
                         finishedTests++;

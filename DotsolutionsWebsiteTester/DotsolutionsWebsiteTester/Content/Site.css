@@ -1,6 +1,7 @@
 ﻿html {
     /*height: 100%;*/
-    font-size: 1em;
+    font-size: 62.5%;
+    font-family: 'Courier New' !important;
 }
 
 /* Move down content because we have a fixed navbar that is 50px tall */
@@ -16,7 +17,7 @@ body {
     -o-background-size: cover;
     background-size: cover;
     height: 100%;
-    font-size: 62.5%;
+    font-size: 1em;
 }
 
 /* Wrapping element */
@@ -73,13 +74,13 @@ textarea {
 
 @media screen and (min-width: 1080px) {
     .jumbotron {
-        font-size: 1em;
+        font-size: 1.2em;
     }
 }
 
 @media screen and (min-width: 901px) and (max-width: 1079px) {
     .jumbotron {
-        font-size: 0.5em;
+        font-size: 1em;
     }
 }
 
@@ -88,7 +89,7 @@ textarea {
         font-size: 0.5em;
     }
     .btn{
-        font-size:0.9em !important;
+        font-size:0.7em !important;
     }
 }
 

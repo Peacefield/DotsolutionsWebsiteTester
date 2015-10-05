@@ -24,6 +24,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            var sb = new System.Text.StringBuilder();
+            InternalLinksSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
+
+            Session["InternalLinks"] = htmlstring;
             return;
 
 
@@ -34,11 +39,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             th.Join();
 
-            var sb = new System.Text.StringBuilder();
-            InternalLinksSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            string htmlstring = sb.ToString();
+            //var sb = new System.Text.StringBuilder();
+            //InternalLinksSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            //string htmlstring = sb.ToString();
 
-            Session["InternalLinks"] = htmlstring;
+            //Session["InternalLinks"] = htmlstring;
         }
 
 

@@ -29,6 +29,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            var sb = new System.Text.StringBuilder();
+            PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
+
+            Session["Printability"] = htmlstring;
             return;
 
 
@@ -86,11 +91,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<ul>" + notprintablelist + "</ul></div>";
             }
 
-            var sb = new System.Text.StringBuilder();
-            PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            string htmlstring = sb.ToString();
+            //var sb = new System.Text.StringBuilder();
+            //PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            //string htmlstring = sb.ToString();
 
-            Session["Printability"] = htmlstring;
+            //Session["Printability"] = htmlstring;
         }
 
         /// <summary>

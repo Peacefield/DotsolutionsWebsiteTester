@@ -30,6 +30,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            var sb = new System.Text.StringBuilder();
+            AnalyticsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
+
+            Session["Analytics"] = htmlstring;
             return;
 
 
@@ -39,11 +44,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             th.Join();
 
-            var sb = new System.Text.StringBuilder();
-            AnalyticsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            string htmlstring = sb.ToString();
+            //var sb = new System.Text.StringBuilder();
+            //AnalyticsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            //string htmlstring = sb.ToString();
 
-            Session["Analytics"] = htmlstring;
+            //Session["Analytics"] = htmlstring;
         }
 
         /// <summary>
