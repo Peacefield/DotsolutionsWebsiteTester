@@ -30,33 +30,43 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            this.authorizer = new SingleUserAuthorizer
-                {
-                    CredentialStore =
-                       new SingleUserInMemoryCredentialStore
-                       {
-                           ConsumerKey =
-                               "lZiItDrOsCPBBIiKioA3QV6IS",
-                           ConsumerSecret =
-                              "tQNgdYtIwqzMGTOVlL8J7Ye7l1FiUHtdnVVFohZgAbjyRCBrtj",
-                           AccessToken =
-                              "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
-                           AccessTokenSecret =
-                              "QzV1lfatNovTwLfWJn2lbJMhtRt5WNHGHowT0wHDKo5ld"
-                       }
-                };
-
-            var ths = new ThreadStart(() => GetTwitterOptions(Session["MainUrl"].ToString()));
-            var th = new Thread(ths);
-            th.Start();
-
-            th.Join();
-
             var sb = new System.Text.StringBuilder();
             TwitterSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
             string htmlstring = sb.ToString();
 
             Session["Twitter"] = htmlstring;
+
+            return;
+
+
+
+            //this.authorizer = new SingleUserAuthorizer
+            //    {
+            //        CredentialStore =
+            //           new SingleUserInMemoryCredentialStore
+            //           {
+            //               ConsumerKey =
+            //                   "lZiItDrOsCPBBIiKioA3QV6IS",
+            //               ConsumerSecret =
+            //                  "tQNgdYtIwqzMGTOVlL8J7Ye7l1FiUHtdnVVFohZgAbjyRCBrtj",
+            //               AccessToken =
+            //                  "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
+            //               AccessTokenSecret =
+            //                  "QzV1lfatNovTwLfWJn2lbJMhtRt5WNHGHowT0wHDKo5ld"
+            //           }
+            //    };
+
+            //var ths = new ThreadStart(() => GetTwitterOptions(Session["MainUrl"].ToString()));
+            //var th = new Thread(ths);
+            //th.Start();
+
+            //th.Join();
+
+            //var sb = new System.Text.StringBuilder();
+            //TwitterSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            //string htmlstring = sb.ToString();
+
+            //Session["Twitter"] = htmlstring;
         }
 
         private void GetTwitterOptions(string url)

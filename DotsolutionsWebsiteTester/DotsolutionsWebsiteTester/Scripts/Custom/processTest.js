@@ -96,7 +96,7 @@ window.onload = function () {
                         if (progress == 100) {
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
-                                $("#performedTestshidden").css("display", "block");
+                                $("#performedTestshidden").fadeIn();
                                 $("#MainContent_CreatePdfBtn").css("display", "block");
                                 document.title = 'Resultaten - Website tester';
                             }, 500);
