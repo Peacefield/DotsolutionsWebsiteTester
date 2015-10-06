@@ -30,16 +30,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            var sb = new System.Text.StringBuilder();
-            TwitterSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            string htmlstring = sb.ToString();
-
-            Session["Twitter"] = htmlstring;
-
-            return;
-
-
-
             //this.authorizer = new SingleUserAuthorizer
             //    {
             //        CredentialStore =
@@ -62,11 +52,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             //th.Join();
 
-            //var sb = new System.Text.StringBuilder();
-            //TwitterSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            //string htmlstring = sb.ToString();
+            var sb = new System.Text.StringBuilder();
+            TwitterSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
 
-            //Session["Twitter"] = htmlstring;
+            Session["Twitter"] = htmlstring;
         }
 
         private void GetTwitterOptions(string url)
@@ -166,10 +156,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                             IPAddress[] addresslist = Dns.GetHostAddresses(response.ResponseUri.Host.ToString());
 
                             foreach (IPAddress theaddress in addresslist)
-                            {
                                 if (addresslistMain.Contains(theaddress))
                                     return true;
-                            }
                         }
                         catch (WebException we)
                         {
