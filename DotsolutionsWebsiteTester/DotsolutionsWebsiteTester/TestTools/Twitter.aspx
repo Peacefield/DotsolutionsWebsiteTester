@@ -7,6 +7,7 @@
             <div class="panel panel-primary" id="TwitterSession" runat="server">
                 <div class="panel-heading">Twitter</div>
                 <div class="panel-body">
+                <div id="twitterResults" runat="server"></div>
                 </div>
             </div>
         </div>

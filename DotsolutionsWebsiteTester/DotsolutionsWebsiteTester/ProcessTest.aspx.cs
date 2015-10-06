@@ -77,7 +77,6 @@ namespace DotsolutionsWebsiteTester
             //Session["selectedSites"] = sitemap;
             //return;
 
-
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=5&q=site:" + url + "%20" + url);
             // Additional parameters
             // &rsz=[1-8] resultSize can be 1 through 8

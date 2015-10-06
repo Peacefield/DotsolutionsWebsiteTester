@@ -79,7 +79,7 @@ window.onload = function () {
                 $.ajax({
                     url: "/TestTools/" + value + ".aspx",
                     cache: false,
-                    async: false,
+                    async: true,
                     success: function (response) {
                         // Do something
                         finishedTests++;
