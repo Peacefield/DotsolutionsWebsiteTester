@@ -13,31 +13,34 @@ namespace DotsolutionsWebsiteTester
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+            if (!IsPostBack)
             {
-                Session["MainUrl"].ToString();
+                try
+                {
+                    Session["MainUrl"].ToString();
+                }
+                catch (NullReferenceException)
+                {
+                    Response.Redirect("~/");
+                    return;
+                }
+
+                UrlTesting.InnerText = Session["MainUrl"].ToString();
+
+                string userAgent = "Mozilla/5.0 (Quality test, http://www.example.net)";
+                Session["userAgent"] = userAgent;
+
+                var ths = new ThreadStart(GetTestList);
+                var th = new Thread(ths);
+                th.Start();
+
+                var ths2 = new ThreadStart(GetSiteList);
+                var th2 = new Thread(ths2);
+                th2.Start();
+
+                th.Join();
+                th2.Join();
             }
-            catch (NullReferenceException)
-            {
-                Response.Redirect("~/");
-                return;
-            }
-
-            UrlTesting.InnerText = Session["MainUrl"].ToString();
-
-            string userAgent = "Mozilla/5.0 (Quality test, http://www.example.net)";
-            Session["userAgent"] = userAgent;
-
-            var ths = new ThreadStart(GetTestList);
-            var th = new Thread(ths);
-            th.Start();
-
-            var ths2 = new ThreadStart(GetSiteList);
-            var th2 = new Thread(ths2);
-            th2.Start();
-
-            th.Join();
-            th2.Join();
         }
 
         /// <summary>

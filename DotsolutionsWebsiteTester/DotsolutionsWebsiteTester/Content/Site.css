@@ -44,6 +44,10 @@
         width: 1000px !important;
     }
 
+    .btn {
+        font-size: 1.3em !important;
+    }
+
     .jumbotron {
         font-size: 1.2em;
     }
