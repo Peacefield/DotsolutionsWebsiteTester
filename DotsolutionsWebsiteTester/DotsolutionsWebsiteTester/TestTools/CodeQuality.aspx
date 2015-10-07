@@ -2,22 +2,24 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="result">
-        
+
         <div id="CodeQuality">
             <div class="panel panel-custom" id="CodeQualitySession" runat="server">
                 <div class="panel-heading">Code quality</div>
                 <div class="panel-body">
-                <div id="w3ErrorsFound" runat="server"></div>
+                    <div id="w3ErrorsFound" runat="server"></div>
                     <div class="hidden" id="W3ResultsTableHidden" runat="server">
-                        <asp:Table ID="table" CssClass="table table-hover" runat="server">
-                            <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">
-                                <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-3" />
-                                <asp:TableHeaderCell Scope="Column" Text="Type" CssClass="col-md-1"/>
-                                <asp:TableHeaderCell Scope="Column" Text="Regel" CssClass="col-md-1"/>
-                                <asp:TableHeaderCell Scope="Column" Text="Kolom" CssClass="col-md-1"/>
-                                <asp:TableHeaderCell Scope="Column" Text="Melding" CssClass="col-md-6"/>
-                            </asp:TableHeaderRow>
-                        </asp:Table>
+                        <div class="table-responsive">
+                            <asp:Table ID="table" CssClass="table table-hover" runat="server">
+                                <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">
+                                    <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-3" />
+                                    <asp:TableHeaderCell Scope="Column" Text="Type" CssClass="col-md-1" />
+                                    <asp:TableHeaderCell Scope="Column" Text="Regel" CssClass="col-md-1" />
+                                    <asp:TableHeaderCell Scope="Column" Text="Kolom" CssClass="col-md-1" />
+                                    <asp:TableHeaderCell Scope="Column" Text="Melding" CssClass="col-md-6" />
+                                </asp:TableHeaderRow>
+                            </asp:Table>
+                        </div>
                     </div>
                 </div>
             </div>
