@@ -11,13 +11,17 @@ body {
 }
 
 body {
-    background: url("/Content/images/bckgnd.jpg") fixed no-repeat;
+    background: url("/Content/images/bckgnd_grn.jpg") fixed no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     height: 100%;
     font-size: 1em;
+}
+
+footer{
+    color: white;
 }
 
 /* Wrapping element */
@@ -209,4 +213,16 @@ textarea {
 
 #MainContent_CreatePdfBtn {
     display: none;
+}
+
+.panel-custom{
+	border-color: #85CC76 !important;
+}
+
+.panel-custom .panel-heading{
+	background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);
+	color: white;
+	background-color: #145007;
+	background-repeat: repeat-x;
+	border-color: #85CC76
 }

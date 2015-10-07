@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="Images">
-            <div class="panel panel-primary" id="ImagesSession" runat="server">
+            <div class="panel panel-custom" id="ImagesSession" runat="server">
                 <div class="panel-heading">Afbeeldingen</div>
                 <div class="panel-body">
                 </div>

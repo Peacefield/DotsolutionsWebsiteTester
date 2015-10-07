@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="MetaTags">
-            <div class="panel panel-primary" id="MetaTagsSession" runat="server">
+            <div class="panel panel-custom" id="MetaTagsSession" runat="server">
                 <div class="panel-heading">Meta tags</div>
                 <div class="panel-body">
                 </div>

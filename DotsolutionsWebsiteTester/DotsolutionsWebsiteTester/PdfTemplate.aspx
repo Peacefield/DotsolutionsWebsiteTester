@@ -17,6 +17,17 @@
             padding-left: 15px;
             padding-right: 15px;
         }
+        .panel-custom {
+            border-color: #85CC76 !important;
+        }
+
+            .panel-custom .panel-heading {
+                background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);
+                color: white;
+                background-color: #145007;
+                background-repeat: repeat-x;
+                border-color: #85CC76;
+            }
     </style>
     <div class="well well-sm" id="sizeref">
         <h5>Rapport voor: </h5>

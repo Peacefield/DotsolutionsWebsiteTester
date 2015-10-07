@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="Headings">
-            <div class="panel panel-primary" id="HeadingsSession" runat="server">
+            <div class="panel panel-custom" id="HeadingsSession" runat="server">
                 <div class="panel-heading">Headers</div>
                 <div class="panel-body">
                 </div>

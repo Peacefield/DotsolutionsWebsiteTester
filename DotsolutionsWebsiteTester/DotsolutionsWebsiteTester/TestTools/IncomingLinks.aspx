@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="IncomingLinks">
-            <div class="panel panel-primary" id="IncomingLinksSession" runat="server">
+            <div class="panel panel-custom" id="IncomingLinksSession" runat="server">
                 <div class="panel-heading">Binnenkomende links</div>
                 <div class="panel-body">
                 </div>

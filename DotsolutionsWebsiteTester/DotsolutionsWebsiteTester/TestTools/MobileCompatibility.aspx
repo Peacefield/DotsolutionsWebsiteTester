@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="MobileCompatibility">
-            <div class="panel panel-primary" id="MobileCompatibilitySession" runat="server">
+            <div class="panel panel-custom" id="MobileCompatibilitySession" runat="server">
                 <div class="panel-heading">Mobiele compatibiliteit</div>
                 <div class="panel-body">
                 </div>

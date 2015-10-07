@@ -4,14 +4,14 @@
     <div id="result">
 
         <div id="InternalLinks">
-            <div class="panel panel-primary" id="InternalLinksSession" runat="server">
+            <div class="panel panel-custom" id="InternalLinksSession" runat="server">
                 <div class="panel-heading">Interne links</div>
 
                 <div class="panel-body">
                 <div id="internalLinksErrorsFound" runat="server"></div>
                     <div class="hidden" id="IntLinksHiddenTable" runat="server">
                         <asp:Table ID="IntLinksTable" CssClass="table table-hover" runat="server">
-                            <asp:TableHeaderRow ID="TableHeaderRow1" BackColor="LightBlue" runat="server">
+                            <asp:TableHeaderRow ID="TableHeaderRow1" BackColor="#C7E5F4" runat="server">
                                 <asp:TableHeaderCell Scope="Column" Text="Link van URL" CssClass="col-md-6"/>
                                 <asp:TableHeaderCell Scope="Column" Text="Melding" CssClass="col-md-5"/>
                                 <asp:TableHeaderCell Scope="Column" Text="Op pagina" CssClass="col-md-1"/>

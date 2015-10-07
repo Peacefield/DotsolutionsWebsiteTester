@@ -29,7 +29,7 @@
                 <asp:Button ID="StartScanBtn"
                     Text="Test"
                     OnClick="StartScanBtn_Click"
-                    CssClass="btn btn-primary btn-md"
+                    CssClass="btn btn-success btn-md"
                     runat="server" />
             </div>
         </div>

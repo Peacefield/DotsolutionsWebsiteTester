@@ -3,8 +3,8 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div id="overlay">
-        <div id="progressbar" class="progress progress-striped active">
-            <div id="testprogressbar" class="progress-bar" style="width: 0%">
+        <div id="progressbar" class="progress progress-striped">
+            <div id="testprogressbar" class="progress-bar progress-bar-success" style="width: 0%">
                 <span id="progresstext">0% Compleet</span>
             </div>
         </div>
@@ -26,7 +26,7 @@
     <div class="pull-right">
         <asp:Button ID="CreatePdfBtn"
             Text="To PDF"
-            CssClass="btn btn-primary btn-md"
+            CssClass="btn btn-success btn-md"
             OnClick="CreatePdfBtn_Click"
             runat="server" />
     </div>
@@ -52,7 +52,7 @@
     <div id="result"></div>
         
     <div id="back-to-top">
-        <div class="btn btn-primary btn-md" id="ToTopBtn">
+        <div class="btn btn-success btn-md" id="ToTopBtn">
         <span aria-hidden="true" class="glyphicon glyphicon-arrow-up"></span>
             Terug naar boven
         </div>

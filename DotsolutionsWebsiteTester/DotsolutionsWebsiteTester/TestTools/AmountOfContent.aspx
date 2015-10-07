@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="AmountOfContent">
-            <div class="panel panel-primary" id="AmountOfContentSession" runat="server">
+            <div class="panel panel-custom" id="AmountOfContentSession" runat="server">
                 <div class="panel-heading">Hoeveelheid Content</div>
                 <div class="panel-body">
                 </div>

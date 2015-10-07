@@ -4,7 +4,7 @@
     <div id="result">
 
         <div id="UrlFormat">
-            <div class="panel panel-primary" id="UrlFormatSession" runat="server">
+            <div class="panel panel-custom" id="UrlFormatSession" runat="server">
                 <div class="panel-heading">Url Formaat</div>
                 <div class="panel-body">
                 </div>
