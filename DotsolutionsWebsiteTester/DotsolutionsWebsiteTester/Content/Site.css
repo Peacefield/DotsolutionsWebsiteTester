@@ -1,9 +1,65 @@
-﻿html {
+﻿/*Overriding container width since it disagrees with my layout*/
+@media (max-width: 767px) {
+    .container {
+        width: 100% !important;
+    }
+
+    .jumbotron {
+        font-size: 1em;
+    }
+
+    .btn {
+        font-size: 1em !important;
+    }
+
+    #MainContent_TestsCheckBoxList1,
+    #MainContent_TestsCheckBoxList2,
+    #MainContent_TestsCheckBoxList3 {
+        margin-left: 40%;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 100% !important;
+    }
+
+    .jumbotron {
+        font-size: 1em;
+    }
+
+    .btn {
+        font-size: 0.7em !important;
+    }
+
+    #MainContent_TestsCheckBoxList1,
+    #MainContent_TestsCheckBoxList2,
+    #MainContent_TestsCheckBoxList3 {
+        margin-left: 30%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        width: 1000px !important;
+    }
+
+    .jumbotron {
+        font-size: 1.2em;
+    }
+}
+
+@media (min-width: 1900px) {
+    .container {
+        width: 1100px !important;
+    }
+}
+
+html {
     /*height: 100%;*/
     font-size: 62.5%;
     font-family: 'Courier New' !important;
 }
-
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-top: 50px;
@@ -20,10 +76,9 @@ body {
     font-size: 1em;
 }
 
-footer{
+footer {
     color: white;
 }
-
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -54,12 +109,6 @@ textarea {
     margin-top: 10%;
 }
 
-#MainContent_TestsCheckBoxList1,
-#MainContent_TestsCheckBoxList2,
-#MainContent_TestsCheckBoxList3 {
-    margin-left: 30%;
-}
-
 #MainContent_StartScanBtn,
 #MainContent_UrlTextBox {
     max-width: 100%;
@@ -73,28 +122,6 @@ textarea {
 
 #CheckboxHolder {
     display: block;
-}
-
-
-@media screen and (min-width: 1080px) {
-    .jumbotron {
-        font-size: 1.2em;
-    }
-}
-
-@media screen and (min-width: 901px) and (max-width: 1079px) {
-    .jumbotron {
-        font-size: 1em;
-    }
-}
-
-@media screen and (max-width: 900px) {
-    .jumbotron {
-        font-size: 0.5em;
-    }
-    .btn{
-        font-size:0.7em !important;
-    }
 }
 
 /**
@@ -168,31 +195,6 @@ textarea {
         cursor: pointer;
     }
 
-/*Overriding container width since it disagrees with my layout*/
-@media (min-width:900px) and (max-width:991px) {
-    .container {
-        width: 900px !important;
-    }
-}
-
-@media (min-width:1100px) and (max-width:1200px) {
-    .container {
-        width: 1100px !important;
-    }
-}
-
-@media (min-width:1000px) and (max-width:1100px) {
-    .container {
-        width: 1000px !important;
-    }
-}
-
-@media (min-width:900px) and (max-width:1000px) {
-    .container {
-        width: 900px !important;
-    }
-}
-
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -215,14 +217,14 @@ textarea {
     display: none;
 }
 
-.panel-custom{
-	border-color: #85CC76 !important;
+.panel-custom {
+    border-color: #85CC76 !important;
 }
 
-.panel-custom .panel-heading{
-	background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);
-	color: white;
-	background-color: #145007;
-	background-repeat: repeat-x;
-	border-color: #85CC76
-}
+    .panel-custom .panel-heading {
+        background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);
+        color: white;
+        background-color: #145007;
+        background-repeat: repeat-x;
+        border-color: #85CC76;
+    }

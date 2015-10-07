@@ -35,19 +35,19 @@
         </div>
 
         <div class="row">
-            <div class="col-md-5 col-xs-5 col-sm-5 col-lg-5"></div>
-            <div class="col-md-2 col-xs-2 col-sm-2 col-lg-2 btn btn-default btn-sm" id="ShowCheckboxes">
+            <div class="col-md-5 col-xs-4 col-sm-5 col-lg-5"></div>
+            <div class="col-md-2 col-xs-4 col-sm-2 col-lg-2 btn btn-default btn-sm" id="ShowCheckboxes">
                 Verberg tests
             </div>
         </div>
 
         <div id="CheckboxHolder" class="noselect">
             <div class="row">
-                <div class="col-md-5 col-xs-5 col-sm-5 col-lg-5"></div>
-                <div class="col-md-2 col-xs-2 col-sm-2 col-lg-2 btn btn-default btn-sm" id="CheckAllCheckboxes">Niks selecteren</div>
+                <div class="col-md-5 col-xs-4 col-sm-5 col-lg-5"></div>
+                <div class="col-md-2 col-xs-4 col-sm-2 col-lg-2 btn btn-default btn-sm" id="CheckAllCheckboxes">Niks selecteren</div>
             </div>
             <div class="row checkboxlistrow text-left">
-                <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4">
+                <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
                     <asp:CheckBoxList ID="TestsCheckBoxList1"
                         runat="server"
                         TextAlign="right">
@@ -59,7 +59,7 @@
                         <asp:ListItem Text="URL formaat" Value="UrlFormat" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>
                 </div>
-                <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4">
+                <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
                     <asp:CheckBoxList ID="TestsCheckBoxList2"
                         runat="server">
                         <asp:ListItem Text="Google+ Pagina" Value="GooglePlus" Selected="false"></asp:ListItem>
@@ -71,7 +71,7 @@
                         <asp:ListItem Text="Afbeeldingen" Value="Images" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>
                 </div>
-                <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4">
+                <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
                     <asp:CheckBoxList ID="TestsCheckBoxList3"
                         runat="server">
                         <asp:ListItem Text="Server gedrag" Value="ServerBehaviour" Selected="false"></asp:ListItem>

@@ -17,10 +17,10 @@
             padding-left: 15px;
             padding-right: 15px;
         }
+        /* Custom panel colouring */
         .panel-custom {
             border-color: #85CC76 !important;
         }
-
             .panel-custom .panel-heading {
                 background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);
                 color: white;

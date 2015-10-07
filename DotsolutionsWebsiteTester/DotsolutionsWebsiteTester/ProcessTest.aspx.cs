@@ -79,7 +79,7 @@ namespace DotsolutionsWebsiteTester
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=5&q=site:" + url + "%20" + url);
             // Additional parameters
-            // &rsz=[1-8] resultSize can be 1 through 8
+            // &rsz=[1-8] resultSize can be 1 through 8. Currently using 5.
             // &start=[x] Indicate where to start searching
             request.UserAgent = userAgent;
             // Get the response.
@@ -100,6 +100,8 @@ namespace DotsolutionsWebsiteTester
                 foreach (JToken item in results)
                 {
                     sitemap.Add(item["url"].ToString());
+                    // If entered URL is not in found URL's it will be added
+                    // This if-statement detects if it IS among the found URL's by comparing it to several possible URL formats
                     if (item["url"].ToString() == url || item["url"].ToString() == (url + "/")
                         || item["url"].ToString() == url.Replace("http://", "https://") || item["url"].ToString() == url.Replace("https://", "http://")
                         || item["url"].ToString() == url.Replace("http://", "https://") + "/" || item["url"].ToString() == url.Replace("https://", "http://") + "/" )
@@ -130,7 +132,7 @@ namespace DotsolutionsWebsiteTester
         /// <param name="e"></param>
         protected void CreatePdfBtn_Click(object sender, EventArgs e)
         {
-            Response.Redirect("PdfTemplate.aspx");
+            Response.Redirect("~/PdfTemplate.aspx");
 
             return;
         }
