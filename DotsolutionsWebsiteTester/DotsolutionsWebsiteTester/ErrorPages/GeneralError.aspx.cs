@@ -12,6 +12,8 @@ namespace DotsolutionsWebsiteTester.ErrorPages
         protected Exception ex = null;
         protected void Page_Load(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("GeneralError pagina bereikt");
+
             // Get the last error from the server
             Exception ex = Server.GetLastError();
 

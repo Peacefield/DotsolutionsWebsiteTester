@@ -25,7 +25,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             catch (NullReferenceException)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/");
                 return;
             }
 
@@ -63,13 +63,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span>Er is rekening gehouden met de printbaarheid van de volgende pagina's:</span>"
+                        + "<span> Er is rekening gehouden met de printbaarheid van de volgende pagina's:</span>"
                         + "<ul>" + printablelist + "</ul></div>";
                 }
                 else
                     PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span>Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
+                        + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
             }
 
             if (printablePages < sitemap.Count)
@@ -87,7 +87,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 PrintResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de printbaarheid:</span>"
+                    + "<span> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de printbaarheid:</span>"
                     + "<ul>" + notprintablelist + "</ul></div>";
             }
 

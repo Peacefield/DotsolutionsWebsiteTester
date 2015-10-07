@@ -26,7 +26,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             catch (NullReferenceException)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/");
                 return;
             }
 
@@ -100,15 +100,15 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (analyticslist.Count == 0)
                 AnalyticsResults.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>Geen analytics software gevonden.</span></div>";
+                    + "<span> Geen analytics software gevonden.</span></div>";
             else if (analyticslist.Count == 1)
                 AnalyticsResults.InnerHtml = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span>" + analyticslist.Count + " soort analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemap.Count + " pagina's</span></div>";
+                    + "<span> " + analyticslist.Count + " soort analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemap.Count + " pagina's</span></div>";
             else
                 AnalyticsResults.InnerHtml = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span>" + analyticslist.Count + " soorten analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemap.Count + " pagina's</span></div>";
+                    + "<span> " + analyticslist.Count + " soorten analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemap.Count + " pagina's</span></div>";
 
             if (analyticslist.Count > 0 && noAnalytics.Count > 0)
             {
@@ -119,7 +119,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 AnalyticsResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>Geen analytics software gevonden op volgende pagina's</span>"
+                    + "<span> Geen analytics software gevonden op volgende pagina's</span>"
                     + "<ul>" + nothing + "</ul></div>";
             }
         }

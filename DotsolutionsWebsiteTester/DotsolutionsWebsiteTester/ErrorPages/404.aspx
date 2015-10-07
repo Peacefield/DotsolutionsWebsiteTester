@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Pagina niet gevonden" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="404.aspx.cs" Inherits="DotsolutionsWebsiteTester.ErrorPages._404" %>
+﻿<%@ Page Title="Pagina niet gevonden" Language="C#" MasterPageFile="../Site.Master" AutoEventWireup="true" CodeBehind="404.aspx.cs" Inherits="DotsolutionsWebsiteTester.ErrorPages._404" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="jumbotron text-center center-block">
@@ -21,6 +21,12 @@
             Ga terug naar de startpagina
         </asp:LinkButton>
     </div>
+    <script type="text/javascript" src="../Scripts/Custom/ads.js"></script>
+    <script>
+        if (window.canRunAds == undefined) {
+            $("#adblocker").removeClass("hidden");
+        }
+    </script>
 
 </asp:Content>
 

@@ -20,7 +20,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             catch (NullReferenceException)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/");
                 return;
             }
 
@@ -85,7 +85,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 IntLinksHiddenTable.Attributes.Remove("class");
                 internalLinksErrorsFound.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>" + errorCnt + " meldingen gevonden.</span></div>";
+                    + "<span> " + errorCnt + " meldingen gevonden.</span></div>";
             }
             else
             {

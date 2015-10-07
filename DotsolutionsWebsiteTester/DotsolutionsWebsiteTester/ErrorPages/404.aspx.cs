@@ -11,12 +11,12 @@ namespace DotsolutionsWebsiteTester.ErrorPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            System.Diagnostics.Debug.WriteLine("404 pagina bereikt");
         }
 
         protected void HomeBackBtn_Click(Object sender, EventArgs e)
         {
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect("~/");
         }
 
     }

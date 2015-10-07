@@ -28,7 +28,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             catch (NullReferenceException)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/");
                 return;
             }
             Debug.WriteLine(">>>> CodeQuality");
@@ -78,7 +78,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span>Er wordt op alle pagina's waarschijnlijk geen tabel gebruikt voor lay-out.</span></div>";
+                    + "<span> Er wordt op alle pagina's waarschijnlijk geen tabel gebruikt voor lay-out.</span></div>";
             }
             else
             {
@@ -88,8 +88,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 unorderedlist += "</ul>";
 
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>De volgende pagina's gebruiken misschien een tabel voor lay-out. Dit wordt over het algemeen beschouwd als bad practice.</span>" + unorderedlist + "</div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                    + "<span> De volgende pagina's gebruiken misschien een tabel voor lay-out. Dit wordt over het algemeen beschouwd als bad practice.</span>" + unorderedlist + "</div>";
             }
 
             // Show results from IsUsingSemantics()
@@ -97,7 +97,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span>Er wordt op alle pagina's gebruik gemaakt van semantic HTML elements</span></div>";
+                    + "<span> Er wordt op alle pagina's gebruik gemaakt van semantic HTML elements</span></div>";
             }
             else
             {
@@ -111,8 +111,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 unorderedlist += "</ul>";
 
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>De volgende pagina's gebruiken geen semantic HTML elements</span> " + unorderedlist + "</div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                    + "<span> De volgende pagina's gebruiken geen semantic HTML elements</span> " + unorderedlist + "</div>";
             }
 
             // Join Threads
@@ -124,7 +124,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span>Alle geteste pagina's zijn W3C compliant</span></div>";
+                    + "<span> Alle geteste pagina's zijn W3C compliant</span></div>";
             }
             else
             {
@@ -134,8 +134,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 unorderedlist += "</ul>";
 
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>De volgende pagina's zijn niet W3C compliant.</span>" + unorderedlist + "</div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                    + "<span> De volgende pagina's zijn niet W3C compliant.</span>" + unorderedlist + "</div>";
             }
 
             // Show table when W3C notifications are encountered 
@@ -156,8 +156,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     warningString = warningCnt + " waarschuwingen";
 
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span>" + errorString + " en " + warningString + " gevonden.</span></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                    + "<span> " + errorString + " en " + warningString + " gevonden.</span></div>";
             }
         }
 

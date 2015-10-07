@@ -17,7 +17,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             catch (NullReferenceException)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/");
                 return;
             }
             var sb = new System.Text.StringBuilder();

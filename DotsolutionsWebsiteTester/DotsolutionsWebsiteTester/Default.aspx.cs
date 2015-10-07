@@ -74,12 +74,12 @@ namespace DotsolutionsWebsiteTester
                     catch (Exception)
                     {
                         invalidUrlHidden.Attributes.Remove("class");
-                        invalidUrl.InnerText = "Geen bestaande url ingevoerd";
+                        invalidUrl.InnerText = " Geen bestaande url ingevoerd";
                         return false; //could not connect to the website (most probably) 
                     }
                 }
                 invalidUrlHidden.Attributes.Remove("class");
-                invalidUrl.InnerText = "Geen geldige url ingevoerd";
+                invalidUrl.InnerText = " Geen geldige url ingevoerd";
                 return false;
             }
         }
@@ -118,7 +118,7 @@ namespace DotsolutionsWebsiteTester
             else
             {
                 invalidUrlHidden.Attributes.Remove("class");
-                invalidUrl.InnerText = "Geen tests geselecteerd";
+                invalidUrl.InnerText = " Geen tests geselecteerd";
                 return false;
             }
         }

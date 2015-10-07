@@ -19,7 +19,7 @@ namespace DotsolutionsWebsiteTester
             }
             catch (NullReferenceException)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/");
                 return;
             }
 

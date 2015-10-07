@@ -20,7 +20,7 @@
 
         <div class="hidden" id="invalidUrlHidden" runat="server">
             <div class="alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12" role="alert">
-                <i class="glyphicon glyphicon-exclamation-sign glyphicons-lg"></i><span class="" id="invalidUrl" runat="server"></span>
+                <i class="glyphicon glyphicon-alert glyphicons-lg"></i><span class="" id="invalidUrl" runat="server"></span>
             </div>
         </div>
 

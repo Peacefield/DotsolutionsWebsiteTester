@@ -17,6 +17,7 @@ namespace DotsolutionsWebsiteTester.TestTools
     {
         // Currently using my personal twitter keys
         private SingleUserAuthorizer authorizer;
+        private TwitterContext twitterContext;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,7 +27,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             catch (NullReferenceException)
             {
-                Response.Redirect("~/Default.aspx");
+                Response.Redirect("~/");
                 return;
             }
 
@@ -46,7 +47,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             //           }
             //    };
 
-            //var ths = new ThreadStart(() => GetTwitterOptions(Session["MainUrl"].ToString()));
+            //this.twitterContext = new TwitterContext(authorizer);
+
+            //var ths = new ThreadStart(() => GetTwitter(Session["MainUrl"].ToString()));
             //var th = new Thread(ths);
             //th.Start();
 
@@ -59,15 +62,15 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["Twitter"] = htmlstring;
         }
 
-        private void GetTwitterOptions(string url)
+        private void GetTwitter(string url)
         {
             Debug.WriteLine("GetTwitterOptions <<< ");
 
             var screennameList = new List<string>();
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=5&q=twitter%20" + url);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=8&q=twitter%20" + url);
             // Additional parameters
-            // &rsz=[1-8] resultSize can be 1 through 8, currently using 5
+            // &rsz=[1-8] resultSize can be 1 through 8, currently using 8
             // &start=[x] Indicate where to start searching
             request.UserAgent = Session["userAgent"].ToString();
             // Get the response.
@@ -97,11 +100,16 @@ namespace DotsolutionsWebsiteTester.TestTools
                             screenName = screenName.Remove(screenName.Length - 1);
                     }
 
-                    if (screenName.Contains("/"))
+                    if (screenName.EndsWith("/"))
                         screenName = screenName.Remove(screenName.Length - 1);
 
-                    if (!screenName.Contains("/"))
+                    if (screenName.Contains("?"))
+                        screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
+
+                    if (!screenName.Contains("/") && screenName != "")
                         screennameList.Add(screenName);
+
+                    Debug.WriteLine(screenName);
                 }
 
                 var twitterfound = false;
@@ -111,21 +119,30 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         Debug.WriteLine(screenName + " gevonden!");
                         twitterfound = true;
+                        var TweetCount = GetTweetCount(screenName);
+                        var FollowersCount = GetFollowerCount(screenName);
                         twitterResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                            + "<span>Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank'>" + screenName + "</a> gevonden</span></div>";
+                            + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank'>" + screenName + "</a> gevonden</span></div>";
+                        twitterResults.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                            + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                            + "<span> Dit account heeft " + TweetCount + " tweets gemaakt naar " + FollowersCount + " volgers</span></div>";
                     }
                 }
                 if (!twitterfound)
                     twitterResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        + "<span>Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg er voor dat de url van uw pagina in uw Twitter-profiel staat</span></div>";
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg er voor dat de url van uw pagina in uw Twitter-profiel staat</span></div>";
             }
         }
 
+        /// <summary>
+        /// Find if the found name is a Twitteraccount with the URL in the description
+        /// </summary>
+        /// <param name="screenName">Found screen name</param>
+        /// <returns>Boolean true if the account has the URL in description</returns>
         private bool isTwitter(string screenName)
         {
-            var twitterContext = new TwitterContext(authorizer);
             var allUsers = new List<User>();
 
             var users = from user in twitterContext.User
@@ -172,6 +189,52 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return false;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Get amount of followers
+        /// </summary>
+        /// <param name="screenName">string screen name</param>
+        /// <returns>Returns int amount of followers</returns>
+        private int GetFollowerCount(string screenName)
+        {
+            int amount = 0;
+
+            var users = from user in twitterContext.User
+                        where user.Type == UserType.Show &&
+                        user.ScreenName == screenName
+                        select user;
+
+            var returnedUser = users.ToList();
+
+            foreach (var item in returnedUser)
+            {
+                amount = item.FollowersCount;
+            }
+            return amount;
+        }
+
+        /// <summary>
+        /// Get amount of tweets from account
+        /// </summary>
+        /// <param name="screenName">string screen name</param>
+        /// <returns>Returns int amount of tweets</returns>
+        private int GetTweetCount(string screenName)
+        {
+            int amount = 0;
+
+            var users = from user in twitterContext.User
+                        where user.Type == UserType.Show &&
+                        user.ScreenName == screenName
+                        select user;
+
+            var returnedUser = users.ToList();
+
+            foreach (var item in returnedUser)
+            {
+                amount = item.StatusesCount;
+            }
+            return amount;
         }
     }
 }
