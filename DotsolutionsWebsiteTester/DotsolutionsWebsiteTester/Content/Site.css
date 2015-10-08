@@ -17,6 +17,9 @@
     #MainContent_TestsCheckBoxList3 {
         margin-left: 40%;
     }
+    .table-responsive {
+        overflow: auto;
+    }
 }
 
 @media (min-width: 768px) {
@@ -37,6 +40,10 @@
     #MainContent_TestsCheckBoxList3 {
         margin-left: 30%;
     }
+
+    .table-responsive {
+        overflow: visible !important;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -48,7 +55,7 @@
         font-size: 1em !important;
     }
 
-    #MainContent_CreatePdfBtn{
+    #MainContent_CreatePdfBtn {
         font-size: 1.2em !important;
     }
 
@@ -93,6 +100,7 @@ footer {
     padding-left: 15px;
     padding-right: 15px;
 }
+
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,

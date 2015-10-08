@@ -128,8 +128,8 @@ namespace DotsolutionsWebsiteTester
             System.IO.StreamWriter file = new System.IO.StreamWriter(@"c:\users\michael\dropbox\hw\Stageopdracht_Dotsolutions\_TestUitrollingen\"
                 + filename + ".html");
             file.WriteLine(sOut);
-
             file.Close();
+
 
             writer.Write(sOut);
         }

@@ -17,6 +17,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private List<string> notW3cCompliant = new List<string>();
         private int errorCnt = 0;
         private int warningCnt = 0;
+        private bool reqSuccess = true;
 
         private List<Thread> threadList = new List<Thread>();
 
@@ -34,7 +35,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine(">>>> CodeQuality");
 
             this.sitemap = (List<string>)Session["selectedSites"];
-            
+
             var ths = new ThreadStart(TestCodeQuality);
             var th = new Thread(ths);
             th.Start();
@@ -119,23 +120,26 @@ namespace DotsolutionsWebsiteTester.TestTools
             foreach (var thread in threadList)
                 thread.Join();
 
-            // Show results from W3CValidate()
-            if (notW3cCompliant.Count == 0)
+            if (reqSuccess)
             {
-                w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Alle geteste pagina's zijn W3C compliant</span></div>";
-            }
-            else
-            {
-                var unorderedlist = "<ul>";
-                foreach (var url in notW3cCompliant)
-                    unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
-                unorderedlist += "</ul>";
+                // Show results from W3CValidate()
+                if (notW3cCompliant.Count == 0)
+                {
+                    w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Alle geteste pagina's zijn W3C compliant</span></div>";
+                }
+                else
+                {
+                    var unorderedlist = "<ul>";
+                    foreach (var url in notW3cCompliant)
+                        unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
+                    unorderedlist += "</ul>";
 
-                w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> De volgende pagina's zijn niet W3C compliant.</span>" + unorderedlist + "</div>";
+                    w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> De volgende pagina's zijn niet W3C compliant.</span>" + unorderedlist + "</div>";
+                }
             }
 
             // Show table when W3C notifications are encountered 
@@ -172,87 +176,99 @@ namespace DotsolutionsWebsiteTester.TestTools
             string encoded = WebUtility.UrlEncode(url);
             Debug.WriteLine("Encoded: " + encoded);
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/check?uri=" + encoded + "&output=json");
-            request.UserAgent = Session["userAgent"].ToString();
-            request.Credentials = CredentialCache.DefaultCredentials;
-            // Get the response.
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            // Get the stream containing content returned by the server.
-            Stream dataStream = response.GetResponseStream();
-            // Open the stream using a StreamReader for easy access.
-            var reader = new StreamReader(dataStream);
-            // Read the content. 
-            string responseFromServer = reader.ReadToEnd();
-
             try
             {
-                JObject w3Validate = JObject.Parse(responseFromServer);
-                IList<JToken> messages = w3Validate["messages"].Children().ToList();
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/check?uri=" + encoded + "&output=json");
+                request.UserAgent = Session["userAgent"].ToString();
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.Timeout = 30000;
+                // Get the response.
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                // Get the stream containing content returned by the server.
+                Stream dataStream = response.GetResponseStream();
+                // Open the stream using a StreamReader for easy access.
+                var reader = new StreamReader(dataStream);
+                // Read the content. 
+                string responseFromServer = reader.ReadToEnd();
 
-                foreach (JToken item in messages)
+                try
                 {
-                    if (item["type"].ToString() == "error")
-                    {
-                        errorCnt++;
-                        if(!notW3cCompliant.Contains(url))
-                            notW3cCompliant.Add(url);
+                    JObject w3Validate = JObject.Parse(responseFromServer);
+                    IList<JToken> messages = w3Validate["messages"].Children().ToList();
 
-                        try
-                        {
-                            // add error message to table
-                            if (item["lastLine"] != null)
-                            {
-                                AddToTable(url, item["type"].ToString(), item["lastLine"].ToString(), item["lastColumn"].ToString(), item["message"].ToString());
-                            }
-                            else
-                            {
-                                AddToTable(url, item["type"].ToString(), "", "", item["message"].ToString());
-                            }
-                        }
-                        catch (NullReferenceException nre)
-                        {
-                            Debug.WriteLine("W3CValidate nullreference exception");
-                            Debug.WriteLine(nre.Message);
-                        }
-                    }
-                    else if (item["type"].ToString() == "info")
+                    foreach (JToken item in messages)
                     {
-                        if (item["subType"] != null)
+                        if (item["type"].ToString() == "error")
                         {
-                            if (item["subType"].ToString() == "warning")
+                            errorCnt++;
+                            if (!notW3cCompliant.Contains(url))
+                                notW3cCompliant.Add(url);
+
+                            try
                             {
-                                warningCnt++;
-                                if (!notW3cCompliant.Contains(url))
-                                    notW3cCompliant.Add(url);
-                                try
+                                // add error message to table
+                                if (item["lastLine"] != null)
                                 {
-                                    if (item["subType"] == null)
-                                    {
-                                        Debug.WriteLine("item[subType] is null");
-                                    }
-                                    if (item["message"] == null)
-                                    {
-                                        Debug.WriteLine("item[message] is null");
-                                    }
-                                    // add warning message to table
-                                    AddToTable(url, item["subType"].ToString(), "", "", item["message"].ToString());
+                                    AddToTable(url, item["type"].ToString(), item["lastLine"].ToString(), item["lastColumn"].ToString(), item["message"].ToString());
                                 }
-                                catch (NullReferenceException nrex)
+                                else
                                 {
-                                    Debug.WriteLine("Could not add to table due to: " + nrex.Message);
+                                    AddToTable(url, item["type"].ToString(), "", "", item["message"].ToString());
+                                }
+                            }
+                            catch (NullReferenceException nre)
+                            {
+                                Debug.WriteLine("W3CValidate nullreference exception");
+                                Debug.WriteLine(nre.Message);
+                            }
+                        }
+                        else if (item["type"].ToString() == "info")
+                        {
+                            if (item["subType"] != null)
+                            {
+                                if (item["subType"].ToString() == "warning")
+                                {
+                                    warningCnt++;
+                                    if (!notW3cCompliant.Contains(url))
+                                        notW3cCompliant.Add(url);
+                                    try
+                                    {
+                                        if (item["subType"] == null)
+                                        {
+                                            Debug.WriteLine("item[subType] is null");
+                                        }
+                                        if (item["message"] == null)
+                                        {
+                                            Debug.WriteLine("item[message] is null");
+                                        }
+                                        // add warning message to table
+                                        AddToTable(url, item["subType"].ToString(), "", "", item["message"].ToString());
+                                    }
+                                    catch (NullReferenceException nrex)
+                                    {
+                                        Debug.WriteLine("Could not add to table due to: " + nrex.Message);
+                                    }
                                 }
                             }
                         }
                     }
+
+                    // Cleanup the streams and the response.
+                    reader.Close();
+                    dataStream.Close();
+                    response.Close();
                 }
-
-                // Cleanup the streams and the response.
-                reader.Close();
-                dataStream.Close();
-                response.Close();
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
             }
-            catch (Exception e)
+            catch (WebException e)
             {
+                reqSuccess = false;
+                w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                    + "<span>W3C Validatie niet uit kunnen voeren voor " + url + ": " + e.Message + "</span></div>";
                 Debug.WriteLine(e.Message);
             }
         }
