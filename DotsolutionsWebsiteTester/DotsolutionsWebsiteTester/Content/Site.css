@@ -17,6 +17,7 @@
     #MainContent_TestsCheckBoxList3 {
         margin-left: 40%;
     }
+
     .table-responsive {
         overflow: auto;
     }
@@ -244,3 +245,11 @@ textarea {
         background-repeat: repeat-x;
         border-color: #85CC76;
     }
+
+#MainContent_Rating {
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border-radius: 200px;
+    font-size: 2em;
+}

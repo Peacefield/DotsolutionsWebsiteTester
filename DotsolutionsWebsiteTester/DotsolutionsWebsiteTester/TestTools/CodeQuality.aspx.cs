@@ -56,6 +56,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             var tableLayOutList = new List<string>();
             var noSemanticList = new List<string>();
+            decimal rating = 10.0m;
+            Debug.WriteLine("rating is ----- " + rating);
 
             foreach (string url in this.sitemap)
             {
@@ -83,6 +85,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
+                rating = rating - 1;
                 var unorderedlist = "<ul>";
                 foreach (var url in tableLayOutList)
                     unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
@@ -102,6 +105,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
+                rating = rating - 1;
                 var unorderedlist = "<ul>";
 
                 foreach (var item in noSemanticList)
@@ -141,10 +145,18 @@ namespace DotsolutionsWebsiteTester.TestTools
                         + "<span> De volgende pagina's zijn niet W3C compliant.</span>" + unorderedlist + "</div>";
                 }
             }
-
+            
             // Show table when W3C notifications are encountered 
             if (errorCnt > 0 || warningCnt > 0)
             {
+                var totalCnt = (errorCnt + warningCnt) / notW3cCompliant.Count;
+
+                rating = rating - ((decimal)totalCnt / 10.0m);
+                if (rating < 1)
+                    rating = 1.0m;
+
+                Rating.InnerHtml = rating.ToString();
+
                 W3ResultsTableHidden.Attributes.Remove("class");
                 var errorString = "";
                 var warningString = "";
@@ -162,6 +174,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> " + errorString + " en " + warningString + " gevonden.</span></div>";
+            }
+            else
+            {
+                Rating.InnerHtml = rating.ToString();
             }
         }
 

@@ -41,6 +41,12 @@
                 border-color: #85CC76;
             }
 
+        #MainContent_Rating {
+            padding: 10px;
+            background-color: white;
+            color: black;
+            border-radius: 200px;
+            font-size: 2em;
         }
     </style>
     <div class="well well-sm" id="sizeref">
