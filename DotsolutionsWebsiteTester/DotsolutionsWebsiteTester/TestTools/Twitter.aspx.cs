@@ -31,29 +31,29 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            //this.authorizer = new SingleUserAuthorizer
-            //    {
-            //        CredentialStore =
-            //           new SingleUserInMemoryCredentialStore
-            //           {
-            //               ConsumerKey =
-            //                   "lZiItDrOsCPBBIiKioA3QV6IS",
-            //               ConsumerSecret =
-            //                  "tQNgdYtIwqzMGTOVlL8J7Ye7l1FiUHtdnVVFohZgAbjyRCBrtj",
-            //               AccessToken =
-            //                  "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
-            //               AccessTokenSecret =
-            //                  "QzV1lfatNovTwLfWJn2lbJMhtRt5WNHGHowT0wHDKo5ld"
-            //           }
-            //    };
+            this.authorizer = new SingleUserAuthorizer
+                {
+                    CredentialStore =
+                       new SingleUserInMemoryCredentialStore
+                       {
+                           ConsumerKey =
+                               "lZiItDrOsCPBBIiKioA3QV6IS",
+                           ConsumerSecret =
+                              "tQNgdYtIwqzMGTOVlL8J7Ye7l1FiUHtdnVVFohZgAbjyRCBrtj",
+                           AccessToken =
+                              "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
+                           AccessTokenSecret =
+                              "QzV1lfatNovTwLfWJn2lbJMhtRt5WNHGHowT0wHDKo5ld"
+                       }
+                };
 
-            //this.twitterContext = new TwitterContext(authorizer);
+            this.twitterContext = new TwitterContext(authorizer);
 
-            //var ths = new ThreadStart(() => GetTwitter(Session["MainUrl"].ToString()));
-            //var th = new Thread(ths);
-            //th.Start();
+            var ths = new ThreadStart(() => GetTwitter(Session["MainUrl"].ToString()));
+            var th = new Thread(ths);
+            th.Start();
 
-            //th.Join();
+            th.Join();
 
             var sb = new System.Text.StringBuilder();
             TwitterSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -67,7 +67,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine("GetTwitterOptions <<< ");
 
             var screennameList = new List<string>();
-
+            var rating = 1.0m;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=8&q=twitter%20" + url);
             // Additional parameters
             // &rsz=[1-8] resultSize can be 1 through 8, currently using 8
@@ -117,6 +117,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (isTwitter(screenName))
                     {
+                        rating = 10m;
                         Debug.WriteLine(screenName + " gevonden!");
                         twitterfound = true;
                         var TweetCount = GetTweetCount(screenName);
@@ -130,10 +131,23 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                 }
                 if (!twitterfound)
+                {
+                    rating = 1.0m;
                     twitterResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                         + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg er voor dat de url van uw pagina in uw Twitter-profiel staat</span></div>";
+                }
             }
+            else
+            {
+                rating = 1.0m;
+                twitterResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                    + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg er voor dat de url van uw pagina in uw Twitter-profiel staat</span></div>";
+            }
+
+            decimal rounded = decimal.Round(rating, 1);
+            Rating.InnerHtml = rounded.ToString();
         }
 
         /// <summary>

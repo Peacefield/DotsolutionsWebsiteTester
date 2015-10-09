@@ -14,6 +14,7 @@ namespace DotsolutionsWebsiteTester.TestTools
     {
         private List<string> noHeadings = new List<string>();
         int errorCnt = 0;
+        int totalHeadingCnt = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -26,11 +27,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            //var ths = new ThreadStart(GetHeadings);
-            //var th = new Thread(ths);
-            //th.Start();
+            var ths = new ThreadStart(GetHeadings);
+            var th = new Thread(ths);
+            th.Start();
 
-            //th.Join();
+            th.Join();
 
             var sb = new System.Text.StringBuilder();
             HeadingsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -42,6 +43,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void GetHeadings()
         {
             var sitemap = (List<string>)Session["selectedSites"];
+            var rating = 10m;
             foreach (var url in sitemap)
             {
                 GetHeadingsOnUrl(url);
@@ -52,6 +54,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 string unorderedlist = "<ul>";
                 foreach (var item in noHeadings)
                 {
+                    rating = rating - 1;
                     unorderedlist += "<li>" + item + "</li>";
                 }
                 unorderedlist += "</ul>";
@@ -69,6 +72,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (errorCnt > 0)
             {
+                //rating = rating - ((decimal)errorCnt / (decimal)totalHeadingCnt);
+                Debug.WriteLine("totalHeadingCnt = " + totalHeadingCnt);
+                Debug.WriteLine("errorCnt = " + errorCnt);
+                rating = rating - ((decimal)errorCnt / (decimal)totalHeadingCnt);
+                Debug.WriteLine("rating = " + rating);
                 headingTableHidden.Attributes.Remove("class");
                 headingMessages.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
@@ -80,6 +88,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Alle headers zijn correct ingedeeld</span></div>";
             }
+            if (rating > 0)
+            {
+                decimal rounded = decimal.Round(rating, 1);
+                Rating.InnerHtml = rounded.ToString();
+            }
+            else
+                Rating.InnerHtml = "1,0";
         }
 
         private void GetHeadingsOnUrl(string url)
@@ -115,6 +130,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     foreach (var item in doc.DocumentNode.SelectNodes("//h1"))
                     {
                         h1list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
+                        totalHeadingCnt++;
                     }
                 }
                 if (doc.DocumentNode.SelectNodes("//h2") != null)
@@ -122,6 +138,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     foreach (var item in doc.DocumentNode.SelectNodes("//h2"))
                     {
                         h2list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
+                        totalHeadingCnt++;
                     }
                 }
                 if (doc.DocumentNode.SelectNodes("//h3") != null)
@@ -129,6 +146,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     foreach (var item in doc.DocumentNode.SelectNodes("//h3"))
                     {
                         h3list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
+                        totalHeadingCnt++;
                     }
                 }
                 if (doc.DocumentNode.SelectNodes("//h4") != null)
@@ -136,6 +154,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     foreach (var item in doc.DocumentNode.SelectNodes("//h4"))
                     {
                         h4list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
+                        totalHeadingCnt++;
                     }
                 }
                 if (doc.DocumentNode.SelectNodes("//h5") != null)
@@ -143,6 +162,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     foreach (var item in doc.DocumentNode.SelectNodes("//h5"))
                     {
                         h5list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
+                        totalHeadingCnt++;
                     }
                 }
                 if (doc.DocumentNode.SelectNodes("//h6") != null)
@@ -150,6 +170,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     foreach (var item in doc.DocumentNode.SelectNodes("//h6"))
                     {
                         h6list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
+                        totalHeadingCnt++;
                     }
                 }
 
@@ -213,70 +234,6 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                     listId++;
                 }
-
-
-                //if (h1list.Count == 0)
-                //{
-                //    // Dit klopt niet. Er zijn geen h1 elementen.
-                //    if (doc.DocumentNode.SelectNodes("//h2") != null)
-                //        foreach (var item in doc.DocumentNode.SelectNodes("//h2"))
-                //            AddToTable(item.InnerText, "H2", url);
-                //}
-                //else
-                //{
-                //    if (h2list.Count > 0)
-                //    {
-                //        foreach (var h2 in h2list)
-                //        {
-                //            var found = false;
-                //            foreach (var h1 in h1list)
-                //            {
-                //                if (h1.Key < h2.Key)
-                //                {
-                //                    // Dit klopt. h1 komt voor h2.
-                //                    found = true;
-                //                    break;
-                //                }
-                //                else
-                //                    found = false;
-                //            }
-                //            if (!found) // Geen h1 element gevonden voorafgaand aan dit h2 element
-                //                AddToTable(h2.Value, "H2", url);
-                //        }
-                //    }
-                //}
-
-                //if (h2list.Count == 0)
-                //{
-                //    // Dit klopt niet. Er zijn geen h2 elementen.
-                //    if (doc.DocumentNode.SelectNodes("//h3") != null)
-                //        foreach (var item in doc.DocumentNode.SelectNodes("//h3"))
-                //            AddToTable(item.InnerText, "H3", url);
-                //}
-                //else
-                //{
-                //    if (h3list.Count > 0)
-                //    {
-                //        foreach (var h3 in h3list)
-                //        {
-                //            var found = false;
-                //            foreach (var h2 in h2list)
-                //            {
-                //                if (h2.Key < h3.Key)
-                //                {
-                //                    // Dit klopt. h1 komt voor h2.
-                //                    found = true;
-                //                    break;
-                //                }
-                //                else
-                //                    found = false;
-                //            }
-                //            if (!found) // Geen h1 element gevonden voorafgaand aan dit h2 element
-                //                AddToTable(h3.Value, "H3", url);
-                //        }
-                //    }
-                //}
-
             }
         }
 

@@ -5,7 +5,9 @@
 
         <div id="SocialInterest">
             <div class="panel panel-custom" id="SocialInterestSession" runat="server">
-                <div class="panel-heading">Sociale interesse</div>
+                <div class="panel-heading">
+                    <span id="Rating" runat="server"></span> Sociale interesse
+                </div>
                 <div class="panel-body">
                 </div>
             </div>

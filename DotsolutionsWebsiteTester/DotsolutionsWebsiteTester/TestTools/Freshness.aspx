@@ -5,7 +5,9 @@
 
         <div id="Freshness">
             <div class="panel panel-custom" id="FreshnessSession" runat="server">
-                <div class="panel-heading">Versheid</div>
+                <div class="panel-heading">
+                    <span id="Rating" runat="server"></span> Versheid
+                </div>
                 <div class="panel-body">
                 </div>
             </div>

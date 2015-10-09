@@ -5,7 +5,9 @@
 
         <div id="ServerBehaviour">
             <div class="panel panel-custom" id="ServerBehaviourSession" runat="server">
-                <div class="panel-heading">Server gedrag</div>
+                <div class="panel-heading">
+                    <span id="Rating" runat="server"></span> Server gedrag
+                </div>
                 <div class="panel-body">
                 </div>
             </div>

@@ -146,17 +146,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
             }
             
-            // Show table when W3C notifications are encountered 
             if (errorCnt > 0 || warningCnt > 0)
             {
                 var totalCnt = (errorCnt + warningCnt) / notW3cCompliant.Count;
-
                 rating = rating - ((decimal)totalCnt / 10.0m);
                 if (rating < 1)
                     rating = 1.0m;
 
-                Rating.InnerHtml = rating.ToString();
-
+                // Show table when W3C notifications are encountered 
                 W3ResultsTableHidden.Attributes.Remove("class");
                 var errorString = "";
                 var warningString = "";
@@ -175,10 +172,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> " + errorString + " en " + warningString + " gevonden.</span></div>";
             }
-            else
-            {
-                Rating.InnerHtml = rating.ToString();
-            }
+
+            decimal rounded = decimal.Round(rating, 1);
+            Rating.InnerHtml = rounded.ToString();
         }
 
         /// <summary>

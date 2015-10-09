@@ -6,7 +6,9 @@
         
         <div id="Facebook">
             <div class="panel panel-custom" id="FacebookSession" runat="server">
-                <div class="panel-heading">Facebook</div>
+                <div class="panel-heading">
+                    <span id="Rating" runat="server"></span> Facebook
+                </div>
                 <div class="panel-body">
                 </div>
             </div>

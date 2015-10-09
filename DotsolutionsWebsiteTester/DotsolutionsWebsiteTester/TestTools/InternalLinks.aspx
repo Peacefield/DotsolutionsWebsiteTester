@@ -5,7 +5,9 @@
 
         <div id="InternalLinks">
             <div class="panel panel-custom" id="InternalLinksSession" runat="server">
-                <div class="panel-heading">Interne links</div>
+                <div class="panel-heading">
+                    <span id="Rating" runat="server"></span> Interne links
+                </div>
 
                 <div class="panel-body">
                     <div id="internalLinksErrorsFound" runat="server"></div>

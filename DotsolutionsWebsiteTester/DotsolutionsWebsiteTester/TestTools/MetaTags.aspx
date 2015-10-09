@@ -5,7 +5,9 @@
 
         <div id="MetaTags">
             <div class="panel panel-custom" id="MetaTagsSession" runat="server">
-                <div class="panel-heading">Meta tags</div>
+                <div class="panel-heading">
+                    <span id="Rating" runat="server"></span> Meta tags
+                </div>
                 <div class="panel-body">
                 </div>
             </div>
