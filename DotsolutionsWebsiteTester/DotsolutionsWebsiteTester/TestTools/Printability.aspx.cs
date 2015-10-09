@@ -14,6 +14,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private List<string> sitemap;
         private List<string> printable = new List<string>();
         private List<string> notPrintable = new List<string>();
+        private List<string> notPrintableCss = new List<string>();
         private List<Thread> threadList = new List<Thread>();
         private int printablePages = 0;
 
@@ -28,14 +29,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Response.Redirect("~/");
                 return;
             }
-
-            var sb = new System.Text.StringBuilder();
-            PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            string htmlstring = sb.ToString();
-
-            Session["Printability"] = htmlstring;
-            return;
-
 
             this.sitemap = (List<string>)Session["selectedSites"];
 
@@ -52,50 +45,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                 th.Join();
             }
 
-            if (printable.Count > 0)
-            {
-                string printablelist = "";
-                foreach (string item in printable)
-                {
-                    printablelist += "<li>" + item + "</li>";
-                }
-                if (printable.Count < sitemap.Count)
-                {
-                    PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Er is rekening gehouden met de printbaarheid van de volgende pagina's:</span>"
-                        + "<ul>" + printablelist + "</ul></div>";
-                }
-                else
-                    PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
-            }
+            ShowPrintability();
 
-            if (printablePages < sitemap.Count)
-            {
-                string notprintablelist = "";
-                foreach (var item in notPrintable)
-                {
-                    notprintablelist += "<li>" + item + "</li>";
-                }
-                string amount = "";
-                if ((sitemap.Count - printablePages) > 1)
-                    amount = "bevatten " + (sitemap.Count - printablePages) + " pagina's";
-                else
-                    amount = "bevat " + (sitemap.Count - printablePages) + " pagina";
+            var sb = new System.Text.StringBuilder();
+            PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
 
-                PrintResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de printbaarheid:</span>"
-                    + "<ul>" + notprintablelist + "</ul></div>";
-            }
-
-            //var sb = new System.Text.StringBuilder();
-            //PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            //string htmlstring = sb.ToString();
-
-            //Session["Printability"] = htmlstring;
+            Session["Printability"] = htmlstring;
         }
 
         /// <summary>
@@ -167,6 +123,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 AddToTable("Geen CSS aangetroffen en er wordt hierdoor waarschijnlijk geen rekening gehouden met de printbaarheid van de pagina.", url, "-");
                 notPrintable.Add(url);
+                notPrintableCss.Add("-");
             }
             else
             {
@@ -206,9 +163,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (!responseFromServer.Contains("@media print"))
             {
-                AddToTable("Er is geen rekening gehouden met de printbaarheid in de aangetroffen CSS.", url, cssUrl);
                 if (!printable.Contains(url))
+                {
                     notPrintable.Add(url);
+                    notPrintableCss.Add(cssUrl);
+                }
             }
             else
             {
@@ -217,8 +176,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                     printable.Add(url);
 
                 if (notPrintable.Contains(url))
-                    notPrintable.Remove(url);
+                {
+                    var index = notPrintable.IndexOf(url);
+                    notPrintableCss.RemoveAt(index);
 
+                    notPrintable.Remove(url);
+                }
             }
         }
 
@@ -240,6 +203,66 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             PrintabilityTable.Rows.Add(tRow);
             PrintabilityTableHidden.Attributes.Remove("class");
+        }
+
+        private void ShowPrintability()
+        {
+            var rating = 10m;
+            if (printable.Count > 0)
+            {
+                string printablelist = "";
+                foreach (string item in printable)
+                {
+                    printablelist += "<li>" + item + "</li>";
+                }
+                if (printable.Count < sitemap.Count)
+                {
+                    rating = rating - ((decimal)sitemap.Count - (decimal)printable.Count);
+                    PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Er is rekening gehouden met de printbaarheid van de volgende pagina's:</span>"
+                        + "<ul>" + printablelist + "</ul></div>";
+                }
+                else
+                    PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
+            }
+
+            if (printablePages < sitemap.Count)
+            {
+                string notprintablelist = "";
+                foreach (var item in notPrintable)
+                {
+                    notprintablelist += "<li>" + item + "</li>";
+                }
+                string amount = "";
+                if ((sitemap.Count - printablePages) > 1)
+                    amount = "bevatten " + (sitemap.Count - printablePages) + " pagina's";
+                else
+                    amount = "bevat " + (sitemap.Count - printablePages) + " pagina";
+
+                PrintResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                    + "<span> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de printbaarheid:</span>"
+                    + "<ul>" + notprintablelist + "</ul></div>";
+            }
+
+            if (notPrintable.Count > 0)
+            {
+                foreach (var url in notPrintable)
+                {
+                    if (!printable.Contains(url))
+                    {
+                        var index = notPrintable.IndexOf(url);
+                        var cssUrl = notPrintableCss[index].ToString();
+                        if (cssUrl != "-")
+                            AddToTable("Er is geen rekening gehouden met de printbaarheid in de aangetroffen CSS.", url, cssUrl);
+                    }
+                }
+            }
+
+            Rating.InnerHtml = rating.ToString();
         }
     }
 }
