@@ -24,26 +24,17 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            //var ths = new ThreadStart(TestInternalLinks);
+            //var th = new Thread(ths);
+            //th.Start();
+
+            //th.Join();
+
             var sb = new System.Text.StringBuilder();
             InternalLinksSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
             string htmlstring = sb.ToString();
 
             Session["InternalLinks"] = htmlstring;
-            return;
-
-
-
-            var ths = new ThreadStart(TestInternalLinks);
-            var th = new Thread(ths);
-            th.Start();
-
-            th.Join();
-
-            //var sb = new System.Text.StringBuilder();
-            //InternalLinksSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            //string htmlstring = sb.ToString();
-
-            //Session["InternalLinks"] = htmlstring;
         }
 
 

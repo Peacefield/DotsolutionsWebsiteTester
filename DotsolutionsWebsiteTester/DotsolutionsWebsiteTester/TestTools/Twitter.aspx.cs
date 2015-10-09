@@ -31,29 +31,29 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            this.authorizer = new SingleUserAuthorizer
-                {
-                    CredentialStore =
-                       new SingleUserInMemoryCredentialStore
-                       {
-                           ConsumerKey =
-                               "lZiItDrOsCPBBIiKioA3QV6IS",
-                           ConsumerSecret =
-                              "tQNgdYtIwqzMGTOVlL8J7Ye7l1FiUHtdnVVFohZgAbjyRCBrtj",
-                           AccessToken =
-                              "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
-                           AccessTokenSecret =
-                              "QzV1lfatNovTwLfWJn2lbJMhtRt5WNHGHowT0wHDKo5ld"
-                       }
-                };
+            //this.authorizer = new SingleUserAuthorizer
+            //    {
+            //        CredentialStore =
+            //           new SingleUserInMemoryCredentialStore
+            //           {
+            //               ConsumerKey =
+            //                   "lZiItDrOsCPBBIiKioA3QV6IS",
+            //               ConsumerSecret =
+            //                  "tQNgdYtIwqzMGTOVlL8J7Ye7l1FiUHtdnVVFohZgAbjyRCBrtj",
+            //               AccessToken =
+            //                  "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
+            //               AccessTokenSecret =
+            //                  "QzV1lfatNovTwLfWJn2lbJMhtRt5WNHGHowT0wHDKo5ld"
+            //           }
+            //    };
 
-            this.twitterContext = new TwitterContext(authorizer);
+            //this.twitterContext = new TwitterContext(authorizer);
 
-            var ths = new ThreadStart(() => GetTwitter(Session["MainUrl"].ToString()));
-            var th = new Thread(ths);
-            th.Start();
+            //var ths = new ThreadStart(() => GetTwitter(Session["MainUrl"].ToString()));
+            //var th = new Thread(ths);
+            //th.Start();
 
-            th.Join();
+            //th.Join();
 
             var sb = new System.Text.StringBuilder();
             TwitterSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));

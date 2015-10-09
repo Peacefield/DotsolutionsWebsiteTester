@@ -30,22 +30,22 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            this.sitemap = (List<string>)Session["selectedSites"];
+            //this.sitemap = (List<string>)Session["selectedSites"];
 
-            foreach (var url in sitemap)
-            {
-                var ths = new ThreadStart(() => TestPrintability(url));
-                var th = new Thread(ths);
-                threadList.Add(th);
-                th.Start();
-            }
+            //foreach (var url in sitemap)
+            //{
+            //    var ths = new ThreadStart(() => TestPrintability(url));
+            //    var th = new Thread(ths);
+            //    threadList.Add(th);
+            //    th.Start();
+            //}
 
-            foreach (var th in threadList)
-            {
-                th.Join();
-            }
+            //foreach (var th in threadList)
+            //{
+            //    th.Join();
+            //}
 
-            ShowPrintability();
+            //ShowPrintability();
 
             var sb = new System.Text.StringBuilder();
             PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));

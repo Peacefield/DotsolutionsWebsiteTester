@@ -27,11 +27,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            var ths = new ThreadStart(GetHeadings);
-            var th = new Thread(ths);
-            th.Start();
+            //var ths = new ThreadStart(GetHeadings);
+            //var th = new Thread(ths);
+            //th.Start();
 
-            th.Join();
+            //th.Join();
 
             var sb = new System.Text.StringBuilder();
             HeadingsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
