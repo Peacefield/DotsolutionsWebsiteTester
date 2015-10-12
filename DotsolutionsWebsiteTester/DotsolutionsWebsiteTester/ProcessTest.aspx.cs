@@ -148,6 +148,7 @@ namespace DotsolutionsWebsiteTester
             return;
         }
 
+        #region WebMethods for setting total rating
         [System.Web.Services.WebMethod]
         public static decimal GetAccessRating()
         {
@@ -164,16 +165,16 @@ namespace DotsolutionsWebsiteTester
             if ((decimal)HttpContext.Current.Session["RatingAccess"] != 0m)
             {
                 var AccessRatingSession = (decimal)HttpContext.Current.Session["RatingAccess"];
-                var count = 0;
+                var count = 0m;
                 Debug.WriteLine("AccessRatingSession -- " + AccessRatingSession);
-                foreach (var item in AccessRatingList)
+                foreach (var item in selectedTests)
                 {
-                    if (selectedTests.Contains(item))
+                    if (AccessRatingList.Contains(item))
                     {
                         count++;
                     }
                 }
-                var temp = AccessRatingSession / count;
+                var temp = decimal.Round(AccessRatingSession / count, 1);
                 Debug.WriteLine("temp --- " + temp);
                 return temp;
             }
@@ -204,16 +205,16 @@ namespace DotsolutionsWebsiteTester
             if ((decimal)HttpContext.Current.Session["RatingUx"] != 0m)
             {
                 var UserxRatingSession = (decimal)HttpContext.Current.Session["RatingUx"];
-                var count = 0;
+                var count = 0m;
                 Debug.WriteLine("UserxRatingSession -- " + UserxRatingSession);
-                foreach (var item in UserxRatingList)
+                foreach (var item in selectedTests)
                 {
-                    if (selectedTests.Contains(item))
+                    if (UserxRatingList.Contains(item))
                     {
                         count++;
                     }
                 }
-                var temp = UserxRatingSession / count;
+                var temp = decimal.Round(UserxRatingSession / count, 1);
                 Debug.WriteLine("temp --- " + temp);
                 return temp;
             }
@@ -244,16 +245,16 @@ namespace DotsolutionsWebsiteTester
             if ((decimal)HttpContext.Current.Session["RatingMarketing"] != 0m)
             {
                 var MarketingRatingSession = (decimal)HttpContext.Current.Session["RatingMarketing"];
-                var count = 0;
+                var count = 0m;
                 Debug.WriteLine("MarketingRatingSession -- " + MarketingRatingSession);
-                foreach (var item in MarketingRatingList)
+                foreach (var item in selectedTests)
                 {
-                    if (selectedTests.Contains(item))
+                    if (MarketingRatingList.Contains(item))
                     {
                         count++;
                     }
                 }
-                var temp = MarketingRatingSession / count;
+                var temp = decimal.Round(MarketingRatingSession / count, 1);
                 Debug.WriteLine("temp --- " + temp);
                 return temp;
             }
@@ -281,20 +282,22 @@ namespace DotsolutionsWebsiteTester
             if ((decimal)HttpContext.Current.Session["RatingTech"] != 0m)
             {
                 var TechRatingSession = (decimal)HttpContext.Current.Session["RatingTech"];
-                var count = 0;
+                var count = 0m;
                 Debug.WriteLine("TechRatingSession -- " + TechRatingSession);
-                foreach (var item in TechRatingList)
+                foreach (var item in selectedTests)
                 {
-                    if (selectedTests.Contains(item))
+                    if (TechRatingList.Contains(item))
                     {
                         count++;
                     }
                 }
-                var temp = TechRatingSession / count;
+                var temp = decimal.Round(TechRatingSession / count, 1);
                 Debug.WriteLine("temp --- " + temp);
                 return temp;
             }
             return 0m;
         }
+        #endregion
+
     }
 }

@@ -148,6 +148,12 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             decimal rounded = decimal.Round(rating, 1);
             Rating.InnerHtml = rounded.ToString();
+
+            var temp = (decimal)Session["RatingUx"];
+            Session["RatingUx"] = rounded + temp;
+            temp = (decimal)Session["RatingMarketing"];
+            Session["RatingMarketing"] = rounded + temp;
+
         }
 
         /// <summary>

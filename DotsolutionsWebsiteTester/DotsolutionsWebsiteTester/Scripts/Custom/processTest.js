@@ -18,16 +18,16 @@
 
     $("#progressbar").css({
         width: width,
-        top: ($bc.height() / 2)
+        top: 200
     });
 
     $("#loadingGIF").css({
-        top: ($bc.height() / 2) + $("#progressbar").height(),
-        left: ($bc.width() / 2) - ($(".loadingmid").width())
+        top: 210 + $("#progressbar").height(),
+        left: ($bc.width() / 2) - ($("#loadingGIF").width())
     });
 
     $("#TestProgress").css({
-        top: ($bc.height() / 2) + $("#progressbar").height() + $("#loadingGIF").height(),
+        top: 200 + $("#progressbar").height() + $("#loadingGIF").height(),
         width: width,
         //left: ($bc.width() / 2.5)
     });
@@ -42,15 +42,27 @@ function animateTo(identifier) {
 
 function OnAccessSuccess(response) {
     $("#RatingAccess").text(response);
+    if (response > 0) {
+        $("#RatingAccessTxt").css("display", "list-item");
+    }
 }
 function OnUserxSuccess(response) {
     $("#RatingUx").text(response);
+    if (response > 0) {
+        $("#RatingUxTxt").css("display", "list-item");
+    }
 }
 function OnMarketingSuccess(response) {
     $("#RatingMarketing").text(response);
+    if (response > 0) {
+        $("#RatingMarketingTxt").css("display", "list-item");
+    }
 }
 function OnTechSuccess(response) {
     $("#RatingTech").text(response);
+    if (response > 0) {
+        $("#RatingTechTxt").css("display", "list-item");
+    }
 }
 
 function OnError(error) {
@@ -118,9 +130,10 @@ window.onload = function () {
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
                                 $("#performedTestshidden").fadeIn();
+                                $("#RatingList").fadeIn();
                                 $("#MainContent_CreatePdfBtn").css("display", "block");
                                 document.title = 'Resultaten - Website tester';
-                            }, 500);
+                            }, 1000);
                         }
                     },
                     error: function (response) {

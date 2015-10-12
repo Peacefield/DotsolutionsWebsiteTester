@@ -31,51 +31,6 @@ namespace DotsolutionsWebsiteTester {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl UrlTesting;
         
         /// <summary>
-        /// RatingList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingList;
-        
-        /// <summary>
-        /// RatingAccessTxt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingAccessTxt;
-        
-        /// <summary>
-        /// RatingUxTxt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingUxTxt;
-        
-        /// <summary>
-        /// RatingMarketingTxt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingMarketingTxt;
-        
-        /// <summary>
-        /// RatingTechTxt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingTechTxt;
-        
-        /// <summary>
         /// PerformedTestsName control.
         /// </summary>
         /// <remarks>

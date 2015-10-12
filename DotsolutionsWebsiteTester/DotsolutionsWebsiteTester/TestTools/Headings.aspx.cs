@@ -92,9 +92,29 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 decimal rounded = decimal.Round(rating, 1);
                 Rating.InnerHtml = rounded.ToString();
+
+                var temp = (decimal)Session["RatingAccess"];
+                Session["RatingAccess"] = temp + rounded;
+
+                temp = (decimal)Session["RatingMarketing"];
+                Session["RatingMarketing"] = temp + rounded;
+
+                temp = (decimal)Session["RatingTech"];
+                Session["RatingTech"] = temp + rounded;
             }
             else
+            {
                 Rating.InnerHtml = "1,0";
+
+                var temp = (decimal)Session["RatingAccess"];
+                Session["RatingAccess"] = temp + 1m;
+
+                temp = (decimal)Session["RatingMarketing"];
+                Session["RatingMarketing"] = temp + 1m;
+
+                temp = (decimal)Session["RatingTech"];
+                Session["RatingTech"] = temp + 1m;
+            }
         }
 
         private void GetHeadingsOnUrl(string url)

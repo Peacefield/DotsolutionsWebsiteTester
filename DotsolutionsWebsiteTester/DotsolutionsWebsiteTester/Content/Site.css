@@ -170,7 +170,6 @@ textarea {
 }
 
 #loadingGIF {
-    top: 20%;
     left: 49%;
 }
 
@@ -208,10 +207,6 @@ textarea {
     right: 1%;
 }
 
-    #back-to-top img {
-        cursor: pointer;
-    }
-
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -226,7 +221,7 @@ textarea {
     cursor: pointer;
 }
 
-#MainContent_performedTestsName li a {
+#MainContent_PerformedTestsName li a {
     cursor: pointer;
 }
 
@@ -260,10 +255,14 @@ textarea {
     text-align: center;
 }
 
-.rating{
-    font-size:1.5em;
+.rating {
+    font-size: 1.5em;
 }
 
-#MainContent_RatingList li{
-    /*display:none;*/
+#RatingList {
+    display: none;
 }
+
+    #RatingList li {
+        display: none;
+    }

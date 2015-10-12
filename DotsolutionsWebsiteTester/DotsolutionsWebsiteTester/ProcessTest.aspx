@@ -36,13 +36,13 @@
         <h4 id="UrlTesting" runat="server"></h4>
     </div>
 
-    <div class="well well-sm">
+    <div class="well well-sm" id="RatingList">
         <h3>Beoordeling:</h3>
-        <ul id="RatingList" runat="server">
-            <li id="RatingAccessTxt" runat="server">Toegankelijkheid: <span id="RatingAccess" class="rating">[Aan het berekenen...]</span></li>
-            <li id="RatingUxTxt" runat="server">Gebruikerservaring: <span id="RatingUx" class="rating">[Aan het berekenen...]</span></li>
-            <li id="RatingMarketingTxt" runat="server">Marketing: <span id="RatingMarketing" class="rating">[Aan het berekenen...]</span></li>
-            <li id="RatingTechTxt" runat="server">Technologie: <span id="RatingTech" class="rating">[Aan het berekenen...]</span></li>
+        <ul runat="server">
+            <li id="RatingAccessTxt">Toegankelijkheid: <span id="RatingAccess" class="rating">[Aan het berekenen...]</span></li>
+            <li id="RatingUxTxt">Gebruikerservaring: <span id="RatingUx" class="rating">[Aan het berekenen...]</span></li>
+            <li id="RatingMarketingTxt">Marketing: <span id="RatingMarketing" class="rating">[Aan het berekenen...]</span></li>
+            <li id="RatingTechTxt">Technologie: <span id="RatingTech" class="rating">[Aan het berekenen...]</span></li>
         </ul>
     </div>
     <div id="performedTestshidden" class="well well-sm">
