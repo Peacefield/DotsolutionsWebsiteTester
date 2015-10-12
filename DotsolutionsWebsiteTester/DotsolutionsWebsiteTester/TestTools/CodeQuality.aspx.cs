@@ -57,7 +57,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             var tableLayOutList = new List<string>();
             var noSemanticList = new List<string>();
             decimal rating = 10.0m;
-            Debug.WriteLine("rating is ----- " + rating);
 
             foreach (string url in this.sitemap)
             {
@@ -175,6 +174,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             decimal rounded = decimal.Round(rating, 1);
             Rating.InnerHtml = rounded.ToString();
+            Session["RatingAccess"] = rounded;
+            Session["RatingTech"] = rounded;
         }
 
         /// <summary>

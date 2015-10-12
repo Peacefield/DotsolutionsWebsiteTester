@@ -25,6 +25,28 @@ namespace DotsolutionsWebsiteTester.TestTools
             string htmlstring = sb.ToString();
 
             Session["PageTitles"] = htmlstring;
+
+            var rounded = 10m;
+
+            if(Session["RatingAccess"] != null)
+            {
+                var temp = (decimal)Session["RatingAccess"];
+                Session["RatingAccess"] = rounded + temp;
+            }
+            else
+            {
+                Session["RatingAccess"] = rounded;
+            }
+
+            if (Session["RatingMarketing"] != null)
+            {
+                var temp = (decimal)Session["RatingMarketing"];
+                Session["RatingMarketing"] = rounded + temp;
+            }
+            else
+            {
+                Session["RatingMarketing"] = rounded;
+            }
         }
     }
 }

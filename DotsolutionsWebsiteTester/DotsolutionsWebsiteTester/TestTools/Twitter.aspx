@@ -6,7 +6,7 @@
         <div id="Twitter">
             <div class="panel panel-custom" id="TwitterSession" runat="server">
                 <div class="panel-heading">
-                    <span id="Rating" runat="server"></span> Twitter
+                    <span id="Rating" runat="server">?</span> Twitter
                 </div>
                 <div class="panel-body">
                 <div id="twitterResults" runat="server"></div>

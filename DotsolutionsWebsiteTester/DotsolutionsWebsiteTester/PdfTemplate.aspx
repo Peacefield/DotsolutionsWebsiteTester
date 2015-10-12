@@ -42,11 +42,17 @@
             }
 
         #MainContent_Rating {
-            padding: 10px;
+            display: inline-block;
+            max-width: 60px;
+            width: 50px;
+            height: 50px;
+            font-size: 2em;
             background-color: white;
             color: black;
             border-radius: 200px;
-            font-size: 2em;
+            margin-right: 5px;
+            padding: 5px;
+            text-align: center;
         }
     </style>
     <div class="well well-sm" id="sizeref">

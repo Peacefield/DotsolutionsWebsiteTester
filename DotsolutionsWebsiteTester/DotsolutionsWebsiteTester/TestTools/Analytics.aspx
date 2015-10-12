@@ -6,7 +6,7 @@
         <div id="Analytics">
             <div class="panel panel-custom" id="AnalyticsSession" runat="server">
                 <div class="panel-heading">
-                    <span id="Rating" runat="server"></span>Analytics
+                    <span id="Rating" runat="server">?</span>Analytics
                 </div>
                 <div class="panel-body">
                     <div id="AnalyticsResults" runat="server"></div>

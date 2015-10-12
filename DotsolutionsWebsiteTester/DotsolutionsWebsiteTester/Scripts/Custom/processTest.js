@@ -40,6 +40,23 @@ function animateTo(identifier) {
     }, 1000);
 }
 
+function OnAccessSuccess(response) {
+    $("#RatingAccess").text(response);
+}
+function OnUserxSuccess(response) {
+    $("#RatingUx").text(response);
+}
+function OnMarketingSuccess(response) {
+    $("#RatingMarketing").text(response);
+}
+function OnTechSuccess(response) {
+    $("#RatingTech").text(response);
+}
+
+function OnError(error) {
+    alert(error);
+}
+
 window.onresize = function () {
     setup_loading();
 }
@@ -94,6 +111,10 @@ window.onload = function () {
                         $("#TestsComplete").append("<li>" + value + "</li>");
 
                         if (progress == 100) {
+                            PageMethods.GetAccessRating(OnAccessSuccess, OnError);
+                            PageMethods.GetUserxRating(OnUserxSuccess, OnError);
+                            PageMethods.GetMarketingRating(OnMarketingSuccess, OnError);
+                            PageMethods.GetTechRating(OnTechSuccess, OnError);
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
                                 $("#performedTestshidden").fadeIn();

@@ -36,13 +36,22 @@
         <h4 id="UrlTesting" runat="server"></h4>
     </div>
 
+    <div class="well well-sm">
+        <h3>Beoordeling:</h3>
+        <ul id="RatingList" runat="server">
+            <li id="RatingAccessTxt" runat="server">Toegankelijkheid: <span id="RatingAccess" class="rating">[Aan het berekenen...]</span></li>
+            <li id="RatingUxTxt" runat="server">Gebruikerservaring: <span id="RatingUx" class="rating">[Aan het berekenen...]</span></li>
+            <li id="RatingMarketingTxt" runat="server">Marketing: <span id="RatingMarketing" class="rating">[Aan het berekenen...]</span></li>
+            <li id="RatingTechTxt" runat="server">Technologie: <span id="RatingTech" class="rating">[Aan het berekenen...]</span></li>
+        </ul>
+    </div>
     <div id="performedTestshidden" class="well well-sm">
         <h3>Uitgevoerde tests:</h3>
-        <ul id="performedTestsName" runat="server"></ul>
+        <ul id="PerformedTestsName" runat="server"></ul>
     </div>
     <div class="well well-sm">
         <h3>Geteste sites:</h3>
-        <ul id="testedsiteslist" runat="server"></ul>
+        <ul id="TestedSitesList" runat="server"></ul>
     </div>
 
     <div class="hidden">
@@ -50,10 +59,10 @@
     </div>
 
     <div id="result"></div>
-        
+
     <div id="back-to-top">
         <div class="btn btn-success btn-md" id="ToTopBtn">
-        <span aria-hidden="true" class="glyphicon glyphicon-arrow-up"></span>
+            <span aria-hidden="true" class="glyphicon glyphicon-arrow-up"></span>
             Terug naar boven
         </div>
     </div>

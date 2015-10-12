@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Web;
+using System.Web.UI;
 
 namespace DotsolutionsWebsiteTester
 {
@@ -27,8 +29,14 @@ namespace DotsolutionsWebsiteTester
 
                 UrlTesting.InnerText = Session["MainUrl"].ToString();
 
+                // Set user agent
                 string userAgent = "Mozilla/5.0 (Quality test, http://www.example.net)";
                 Session["userAgent"] = userAgent;
+                // Set rating sessions
+                Session["RatingAccess"] = 0m;
+                Session["RatingUx"] = 0m;
+                Session["RatingMarketing"] = 0m;
+                Session["RatingTech"] = 0m;
 
                 var ths = new ThreadStart(GetTestList);
                 var th = new Thread(ths);
@@ -57,10 +65,10 @@ namespace DotsolutionsWebsiteTester
                 // Set list for ajax requests
                 performedTests.InnerHtml += "<li>" + selectedTests[i] + "</li>";
                 // Display name for user
-                performedTestsName.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                PerformedTestsName.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
             }
         }
-        
+
         /// <summary>
         /// Get list of sites we can test from the google search api
         /// Adds this list to Session["selectedSites"] so we can access it throughout the application
@@ -107,7 +115,7 @@ namespace DotsolutionsWebsiteTester
                     // This if-statement detects if it IS among the found URL's by comparing it to several possible URL formats
                     if (item["url"].ToString() == url || item["url"].ToString() == (url + "/")
                         || item["url"].ToString() == url.Replace("http://", "https://") || item["url"].ToString() == url.Replace("https://", "http://")
-                        || item["url"].ToString() == url.Replace("http://", "https://") + "/" || item["url"].ToString() == url.Replace("https://", "http://") + "/" )
+                        || item["url"].ToString() == url.Replace("http://", "https://") + "/" || item["url"].ToString() == url.Replace("https://", "http://") + "/")
                         isPresent = true;
                 }
                 if (!isPresent)
@@ -122,8 +130,8 @@ namespace DotsolutionsWebsiteTester
             response.Close();
 
             foreach (string item in sitemap)
-                testedsiteslist.InnerHtml += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
-
+                TestedSitesList.InnerHtml += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
+            
             // Add tested sites to session
             Session["selectedSites"] = sitemap;
         }
@@ -138,6 +146,155 @@ namespace DotsolutionsWebsiteTester
             Response.Redirect("~/PdfTemplate.aspx");
 
             return;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static decimal GetAccessRating()
+        {
+            var AccessRatingList = new List<string>();
+            var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
+            string[] accessRatingList = { "CodeQuality", 
+                                                "PageTitles", 
+                                                "MobileCompatibility", 
+                                                "Headings", 
+                                                "InternalLinks", 
+                                                "UrlFormat" };
+            AccessRatingList.AddRange(accessRatingList);
+
+            if ((decimal)HttpContext.Current.Session["RatingAccess"] != 0m)
+            {
+                var AccessRatingSession = (decimal)HttpContext.Current.Session["RatingAccess"];
+                var count = 0;
+                Debug.WriteLine("AccessRatingSession -- " + AccessRatingSession);
+                foreach (var item in AccessRatingList)
+                {
+                    if (selectedTests.Contains(item))
+                    {
+                        count++;
+                    }
+                }
+                var temp = AccessRatingSession / count;
+                Debug.WriteLine("temp --- " + temp);
+                return temp;
+            }
+            return 0m;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static decimal GetUserxRating()
+        {
+            var UserxRatingList = new List<string>();
+            var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
+
+            string[] userxRatingList = { "GooglePlus", 
+                                               "Facebook", 
+                                               "Twitter", 
+                                               "SocialInterest", 
+                                               "Popularity", 
+                                               "AmountOfContent", 
+                                               "Images", 
+                                               "ServerBehaviour", 
+                                               "MobileCompatibility", 
+                                               "InternalLinks", 
+                                               "Printability", 
+                                               "UrlFormat", 
+                                               "Freshness" };
+            UserxRatingList.AddRange(userxRatingList);
+
+            if ((decimal)HttpContext.Current.Session["RatingUx"] != 0m)
+            {
+                var UserxRatingSession = (decimal)HttpContext.Current.Session["RatingUx"];
+                var count = 0;
+                Debug.WriteLine("UserxRatingSession -- " + UserxRatingSession);
+                foreach (var item in UserxRatingList)
+                {
+                    if (selectedTests.Contains(item))
+                    {
+                        count++;
+                    }
+                }
+                var temp = UserxRatingSession / count;
+                Debug.WriteLine("temp --- " + temp);
+                return temp;
+            }
+            return 0m;
+        }
+        
+        [System.Web.Services.WebMethod]
+        public static decimal GetMarketingRating()
+        {
+            var MarketingRatingList = new List<string>();
+            var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
+            
+            string[] marketingRatingList = { "GooglePlus", 
+                                               "Facebook", 
+                                               "Twitter", 
+                                               "SocialInterest", 
+                                               "Popularity", 
+                                               "AmountOfContent", 
+                                               "PageTitles", 
+                                               "Headings", 
+                                               "IncomingLinks", 
+                                               "InternalLinks", 
+                                               "Freshness", 
+                                               "Analytics", 
+                                               "MetaTags" };
+            MarketingRatingList.AddRange(marketingRatingList);
+
+            if ((decimal)HttpContext.Current.Session["RatingMarketing"] != 0m)
+            {
+                var MarketingRatingSession = (decimal)HttpContext.Current.Session["RatingMarketing"];
+                var count = 0;
+                Debug.WriteLine("MarketingRatingSession -- " + MarketingRatingSession);
+                foreach (var item in MarketingRatingList)
+                {
+                    if (selectedTests.Contains(item))
+                    {
+                        count++;
+                    }
+                }
+                var temp = MarketingRatingSession / count;
+                Debug.WriteLine("temp --- " + temp);
+                return temp;
+            }
+            return 0m;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static decimal GetTechRating()
+        {
+            var TechRatingList = new List<string>();
+            var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
+
+            string[] techRatingList = { "CodeQuality", 
+                                                "Images", 
+                                                "ServerBehaviour", 
+                                                "MobileCompatibility", 
+                                                "Headings", 
+                                                "InternalLinks", 
+                                                "MetaTags", 
+                                                "Printability", 
+                                                "UrlFormat" };
+
+            TechRatingList.AddRange(techRatingList);
+
+            if ((decimal)HttpContext.Current.Session["RatingTech"] != 0m)
+            {
+                var TechRatingSession = (decimal)HttpContext.Current.Session["RatingTech"];
+                var count = 0;
+                Debug.WriteLine("TechRatingSession -- " + TechRatingSession);
+                foreach (var item in TechRatingList)
+                {
+                    if (selectedTests.Contains(item))
+                    {
+                        count++;
+                    }
+                }
+                var temp = TechRatingSession / count;
+                Debug.WriteLine("temp --- " + temp);
+                return temp;
+            }
+            return 0m;
         }
     }
 }
