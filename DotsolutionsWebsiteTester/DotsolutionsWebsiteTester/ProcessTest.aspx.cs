@@ -175,7 +175,7 @@ namespace DotsolutionsWebsiteTester
                     }
                 }
                 var temp = decimal.Round(AccessRatingSession / count, 1);
-                Debug.WriteLine("temp --- " + temp);
+                HttpContext.Current.Session["RatingAccess"] = temp;
                 return temp;
             }
             return 0m;
@@ -215,7 +215,7 @@ namespace DotsolutionsWebsiteTester
                     }
                 }
                 var temp = decimal.Round(UserxRatingSession / count, 1);
-                Debug.WriteLine("temp --- " + temp);
+                HttpContext.Current.Session["RatingUx"] = temp;
                 return temp;
             }
             return 0m;
@@ -255,7 +255,7 @@ namespace DotsolutionsWebsiteTester
                     }
                 }
                 var temp = decimal.Round(MarketingRatingSession / count, 1);
-                Debug.WriteLine("temp --- " + temp);
+                HttpContext.Current.Session["RatingMarketing"] = temp;
                 return temp;
             }
             return 0m;
@@ -292,7 +292,7 @@ namespace DotsolutionsWebsiteTester
                     }
                 }
                 var temp = decimal.Round(TechRatingSession / count, 1);
-                Debug.WriteLine("temp --- " + temp);
+                HttpContext.Current.Session["RatingTech"] = temp;
                 return temp;
             }
             return 0m;

@@ -38,6 +38,8 @@ namespace DotsolutionsWebsiteTester
             for (int i = 0; i < selectedTests.Count; i++)
                 performedTests.InnerHtml += "<li><a href='#" + selectedTests[i] + "' >" + selectedTestsName[i] + "</a></li>";
 
+            SetTotalRating();
+
             // Append HTML to the results div
             foreach (var test in selectedTests)
             {
@@ -52,6 +54,23 @@ namespace DotsolutionsWebsiteTester
                         + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>";
                 }
             }
+        }
+
+        private void SetTotalRating()
+        {
+            RatingAccess.InnerHtml = ((decimal)Session["RatingAccess"]).ToString();
+            RatingUx.InnerHtml = ((decimal)Session["RatingUx"]).ToString();
+            RatingMarketing.InnerHtml = ((decimal)Session["RatingMarketing"]).ToString();
+            RatingTech.InnerHtml = ((decimal)Session["RatingTech"]).ToString();
+
+            if ((decimal)Session["RatingAccess"] != 0m)
+                RatingAccessTxt.Style.Add("display", "list-item");
+            if ((decimal)Session["RatingUx"] != 0m)
+                RatingUxTxt.Style.Add("display", "list-item");
+            if ((decimal)Session["RatingMarketing"] != 0m)
+                RatingMarketingTxt.Style.Add("display", "list-item");
+            if ((decimal)Session["RatingTech"] != 0m)
+                RatingTechTxt.Style.Add("display", "list-item");
         }
 
         /// <summary>

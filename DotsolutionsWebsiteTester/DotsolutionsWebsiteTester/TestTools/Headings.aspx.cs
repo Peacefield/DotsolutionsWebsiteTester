@@ -27,11 +27,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            //var ths = new ThreadStart(GetHeadings);
-            //var th = new Thread(ths);
-            //th.Start();
+            var ths = new ThreadStart(GetHeadings);
+            var th = new Thread(ths);
+            th.Start();
 
-            //th.Join();
+            th.Join();
 
             var sb = new System.Text.StringBuilder();
             HeadingsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -72,15 +72,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (errorCnt > 0)
             {
-                //rating = rating - ((decimal)errorCnt / (decimal)totalHeadingCnt);
-                Debug.WriteLine("totalHeadingCnt = " + totalHeadingCnt);
-                Debug.WriteLine("errorCnt = " + errorCnt);
-                rating = rating - ((decimal)errorCnt / (decimal)totalHeadingCnt);
-                Debug.WriteLine("rating = " + rating);
+                rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 9);
                 headingTableHidden.Attributes.Remove("class");
                 headingMessages.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> De volgende headers bevinden zich niet in een overkoepelend header-element:</span></div>";
+                    + "<span> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
             }
             else
             {
@@ -138,12 +134,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 && doc.DocumentNode.SelectNodes("//h5") == null
                 && doc.DocumentNode.SelectNodes("//h6") == null)
             {
-                Debug.WriteLine("Er worden geen headers gebruikt op " + url);
                 noHeadings.Add(url);
             }
             else
             {
-                Debug.WriteLine(url + " gebruikt headers");
                 // Vul lijsten voor controle
                 if (doc.DocumentNode.SelectNodes("//h1") != null)
                 {
@@ -206,17 +200,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                 for (int i = 0; i < listlist.Count; i++)
                 {
                     var nextheader = "h" + listId;
-                    Debug.WriteLine("Bezig met " + i + " heeft count: " + listlist[i].Count);
-                    Debug.WriteLine("nextheader is: " + nextheader);
 
                     if (listlist[i].Count == 0)
                     {
                         if (doc.DocumentNode.SelectNodes("//" + nextheader + "") != null)
                         {
-                            Debug.WriteLine("Geen overkoepelende header aanwezig. Dit klopt dus niet");
                             foreach (var item in doc.DocumentNode.SelectNodes("//" + nextheader + ""))
                             {
-                                Debug.WriteLine(" >>>>>>>>>>>>> listlist[i].Count == 0 >>>>>>>>>> " + nextheader + " op streamposition: " + item.StreamPosition + " met tekst: " + item.InnerText);
                                 AddToTable(item.InnerText, nextheader, url);
                             }
                         }
@@ -235,7 +225,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                                     {
                                         if (listlist[i][j].Key < nextlist.Key)
                                         {
-                                            Debug.WriteLine("Dit klopt. " + listlist[i][j].Key + " komt voor " + nextlist.Key);
                                             found = true;
                                             break;
                                         }
@@ -245,7 +234,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                                     if (!found)
                                     {
                                         AddToTable(nextlist.Value, nextheader, url);
-                                        Debug.WriteLine(nextheader + " op streamposition: " + nextlist.Key + " met tekst: " + nextlist.Value);
                                     }
                                 }
                             }

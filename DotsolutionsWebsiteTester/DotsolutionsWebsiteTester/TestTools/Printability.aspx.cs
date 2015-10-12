@@ -30,22 +30,22 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            //this.sitemap = (List<string>)Session["selectedSites"];
+            this.sitemap = (List<string>)Session["selectedSites"];
 
-            //foreach (var url in sitemap)
-            //{
-            //    var ths = new ThreadStart(() => TestPrintability(url));
-            //    var th = new Thread(ths);
-            //    threadList.Add(th);
-            //    th.Start();
-            //}
+            foreach (var url in sitemap)
+            {
+                var ths = new ThreadStart(() => TestPrintability(url));
+                var th = new Thread(ths);
+                threadList.Add(th);
+                th.Start();
+            }
 
-            //foreach (var th in threadList)
-            //{
-            //    th.Join();
-            //}
+            foreach (var th in threadList)
+            {
+                th.Join();
+            }
 
-            //ShowPrintability();
+            ShowPrintability();
 
             var sb = new System.Text.StringBuilder();
             PrintabilitySession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -208,6 +208,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void ShowPrintability()
         {
             var rating = 10m;
+
+            // Er zijn printbare pagina's
             if (printable.Count > 0)
             {
                 string printablelist = "";
@@ -215,9 +217,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     printablelist += "<li>" + item + "</li>";
                 }
+                // Minder pagina's printbaar dan getest
+                // Er zitten dus niet-printbare pagina's bij
                 if (printable.Count < sitemap.Count)
                 {
-                    rating = rating - ((decimal)sitemap.Count - (decimal)printable.Count);
+                    rating = rating - (((decimal)sitemap.Count - (decimal)printable.Count) * (10m / (decimal)sitemap.Count));
                     PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                         + "<span> Er is rekening gehouden met de printbaarheid van de volgende pagina's:</span>"
@@ -227,6 +231,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                     PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                         + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
+            }
+            else
+            {
+                rating = 1.0m;
             }
 
             if (printablePages < sitemap.Count)
@@ -263,6 +271,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             Rating.InnerHtml = rating.ToString();
+            Session["RatingUx"] = rating;
+            Session["RatingTech"] = rating;
         }
     }
 }
