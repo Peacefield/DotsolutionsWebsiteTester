@@ -29,26 +29,18 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Response.Redirect("~/");
                 return;
             }
+            
+            //var ths = new ThreadStart(TestAnalytics);
+            //var th = new Thread(ths);
+            //th.Start();
 
+            //th.Join();
+            
             var sb = new System.Text.StringBuilder();
             AnalyticsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
             string htmlstring = sb.ToString();
 
             Session["Analytics"] = htmlstring;
-            return;
-
-
-            var ths = new ThreadStart(TestAnalytics);
-            var th = new Thread(ths);
-            th.Start();
-
-            th.Join();
-
-            //var sb = new System.Text.StringBuilder();
-            //AnalyticsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            //string htmlstring = sb.ToString();
-
-            //Session["Analytics"] = htmlstring;
         }
 
         /// <summary>
