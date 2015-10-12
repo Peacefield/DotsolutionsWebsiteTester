@@ -269,10 +269,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                 }
             }
+            var rounded = decimal.Round(rating, 1);
+            Rating.InnerHtml = rounded.ToString();
 
-            Rating.InnerHtml = rating.ToString();
-            Session["RatingUx"] = rating;
-            Session["RatingTech"] = rating;
+            var temp = (decimal)Session["RatingUx"];
+            Session["RatingUx"] = temp + rounded;
+
+            temp = (decimal)Session["RatingTech"];
+            Session["RatingTech"] = temp + rounded;
         }
     }
 }
