@@ -13,8 +13,8 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class Headings : System.Web.UI.Page
     {
         private List<string> noHeadings = new List<string>();
-        int errorCnt = 0;
-        int totalHeadingCnt = 0;
+        private int errorCnt = 0;
+        private int totalHeadingCnt = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -158,12 +158,10 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 foreach (var list in templist)
                 {
-                    Debug.WriteLine("Zoeken naar h" + current);
                     if (doc.DocumentNode.SelectNodes("//h" + current) != null)
                     {
                         foreach (var item in doc.DocumentNode.SelectNodes("//h" + current))
                         {
-                            Debug.WriteLine("h" + current + " gevonden!");
                             list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
                             totalHeadingCnt++;
                         }
