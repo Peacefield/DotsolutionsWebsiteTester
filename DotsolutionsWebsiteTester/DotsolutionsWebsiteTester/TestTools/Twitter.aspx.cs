@@ -31,29 +31,29 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            //this.authorizer = new SingleUserAuthorizer
-            //    {
-            //        CredentialStore =
-            //           new SingleUserInMemoryCredentialStore
-            //           {
-            //               ConsumerKey =
-            //                   "lZiItDrOsCPBBIiKioA3QV6IS",
-            //               ConsumerSecret =
-            //                  "tQNgdYtIwqzMGTOVlL8J7Ye7l1FiUHtdnVVFohZgAbjyRCBrtj",
-            //               AccessToken =
-            //                  "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
-            //               AccessTokenSecret =
-            //                  "QzV1lfatNovTwLfWJn2lbJMhtRt5WNHGHowT0wHDKo5ld"
-            //           }
-            //    };
+            this.authorizer = new SingleUserAuthorizer
+                {
+                    CredentialStore =
+                       new SingleUserInMemoryCredentialStore
+                       {
+                           ConsumerKey =
+                               "lZiItDrOsCPBBIiKioA3QV6IS",
+                           ConsumerSecret =
+                              "tQNgdYtIwqzMGTOVlL8J7Ye7l1FiUHtdnVVFohZgAbjyRCBrtj",
+                           AccessToken =
+                              "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
+                           AccessTokenSecret =
+                              "QzV1lfatNovTwLfWJn2lbJMhtRt5WNHGHowT0wHDKo5ld"
+                       }
+                };
 
-            //this.twitterContext = new TwitterContext(authorizer);
+            this.twitterContext = new TwitterContext(authorizer);
 
-            //var ths = new ThreadStart(() => GetTwitter(Session["MainUrl"].ToString()));
-            //var th = new Thread(ths);
-            //th.Start();
+            var ths = new ThreadStart(() => GetTwitter(Session["MainUrl"].ToString()));
+            var th = new Thread(ths);
+            th.Start();
 
-            //th.Join();
+            th.Join();
 
             var sb = new System.Text.StringBuilder();
             TwitterSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -107,24 +107,26 @@ namespace DotsolutionsWebsiteTester.TestTools
                         screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
 
                     if (!screenName.Contains("/") && screenName != "")
+                    {
                         screennameList.Add(screenName);
 
-                    Debug.WriteLine(screenName);
+                        Debug.WriteLine("screenName ---> " + screenName);
+                    }
                 }
 
                 var twitterfound = false;
                 foreach (var screenName in screennameList)
                 {
-                    if (isTwitter(screenName))
+                    if (IsTwitter(screenName))
                     {
                         rating = 10m;
                         Debug.WriteLine(screenName + " gevonden!");
                         twitterfound = true;
-                        var TweetCount = GetTweetCount(screenName);
-                        var FollowersCount = GetFollowerCount(screenName);
+                        var TweetCount = GetTweetCount(screenName).ToString("#,##0");
+                        var FollowersCount = GetFollowerCount(screenName).ToString("#,##0");
                         twitterResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                            + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank'>" + screenName + "</a> gevonden</span></div>";
+                            + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span></div>";
                         twitterResults.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                             + "<span> Dit account heeft " + TweetCount + " tweets gemaakt naar " + FollowersCount + " volgers</span></div>";
@@ -135,7 +137,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     rating = 1.0m;
                     twitterResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                        + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg er voor dat de url van uw pagina in uw Twitter-profiel staat</span></div>";
+                        + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Twitter-profiel staat</span></div>";
                 }
             }
             else
@@ -143,7 +145,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 1.0m;
                 twitterResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg er voor dat de url van uw pagina in uw Twitter-profiel staat</span></div>";
+                    + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Twitter-profiel staat</span></div>";
             }
 
             decimal rounded = decimal.Round(rating, 1);
@@ -161,7 +163,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         /// <param name="screenName">Found screen name</param>
         /// <returns>Boolean true if the account has the URL in description</returns>
-        private bool isTwitter(string screenName)
+        private bool IsTwitter(string screenName)
         {
             var allUsers = new List<User>();
 
@@ -198,7 +200,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         }
                         catch (WebException we)
                         {
-                            Debug.WriteLine(we.Message);
+                            Debug.WriteLine("IsTwitter Catch" + we.Message);
                         }
                     }
                 }

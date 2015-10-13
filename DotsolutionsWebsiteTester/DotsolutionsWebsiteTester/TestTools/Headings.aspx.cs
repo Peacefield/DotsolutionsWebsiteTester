@@ -54,6 +54,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 string unorderedlist = "<ul>";
                 foreach (var item in noHeadings)
                 {
+                    // puntreductie gelijk aan percentage van totaal aantal geteste sites
+
                     rating = rating - 1;
                     unorderedlist += "<li>" + item + "</li>";
                 }
@@ -72,7 +74,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (errorCnt > 0)
             {
-                rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 9);
+                rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 4.5m);
                 headingTableHidden.Attributes.Remove("class");
                 headingMessages.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"

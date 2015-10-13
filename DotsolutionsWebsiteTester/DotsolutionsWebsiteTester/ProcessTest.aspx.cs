@@ -298,6 +298,5 @@ namespace DotsolutionsWebsiteTester
             return 0m;
         }
         #endregion
-
     }
 }

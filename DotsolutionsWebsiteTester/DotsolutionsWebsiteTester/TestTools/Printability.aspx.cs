@@ -144,6 +144,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Check if found CSS is compatible for printing
+        /// </summary>
+        /// <param name="url">URL where CSS was found</param>
+        /// <param name="cssUrl">URL of found CSS</param>
         private void TestCss(string url, string cssUrl)
         {
             Debug.WriteLine("Getting content of: " + cssUrl + " from: " + url);
@@ -185,6 +190,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Add to table
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="url">URL of origin</param>
+        /// <param name="cssUrl">URL of found CSS</param>
         private void AddToTable(string msg, string url, string cssUrl)
         {
             var tRow = new TableRow();
@@ -205,6 +216,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             PrintabilityTableHidden.Attributes.Remove("class");
         }
 
+        /// <summary>
+        /// Show resultmessages
+        /// </summary>
         private void ShowPrintability()
         {
             var rating = 10m;
