@@ -54,9 +54,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 string unorderedlist = "<ul>";
                 foreach (var item in noHeadings)
                 {
-                    // puntreductie gelijk aan percentage van totaal aantal geteste sites
-
-                    rating = rating - 1;
+                    // Point reduction equal to percentage equal to the total amount of tested sites
+                    rating = rating - ((1m / (decimal)sitemap.Count) * 10m);
                     unorderedlist += "<li>" + item + "</li>";
                 }
                 unorderedlist += "</ul>";
@@ -72,20 +71,31 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> Er wordt op alle pagina's gebruik gemaakt van headers</span></div>";
             }
 
-            if (errorCnt > 0)
+            if (totalHeadingCnt > 0)
             {
-                rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 4.5m);
-                headingTableHidden.Attributes.Remove("class");
-                headingMessages.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
+
+                if (errorCnt > 0)
+                {
+                    rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 4.5m);
+                    headingTableHidden.Attributes.Remove("class");
+                    headingMessages.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                        + "<span> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
+                }
+                else
+                {
+                    headingMessages.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Alle headers zijn correct ingedeeld</span></div>";
+                }
             }
             else
             {
-                headingMessages.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Alle headers zijn correct ingedeeld</span></div>";
+                headingMessages.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                    + "<span> Er zijn geen headers gebruikt op alle geteste pagina's</span></div>";
             }
+
             if (rating > 0)
             {
                 decimal rounded = decimal.Round(rating, 1);
@@ -137,6 +147,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 && doc.DocumentNode.SelectNodes("//h6") == null)
             {
                 noHeadings.Add(url);
+                Debug.WriteLine(url + " bevat geen headers");
             }
             else
             {

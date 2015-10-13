@@ -168,7 +168,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (!responseFromServer.Contains("@media print"))
             {
-                if (!printable.Contains(url))
+                if (!printable.Contains(url) && !notPrintable.Contains(url))
                 {
                     notPrintable.Add(url);
                     notPrintableCss.Add(cssUrl);
