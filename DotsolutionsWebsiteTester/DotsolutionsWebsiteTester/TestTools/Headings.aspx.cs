@@ -132,12 +132,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             var Webget = new HtmlWeb();
             var doc = Webget.Load(url);
 
-            var h1list = new List<KeyValuePair<int, string>>();
-            var h2list = new List<KeyValuePair<int, string>>();
-            var h3list = new List<KeyValuePair<int, string>>();
-            var h4list = new List<KeyValuePair<int, string>>();
-            var h5list = new List<KeyValuePair<int, string>>();
-            var h6list = new List<KeyValuePair<int, string>>();
 
             if (doc.DocumentNode.SelectNodes("//h1") == null
                 && doc.DocumentNode.SelectNodes("//h2") == null
@@ -151,63 +145,33 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                // Vul lijsten voor controle
-                if (doc.DocumentNode.SelectNodes("//h1") != null)
+                var h1list = new List<KeyValuePair<int, string>>();
+                var h2list = new List<KeyValuePair<int, string>>();
+                var h3list = new List<KeyValuePair<int, string>>();
+                var h4list = new List<KeyValuePair<int, string>>();
+                var h5list = new List<KeyValuePair<int, string>>();
+                var h6list = new List<KeyValuePair<int, string>>();
+
+                // Fill lists
+                var templist = new List<List<KeyValuePair<int, string>>>() { h1list, h2list, h3list, h4list, h5list, h6list };
+                var current = 1;
+
+                foreach (var list in templist)
                 {
-                    foreach (var item in doc.DocumentNode.SelectNodes("//h1"))
+                    Debug.WriteLine("Zoeken naar h" + current);
+                    if (doc.DocumentNode.SelectNodes("//h" + current) != null)
                     {
-                        h1list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
-                        totalHeadingCnt++;
+                        foreach (var item in doc.DocumentNode.SelectNodes("//h" + current))
+                        {
+                            Debug.WriteLine("h" + current + " gevonden!");
+                            list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
+                            totalHeadingCnt++;
+                        }
                     }
-                }
-                if (doc.DocumentNode.SelectNodes("//h2") != null)
-                {
-                    foreach (var item in doc.DocumentNode.SelectNodes("//h2"))
-                    {
-                        h2list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
-                        totalHeadingCnt++;
-                    }
-                }
-                if (doc.DocumentNode.SelectNodes("//h3") != null)
-                {
-                    foreach (var item in doc.DocumentNode.SelectNodes("//h3"))
-                    {
-                        h3list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
-                        totalHeadingCnt++;
-                    }
-                }
-                if (doc.DocumentNode.SelectNodes("//h4") != null)
-                {
-                    foreach (var item in doc.DocumentNode.SelectNodes("//h4"))
-                    {
-                        h4list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
-                        totalHeadingCnt++;
-                    }
-                }
-                if (doc.DocumentNode.SelectNodes("//h5") != null)
-                {
-                    foreach (var item in doc.DocumentNode.SelectNodes("//h5"))
-                    {
-                        h5list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
-                        totalHeadingCnt++;
-                    }
-                }
-                if (doc.DocumentNode.SelectNodes("//h6") != null)
-                {
-                    foreach (var item in doc.DocumentNode.SelectNodes("//h6"))
-                    {
-                        h6list.Add(new KeyValuePair<int, string>(item.StreamPosition, item.InnerText));
-                        totalHeadingCnt++;
-                    }
+                    current++;
                 }
 
-                List<List<KeyValuePair<int, string>>> listlist = new List<List<KeyValuePair<int, string>>>();
-                listlist.Add(h1list);
-                listlist.Add(h2list);
-                listlist.Add(h3list);
-                listlist.Add(h4list);
-                listlist.Add(h5list);
-                listlist.Add(h6list);
+                List<List<KeyValuePair<int, string>>> listlist = new List<List<KeyValuePair<int, string>>>(templist);
 
                 var listId = 2;
                 for (int i = 0; i < listlist.Count; i++)
