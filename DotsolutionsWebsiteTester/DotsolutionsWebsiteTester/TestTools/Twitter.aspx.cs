@@ -64,7 +64,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetTwitter(string url)
         {
-            Debug.WriteLine("GetTwitterOptions <<< ");
+            Debug.WriteLine("GetTwitter <<< ");
 
             var screennameList = new List<string>();
             var rating = 1.0m;
@@ -91,9 +91,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     var screenName = "";
 
-                    if (item["unescapedUrl"].ToString().Contains("https://www.twitter.com"))
+                    if (item["unescapedUrl"].ToString().Contains("https://www.twitter.com/"))
                         screenName = item["unescapedUrl"].ToString().Remove(0, 24);
-                    else if (item["unescapedUrl"].ToString().Contains("https://twitter.com"))
+                    else if (item["unescapedUrl"].ToString().Contains("https://twitter.com/"))
                     {
                         screenName = item["unescapedUrl"].ToString().Remove(0, 20);
                         if (screenName.Contains("/"))
@@ -109,8 +109,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (!screenName.Contains("/") && screenName != "")
                     {
                         screennameList.Add(screenName);
-
-                        Debug.WriteLine("screenName ---> " + screenName);
                     }
                 }
 

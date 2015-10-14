@@ -10,6 +10,7 @@
                     <span id="Rating" runat="server">?</span> Facebook
                 </div>
                 <div class="panel-body">
+                <div id="facebookResults" runat="server"></div>
                 </div>
             </div>
         </div>
