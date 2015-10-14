@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,7 +15,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class Facebook : System.Web.UI.Page
     {
-        FacebookClient fbc;
+        private FacebookClient fbc;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -45,12 +46,17 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     fbc.AccessToken = accessToken;
                 }
-                GetFacebook();
+
+                var ths = new ThreadStart(GetFacebook);
+                var th = new Thread(ths);
+                th.Start();
+
+                th.Join();
             }
             catch (FacebookOAuthException)
             {
                 var rating = 5.5m;
-                facebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                FacebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er kon geen beveiligde verbinding worden vastgesteld.</span></div>";
 
@@ -62,7 +68,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 temp = (decimal)Session["RatingMarketing"];
                 Session["RatingMarketing"] = rounded + temp;
             }
-
 
             var sb = new System.Text.StringBuilder();
             FacebookSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -125,10 +130,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                         dynamic result = fbc.Get(screenName, new { fields = "likes" });
                         var fbLikes = result.likes.ToString("#,##0"); ;
 
-                        facebookResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        FacebookResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                             + "<span> Facebook account <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
-                        facebookResults.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        FacebookResults.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                             + "<span> Dit account heeft " + fbLikes + " likes</span></div>";
                     }
@@ -136,7 +141,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (!isFacebookFound)
                 {
                     rating = 1.0m;
-                    facebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    FacebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                         + "<span> Er is geen Facebook account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";
                 }
@@ -144,7 +149,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             else
             {
                 rating = 1.0m;
-                facebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                FacebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er is geen Facebook account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";
             }
@@ -169,7 +174,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 if (fbName != "")
                 {
-                    if (IsWebsite(fbUrl))
+                    if (HasWebsite(fbUrl))
                         return true;
                 }
             }
@@ -181,7 +186,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             return false;
         }
 
-        private bool IsWebsite(string fbUrl)
+        private bool HasWebsite(string fbUrl)
         {
             if (fbUrl == null || fbUrl == "")
             {
@@ -212,12 +217,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (addresslistMain.Contains(theaddress))
                         return true;
             }
-            catch (UriFormatException ufe)
+            catch (UriFormatException)
             {
                 Debug.WriteLine("IsWebsite UriFormatException Catch --- " + fbUrl);
                 return false;
             }
-            catch (WebException we)
+            catch (WebException)
             {
                 Debug.WriteLine("IsWebsite WebException Catch --- " + fbUrl);
                 return false;
@@ -225,17 +230,5 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             return false;
         }
-
-        //Acces Token: CAACEdEose0cBAN6Mglo4kgzCv5RaOAovPlZBQmYLc1mSjXTYxZBaHd14tvtofH3EEqzpWtSORuFKnfuYrC3zNDpVwALPm9JoMUUOrzLBoDazyxF6mRVH0wTX2H1FXVMhgZCQXioGZCrKEuOb6ZAZBKZAo6YaXKS13aC4GtOKYAvAaPqeXhVs7yLSLy8geYkuZBeQJfuKHBuduAZDZD
-        //SELECT fan_count, website, pic FROM page WHERE username="dotsolutions"
-        //{
-        //  "data": [
-        //    {
-        //      "fan_count": 253,
-        //      "website": "http://www.dotsolutions.nl",
-        //      "pic": "https://scontent.xx.fbcdn.net/hprofile-xat1/v/t1.0-1/p100x100/12144761_1146334558728006_6208729277974377873_n.png?oh=48e85ea1a9cc32ea8902d6bd5f5fcf2f&oe=56C87E22"
-        //    }
-        //  ],
-        //}
     }
 }

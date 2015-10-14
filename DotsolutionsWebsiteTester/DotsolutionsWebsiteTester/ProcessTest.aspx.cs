@@ -32,6 +32,7 @@ namespace DotsolutionsWebsiteTester
                 // Set user agent
                 string userAgent = "Mozilla/5.0 (Quality test, http://www.example.net)";
                 Session["userAgent"] = userAgent;
+
                 // Set rating sessions
                 Session["RatingAccess"] = 0m;
                 Session["RatingUx"] = 0m;

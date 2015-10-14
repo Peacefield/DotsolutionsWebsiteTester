@@ -36,7 +36,7 @@
 function animateTo(identifier) {
     var target = document.getElementById(identifier);
     $('body').animate({
-        scrollTop: target.offsetTop
+        scrollTop: target.offsetTop - 50
     }, 1000);
 }
 

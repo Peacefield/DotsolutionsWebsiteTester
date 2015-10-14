@@ -231,17 +231,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     printablelist += "<li>" + item + "</li>";
                 }
-                // Minder pagina's printbaar dan getest
-                // Er zitten dus niet-printbare pagina's bij
-                if (printable.Count < sitemap.Count)
-                {
-                    rating = rating - (((decimal)sitemap.Count - (decimal)printable.Count) * (10m / (decimal)sitemap.Count));
-                    PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Er is rekening gehouden met de printbaarheid van de volgende pagina's:</span>"
-                        + "<ul>" + printablelist + "</ul></div>";
-                }
-                else
+                if (printable.Count >= sitemap.Count)
                     PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                         + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
