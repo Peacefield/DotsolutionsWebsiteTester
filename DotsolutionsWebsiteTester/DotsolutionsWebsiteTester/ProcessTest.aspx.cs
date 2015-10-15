@@ -15,11 +15,6 @@ namespace DotsolutionsWebsiteTester
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Set rating sessions
-            Session["RatingAccess"] = 0m;
-            Session["RatingUx"] = 0m;
-            Session["RatingMarketing"] = 0m;
-            Session["RatingTech"] = 0m;
             if (!IsPostBack)
             {
                 try
@@ -48,6 +43,11 @@ namespace DotsolutionsWebsiteTester
 
                 th.Join();
                 th2.Join();
+                // Set rating sessions
+                Session["RatingAccess"] = 0m;
+                Session["RatingUx"] = 0m;
+                Session["RatingMarketing"] = 0m;
+                Session["RatingTech"] = 0m;
             }
         }
 

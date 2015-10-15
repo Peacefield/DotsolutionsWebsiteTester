@@ -54,16 +54,29 @@
             padding: 5px;
             text-align: center;
         }
-        
+
         #RatingList {
             display: block;
         }
-        #RatingList li {
-            display: none;
-        }
+
+            #RatingList li {
+                display: none;
+            }
 
         .rating {
             font-size: 1.5em;
+        }
+
+        .ResultWell {
+            width: 48%;
+            float: left;
+        }
+
+        .ResultDivider {
+            width: 4%;
+            float: left;
+            min-height: 1px;
+            position: relative;
         }
     </style>
     <div class="well well-sm" id="sizeref">

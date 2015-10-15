@@ -266,3 +266,15 @@ textarea {
     #RatingList li {
         display: none;
     }
+
+.ResultWell {
+    width: 48%;
+    float: left;
+}
+
+.ResultDivider {
+    width: 4%;
+    float: left;
+    min-height: 1px;
+    position: relative;
+}
