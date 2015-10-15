@@ -69,7 +69,21 @@ namespace DotsolutionsWebsiteTester.TestTools
             string stylesheet = "";
             bool found = false;
 
-            if (doc.DocumentNode.SelectNodes("//link[@rel]") != null)
+
+            if (doc.DocumentNode.SelectNodes("//link[@media]") != null)
+            {
+                foreach (var node in doc.DocumentNode.SelectNodes("//link[@media]"))
+                {
+                    if (node.Attributes["media"].Value == "print")
+                    {
+                        found = true;
+                        printablePages++;
+                        printable.Add(url);
+                    }
+                }
+            }
+
+            if (doc.DocumentNode.SelectNodes("//link[@rel]") != null && !found)
             {
                 foreach (var node in doc.DocumentNode.SelectNodes("//link[@rel]"))
                 {
@@ -127,19 +141,22 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                // Check if CSS has option for @media print
-                foreach (var cssUrl in cssList)
+                if (cssList.Count > 0)
                 {
-                    var ths = new ThreadStart(() => TestCss(url, cssUrl));
-                    var th = new Thread(ths);
-                    subThreadList.Add(th);
-                    th.Start();
-                }
+                    // Check if CSS has option for @media print
+                    foreach (var cssUrl in cssList)
+                    {
+                        var ths = new ThreadStart(() => TestCss(url, cssUrl));
+                        var th = new Thread(ths);
+                        subThreadList.Add(th);
+                        th.Start();
+                    }
 
 
-                foreach (Thread th in subThreadList)
-                {
-                    th.Join();
+                    foreach (Thread th in subThreadList)
+                    {
+                        th.Join();
+                    }
                 }
             }
         }
@@ -153,40 +170,46 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             Debug.WriteLine("Getting content of: " + cssUrl + " from: " + url);
             //string encoded = WebUtility.UrlEncode(cssUrl);
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(cssUrl);
-            request.UserAgent = Session["userAgent"].ToString();
-            request.Credentials = CredentialCache.DefaultCredentials;
-            // Get the response.
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            // Get the stream containing content returned by the server.
-            Stream dataStream = response.GetResponseStream();
-            // Open the stream using a StreamReader for easy access.
-            var reader = new StreamReader(dataStream);
-            // Read the content. 
-            string responseFromServer = reader.ReadToEnd();
-
-            if (!responseFromServer.Contains("@media print"))
+            try
             {
-                if (!printable.Contains(url) && !notPrintable.Contains(url))
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(cssUrl);
+                request.UserAgent = Session["userAgent"].ToString();
+                request.Credentials = CredentialCache.DefaultCredentials;
+                // Get the response.
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                // Get the stream containing content returned by the server.
+                Stream dataStream = response.GetResponseStream();
+                // Open the stream using a StreamReader for easy access.
+                var reader = new StreamReader(dataStream);
+                // Read the content. 
+                string responseFromServer = reader.ReadToEnd();
+
+                if (!responseFromServer.Contains("@media print"))
                 {
-                    notPrintable.Add(url);
-                    notPrintableCss.Add(cssUrl);
+                    if (!printable.Contains(url) && !notPrintable.Contains(url))
+                    {
+                        notPrintable.Add(url);
+                        notPrintableCss.Add(cssUrl);
+                    }
+                }
+                else
+                {
+                    printablePages++;
+                    if (!printable.Contains(url))
+                        printable.Add(url);
+
+                    if (notPrintable.Contains(url))
+                    {
+                        var index = notPrintable.IndexOf(url);
+                        notPrintableCss.RemoveAt(index);
+
+                        notPrintable.Remove(url);
+                    }
                 }
             }
-            else
+            catch (WebException)
             {
-                printablePages++;
-                if (!printable.Contains(url))
-                    printable.Add(url);
-
-                if (notPrintable.Contains(url))
-                {
-                    var index = notPrintable.IndexOf(url);
-                    notPrintableCss.RemoveAt(index);
-
-                    notPrintable.Remove(url);
-                }
+                Debug.WriteLine("Could not fetch CSS");
             }
         }
 

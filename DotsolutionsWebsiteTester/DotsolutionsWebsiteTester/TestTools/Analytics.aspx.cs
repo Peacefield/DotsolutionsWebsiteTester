@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Web.UI.WebControls;
 
@@ -29,13 +32,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Response.Redirect("~/");
                 return;
             }
-            
-            //var ths = new ThreadStart(TestAnalytics);
-            //var th = new Thread(ths);
-            //th.Start();
 
-            //th.Join();
-            
+            var ths = new ThreadStart(TestAnalytics);
+            var th = new Thread(ths);
+            th.Start();
+
+            th.Join();
+
             var sb = new System.Text.StringBuilder();
             AnalyticsSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
             string htmlstring = sb.ToString();
@@ -48,11 +51,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// Currently only checking for google-analytics
         /// </summary>
         private void TestAnalytics()
-        {            
+        {
             Debug.WriteLine(">>>> Analytics");
             var sitemap = (List<string>)Session["selectedSites"];
             var analyticslist = new List<KeyValuePair<string, string>>();
-
+            var rating = 10m;
             analyticTypes.Add(new KeyValuePair<string, string>("google-analytics.com", "Google Analytics"));
             analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
             //analyticTypes.Add(new KeyValuePair<string, string>("placeholder-type", "placeholder-name"));
@@ -62,6 +65,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             for (int i = 0; i < analyticTypes.Count; i++)
             {
+                Debug.WriteLine("Op zoek naar " + analyticTypes[i].Key);
                 found = 0;
                 // Check every url in sitemap for analytics software for the current analytictype
                 foreach (string url in sitemap)
@@ -90,17 +94,23 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             if (analyticslist.Count == 0)
+            {
                 AnalyticsResults.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                     + "<span> Geen analytics software gevonden.</span></div>";
-            else if (analyticslist.Count == 1)
-                AnalyticsResults.InnerHtml = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> " + analyticslist.Count + " soort analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemap.Count + " pagina's</span></div>";
+            }
             else
+            {
+                var analyticsGrammar = analyticslist.Count + " soort";
+                if (analyticslist.Count > 1)
+                    analyticsGrammar = analyticslist.Count + " soorten";
+                var sitemapGrammar = sitemap.Count + " pagina's";
+                if (sitemap.Count == 1)
+                    sitemapGrammar = sitemap.Count + " pagina";
                 AnalyticsResults.InnerHtml = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> " + analyticslist.Count + " soorten analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemap.Count + " pagina's</span></div>";
+                    + "<span> " + analyticsGrammar + " analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemapGrammar + "</span></div>";
+            }
 
             if (analyticslist.Count > 0 && noAnalytics.Count > 0)
             {
@@ -114,6 +124,22 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> Geen analytics software gevonden op volgende pagina's</span>"
                     + "<ul>" + nothing + "</ul></div>";
             }
+
+            if (analyticslist.Count > 0)
+            {
+                if (noAnalytics.Count > 0)
+                    rating = rating - (((decimal)noAnalytics.Count / (decimal)sitemap.Count) * 10m);
+                else
+                    rating = 10m;
+            }
+            else
+                rating = 1.0m;
+
+            decimal rounded = decimal.Round(rating, 1);
+            Rating.InnerHtml = rounded.ToString();
+            var RatingMarketing = (decimal)Session["RatingMarketing"];
+            Session["RatingMarketing"] = rounded + RatingMarketing;
+
         }
 
         /// <summary>
@@ -129,7 +155,6 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (doc.DocumentNode.SelectNodes("//script") != null)
             {
-                Debug.WriteLine(doc.DocumentNode.SelectSingleNode("//script").InnerHtml);
                 foreach (var node in doc.DocumentNode.SelectNodes("//script"))
                 {
                     // if type from list is detected do this
@@ -137,7 +162,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         found++;
                         done = true;
-                        Debug.WriteLine("Done naar true <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
+                        //Debug.WriteLine("Done naar true <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
+                        //Debug.WriteLine(url);
                         // Add to list that tested positive to some kind of analytics software if it's not already in there
                         if (!yesAnalytics.Contains(url))
                         {
@@ -155,11 +181,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
             }
 
+
             if (!done && doc.DocumentNode.SelectSingleNode("//html") != null)
             {
                 var node = doc.DocumentNode.SelectSingleNode("//html");
                 Debug.WriteLine("HTML <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
-                Debug.WriteLine(node.InnerHtml);
+                Debug.WriteLine(url);
 
                 // if type from list is detected do this
                 if (node.InnerHtml.Contains(analyticTypes[index].Key))

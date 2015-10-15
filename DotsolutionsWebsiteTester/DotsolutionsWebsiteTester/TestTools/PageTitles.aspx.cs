@@ -35,9 +35,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             string htmlstring = sb.ToString();
 
             Session["PageTitles"] = htmlstring;
-
         }
 
+        /// <summary>
+        /// Gather info on all available titles into lists and rate titles
+        /// </summary>
         private void GetPageTitles()
         {
             var rating = 10m;
@@ -74,9 +76,16 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     noTitleGrammar = "is " + noTitles.Count + " pagina";
                 }
+                var noTitleUl = "";
+
+                foreach (var page in noTitles)
+                {
+                    noTitleUl += "<li>" + page + "</li>";
+                }
+
                 PageTitleResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er " + noTitleGrammar + " gevonden zonder titel</span></div>";
+                    + "<span> Er " + noTitleGrammar + " gevonden zonder titel:</span><ul>"+ noTitleUl + "</ul></div>";
             }
 
             if (longTitles.Count > 0)
@@ -100,13 +109,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Op elke pagina is een goede titel aanwezig</span></div>";
             }
-
-
+            
             if (rating < 1m)
             {
                 rating = 1.0m;
             }
-
             decimal rounded = decimal.Round(rating, 1);
             Rating.InnerHtml = rounded.ToString();
             var ratingAccess = (decimal)Session["RatingAccess"];
@@ -114,31 +121,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             var RatingMarketing = (decimal)Session["RatingMarketing"];
             Session["RatingMarketing"] = rounded + RatingMarketing;
         }
-
-        private void AddToTable(string title, string page)
-        {
-            var tRow = new TableRow();
-
-            var tCellTitle = new TableCell();
-            tCellTitle.Text = title;
-            tRow.Cells.Add(tCellTitle);
-
-            var tCellCssPage = new TableCell();
-            tCellCssPage.Text = "<a href='" + page + "' target='_blank' >" + page + "</a>";
-            tRow.Cells.Add(tCellCssPage);
-
-            PageTitlesTable.Rows.Add(tRow);
-        }
-
-        private bool IsLongTitle(string title)
-        {
-            if (title.Length < 55)
-            {
-                return false;
-            }
-            return true;
-        }
-
+        
+        /// <summary>
+        /// Get if title is present
+        /// </summary>
+        /// <param name="page">page of origin</param>
+        /// <returns>string title, empty when no title was found</returns>
         private string GetTitle(string page)
         {
             var title = "";
@@ -156,6 +144,40 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
             }
             return title;
+        }
+
+        /// <summary>
+        /// Get if title is long
+        /// </summary>
+        /// <param name="title">title</param>
+        /// <returns>true if title > 55 chars</returns>
+        private bool IsLongTitle(string title)
+        {
+            if (title.Length < 55)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Add to PageTitlesTable
+        /// </summary>
+        /// <param name="title">Title</param>
+        /// <param name="page">Page of origin</param>
+        private void AddToTable(string title, string page)
+        {
+            var tRow = new TableRow();
+
+            var tCellTitle = new TableCell();
+            tCellTitle.Text = title;
+            tRow.Cells.Add(tCellTitle);
+
+            var tCellCssPage = new TableCell();
+            tCellCssPage.Text = "<a href='" + page + "' target='_blank' >" + page + "</a>";
+            tRow.Cells.Add(tCellCssPage);
+
+            PageTitlesTable.Rows.Add(tRow);
         }
     }
 }

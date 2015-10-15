@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -25,6 +27,23 @@ namespace DotsolutionsWebsiteTester.TestTools
             string htmlstring = sb.ToString();
 
             Session["MetaTags"] = htmlstring;
+        }
+
+        private void GetMetaTags()
+        {
+            var sitemap = (List<string>)Session["testedSites"];
+            foreach (var url in sitemap)
+            {                
+                var Webget = new HtmlWeb();
+                var doc = Webget.Load(url);
+
+                if (doc.DocumentNode.SelectSingleNode("//head") != null)
+                {
+                    var node = doc.DocumentNode.SelectSingleNode("//head");
+                    Debug.WriteLine("Getting <head> contents of " + url);
+                    Debug.WriteLine(node.InnerHtml);
+                }
+            }
         }
     }
 }

@@ -65,6 +65,9 @@ function OnTechSuccess(response) {
     }
 }
 
+function OnSuccess(response) {
+    // Do nothing
+}
 function OnError(error) {
     alert(error);
 }
@@ -75,7 +78,7 @@ window.onresize = function () {
 
 // Execute on window.onload
 window.onload = function () {
-
+    PageMethods.ResetRating(OnSuccess, OnError);
     var url = $("#MainContent_UrlTesting").text();
     if (url !== "") {
 

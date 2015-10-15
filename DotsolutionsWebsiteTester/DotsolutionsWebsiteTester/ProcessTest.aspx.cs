@@ -15,6 +15,11 @@ namespace DotsolutionsWebsiteTester
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Set rating sessions
+            Session["RatingAccess"] = 0m;
+            Session["RatingUx"] = 0m;
+            Session["RatingMarketing"] = 0m;
+            Session["RatingTech"] = 0m;
             if (!IsPostBack)
             {
                 try
@@ -32,12 +37,6 @@ namespace DotsolutionsWebsiteTester
                 // Set user agent
                 string userAgent = "Mozilla/5.0 (Quality test, http://www.example.net)";
                 Session["userAgent"] = userAgent;
-
-                // Set rating sessions
-                Session["RatingAccess"] = 0m;
-                Session["RatingUx"] = 0m;
-                Session["RatingMarketing"] = 0m;
-                Session["RatingTech"] = 0m;
 
                 var ths = new ThreadStart(GetTestList);
                 var th = new Thread(ths);
@@ -89,7 +88,7 @@ namespace DotsolutionsWebsiteTester
             //Session["selectedSites"] = sitemap;
             //return;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=5&q=site:" + url + "%20" + url);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=5&q=%22" + url + "%22");
             // Additional parameters
             // &rsz=[1-8] resultSize can be 1 through 8. Currently using 5.
             // &start=[x] Indicate where to start searching
@@ -132,7 +131,7 @@ namespace DotsolutionsWebsiteTester
 
             foreach (string item in sitemap)
                 TestedSitesList.InnerHtml += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
-            
+
             // Add tested sites to session
             Session["selectedSites"] = sitemap;
         }
@@ -150,6 +149,17 @@ namespace DotsolutionsWebsiteTester
         }
 
         #region WebMethods for setting total rating
+
+        [System.Web.Services.WebMethod]
+        public static void ResetRating()
+        {
+            // Set rating sessions
+            HttpContext.Current.Session["RatingAccess"] = 0m;
+            HttpContext.Current.Session["RatingUx"] = 0m;
+            HttpContext.Current.Session["RatingMarketing"] = 0m;
+            HttpContext.Current.Session["RatingTech"] = 0m;
+        }
+
         [System.Web.Services.WebMethod]
         public static decimal GetAccessRating()
         {
@@ -221,13 +231,13 @@ namespace DotsolutionsWebsiteTester
             }
             return 0m;
         }
-        
+
         [System.Web.Services.WebMethod]
         public static decimal GetMarketingRating()
         {
             var MarketingRatingList = new List<string>();
             var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
-            
+
             string[] marketingRatingList = { "GooglePlus", 
                                                "Facebook", 
                                                "Twitter", 

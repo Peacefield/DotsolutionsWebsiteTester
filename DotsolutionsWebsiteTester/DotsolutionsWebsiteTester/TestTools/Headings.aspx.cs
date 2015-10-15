@@ -132,7 +132,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             var Webget = new HtmlWeb();
             var doc = Webget.Load(url);
 
-
             if (doc.DocumentNode.SelectNodes("//h1") == null
                 && doc.DocumentNode.SelectNodes("//h2") == null
                 && doc.DocumentNode.SelectNodes("//h3") == null
