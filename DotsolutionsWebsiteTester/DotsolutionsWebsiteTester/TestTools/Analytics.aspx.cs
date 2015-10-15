@@ -175,7 +175,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         {
                             noAnalytics.Remove(url);
                         }
-                        // Break incase they added the same type in multiple forms, e.g. //www.google-analytics.com/analytics.js and https://ssl.google-analytics.com/ga.js
+                        // Break in case they added the same type in multiple forms, e.g. //www.google-analytics.com/analytics.js and https://ssl.google-analytics.com/ga.js
                         break;
                     }
                 }
