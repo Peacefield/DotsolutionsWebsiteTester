@@ -148,8 +148,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (errorCnt > 0 || warningCnt > 0)
             {
                 var totalCnt = ((decimal)errorCnt + (decimal)warningCnt) / (decimal)notW3cCompliant.Count;
-                //rating = rating - (totalCnt / 10.0m);
-                rating = rating - totalCnt;
+                rating = rating - (totalCnt / 10.0m);
+                //rating = rating - totalCnt;
                 if (rating < 1)
                     rating = 1.0m;
 
