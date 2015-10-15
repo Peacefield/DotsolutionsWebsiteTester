@@ -93,6 +93,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
             }
 
+            // Nothing found vs some things found
             if (analyticslist.Count == 0)
             {
                 AnalyticsResults.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
@@ -112,6 +113,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> " + analyticsGrammar + " analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemapGrammar + "</span></div>";
             }
 
+            // Did not find analytics software on every page
             if (analyticslist.Count > 0 && noAnalytics.Count > 0)
             {
                 string nothing = "";
@@ -175,7 +177,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         {
                             noAnalytics.Remove(url);
                         }
-                        // Break in case they added the same type in multiple forms, e.g. //www.google-analytics.com/analytics.js and https://ssl.google-analytics.com/ga.js
+                        // Break in case they added the same type in multiple forms, e.g. //www.google-analytics.com/analytics.js and (the older version: ) https://ssl.google-analytics.com/ga.js
                         break;
                     }
                 }

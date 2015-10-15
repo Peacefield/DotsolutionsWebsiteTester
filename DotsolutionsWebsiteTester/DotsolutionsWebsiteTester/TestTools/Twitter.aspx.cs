@@ -120,11 +120,24 @@ namespace DotsolutionsWebsiteTester.TestTools
                         rating = 10m;
                         Debug.WriteLine(screenName + " gevonden!");
                         twitterfound = true;
-                        var TweetCount = GetTweetCount(screenName).ToString("#,##0");
-                        var FollowersCount = GetFollowerCount(screenName).ToString("#,##0");
+
+                        var users = from user in twitterContext.User
+                                    where user.Type == UserType.Show &&
+                                    user.ScreenName == screenName
+                                    select user;
+                        var returnedUser = users.ToList();
+
+                        var TweetCount = GetTweetCount(returnedUser).ToString("#,##0");
+                        var FollowersCount = GetFollowerCount(returnedUser).ToString("#,##0");
+                        var ProfileImage = GetProfileImage(returnedUser);
+
                         twitterResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                            + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                            + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span></div>";
+                            + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
+                            + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
+                            + "</div>";
+
+
+
                         twitterResults.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                             + "<span> Dit account heeft " + TweetCount + " tweets gemaakt naar " + FollowersCount + " volgers</span></div>";
@@ -155,6 +168,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["RatingMarketing"] = rounded + temp;
 
         }
+
 
         /// <summary>
         /// Find if the found name is a Twitteraccount with the URL in the description
@@ -216,16 +230,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         /// <param name="screenName">string screen name</param>
         /// <returns>Returns int amount of followers</returns>
-        private int GetFollowerCount(string screenName)
+        private int GetFollowerCount(List<User> returnedUser)
         {
-            int amount = 0;
-
-            var users = from user in twitterContext.User
-                        where user.Type == UserType.Show &&
-                        user.ScreenName == screenName
-                        select user;
-
-            var returnedUser = users.ToList();
+            var amount = 0;
 
             foreach (var item in returnedUser)
             {
@@ -239,22 +246,26 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         /// <param name="screenName">string screen name</param>
         /// <returns>Returns int amount of tweets</returns>
-        private int GetTweetCount(string screenName)
+        private int GetTweetCount(List<User> returnedUser)
         {
-            int amount = 0;
-
-            var users = from user in twitterContext.User
-                        where user.Type == UserType.Show &&
-                        user.ScreenName == screenName
-                        select user;
-
-            var returnedUser = users.ToList();
+            var amount = 0;
 
             foreach (var item in returnedUser)
             {
                 amount = item.StatusesCount;
             }
             return amount;
+        }
+
+        private string GetProfileImage(List<User> returnedUser)
+        {
+            var profileimage = "";
+
+            foreach (var item in returnedUser)
+            {
+                profileimage = item.ProfileImageUrl;
+            }
+            return profileimage;
         }
     }
 }
