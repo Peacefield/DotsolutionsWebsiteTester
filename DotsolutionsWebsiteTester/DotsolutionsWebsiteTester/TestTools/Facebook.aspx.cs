@@ -135,16 +135,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                             + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "
                             + "<span> Facebook account <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
 
-                        //FacebookResults.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        //    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        //    + "<span> Dit account heeft " + fbLikes + " likes en " + fbTalking + " mensen praten er over</span></div>";
-
-
                         FacebookResults.InnerHtml += "<div class='well well-lg ResultWell'>"
                             + "<i class='fa fa-thumbs-o-up fa-4x'></i>"
-                            + "<span> Dit account heeft " + fbLikes + " likes </span></div>";
-                        FacebookResults.InnerHtml += "<div class='ResultDivider'></div>";
-                        FacebookResults.InnerHtml += "<div class='well well-lg ResultWell'>"
+                            + "<span> Dit account heeft " + fbLikes + " likes </span></div>"
+                            + "<div class='ResultDivider'></div>"
+                            + "<div class='well well-lg ResultWell'>"
                             + "<i class='fa fa-commenting-o fa-4x'></i>"
                             + "<span> " + fbTalking + " mensen praten hier over</span></div>";
                     }
