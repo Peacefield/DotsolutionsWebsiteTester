@@ -136,11 +136,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                             + "<span> Facebook account <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
 
                         FacebookResults.InnerHtml += "<div class='well well-lg ResultWell'>"
-                            + "<i class='fa fa-thumbs-o-up fa-4x'></i>"
+                            + "<i class='fa fa-thumbs-o-up fa-3x'></i>"
                             + "<span> Dit account heeft " + fbLikes + " likes </span></div>"
                             + "<div class='ResultDivider'></div>"
                             + "<div class='well well-lg ResultWell'>"
-                            + "<i class='fa fa-commenting-o fa-4x'></i>"
+                            + "<i class='fa fa-commenting-o fa-3x'></i>"
                             + "<span> " + fbTalking + " mensen praten hier over</span></div>";
                     }
                 }

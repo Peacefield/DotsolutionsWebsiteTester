@@ -102,9 +102,14 @@ namespace DotsolutionsWebsiteTester
             // Read the content. 
             string responseFromServer = reader.ReadToEnd();
 
-
             JObject googleSearch = JObject.Parse(responseFromServer);
             IList<JToken> results = googleSearch["responseData"]["results"].Children().ToList();
+
+            System.Uri uri = new Uri(url);
+            string uriWithoutScheme = uri.Host;
+
+            //if(uriWithoutScheme.Contains("www."))
+            //    uriWithoutScheme = uriWithoutScheme.Remove(uriWithoutScheme.IndexOf)
 
             if (results.Count != 0)
             {

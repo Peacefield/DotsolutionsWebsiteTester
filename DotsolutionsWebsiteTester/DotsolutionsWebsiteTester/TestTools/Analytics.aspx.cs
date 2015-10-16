@@ -60,6 +60,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
             //analyticTypes.Add(new KeyValuePair<string, string>("placeholder-type", "placeholder-name"));
 
+            var temp = Server.HtmlEncode("<div>");
+            analyticTypes.Add(new KeyValuePair<string, string>("</div>", "placeholder > " + temp));
+
             // List for gathering
             var analytics = new List<string>();
 
@@ -157,6 +160,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (doc.DocumentNode.SelectNodes("//script") != null)
             {
+                Debug.WriteLine("Scipts <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! " + url);
                 foreach (var node in doc.DocumentNode.SelectNodes("//script"))
                 {
                     // if type from list is detected do this
@@ -187,8 +191,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (!done && doc.DocumentNode.SelectSingleNode("//html") != null)
             {
                 var node = doc.DocumentNode.SelectSingleNode("//html");
-                Debug.WriteLine("HTML <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
-                Debug.WriteLine(url);
+                Debug.WriteLine("HTML <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! " + url);
 
                 // if type from list is detected do this
                 if (node.InnerHtml.Contains(analyticTypes[index].Key))

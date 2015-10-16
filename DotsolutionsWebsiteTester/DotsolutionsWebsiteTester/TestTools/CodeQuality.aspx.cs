@@ -144,7 +144,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         + "<span> De volgende pagina's zijn niet W3C compliant.</span>" + unorderedlist + "</div>";
                 }
             }
-            
+
             if (errorCnt > 0 || warningCnt > 0)
             {
                 var totalCnt = ((decimal)errorCnt + (decimal)warningCnt) / (decimal)notW3cCompliant.Count;
@@ -191,8 +191,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             Debug.WriteLine("Performing code quality check on: " + url);
 
-            string encoded = WebUtility.UrlEncode(url);
-            Debug.WriteLine("Encoded: " + encoded);
+            var encoded = WebUtility.UrlEncode(url);
+            var currentCnt = 0;
 
             try
             {
@@ -219,25 +219,29 @@ namespace DotsolutionsWebsiteTester.TestTools
                         if (item["type"].ToString() == "error")
                         {
                             errorCnt++;
+                            currentCnt++;
                             if (!notW3cCompliant.Contains(url))
                                 notW3cCompliant.Add(url);
+                            if (currentCnt <= 10)
+                            {
 
-                            try
-                            {
-                                // add error message to table
-                                if (item["lastLine"] != null)
+                                try
                                 {
-                                    AddToTable(url, item["type"].ToString(), item["lastLine"].ToString(), item["lastColumn"].ToString(), item["message"].ToString());
+                                    // add error message to table
+                                    if (item["lastLine"] != null)
+                                    {
+                                        AddToTable(url, item["type"].ToString(), item["lastLine"].ToString(), item["lastColumn"].ToString(), item["message"].ToString());
+                                    }
+                                    else
+                                    {
+                                        AddToTable(url, item["type"].ToString(), "", "", item["message"].ToString());
+                                    }
                                 }
-                                else
+                                catch (NullReferenceException nre)
                                 {
-                                    AddToTable(url, item["type"].ToString(), "", "", item["message"].ToString());
+                                    Debug.WriteLine("W3CValidate nullreference exception");
+                                    Debug.WriteLine(nre.Message);
                                 }
-                            }
-                            catch (NullReferenceException nre)
-                            {
-                                Debug.WriteLine("W3CValidate nullreference exception");
-                                Debug.WriteLine(nre.Message);
                             }
                         }
                         else if (item["type"].ToString() == "info")
@@ -247,29 +251,36 @@ namespace DotsolutionsWebsiteTester.TestTools
                                 if (item["subType"].ToString() == "warning")
                                 {
                                     warningCnt++;
+                                    currentCnt++;
                                     if (!notW3cCompliant.Contains(url))
                                         notW3cCompliant.Add(url);
-                                    try
+                                    if (currentCnt <= 10)
                                     {
-                                        if (item["subType"] == null)
+                                        try
                                         {
-                                            Debug.WriteLine("item[subType] is null");
+                                            if (item["subType"] == null)
+                                            {
+                                                Debug.WriteLine("item[subType] is null");
+                                            }
+                                            if (item["message"] == null)
+                                            {
+                                                Debug.WriteLine("item[message] is null");
+                                            }
+                                            // add warning message to table
+                                            AddToTable(url, item["subType"].ToString(), "", "", item["message"].ToString());
                                         }
-                                        if (item["message"] == null)
+                                        catch (NullReferenceException nrex)
                                         {
-                                            Debug.WriteLine("item[message] is null");
+                                            Debug.WriteLine("Could not add to table due to: " + nrex.Message);
                                         }
-                                        // add warning message to table
-                                        AddToTable(url, item["subType"].ToString(), "", "", item["message"].ToString());
-                                    }
-                                    catch (NullReferenceException nrex)
-                                    {
-                                        Debug.WriteLine("Could not add to table due to: " + nrex.Message);
                                     }
                                 }
                             }
                         }
                     }
+
+                    if (currentCnt > 10)
+                        AddToTable(url, "...", "...", "...", "<a href='https://validator.w3.org/nu/?doc=" + url + "' target='_blank'>Volledig verslag met " + currentCnt + " meldingen</a>");
 
                     // Cleanup the streams and the response.
                     reader.Close();
@@ -356,7 +367,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             var semantics = new List<string>()
             {
-                "article>", "aside>", "details>", "figcaption>", "figure>", "footer>", "form>", "header>", "img>", "main>", "mark>", "nav>", "section>", "summary>", "table>", "time>"
+                "</article>", "</aside>", "</details>", "</figcaption>", "</figure>", "</footer>", "</form>", "</header>", "</img>", "</main>", "</mark>", "</nav>", "</section>", "</summary>", "</table>", "</time>"
             };
 
             if (doc.DocumentNode.SelectSingleNode("//body") != null)

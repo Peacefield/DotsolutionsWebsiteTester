@@ -136,13 +136,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                             + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
                             + "</div>";
 
-
-
-                        //twitterResults.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        //    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        //    + "<span> Dit account heeft " + TweetCount + " tweets gemaakt naar " + FollowersCount + " volgers</span></div>";
-
-
                         twitterResults.InnerHtml += "<div class='well well-lg ResultWell'>"
                             + "<i class='fa fa-retweet fa-3x'></i>"
                             + "<span> Dit account heeft " + TweetCount + " tweets gemaakt </span></div>"

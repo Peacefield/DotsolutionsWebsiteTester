@@ -76,7 +76,7 @@
                         runat="server">
                         <asp:ListItem Text="Server gedrag" Value="ServerBehaviour" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Printbaarheid" Value="Printability" Selected="true"></asp:ListItem>
-                        <asp:ListItem Text="Freshness" Value="Freshness" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Actueelheid" Value="Freshness" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Binnenkomende links" Value="IncomingLinks" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Analytics" Value="Analytics" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Meta tags" Value="MetaTags" Selected="false" Enabled="false"></asp:ListItem>
