@@ -142,7 +142,7 @@ textarea {
 }
 
 /**
- * Loading div on ProcessTest
+ * Loading div on Geautomatiseerde-Test.aspx
  */
 #overlay {
     display: none;
@@ -247,8 +247,8 @@ textarea {
     width: 50px;
     height: 50px;
     font-size: 2em;
-    background-color: white;
-    color: black;
+    background-color: red;
+    color: white;
     border-radius: 200px;
     margin-right: 5px;
     padding: 5px;
@@ -257,6 +257,13 @@ textarea {
 
 .rating {
     font-size: 1.5em;
+    background-color: orangered;
+    border-radius: 5px;
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-bottom: 4px;
+    margin-right: 5px;
 }
 
 #RatingList {
@@ -264,7 +271,7 @@ textarea {
 }
 
     #RatingList li {
-        display: none;
+        list-style: none;
     }
 
 .ResultWell {

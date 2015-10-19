@@ -67,6 +67,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Session["RatingUx"] = rounded + temp;
                 temp = (decimal)Session["RatingMarketing"];
                 Session["RatingMarketing"] = rounded + temp;
+                SetRatingDisplay(rating);
             }
 
             var sb = new System.Text.StringBuilder();
@@ -166,6 +167,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["RatingUx"] = rounded + temp;
             temp = (decimal)Session["RatingMarketing"];
             Session["RatingMarketing"] = rounded + temp;
+            SetRatingDisplay(rating);
         }
 
         private bool IsFacebook(string screenName)
@@ -235,6 +237,24 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             return false;
+        }
+        private void SetRatingDisplay(decimal rating)
+        {
+            if (rating < 4)
+            {
+                Rating.Style.Add("background-color", "red");
+                Rating.Style.Add("color", "white");
+            }
+            else if (rating < 8)
+            {
+                Rating.Style.Add("background-color", "orangered");
+                Rating.Style.Add("color", "white");
+            }
+            else
+            {
+                Rating.Style.Add("background-color", "green");
+                Rating.Style.Add("color", "white");
+            }
         }
     }
 }

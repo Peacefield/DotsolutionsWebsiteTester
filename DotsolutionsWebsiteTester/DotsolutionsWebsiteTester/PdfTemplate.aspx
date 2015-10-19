@@ -59,12 +59,14 @@
             display: block;
         }
 
-            #RatingList li {
-                display: none;
-            }
-
         .rating {
             font-size: 1.5em;
+            font-size: 1.5em;
+            background-color: orangered;
+            border-radius: 5px;
+            display: inline-block;
+            padding-left: 3px;
+            padding-right: 3px;
         }
 
         .ResultWell {

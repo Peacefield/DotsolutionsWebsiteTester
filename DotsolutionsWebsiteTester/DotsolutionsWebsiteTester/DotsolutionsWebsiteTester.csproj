@@ -177,13 +177,14 @@
     <Content Include="ErrorPages\404.aspx" />
     <Content Include="ErrorPages\GeneralError.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Handmatige-Test.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="PdfTemplate.aspx" />
-    <Content Include="ProcessTest.aspx" />
+    <Content Include="Geautomatiseerde-Test.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Custom\ads.js" />
@@ -279,6 +280,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handmatige-Test.aspx.cs">
+      <DependentUpon>Handmatige-Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Handmatige-Test.aspx.designer.cs">
+      <DependentUpon>Handmatige-Test.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PdfTemplate.aspx.cs">
       <DependentUpon>PdfTemplate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -286,12 +294,12 @@
     <Compile Include="PdfTemplate.aspx.designer.cs">
       <DependentUpon>PdfTemplate.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ProcessTest.aspx.cs">
-      <DependentUpon>ProcessTest.aspx</DependentUpon>
+    <Compile Include="Geautomatiseerde-Test.aspx.cs">
+      <DependentUpon>Geautomatiseerde-Test.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ProcessTest.aspx.designer.cs">
-      <DependentUpon>ProcessTest.aspx</DependentUpon>
+    <Compile Include="Geautomatiseerde-Test.aspx.designer.cs">
+      <DependentUpon>Geautomatiseerde-Test.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

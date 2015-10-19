@@ -34,7 +34,7 @@ namespace DotsolutionsWebsiteTester
             // Set session that contains the url the user wants to test
             // This session is also checked throughout the application to check if all the needed sessions are set.
             Session["MainUrl"] = url;
-            Response.Redirect("ProcessTest.aspx");
+            Response.Redirect("Handmatige-Test.aspx");
             return;
         }
 

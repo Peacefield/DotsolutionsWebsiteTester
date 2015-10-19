@@ -164,9 +164,9 @@ namespace DotsolutionsWebsiteTester
             HttpContext.Current.Session["RatingMarketing"] = 0m;
             HttpContext.Current.Session["RatingTech"] = 0m;
         }
-
+        
         [System.Web.Services.WebMethod]
-        public static decimal GetAccessRating()
+        public static string GetAccessRating()
         {
             var AccessRatingList = new List<string>();
             var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
@@ -192,13 +192,13 @@ namespace DotsolutionsWebsiteTester
                 }
                 var temp = decimal.Round(AccessRatingSession / count, 1);
                 HttpContext.Current.Session["RatingAccess"] = temp;
-                return temp;
+                return temp.ToString("0.0");
             }
-            return 0m;
+            return "0,0";
         }
 
         [System.Web.Services.WebMethod]
-        public static decimal GetUserxRating()
+        public static string GetUserxRating()
         {
             var UserxRatingList = new List<string>();
             var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
@@ -232,13 +232,13 @@ namespace DotsolutionsWebsiteTester
                 }
                 var temp = decimal.Round(UserxRatingSession / count, 1);
                 HttpContext.Current.Session["RatingUx"] = temp;
-                return temp;
+                return temp.ToString("0.0");
             }
-            return 0m;
+            return "0,0";
         }
 
         [System.Web.Services.WebMethod]
-        public static decimal GetMarketingRating()
+        public static string GetMarketingRating()
         {
             var MarketingRatingList = new List<string>();
             var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
@@ -272,13 +272,13 @@ namespace DotsolutionsWebsiteTester
                 }
                 var temp = decimal.Round(MarketingRatingSession / count, 1);
                 HttpContext.Current.Session["RatingMarketing"] = temp;
-                return temp;
+                return temp.ToString("0.0");
             }
-            return 0m;
+            return "0,0";
         }
 
         [System.Web.Services.WebMethod]
-        public static decimal GetTechRating()
+        public static string GetTechRating()
         {
             var TechRatingList = new List<string>();
             var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
@@ -309,9 +309,9 @@ namespace DotsolutionsWebsiteTester
                 }
                 var temp = decimal.Round(TechRatingSession / count, 1);
                 HttpContext.Current.Session["RatingTech"] = temp;
-                return temp;
+                return temp.ToString("0.0");
             }
-            return 0m;
+            return "0,0";
         }
         #endregion
     }

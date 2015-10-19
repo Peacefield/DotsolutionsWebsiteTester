@@ -304,6 +304,25 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             temp = (decimal)Session["RatingTech"];
             Session["RatingTech"] = temp + rounded;
+            SetRatingDisplay(rating);
+        }
+        private void SetRatingDisplay(decimal rating)
+        {
+            if (rating < 4)
+            {
+                Rating.Style.Add("background-color", "red");
+                Rating.Style.Add("color", "white");
+            }
+            else if (rating < 8)
+            {
+                Rating.Style.Add("background-color", "orangered");
+                Rating.Style.Add("color", "white");
+            }
+            else
+            {
+                Rating.Style.Add("background-color", "green");
+                Rating.Style.Add("color", "white");
+            }
         }
     }
 }

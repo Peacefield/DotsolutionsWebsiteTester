@@ -51,10 +51,10 @@
                     <asp:CheckBoxList ID="TestsCheckBoxList1"
                         runat="server"
                         TextAlign="right">
-                        <asp:ListItem Text="Code kwaliteit" Value="CodeQuality" Selected="true"></asp:ListItem>
-                        <asp:ListItem Text="Pagina titels" Value="PageTitles" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Code kwaliteit" Value="CodeQuality" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Pagina titels" Value="PageTitles" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Mobiele compatibiliteit" Value="MobileCompatibility" Selected="false" Enabled="false"></asp:ListItem>
-                        <asp:ListItem Text="Headers" Value="Headings" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Headers" Value="Headings" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Interne links" Value="InternalLinks" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="URL formaat" Value="UrlFormat" Selected="false" Enabled="false"></asp:ListItem>
                     </asp:CheckBoxList>
@@ -63,8 +63,8 @@
                     <asp:CheckBoxList ID="TestsCheckBoxList2"
                         runat="server">
                         <asp:ListItem Text="Google+ Pagina" Value="GooglePlus" Selected="false" Enabled="false"></asp:ListItem>
-                        <asp:ListItem Text="Facebook Pagina" Value="Facebook" Selected="true"></asp:ListItem>
-                        <asp:ListItem Text="Twitter Pagina" Value="Twitter" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Facebook Pagina" Value="Facebook" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Twitter Pagina" Value="Twitter" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Sociale interesse" Value="SocialInterest" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Populariteit" Value="Popularity" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Hoeveelheid content" Value="AmountOfContent" Selected="false" Enabled="false"></asp:ListItem>
@@ -75,7 +75,7 @@
                     <asp:CheckBoxList ID="TestsCheckBoxList3"
                         runat="server">
                         <asp:ListItem Text="Server gedrag" Value="ServerBehaviour" Selected="false" Enabled="false"></asp:ListItem>
-                        <asp:ListItem Text="Printbaarheid" Value="Printability" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Printbaarheid" Value="Printability" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Actueelheid" Value="Freshness" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Binnenkomende links" Value="IncomingLinks" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Analytics" Value="Analytics" Selected="false"></asp:ListItem>

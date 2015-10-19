@@ -84,7 +84,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                rating = rating - 1;
+                rating = rating - 2;
                 var unorderedlist = "<ul>";
                 foreach (var url in tableLayOutList)
                     unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
@@ -104,7 +104,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                rating = rating - 1;
+                rating = rating - 2;
                 var unorderedlist = "<ul>";
 
                 foreach (var item in noSemanticList)
@@ -147,11 +147,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (errorCnt > 0 || warningCnt > 0)
             {
-                var totalCnt = ((decimal)errorCnt + (decimal)warningCnt) / (decimal)notW3cCompliant.Count;
-                rating = rating - (totalCnt / 10.0m);
-                //rating = rating - totalCnt;
-                if (rating < 1)
-                    rating = 1.0m;
+                // Maximum reduction of 6 because of previous tests. Margin dependent of amount of sites found
+                var margin = 6m / (decimal)sitemap.Count;
+                rating = rating - ((decimal)notW3cCompliant.Count * margin);
+                if (rating < 0)
+                    rating = 0.0m;
 
                 // Show table when W3C notifications are encountered 
                 W3ResultsTableHidden.Attributes.Remove("class");
@@ -181,6 +181,25 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             temp = (decimal)Session["RatingTech"];
             Session["RatingTech"] = temp + rounded;
+            SetRatingDisplay(rating);
+        }
+        private void SetRatingDisplay(decimal rating)
+        {
+            if (rating < 4)
+            {
+                Rating.Style.Add("background-color", "red");
+                Rating.Style.Add("color", "white");
+            }
+            else if (rating < 8)
+            {
+                Rating.Style.Add("background-color", "orangered");
+                Rating.Style.Add("color", "white");
+            }
+            else
+            {
+                Rating.Style.Add("background-color", "green");
+                Rating.Style.Add("color", "white");
+            }
         }
 
         /// <summary>
@@ -222,7 +241,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                             currentCnt++;
                             if (!notW3cCompliant.Contains(url))
                                 notW3cCompliant.Add(url);
-                            if (currentCnt <= 10)
+                            if (currentCnt <= 5)
                             {
 
                                 try
@@ -254,7 +273,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                                     currentCnt++;
                                     if (!notW3cCompliant.Contains(url))
                                         notW3cCompliant.Add(url);
-                                    if (currentCnt <= 10)
+                                    if (currentCnt <= 5)
                                     {
                                         try
                                         {
@@ -280,7 +299,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
 
                     if (currentCnt > 10)
-                        AddToTable(url, "...", "...", "...", "<a href='https://validator.w3.org/nu/?doc=" + url + "' target='_blank'>Volledig verslag met " + currentCnt + " meldingen</a>");
+                        AddToTable(url, "...", "...", "...", "<a href='https://validator.w3.org/nu/?doc=" + url + "' target='_blank'>Volledig verslag met " + currentCnt + " errors en/of waarschuwingen</a>");
 
                     // Cleanup the streams and the response.
                     reader.Close();

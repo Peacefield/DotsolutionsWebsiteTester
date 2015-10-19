@@ -58,19 +58,36 @@ namespace DotsolutionsWebsiteTester
 
         private void SetTotalRating()
         {
-            RatingAccess.InnerHtml = ((decimal)Session["RatingAccess"]).ToString();
-            RatingUx.InnerHtml = ((decimal)Session["RatingUx"]).ToString();
-            RatingMarketing.InnerHtml = ((decimal)Session["RatingMarketing"]).ToString();
-            RatingTech.InnerHtml = ((decimal)Session["RatingTech"]).ToString();
+            RatingAccess.InnerHtml = ((decimal)Session["RatingAccess"]).ToString("0.0");
+            RatingUx.InnerHtml = ((decimal)Session["RatingUx"]).ToString("0.0");
+            RatingMarketing.InnerHtml = ((decimal)Session["RatingMarketing"]).ToString("0.0");
+            RatingTech.InnerHtml = ((decimal)Session["RatingTech"]).ToString("0.0");
 
-            if ((decimal)Session["RatingAccess"] != 0m)
-                RatingAccessTxt.Style.Add("display", "list-item");
-            if ((decimal)Session["RatingUx"] != 0m)
-                RatingUxTxt.Style.Add("display", "list-item");
-            if ((decimal)Session["RatingMarketing"] != 0m)
-                RatingMarketingTxt.Style.Add("display", "list-item");
-            if ((decimal)Session["RatingTech"] != 0m)
-                RatingTechTxt.Style.Add("display", "list-item");
+            SetRatingDisplay("RatingAccess", RatingAccess);
+            SetRatingDisplay("RatingUx", RatingUx);
+            SetRatingDisplay("RatingMarketing", RatingMarketing);
+            SetRatingDisplay("RatingTech", RatingTech);
+        }
+
+        private void SetRatingDisplay(string criteria, System.Web.UI.HtmlControls.HtmlGenericControl control)
+        {
+            var rating = (decimal)Session[criteria];
+
+            if (rating < 4)
+            {
+                control.Style.Add("background-color", "red");
+                control.Style.Add("color", "white");
+            }
+            else if (rating < 8)
+            {
+                control.Style.Add("background-color", "orangered");
+                control.Style.Add("color", "white");
+            }
+            else
+            {
+                control.Style.Add("background-color", "green");
+                control.Style.Add("color", "white");
+            }
         }
 
         /// <summary>

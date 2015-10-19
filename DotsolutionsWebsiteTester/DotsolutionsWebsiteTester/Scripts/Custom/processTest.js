@@ -40,30 +40,51 @@ function animateTo(identifier) {
     }, 1000);
 }
 
+function SetRatingDisplay(rating, criteria) {
+    var rating = parseInt(rating);
+    if (rating < 4) {
+        $("#" + criteria).css("background-color", "red");
+        $("#" + criteria).css("color", "white");
+    }
+    else if (rating < 8) {
+        $("#" + criteria).css("background-color", "orangered");
+        $("#" + criteria).css("color", "white");
+    }
+    else {
+        $("#" + criteria).css("background-color", "green");
+        $("#" + criteria).css("color", "white");
+    }
+}
+
 function OnAccessSuccess(response) {
     $("#RatingAccess").text(response);
-    if (response > 0) {
+    if (response >= 0) {
         $("#RatingAccessTxt").css("display", "list-item");
     }
+    SetRatingDisplay(response, "RatingAccess");
 }
 function OnUserxSuccess(response) {
     $("#RatingUx").text(response);
-    if (response > 0) {
+    if (response >= 0) {
         $("#RatingUxTxt").css("display", "list-item");
     }
+    SetRatingDisplay(response, "RatingUx");
 }
 function OnMarketingSuccess(response) {
     $("#RatingMarketing").text(response);
-    if (response > 0) {
+    if (response >= 0) {
         $("#RatingMarketingTxt").css("display", "list-item");
     }
+    SetRatingDisplay(response, "RatingMarketing");
 }
 function OnTechSuccess(response) {
     $("#RatingTech").text(response);
-    if (response > 0) {
+    if (response >= 0) {
         $("#RatingTechTxt").css("display", "list-item");
     }
+    SetRatingDisplay(response, "RatingTech");
 }
+
 
 function OnSuccess(response) {
     // Do nothing

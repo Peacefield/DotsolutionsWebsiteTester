@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Aan het testen..." Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProcessTest.aspx.cs" Inherits="DotsolutionsWebsiteTester.ProcessTest" %>
+﻿<%@ Page Title="Aan het testen..." Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Geautomatiseerde-Test.aspx.cs" Inherits="DotsolutionsWebsiteTester.ProcessTest" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -39,10 +39,10 @@
     <div class="well well-sm" id="RatingList">
         <h3>Beoordeling:</h3>
         <ul runat="server">
-            <li id="RatingAccessTxt">Toegankelijkheid: <span id="RatingAccess" class="rating">[Aan het berekenen...]</span></li>
-            <li id="RatingUxTxt">Gebruikerservaring: <span id="RatingUx" class="rating">[Aan het berekenen...]</span></li>
-            <li id="RatingMarketingTxt">Marketing: <span id="RatingMarketing" class="rating">[Aan het berekenen...]</span></li>
-            <li id="RatingTechTxt">Technologie: <span id="RatingTech" class="rating">[Aan het berekenen...]</span></li>
+            <li id="RatingAccessTxt"><span id="RatingAccess" class="rating">[Aan het berekenen...]</span>Toegankelijkheid</li>
+            <li id="RatingUxTxt"><span id="RatingUx" class="rating">[Aan het berekenen...]</span>Gebruikerservaring</li>
+            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="rating">[Aan het berekenen...]</span>Marketing</li>
+            <li id="RatingTechTxt"><span id="RatingTech" class="rating">[Aan het berekenen...]</span>Technologie</li>
         </ul>
     </div>
     <div id="performedTestshidden" class="well well-sm">

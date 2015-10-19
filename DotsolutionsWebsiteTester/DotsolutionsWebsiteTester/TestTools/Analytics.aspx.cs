@@ -57,11 +57,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             var analyticslist = new List<KeyValuePair<string, string>>();
             var rating = 10m;
             analyticTypes.Add(new KeyValuePair<string, string>("google-analytics.com", "Google Analytics"));
-            analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
+            //analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
             //analyticTypes.Add(new KeyValuePair<string, string>("placeholder-type", "placeholder-name"));
 
-            var temp = Server.HtmlEncode("<div>");
-            analyticTypes.Add(new KeyValuePair<string, string>("</div>", "placeholder > " + temp));
+            //var temp = Server.HtmlEncode("<div>");
+            //analyticTypes.Add(new KeyValuePair<string, string>("</div>", "placeholder > " + temp));
 
             // List for gathering
             var analytics = new List<string>();
@@ -144,7 +144,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Rating.InnerHtml = rounded.ToString();
             var RatingMarketing = (decimal)Session["RatingMarketing"];
             Session["RatingMarketing"] = rounded + RatingMarketing;
-
+            SetRatingDisplay(rating);
         }
 
         /// <summary>
@@ -236,6 +236,25 @@ namespace DotsolutionsWebsiteTester.TestTools
             tRow.Cells.Add(tCellPerc);
 
             AnalyticsTable.Rows.Add(tRow);
+        }
+
+        private void SetRatingDisplay(decimal rating)
+        {
+            if (rating < 4)
+            {
+                Rating.Style.Add("background-color", "red");
+                Rating.Style.Add("color", "white");
+            }
+            else if (rating < 8)
+            {
+                Rating.Style.Add("background-color", "orangered");
+                Rating.Style.Add("color", "white");
+            }
+            else
+            {
+                Rating.Style.Add("background-color", "green");
+                Rating.Style.Add("color", "white");
+            }
         }
     }
 }
