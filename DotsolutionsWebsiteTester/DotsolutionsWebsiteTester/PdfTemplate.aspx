@@ -47,7 +47,7 @@
             width: 50px;
             height: 50px;
             font-size: 2em;
-            background-color: white;
+            background-image: linear-gradient(to bottom,orangered 0,black 175%);
             color: black;
             border-radius: 200px;
             margin-right: 5px;
@@ -59,14 +59,20 @@
             display: block;
         }
 
+            #RatingList li {
+                list-style: none;
+            }
+
         .rating {
             font-size: 1.5em;
             font-size: 1.5em;
-            background-color: orangered;
             border-radius: 5px;
             display: inline-block;
+            background-color: orangered;
             padding-left: 3px;
             padding-right: 3px;
+            margin-bottom: 4px;
+            margin-right: 5px;
         }
 
         .ResultWell {
@@ -88,10 +94,10 @@
     <div class="well well-sm" id="RatingList">
         <h3>Beoordeling:</h3>
         <ul runat="server">
-            <li id="RatingAccessTxt" runat="server">Toegankelijkheid: <span id="RatingAccess" class="rating" runat="server">[Aan het berekenen...]</span></li>
-            <li id="RatingUxTxt" runat="server">Gebruikerservaring: <span id="RatingUx" class="rating" runat="server">[Aan het berekenen...]</span></li>
-            <li id="RatingMarketingTxt" runat="server">Marketing: <span id="RatingMarketing" class="rating" runat="server">[Aan het berekenen...]</span></li>
-            <li id="RatingTechTxt" runat="server">Technologie: <span id="RatingTech" class="rating" runat="server">[Aan het berekenen...]</span></li>
+            <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="rating" runat="server">[Aan het berekenen...]</span>Toegankelijkheid</li>
+            <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="rating" runat="server">[Aan het berekenen...]</span>Gebruikerservaring</li>
+            <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="rating" runat="server">[Aan het berekenen...]</span>Marketing</li>
+            <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="rating" runat="server">[Aan het berekenen...]</span>Technologie</li>
         </ul>
     </div>
     <div class="well well-sm">

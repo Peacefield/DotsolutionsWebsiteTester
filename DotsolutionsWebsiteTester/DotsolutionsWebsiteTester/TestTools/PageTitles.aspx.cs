@@ -57,7 +57,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         // Has long title ( title > 55 chars)
                         longTitles.Add(page);
                         AddToTable(title, page);
-                        rating = rating - ((1m / (decimal)sitemap.Count) * 5m);
+                        rating = rating - ((1m / (decimal)sitemap.Count) * 10m);
                     }
                 }
                 else
@@ -85,7 +85,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 PageTitleResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er " + noTitleGrammar + " gevonden zonder titel:</span><ul>"+ noTitleUl + "</ul></div>";
+                    + "<span> Er " + noTitleGrammar + " gevonden zonder titel:</span><ul>" + noTitleUl + "</ul></div>";
             }
 
             if (longTitles.Count > 0)
@@ -109,7 +109,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Op elke pagina is een goede titel aanwezig</span></div>";
             }
-            
+
             if (rating < 1m)
             {
                 rating = 1.0m;
@@ -122,7 +122,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["RatingMarketing"] = rounded + RatingMarketing;
             SetRatingDisplay(rating);
         }
-        
+
         /// <summary>
         /// Get if title is present
         /// </summary>
@@ -182,21 +182,23 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
         private void SetRatingDisplay(decimal rating)
         {
+            var image = "";
             if (rating < 4)
             {
-                Rating.Style.Add("background-color", "red");
+                image = "red";
                 Rating.Style.Add("color", "white");
             }
             else if (rating < 8)
             {
-                Rating.Style.Add("background-color", "orangered");
+                image = "orangered";
                 Rating.Style.Add("color", "white");
             }
             else
             {
-                Rating.Style.Add("background-color", "green");
+                image = "green";
                 Rating.Style.Add("color", "white");
             }
+            Rating.Style.Add("background", "linear-gradient(to bottom," + image + " 0,black 175%);");
         }
     }
 }

@@ -183,24 +183,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["RatingTech"] = temp + rounded;
             SetRatingDisplay(rating);
         }
-        private void SetRatingDisplay(decimal rating)
-        {
-            if (rating < 4)
-            {
-                Rating.Style.Add("background-color", "red");
-                Rating.Style.Add("color", "white");
-            }
-            else if (rating < 8)
-            {
-                Rating.Style.Add("background-color", "orangered");
-                Rating.Style.Add("color", "white");
-            }
-            else
-            {
-                Rating.Style.Add("background-color", "green");
-                Rating.Style.Add("color", "white");
-            }
-        }
 
         /// <summary>
         /// Get W3C validation results of a single page
@@ -398,6 +380,26 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
             }
             return false;
+        }
+        private void SetRatingDisplay(decimal rating)
+        {
+            var image = "";
+            if (rating < 4)
+            {
+                image = "red";
+                Rating.Style.Add("color", "white");
+            }
+            else if (rating < 8)
+            {
+                image = "orangered";
+                Rating.Style.Add("color", "white");
+            }
+            else
+            {
+                image = "green";
+                Rating.Style.Add("color", "white");
+            }
+            Rating.Style.Add("background", "linear-gradient(to bottom," + image + " 0,black 175%);");
         }
     }
 }

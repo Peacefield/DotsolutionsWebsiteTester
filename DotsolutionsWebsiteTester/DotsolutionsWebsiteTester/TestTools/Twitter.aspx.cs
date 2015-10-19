@@ -271,21 +271,23 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
         private void SetRatingDisplay(decimal rating)
         {
+            var image = "";
             if (rating < 4)
             {
-                Rating.Style.Add("background-color", "red");
+                image = "red";
                 Rating.Style.Add("color", "white");
             }
             else if (rating < 8)
             {
-                Rating.Style.Add("background-color", "orangered");
+                image = "orangered";
                 Rating.Style.Add("color", "white");
             }
             else
             {
-                Rating.Style.Add("background-color", "green");
+                image = "green";
                 Rating.Style.Add("color", "white");
             }
+            Rating.Style.Add("background", "linear-gradient(to bottom," + image + " 0,black 175%);");
         }
     }
 }
