@@ -31,33 +31,6 @@ namespace DotsolutionsWebsiteTester {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl UrlTesting;
         
         /// <summary>
-        /// PerformedTestsName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PerformedTestsName;
-        
-        /// <summary>
-        /// performedTests control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl performedTests;
-        
-        /// <summary>
-        /// TestedSitesList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TestedSitesList;
-        
-        /// <summary>
         /// manualResultHidden control.
         /// </summary>
         /// <remarks>
@@ -119,5 +92,32 @@ namespace DotsolutionsWebsiteTester {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl VormComment;
+        
+        /// <summary>
+        /// PerformedTestsName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PerformedTestsName;
+        
+        /// <summary>
+        /// performedTests control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl performedTests;
+        
+        /// <summary>
+        /// TestedSitesList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TestedSitesList;
     }
 }

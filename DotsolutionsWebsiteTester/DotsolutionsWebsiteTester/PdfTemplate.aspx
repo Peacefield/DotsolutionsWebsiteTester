@@ -93,11 +93,13 @@
         }
     </style>
     <div class="well well-sm" id="sizeref">
-        <h5>Rapport voor: </h5>
+        <h5>Rapport voor</h5>
         <h4 id="UrlTesting" runat="server"></h4>
     </div>
+    
+    <div id="manualresults" runat="server"></div>
     <div class="well well-sm" id="RatingList">
-        <h3>Beoordeling:</h3>
+        <h3>Beoordeling Geautomatiseerde Test</h3>
         <ul runat="server">
             <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="rating" runat="server">[Aan het berekenen...]</span>Toegankelijkheid</li>
             <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="rating" runat="server">[Aan het berekenen...]</span>Gebruikerservaring</li>
@@ -106,11 +108,11 @@
         </ul>
     </div>
     <div class="well well-sm">
-        <h3>Uitgevoerde tests:</h3>
+        <h3>Uitgevoerde tests</h3>
         <ul id="performedTests" runat="server"></ul>
     </div>
     <div class="well well-sm">
-        <h3>Geteste sites:</h3>
+        <h3>Geteste pagina's</h3>
         <ul id="testedsiteslist" runat="server"></ul>
     </div>
     <div id="results" runat="server">

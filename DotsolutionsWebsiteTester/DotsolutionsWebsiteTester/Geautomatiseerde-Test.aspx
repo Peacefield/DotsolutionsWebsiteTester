@@ -32,36 +32,13 @@
     </div>
 
     <div class="well well-sm" id="sizeref">
-        <h5>Rapport voor </h5>
+        <h5>Rapport voor</h5>
         <h4 id="UrlTesting" runat="server"></h4>
     </div>
-
-    <div class="well well-sm" id="RatingList">
-        <h3>Beoordeling:</h3>
-        <ul runat="server">
-            <li id="RatingAccessTxt"><span id="RatingAccess" class="rating">[Aan het berekenen...]</span>Toegankelijkheid</li>
-            <li id="RatingUxTxt"><span id="RatingUx" class="rating">[Aan het berekenen...]</span>Gebruikerservaring</li>
-            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="rating">[Aan het berekenen...]</span>Marketing</li>
-            <li id="RatingTechTxt"><span id="RatingTech" class="rating">[Aan het berekenen...]</span>Technologie</li>
-        </ul>
-    </div>
-    <div id="performedTestshidden" class="well well-sm">
-        <h3>Uitgevoerde tests</h3>
-        <ul id="PerformedTestsName" runat="server"></ul>
-    </div>
-    <!-- Hidden list with page-names used for the AJAX requests -->
-    <div class="hidden">
-        <ul id="performedTests" runat="server"></ul>
-    </div>
-
-    <div class="well well-sm">
-        <h3>Geteste sites</h3>
-        <ul id="TestedSitesList" runat="server"></ul>
-    </div>
-
+    
     <div id="manualResultHidden" class="hidden" runat="server">
         <div class="well well-sm">
-            <h3>Handmatige Testresultaten</h3>
+            <h3>Beoordeling Handmatige Test</h3>
             <h4>Vormgeving</h4>
             <div id="prof" class="ManualTest">
                 <h4>Professionaliteit</h4>
@@ -100,6 +77,28 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="well well-sm" id="RatingList">
+        <h3>Beoordeling Geautomatiseerde Test</h3>
+        <ul runat="server">
+            <li id="RatingAccessTxt"><span id="RatingAccess" class="rating">[Aan het berekenen...]</span>Toegankelijkheid</li>
+            <li id="RatingUxTxt"><span id="RatingUx" class="rating">[Aan het berekenen...]</span>Gebruikerservaring</li>
+            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="rating">[Aan het berekenen...]</span>Marketing</li>
+            <li id="RatingTechTxt"><span id="RatingTech" class="rating">[Aan het berekenen...]</span>Technologie</li>
+        </ul>
+    </div>
+    <div id="performedTestshidden" class="well well-sm">
+        <h3>Uitgevoerde tests</h3>
+        <ul id="PerformedTestsName" runat="server"></ul>
+    </div>
+    <!-- Hidden list with page-names used for the AJAX requests -->
+    <div class="hidden">
+        <ul id="performedTests" runat="server"></ul>
+    </div>
+
+    <div class="well well-sm">
+        <h3>Geteste pagina's</h3>
+        <ul id="TestedSitesList" runat="server"></ul>
     </div>
 
     <div id="result"></div>

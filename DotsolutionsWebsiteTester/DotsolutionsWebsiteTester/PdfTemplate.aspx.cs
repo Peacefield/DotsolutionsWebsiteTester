@@ -42,7 +42,7 @@ namespace DotsolutionsWebsiteTester
 
             if ((bool)Session["ManualTest"])
             {
-                results.InnerHtml += Session["ManualTestResults"].ToString();
+                manualresults.InnerHtml += Session["ManualTestResults"].ToString();
             }
 
             // Append HTML to the results div
