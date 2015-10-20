@@ -9,7 +9,7 @@
                     <span id="Rating" runat="server">?</span> Headers
                 </div>
                 <div class="panel-body">
-                    <div id="headingMessages" runat="server"></div>
+                    <div id="headingMessages" class="results" runat="server"></div>
                     <div class="hidden" id="headingTableHidden" runat="server">
                         <div class="table-responsive">
                             <asp:Table ID="table" CssClass="table table-hover" runat="server">

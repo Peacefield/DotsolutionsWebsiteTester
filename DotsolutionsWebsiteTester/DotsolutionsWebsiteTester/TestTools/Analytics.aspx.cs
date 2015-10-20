@@ -138,7 +138,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     rating = 10m;
             }
             else
-                rating = 1.0m;
+                rating = 0.0m;
 
             decimal rounded = decimal.Round(rating, 1);
             Rating.InnerHtml = rounded.ToString();

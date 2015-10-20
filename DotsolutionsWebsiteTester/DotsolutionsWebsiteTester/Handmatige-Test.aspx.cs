@@ -11,22 +11,53 @@ namespace DotsolutionsWebsiteTester
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    Session["MainUrl"].ToString();
-            //}
-            //catch (NullReferenceException)
-            //{
-            //    Response.Redirect("~/");
-            //    return;
-            //}
+            try
+            {
+                Session["MainUrl"].ToString();
+            }
+            catch (NullReferenceException)
+            {
+                Response.Redirect("~/");
+                return;
+            }
+            SiteUrl.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>" + Session["MainUrl"].ToString() + "</a>";
         }
 
         protected void SkipTest_Click(Object sender, EventArgs e)
         {
+            Session["ManualTest"] = false;
             Response.Redirect("Geautomatiseerde-Test.aspx");
             return;
         }
 
+        protected void StartTest_Click(Object sender, EventArgs e)
+        {
+            var vormProfOpma = VormProfOpma.Text;
+            var vormProfHuis = VormProfHuis.Text;
+            var vormProfKleur = VormProfKleur.Text;
+            var vormUxMen = VormUxMen.Text;
+            var vormUxStruc = VormUxStruc.Text;
+            var vormgevingOpmerking = VormgevingOpmerking.Text;
+
+            if (vormProfOpma == "" || vormProfHuis == "" || vormProfKleur == "" || vormUxMen == "" || vormUxStruc == "")
+            {
+                required.Attributes.Remove("class");
+                return;
+            }
+
+            VormgevingOpmerking.Text = "";
+            Session["ManualTest"] = true;
+            Session["VormProfOpma"] = vormProfOpma;
+            Session["VormProfHuis"] = vormProfHuis;
+            Session["VormProfKleur"] = vormProfKleur;
+
+            Session["VormUxMen"] = vormUxMen;
+            Session["VormUxStruc"] = vormUxStruc;
+
+            Session["VormOpm"] = vormgevingOpmerking;
+
+            Response.Redirect("Geautomatiseerde-Test.aspx");
+            return;
+        }
     }
 }

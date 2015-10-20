@@ -9,7 +9,7 @@
                     <span id="Rating" runat="server">?</span> Printbaarheid
                 </div>
                 <div class="panel-body">
-                    <div id="PrintResults" runat="server"></div>
+                    <div id="PrintResults" class="results" runat="server"></div>
                     <div class="hidden" id="PrintabilityTableHidden" runat="server">
                         <div class="table-responsive">
                             <asp:Table ID="PrintabilityTable" CssClass="table table-hover" runat="server">

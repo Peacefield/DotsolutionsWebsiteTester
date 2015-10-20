@@ -86,6 +86,11 @@
             min-height: 1px;
             position: relative;
         }
+
+        .ManualTest {
+            left: 2%;
+            position: relative;
+        }
     </style>
     <div class="well well-sm" id="sizeref">
         <h5>Rapport voor: </h5>

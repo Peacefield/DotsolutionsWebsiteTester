@@ -9,7 +9,7 @@
                     <span id="Rating" runat="server">?</span> Code kwaliteit
                 </div>
                 <div class="panel-body">
-                    <div id="w3ErrorsFound" runat="server"></div>
+                    <div id="w3ErrorsFound" class="results" runat="server"></div>
                     <div class="hidden" id="W3ResultsTableHidden" runat="server">
                         <div class="table-responsive">
                             <asp:Table ID="table" CssClass="table table-hover" runat="server">

@@ -9,7 +9,7 @@
                     <span id="Rating" runat="server">?</span>Analytics
                 </div>
                 <div class="panel-body">
-                    <div id="AnalyticsResults" runat="server"></div>
+                    <div id="AnalyticsResults" class="results" runat="server"></div>
                     <div class="hidden" id="AnalyticsTableHidden" runat="server">
                         <div class="table-responsive">
                             <asp:Table ID="AnalyticsTable" CssClass="table table-hover" runat="server">

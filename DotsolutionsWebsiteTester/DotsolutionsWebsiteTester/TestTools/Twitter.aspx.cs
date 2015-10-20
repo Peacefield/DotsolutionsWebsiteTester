@@ -117,7 +117,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (IsTwitter(screenName))
                     {
-                        rating = 10m;
                         Debug.WriteLine(screenName + " gevonden!");
                         twitterfound = true;
 
@@ -127,9 +126,40 @@ namespace DotsolutionsWebsiteTester.TestTools
                                     select user;
                         var returnedUser = users.ToList();
 
-                        var TweetCount = GetTweetCount(returnedUser).ToString("#,##0");
-                        var FollowersCount = GetFollowerCount(returnedUser).ToString("#,##0");
+                        var TweetCount = GetTweetCount(returnedUser);
+                        var FollowersCount = GetFollowerCount(returnedUser);
+
+                        var TweetCountString = TweetCount.ToString("#,##0");
+                        var FollowersCountString = FollowersCount.ToString("#,##0");
                         var ProfileImage = GetProfileImage(returnedUser);
+
+                        var percentage = ((decimal)FollowersCount / (decimal)TweetCount) * 100m;
+                        Debug.WriteLine("percentage = " + percentage);
+                        if (FollowersCount >= TweetCount)
+                        {
+                            rating = 10m;
+                        }
+                        else if (percentage > 75m)
+                        {
+                            rating = 10m;
+                        }
+                        else if (percentage > 50m)
+                        {
+                            rating = 7.5m;
+                        }
+                        else if (percentage > 33m)
+                        {
+                            rating = 5.5m;
+                        }
+                        else if (percentage > 10m)
+                        {
+                            rating = 4m;
+                        }
+                        else
+                        {
+                            rating = 1m;
+                        }
+
 
                         twitterResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
@@ -138,16 +168,17 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                         twitterResults.InnerHtml += "<div class='well well-lg ResultWell'>"
                             + "<i class='fa fa-retweet fa-3x'></i>"
-                            + "<span> Dit account heeft " + TweetCount + " tweets gemaakt </span></div>"
+                            + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
                             + "<div class='ResultDivider'></div>"
                             + "<div class='well well-lg ResultWell'>"
                             + "<i class='fa fa-users fa-3x'></i>"
-                            + "<span> Dit account heeft " + FollowersCount + " volgers</span></div>";
+                            + "<span> Dit account heeft " + FollowersCountString + " volgers</span></div>";
+                        break;
                     }
                 }
                 if (!twitterfound)
                 {
-                    rating = 1.0m;
+                    rating = 0.0m;
                     twitterResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                         + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Twitter-profiel staat</span></div>";

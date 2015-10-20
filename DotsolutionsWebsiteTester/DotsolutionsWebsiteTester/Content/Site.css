@@ -71,6 +71,10 @@
     }
 }
 
+.results {
+    overflow-x: auto;
+}
+
 html {
     /*height: 100%;*/
     font-size: 62.5%;
@@ -283,5 +287,21 @@ textarea {
     width: 4%;
     float: left;
     min-height: 1px;
+    position: relative;
+}
+
+.FullTextArea {
+    max-width: 100%;
+    width: 100%;
+    resize: none;
+}
+
+.rating-input {
+    cursor: pointer;
+    font-size: 2em;
+}
+
+.ManualTest{
+    left: 2%; 
     position: relative;
 }

@@ -123,7 +123,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (IsFacebook(screenName))
                     {
-                        rating = 10m;
                         Debug.WriteLine(screenName + " facebook gevonden!");
                         isFacebookFound = true;
 
@@ -131,6 +130,28 @@ namespace DotsolutionsWebsiteTester.TestTools
                         var fbLikes = result.likes.ToString("#,##0");
                         var fbPicture = result.picture.data["url"];
                         var fbTalking = result.talking_about_count.ToString("#,##0");
+
+                        var percentage = ((decimal)result.talking_about_count / (decimal)result.likes) * 100;
+                        if (percentage > 10m)
+                        {
+                            rating = 10m;
+                        }
+                        else if (percentage > 1m)
+                        {
+                            rating = 7.5m;
+                        }
+                        else if (percentage > 0.5m)
+                        {
+                            rating = 5.5m;
+                        }
+                        else if (percentage > 0.25m)
+                        {
+                            rating = 4m;
+                        }
+                        else
+                        {
+                            rating = 1m;
+                        }
 
                         FacebookResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "
@@ -143,11 +164,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                             + "<div class='well well-lg ResultWell'>"
                             + "<i class='fa fa-commenting-o fa-3x'></i>"
                             + "<span> " + fbTalking + " mensen praten hier over</span></div>";
+
+
                     }
                 }
                 if (!isFacebookFound)
                 {
-                    rating = 1.0m;
+                    rating = 0.0m;
                     FacebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                         + "<span> Er is geen Facebook account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";

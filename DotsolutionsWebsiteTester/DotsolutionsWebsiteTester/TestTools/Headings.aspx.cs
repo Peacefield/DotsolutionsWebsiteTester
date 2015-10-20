@@ -54,7 +54,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 string unorderedlist = "<ul>";
                 foreach (var item in noHeadings)
                 {
-                    // Point reduction equal to percentage equal to the total amount of tested sites
+                    // Point reduction equal to percentage of the total amount of tested sites
+                    // E.g. when 1/5 has no heading it gets 1/5th of 10 reduction from remaining rating
                     rating = rating - ((1m / (decimal)sitemap.Count) * 10m);
                     unorderedlist += "<li>" + item + "</li>";
                 }
@@ -76,7 +77,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 if (errorCnt > 0)
                 {
-                    rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 4.5m);
+                    // Every misplaced heading causes a reduction in relation the the total amount of headers used
+                    // E.g. 3 misplaced headings while there was a total of 20 headings used cause a reduction of 3/20th * 10
+                    rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 10m);
                     headingTableHidden.Attributes.Remove("class");
                     headingMessages.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
@@ -111,18 +114,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Session["RatingTech"] = temp + rounded;
             }
             else
-            {
-                Rating.InnerHtml = "1,0";
+                Rating.InnerHtml = "0,0";
 
-                var temp = (decimal)Session["RatingAccess"];
-                Session["RatingAccess"] = temp + 1m;
-
-                temp = (decimal)Session["RatingMarketing"];
-                Session["RatingMarketing"] = temp + 1m;
-
-                temp = (decimal)Session["RatingTech"];
-                Session["RatingTech"] = temp + 1m;
-            }
             SetRatingDisplay(rating);
         }
 

@@ -9,7 +9,7 @@
                     <span id="Rating" runat="server">?</span> Pagina titels
                 </div>
                 <div class="panel-body">
-                    <div id="PageTitleResults" runat="server"></div>
+                    <div id="PageTitleResults" class="results" runat="server"></div>
 
                     <div class="hidden" id="PageTitlesTableHidden" runat="server">
                         <div class="table-responsive">

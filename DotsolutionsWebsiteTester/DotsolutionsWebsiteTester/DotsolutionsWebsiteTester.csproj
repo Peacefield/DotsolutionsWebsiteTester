@@ -188,6 +188,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Custom\ads.js" />
+    <Content Include="Scripts\Custom\bootstrap-rating-input.js" />
     <Content Include="Scripts\Custom\default.js" />
     <Content Include="Scripts\Custom\processTest.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

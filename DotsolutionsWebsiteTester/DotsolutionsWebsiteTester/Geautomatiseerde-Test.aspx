@@ -32,7 +32,7 @@
     </div>
 
     <div class="well well-sm" id="sizeref">
-        <h5>Rapport voor: </h5>
+        <h5>Rapport voor </h5>
         <h4 id="UrlTesting" runat="server"></h4>
     </div>
 
@@ -46,16 +46,60 @@
         </ul>
     </div>
     <div id="performedTestshidden" class="well well-sm">
-        <h3>Uitgevoerde tests:</h3>
+        <h3>Uitgevoerde tests</h3>
         <ul id="PerformedTestsName" runat="server"></ul>
     </div>
+    <!-- Hidden list with page-names used for the AJAX requests -->
+    <div class="hidden">
+        <ul id="performedTests" runat="server"></ul>
+    </div>
+
     <div class="well well-sm">
-        <h3>Geteste sites:</h3>
+        <h3>Geteste sites</h3>
         <ul id="TestedSitesList" runat="server"></ul>
     </div>
 
-    <div class="hidden">
-        <ul id="performedTests" runat="server"></ul>
+    <div id="manualResultHidden" class="hidden" runat="server">
+        <div class="well well-sm">
+            <h3>Handmatige Testresultaten</h3>
+            <h4>Vormgeving</h4>
+            <div id="prof" class="ManualTest">
+                <h4>Professionaliteit</h4>
+                <div class="row">
+                    <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Opmaak</label>
+                    <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfOpma" runat="server">
+                    </label>
+
+                    <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Huisstijl</label>
+                    <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfHuis" runat="server">
+                    </label>
+
+                    <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Kleurgebruik</label>
+                    <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfKleur" runat="server">
+                    </label>
+                </div>
+            </div>
+            <div id="userX" class="ManualTest">
+                <h4>Gebruiksvriendelijkheid</h4>
+                <div class="row">
+                    <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Menu</label>
+                    <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormUxMen" runat="server">
+                    </label>
+
+                    <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Structuur</label>
+                    <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormUxStruc" runat="server">
+                    </label>
+                </div>
+            </div>
+            <div id="vormComm" class="ManualTest">
+                <div class="row">
+                    <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Opmerkingen</label>
+                    <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormComment" runat="server">
+                    </label>
+                    <label class="col-md-1 col-lg-1 col-xs-1 col-sm-1"></label>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="result"></div>

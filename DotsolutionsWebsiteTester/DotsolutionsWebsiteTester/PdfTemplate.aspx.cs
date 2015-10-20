@@ -40,6 +40,11 @@ namespace DotsolutionsWebsiteTester
 
             SetTotalRating();
 
+            if ((bool)Session["ManualTest"])
+            {
+                results.InnerHtml += Session["ManualTestResults"].ToString();
+            }
+
             // Append HTML to the results div
             foreach (var test in selectedTests)
             {

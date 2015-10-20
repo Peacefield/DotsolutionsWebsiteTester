@@ -65,7 +65,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // Does not have title in <head>
                     // Add to List
                     noTitles.Add(page);
-                    rating = rating - ((1m / (decimal)sitemap.Count) * 10m);
+                    rating = rating - ((1m / (decimal)sitemap.Count) * 15m);
                 }
             }
 
@@ -110,9 +110,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> Op elke pagina is een goede titel aanwezig</span></div>";
             }
 
-            if (rating < 1m)
+            if (rating < 0m)
             {
-                rating = 1.0m;
+                rating = 0.0m;
             }
             decimal rounded = decimal.Round(rating, 1);
             Rating.InnerHtml = rounded.ToString();

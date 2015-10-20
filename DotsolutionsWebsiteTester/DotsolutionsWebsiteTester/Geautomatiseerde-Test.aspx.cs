@@ -43,6 +43,14 @@ namespace DotsolutionsWebsiteTester
 
                 th.Join();
                 th2.Join();
+
+                if ((bool)Session["ManualTest"])
+                {
+                    // Do manual test stuff
+                    manualResultHidden.Attributes.Remove("class");
+                    GetManualTestResults();
+                }
+
                 // Set rating sessions
                 Session["RatingAccess"] = 0m;
                 Session["RatingUx"] = 0m;
@@ -80,7 +88,6 @@ namespace DotsolutionsWebsiteTester
             string userAgent = Session["userAgent"].ToString();
             bool isPresent = false;
 
-            Debug.WriteLine(">>>> GetSiteList >>> " + url);
 
             //sitemap.Add(url);
             //testedsiteslist.InnerHtml += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
@@ -88,11 +95,16 @@ namespace DotsolutionsWebsiteTester
             //Session["selectedSites"] = sitemap;
             //return;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=5&q=%22" + url + "%22");
+            var queryString = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&q=%22" + url + "%22&rsz=5";
+            Debug.WriteLine(">>>> GetSiteList >>> " + queryString);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(queryString);
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=5&q=%22" + url + "%22");
             // Additional parameters
             // &rsz=[1-8] resultSize can be 1 through 8. Currently using 5.
             // &start=[x] Indicate where to start searching
             request.UserAgent = userAgent;
+            request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
             // Get the response.
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             // Get the stream containing content returned by the server.
@@ -116,12 +128,14 @@ namespace DotsolutionsWebsiteTester
                 foreach (JToken item in results)
                 {
                     sitemap.Add(item["url"].ToString());
+
                     // If entered URL is not in found URL's it will be added
                     // This if-statement detects if it IS among the found URL's by comparing it to several possible URL formats
                     if (item["url"].ToString() == url || item["url"].ToString() == (url + "/")
                         || item["url"].ToString() == url.Replace("http://", "https://") || item["url"].ToString() == url.Replace("https://", "http://")
                         || item["url"].ToString() == url.Replace("http://", "https://") + "/" || item["url"].ToString() == url.Replace("https://", "http://") + "/")
                         isPresent = true;
+
                 }
                 if (!isPresent)
                     sitemap.Add(url);
@@ -153,6 +167,50 @@ namespace DotsolutionsWebsiteTester
             return;
         }
 
+        private void GetManualTestResults()
+        {
+            var vormProfOpma = Convert.ToInt32(Session["VormProfOpma"]);
+            var vormProfHuis = Convert.ToInt32(Session["VormProfHuis"]);
+            var vormProfKleur = Convert.ToInt32(Session["VormProfKleur"]);
+
+            var vormUxMen = Convert.ToInt32(Session["VormUxMen"]);
+            var vormUxStruc = Convert.ToInt32(Session["VormUxStruc"]);
+
+            var vormgevingOpmerking = Session["VormOpm"].ToString();
+            
+            CalculateStars(vormProfOpma, VormProfOpma);
+            CalculateStars(vormProfHuis, VormProfHuis);
+            CalculateStars(vormProfKleur, VormProfKleur);
+            CalculateStars(vormUxMen, VormUxMen);
+            CalculateStars(vormUxStruc, VormUxStruc);
+
+            VormComment.InnerText = vormgevingOpmerking;
+
+            // Read contents from div and add as Session for PDF
+
+            var sb = new System.Text.StringBuilder();
+            manualResultHidden.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+            string htmlstring = sb.ToString();
+
+            Session["ManualTestResults"] = htmlstring;
+        }
+
+        private void CalculateStars(int rating, System.Web.UI.HtmlControls.HtmlGenericControl control)
+        {
+            for (int i = 0; i < rating; i++)
+            {
+                control.InnerHtml += "<i class='glyphicon glyphicon-star'></i>";
+            }
+            if (rating < 10)
+            {
+                var remainder = 10 - rating;
+                for (int i = 0; i < remainder; i++)
+                {
+                    control.InnerHtml += "<i class='glyphicon glyphicon-star-empty'></i>";
+                }
+            }
+        }
+
         #region WebMethods for setting total rating
 
         [System.Web.Services.WebMethod]
@@ -164,7 +222,7 @@ namespace DotsolutionsWebsiteTester
             HttpContext.Current.Session["RatingMarketing"] = 0m;
             HttpContext.Current.Session["RatingTech"] = 0m;
         }
-        
+
         [System.Web.Services.WebMethod]
         public static string GetAccessRating()
         {

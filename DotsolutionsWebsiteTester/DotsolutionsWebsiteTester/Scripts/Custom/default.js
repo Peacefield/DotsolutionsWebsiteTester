@@ -1,17 +1,23 @@
 ﻿function CheckAll() {
     $("#MainContent_TestsCheckBoxList1 td input").each(function (index) {
-        $(this).prop("checked", true);
+        if ($(this).attr("disabled") !== "disabled") {
+            $(this).prop("checked", true);
+        }
     });
     $("#MainContent_TestsCheckBoxList2 td input").each(function (index) {
-        $(this).prop("checked", true);
+        if ($(this).attr("disabled") !== "disabled") {
+            $(this).prop("checked", true);
+        }
     });
     $("#MainContent_TestsCheckBoxList3 td input").each(function (index) {
-        $(this).prop("checked", true);
+        if ($(this).attr("disabled") !== "disabled") {
+            $(this).prop("checked", true);
+        }
     });
 }
 function CheckNone() {
     $("#MainContent_TestsCheckBoxList1 td input").each(function (index) {
-        $(this).prop("checked", false);
+            $(this).prop("checked", false);
     });
     $("#MainContent_TestsCheckBoxList2 td input").each(function (index) {
         $(this).prop("checked", false);

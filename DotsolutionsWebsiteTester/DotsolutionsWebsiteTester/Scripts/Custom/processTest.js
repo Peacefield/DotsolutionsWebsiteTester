@@ -35,7 +35,7 @@
 
 function animateTo(identifier) {
     var target = document.getElementById(identifier);
-    $('body').animate({
+    $('body,html').animate({
         scrollTop: target.offsetTop - 50
     }, 1000);
 }
@@ -190,7 +190,7 @@ $(document).ready(function () {
         }
     });
     $('#back-to-top').click(function () {
-        $('body').animate({
+        $('body,html').animate({
             scrollTop: 0
         }, 1000);
     });

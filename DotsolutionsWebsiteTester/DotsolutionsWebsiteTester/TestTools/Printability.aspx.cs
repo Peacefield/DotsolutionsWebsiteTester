@@ -247,28 +247,22 @@ namespace DotsolutionsWebsiteTester.TestTools
             var rating = 10m;
 
             // Er zijn printbare pagina's
-            if (printable.Count > 0)
+            if (printable.Count >= sitemap.Count)
             {
-                string printablelist = "";
-                foreach (string item in printable)
-                {
-                    printablelist += "<li>" + item + "</li>";
-                }
-                if (printable.Count >= sitemap.Count)
-                    PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
-            }
-            else
-            {
-                rating = 1.0m;
+                PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                    + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
             }
 
-            if (printablePages < sitemap.Count)
+            //// Less pages printable than there were pages tested
+            //if (printablePages < sitemap.Count)
+            else
             {
+                //rating = ((decimal)printablePages / (decimal)sitemap.Count) * 10m;
                 string notprintablelist = "";
                 foreach (var item in notPrintable)
                 {
+                    rating = rating - (10m / (decimal)sitemap.Count);
                     notprintablelist += "<li>" + item + "</li>";
                 }
                 string amount = "";
@@ -283,6 +277,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<ul>" + notprintablelist + "</ul></div>";
             }
 
+            // Add every page that's not printable
             if (notPrintable.Count > 0)
             {
                 foreach (var url in notPrintable)
@@ -306,6 +301,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["RatingTech"] = temp + rounded;
             SetRatingDisplay(rating);
         }
+
         private void SetRatingDisplay(decimal rating)
         {
             var image = "";
