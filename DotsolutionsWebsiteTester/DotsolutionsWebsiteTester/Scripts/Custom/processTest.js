@@ -34,6 +34,7 @@
 }
 
 function animateTo(identifier) {
+   event.srcElement.removeAttribute("href");
     var target = document.getElementById(identifier);
     $('body,html').animate({
         scrollTop: target.offsetTop - 50

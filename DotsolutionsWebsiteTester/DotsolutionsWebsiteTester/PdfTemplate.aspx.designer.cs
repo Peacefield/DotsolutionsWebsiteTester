@@ -49,6 +49,15 @@ namespace DotsolutionsWebsiteTester {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingAccess;
         
         /// <summary>
+        /// RatingAccessList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingAccessList;
+        
+        /// <summary>
         /// RatingUxTxt control.
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace DotsolutionsWebsiteTester {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingUx;
+        
+        /// <summary>
+        /// RatingUxList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingUxList;
         
         /// <summary>
         /// RatingMarketingTxt control.
@@ -85,6 +103,15 @@ namespace DotsolutionsWebsiteTester {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingMarketing;
         
         /// <summary>
+        /// RatingMarketingList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingMarketingList;
+        
+        /// <summary>
         /// RatingTechTxt control.
         /// </summary>
         /// <remarks>
@@ -101,6 +128,15 @@ namespace DotsolutionsWebsiteTester {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingTech;
+        
+        /// <summary>
+        /// RatingTechList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingTechList;
         
         /// <summary>
         /// performedTests control.

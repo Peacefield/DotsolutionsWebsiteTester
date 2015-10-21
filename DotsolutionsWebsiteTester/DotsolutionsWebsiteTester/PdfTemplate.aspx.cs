@@ -72,6 +72,11 @@ namespace DotsolutionsWebsiteTester
             SetRatingDisplay("RatingUx", RatingUx);
             SetRatingDisplay("RatingMarketing", RatingMarketing);
             SetRatingDisplay("RatingTech", RatingTech);
+
+            RatingAccessList.InnerHtml = Session["RatingAccessList"].ToString();
+            RatingUxList.InnerHtml = Session["RatingUxList"].ToString();
+            RatingMarketingList.InnerHtml = Session["RatingMarketingList"].ToString();
+            RatingTechList.InnerHtml = Session["RatingTechList"].ToString();
         }
 
         private void SetRatingDisplay(string criteria, System.Web.UI.HtmlControls.HtmlGenericControl control)

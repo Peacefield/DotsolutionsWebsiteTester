@@ -91,20 +91,52 @@
             left: 2%;
             position: relative;
         }
+
+        .ratingList {
+            display: block;
+            width: 30%;
+            margin-left: 50px;
+        }
+
+            .ratingList li a {
+                margin-left: -45px;
+                cursor: pointer;
+            }
+
     </style>
     <div class="well well-sm" id="sizeref">
         <h5>Rapport voor</h5>
         <h4 id="UrlTesting" runat="server"></h4>
     </div>
-    
+
     <div id="manualresults" runat="server"></div>
     <div class="well well-sm" id="automatedRatingList">
         <h3>Beoordeling Geautomatiseerde Test</h3>
         <ul runat="server">
-            <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="rating" runat="server">[Aan het berekenen...]</span>Toegankelijkheid</li>
-            <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="rating" runat="server">[Aan het berekenen...]</span>Gebruikerservaring</li>
-            <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="rating" runat="server">[Aan het berekenen...]</span>Marketing</li>
-            <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="rating" runat="server">[Aan het berekenen...]</span>Technologie</li>
+            <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="rating" runat="server">[Aan het berekenen...]</span>Toegankelijkheid
+                <div class="well-sm well ratingList">
+                    <ul id="RatingAccessList" runat="server">
+                    </ul>
+                </div>
+            </li>
+            <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="rating" runat="server">[Aan het berekenen...]</span>Gebruikerservaring
+                <div class="well-sm well ratingList">
+                    <ul id="RatingUxList" runat="server">
+                    </ul>
+                </div>
+            </li>
+            <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="rating" runat="server">[Aan het berekenen...]</span>Marketing
+                <div class="well-sm well ratingList">
+                    <ul id="RatingMarketingList" runat="server">
+                    </ul>
+                </div>
+            </li>
+            <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="rating" runat="server">[Aan het berekenen...]</span>Technologie
+                <div class="well-sm well ratingList">
+                    <ul id="RatingTechList" runat="server">
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="well well-sm">
