@@ -71,10 +71,6 @@
     }
 }
 
-.results {
-    overflow-x: auto;
-}
-
 html {
     /*height: 100%;*/
     font-size: 62.5%;
@@ -96,6 +92,13 @@ body {
     font-size: 1em;
 }
 
+/* Set widths on the form inputs since otherwise they're 100% wide */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
 footer {
     color: white;
 }
@@ -104,26 +107,46 @@ footer {
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    /*padding: 0;*/
 }
 
-
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
+.results {
+    overflow-x: auto;
 }
 
 .jumbotron {
     margin-top: 20px;
 }
 
-.body-content {
-    padding: 0;
-}
-
 .btn {
     margin-bottom: 5px !important;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.panel-custom {
+    border-color: #85CC76 !important;
+}
+
+    .panel-custom .panel-heading {
+        background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);
+        color: white;
+        background-color: #145007;
+        background-repeat: repeat-x;
+        border-color: #85CC76;
+    }
+
+/* Start Default Page CSS */
+.checkboxlistrow,
+.urlTextBoxRow {
+    padding-bottom: 10px;
 }
 
 #testsjumbotron {
@@ -136,18 +159,32 @@ textarea {
     width: 100%;
 }
 
-.checkboxlistrow,
-.urlTextBoxRow {
-    padding-bottom: 10px;
-}
-
-#CheckboxHolder {
+#checkboxHolder {
     display: block;
 }
 
-/**
- * Loading div on Geautomatiseerde-Test.aspx
- */
+    #checkboxHolder td input,
+    #checkboxHolder td label {
+        cursor: pointer;
+    }
+
+/* End Default Page CSS */
+
+/* Start Geautomatiseerde-Test CSS*/
+
+/* Start Loading div on Geautomatiseerde-Test.aspx */
+
+.progress {
+    position: relative;
+}
+
+    .progress span {
+        position: absolute;
+        display: block;
+        width: 100%;
+        color: black;
+    }
+
 #overlay {
     display: none;
     position: absolute;
@@ -169,7 +206,7 @@ textarea {
     left: 0;
 }
 
-#loadingGIF, #TestProgress {
+#loadingGIF, #testProgress {
     position: absolute;
 }
 
@@ -177,7 +214,7 @@ textarea {
     left: 49%;
 }
 
-#TestProgress {
+#testProgress {
     top: 40%;
     width: 100%;
 }
@@ -186,43 +223,68 @@ textarea {
     display: none;
 }
 
-#TestsInProgress, #TestsComplete {
+#testsInProgress, #testsComplete {
     list-style-type: none;
 }
 
-.progress {
+/* End Loading div on Geautomatiseerde-Test.aspx */
+
+.rating {
+    font-size: 1.5em;
+    background-color: orangered;
+    border-radius: 5px;
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-bottom: 4px;
+    margin-right: 5px;
+}
+
+.resultWell {
+    width: 48%;
+    float: left;
+}
+
+.resultDivider {
+    width: 4%;
+    float: left;
+    min-height: 1px;
     position: relative;
 }
 
-    .progress span {
-        position: absolute;
-        display: block;
-        width: 100%;
-        color: black;
+.manualTest {
+    left: 2%;
+    position: relative;
+}
+
+.ratingList {
+    display: none;
+    width: 30%;
+    margin-left: 50px;
+}
+
+    .ratingList li {
+        margin-left: -45px;
     }
-/**
- * Back to top button
-    Not perfected for smaller screens
- */
+
+.displayRating {
+    margin-left: 5px;
+}
+
+#automatedRatingList {
+    display: none;
+}
+
+    #automatedRatingList li {
+        list-style: none;
+    }
+
+
 #back-to-top {
     position: fixed;
     top: 99%;
     margin-top: -50px;
     right: 1%;
-}
-
-.noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-#CheckboxHolder td input,
-#CheckboxHolder td label {
-    cursor: pointer;
 }
 
 #MainContent_PerformedTestsName li a {
@@ -232,18 +294,6 @@ textarea {
 #MainContent_CreatePdfBtn {
     display: none;
 }
-
-.panel-custom {
-    border-color: #85CC76 !important;
-}
-
-    .panel-custom .panel-heading {
-        background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);
-        color: white;
-        background-color: #145007;
-        background-repeat: repeat-x;
-        border-color: #85CC76;
-    }
 
 #MainContent_Rating {
     display: inline-block;
@@ -259,38 +309,11 @@ textarea {
     text-align: center;
 }
 
-.rating {
-    font-size: 1.5em;
-    background-color: orangered;
-    border-radius: 5px;
-    display: inline-block;
-    padding-left: 3px;
-    padding-right: 3px;
-    margin-bottom: 4px;
-    margin-right: 5px;
-}
+/* End Geautomatiseerde-Test CSS*/
 
-#RatingList {
-    display: none;
-}
+/* Start Handmatige-Test CSS*/
 
-    #RatingList li {
-        list-style: none;
-    }
-
-.ResultWell {
-    width: 48%;
-    float: left;
-}
-
-.ResultDivider {
-    width: 4%;
-    float: left;
-    min-height: 1px;
-    position: relative;
-}
-
-.FullTextArea {
+.fullTextArea {
     max-width: 100%;
     width: 100%;
     resize: none;
@@ -301,7 +324,4 @@ textarea {
     font-size: 2em;
 }
 
-.ManualTest{
-    left: 2%; 
-    position: relative;
-}
+/* End Handmatige-Test CSS*/

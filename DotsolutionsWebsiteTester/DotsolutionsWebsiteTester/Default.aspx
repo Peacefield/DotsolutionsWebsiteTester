@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div id="CheckboxHolder" class="noselect">
+        <div id="checkboxHolder" class="noselect">
             <div class="row">
                 <div class="col-md-5 col-xs-4 col-sm-5 col-lg-5"></div>
                 <div class="col-md-2 col-xs-4 col-sm-2 col-lg-2 btn btn-default btn-sm" id="CheckAllCheckboxes">Niks selecteren</div>

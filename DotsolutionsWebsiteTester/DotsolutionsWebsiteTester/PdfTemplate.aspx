@@ -55,11 +55,11 @@
             text-align: center;
         }
 
-        #RatingList {
+        #automatedRatingList {
             display: block;
         }
 
-            #RatingList li {
+            #automatedRatingList li {
                 list-style: none;
             }
 
@@ -75,19 +75,19 @@
             margin-right: 5px;
         }
 
-        .ResultWell {
+        .resultWell {
             width: 48%;
             float: left;
         }
 
-        .ResultDivider {
+        .resultDivider {
             width: 4%;
             float: left;
             min-height: 1px;
             position: relative;
         }
 
-        .ManualTest {
+        .manualTest {
             left: 2%;
             position: relative;
         }
@@ -98,7 +98,7 @@
     </div>
     
     <div id="manualresults" runat="server"></div>
-    <div class="well well-sm" id="RatingList">
+    <div class="well well-sm" id="automatedRatingList">
         <h3>Beoordeling Geautomatiseerde Test</h3>
         <ul runat="server">
             <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="rating" runat="server">[Aan het berekenen...]</span>Toegankelijkheid</li>

@@ -11,21 +11,21 @@
         <div>
             <img id="loadingGIF" src="Content/images/loading.gif" height="32" width="32" />
         </div>
-        <div id="TestProgress" class="row">
+        <div id="testProgress" class="row">
             <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
                 <h3>Testen in behandeling</h3>
-                <ul id="TestsInProgress"></ul>
+                <ul id="testsInProgress"></ul>
             </div>
             <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
                 <h3>Testen compleet</h3>
-                <ul id="TestsComplete"></ul>
+                <ul id="testsComplete"></ul>
             </div>
         </div>
     </div>
 
     <div class="pull-right">
         <asp:Button ID="CreatePdfBtn"
-            Text="To PDF"
+            Text="Opslaan als PDF"
             CssClass="btn btn-success btn-md"
             OnClick="CreatePdfBtn_Click"
             runat="server" />
@@ -40,7 +40,7 @@
         <div class="well well-sm">
             <h3>Beoordeling Handmatige Test</h3>
             <h4>Vormgeving</h4>
-            <div id="prof" class="ManualTest">
+            <div id="prof" class="manualTest">
                 <h4>Professionaliteit</h4>
                 <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Opmaak</label>
@@ -56,7 +56,7 @@
                     </label>
                 </div>
             </div>
-            <div id="userX" class="ManualTest">
+            <div id="userX" class="manualTest">
                 <h4>Gebruiksvriendelijkheid</h4>
                 <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Menu</label>
@@ -68,7 +68,7 @@
                     </label>
                 </div>
             </div>
-            <div id="vormComm" class="ManualTest">
+            <div id="vormComm" class="manualTest">
                 <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Opmerkingen</label>
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormComment" runat="server">
@@ -78,13 +78,49 @@
             </div>
         </div>
     </div>
-    <div class="well well-sm" id="RatingList">
+    <div class="well well-sm" id="automatedRatingList">
         <h3>Beoordeling Geautomatiseerde Test</h3>
         <ul runat="server">
-            <li id="RatingAccessTxt"><span id="RatingAccess" class="rating">[Aan het berekenen...]</span>Toegankelijkheid</li>
-            <li id="RatingUxTxt"><span id="RatingUx" class="rating">[Aan het berekenen...]</span>Gebruikerservaring</li>
-            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="rating">[Aan het berekenen...]</span>Marketing</li>
-            <li id="RatingTechTxt"><span id="RatingTech" class="rating">[Aan het berekenen...]</span>Technologie</li>
+            <li id="RatingAccessTxt"><span id="RatingAccess" class="rating">[Aan het berekenen...]</span>Toegankelijkheid 
+                <span id="ShowRatingAccess" class="displayRating">
+                    <i id="RatingAccesBtn" class="glyphicon glyphicon-chevron-down"></i>
+                </span> 
+                <div id="RatingAccessList" runat="server" class="well-sm well ratingList">
+                    <ul>
+                        <li>Test</li>
+                    </ul>
+                </div>
+            </li>
+            <li id="RatingUxTxt"><span id="RatingUx" class="rating">[Aan het berekenen...]</span>Gebruikerservaring
+                <span id="ShowRatingUx" class="displayRating">
+                    <i id="RatingUxBtn" class="glyphicon glyphicon-chevron-down"></i>
+                </span> 
+                <div id="RatingUxList" runat="server" class="well-sm well ratingList">
+                    <ul>
+                        <li>Test</li>
+                    </ul>
+                </div>
+            </li>
+            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="rating">[Aan het berekenen...]</span>Marketing
+                <span id="ShowRatingMarketing" class="displayRating">
+                    <i id="RatingMarketingBtn" class="glyphicon glyphicon-chevron-down"></i>
+                </span> 
+                <div id="RatingMarketingList" runat="server" class="well-sm well ratingList">
+                    <ul >
+                        <li>Test</li>
+                    </ul>
+                </div>
+            </li>
+            <li id="RatingTechTxt"><span id="RatingTech" class="rating">[Aan het berekenen...]</span>Technologie
+                <span id="ShowRatingTech" class="displayRating">
+                    <i id="RatingTechBtn" class="glyphicon glyphicon-chevron-down"></i>
+                </span> 
+                <div id="RatingTechList" runat="server" class="well-sm well ratingList">
+                    <ul>
+                        <li>Test</li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
     <div id="performedTestshidden" class="well well-sm">

@@ -26,7 +26,7 @@
         left: ($bc.width() / 2) - ($("#loadingGIF").width())
     });
 
-    $("#TestProgress").css({
+    $("#testProgress").css({
         top: 200 + $("#progressbar").height() + $("#loadingGIF").height(),
         width: width,
         //left: ($bc.width() / 2.5)
@@ -111,7 +111,7 @@ window.onload = function () {
             var test = $(this).text().replace(" ", "");
             array.push(test);
 
-            $("#TestsInProgress").append("<li>" + test + "</li>");
+            $("#testsInProgress").append("<li>" + test + "</li>");
         });
 
         // Remove Analytics from array since it will be blocked because of adblockers
@@ -143,8 +143,8 @@ window.onload = function () {
                         $("#progresstext").text(progress + "% compleet");
                         $("#overlay").css("height", $html.outerHeight());
 
-                        $("#TestsInProgress li:contains(" + value + ")").remove();
-                        $("#TestsComplete").append("<li>" + value + "</li>");
+                        $("#testsInProgress li:contains(" + value + ")").remove();
+                        $("#testsComplete").append("<li>" + value + "</li>");
 
                         if (progress == 100) {
                             PageMethods.GetAccessRating(OnAccessSuccess, OnError);
@@ -154,7 +154,7 @@ window.onload = function () {
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
                                 $("#performedTestshidden").fadeIn();
-                                $("#RatingList").fadeIn();
+                                $("#automatedRatingList").fadeIn();
                                 $("#MainContent_CreatePdfBtn").css("display", "block");
                                 document.title = 'Resultaten - Website tester';
                             }, 1000);
@@ -194,4 +194,47 @@ $(document).ready(function () {
             scrollTop: 0
         }, 1000);
     });
+    
+    // Event Handlers showing tests
+    var ShowRatingAccess = document.getElementById("ShowRatingAccess");
+    var ShowRatingUx = document.getElementById("ShowRatingUx");
+    var ShowRatingMarketing = document.getElementById("ShowRatingMarketing");
+    var ShowRatingTech = document.getElementById("ShowRatingTech");
+    ShowRatingAccess.onclick = function () {
+        setTimeout(function () {
+            $("#MainContent_RatingAccessList").toggle("slide", { direction: 'up' }, 500, null);
+        }, 100);
+
+        $("#RatingAccesBtn").prop("class", function (i, curClass) {
+            return curClass === "glyphicon glyphicon-chevron-down" ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down";
+        })
+    };
+    ShowRatingUx.onclick = function () {
+        setTimeout(function () {
+            $("#MainContent_RatingUxList").toggle("slide", { direction: 'up' }, 500, null);
+        }, 100);
+
+        $("#RatingUxBtn").prop("class", function (i, curClass) {
+            return curClass === "glyphicon glyphicon-chevron-down" ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down";
+        })
+    };
+
+    ShowRatingMarketing.onclick = function () {
+        setTimeout(function () {
+            $("#MainContent_RatingMarketingList").toggle("slide", { direction: 'up' }, 500, null);
+        }, 100);
+
+        $("#RatingMarketingBtn").prop("class", function (i, curClass) {
+            return curClass === "glyphicon glyphicon-chevron-down" ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down";
+        })
+    };
+    ShowRatingTech.onclick = function () {
+        setTimeout(function () {
+            $("#MainContent_RatingTechList").toggle("slide", { direction: 'up' }, 500, null);
+        }, 100);
+
+        $("#RatingTechBtn").prop("class", function (i, curClass) {
+            return curClass === "glyphicon glyphicon-chevron-down" ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down";
+        })
+    };
 });

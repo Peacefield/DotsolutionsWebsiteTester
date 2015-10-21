@@ -166,11 +166,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                             + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
                             + "</div>";
 
-                        twitterResults.InnerHtml += "<div class='well well-lg ResultWell'>"
+                        twitterResults.InnerHtml += "<div class='well well-lg resultWell'>"
                             + "<i class='fa fa-retweet fa-3x'></i>"
                             + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
-                            + "<div class='ResultDivider'></div>"
-                            + "<div class='well well-lg ResultWell'>"
+                            + "<div class='resultDivider'></div>"
+                            + "<div class='well well-lg resultWell'>"
                             + "<i class='fa fa-users fa-3x'></i>"
                             + "<span> Dit account heeft " + FollowersCountString + " volgers</span></div>";
                         break;

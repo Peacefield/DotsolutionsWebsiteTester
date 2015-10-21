@@ -77,18 +77,18 @@
                 <asp:TextBox ID="VormgevingOpmerking"
                     TextMode="MultiLine"
                     Rows="4"
-                    CssClass="FullTextArea"
+                    CssClass="fullTextArea"
                     runat="server" />
             </article>
         </article>
 
-        <article>
+        <article id="buttons">
             <asp:LinkButton ID="SkipTestBtn"
                 OnClick="SkipTest_Click"
                 CssClass="btn btn-success btn-md"
                 runat="server">
             <span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
-            Sla over
+            Overslaan
             </asp:LinkButton>
             <asp:LinkButton ID="StartTestBtn"
                 OnClick="StartTest_Click"

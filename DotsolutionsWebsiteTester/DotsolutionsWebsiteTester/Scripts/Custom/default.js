@@ -33,7 +33,7 @@ window.onload = function () {
 
     ShowCheckboxes.onclick = function () {
         setTimeout(function () {
-            $("#CheckboxHolder").toggle("slide", { direction: 'up' }, 1000, null);
+            $("#checkboxHolder").toggle("slide", { direction: 'up' }, 1000, null);
         }, 100); // How long do you want the delay to be (in milliseconds)? 
         $(this).text(function (i, text) {
             return text === "Selecteer tests" ? "Verberg tests" : "Selecteer tests";
