@@ -202,7 +202,7 @@ $(document).ready(function () {
     var ShowRatingTech = document.getElementById("ShowRatingTech");
     ShowRatingAccess.onclick = function () {
         setTimeout(function () {
-            $("#MainContent_RatingAccessList").toggle("slide", { direction: 'up' }, 500, null);
+            $("#RatingAccessListHidden").toggle("slide", { direction: 'up' }, 500, null);
         }, 100);
 
         $("#RatingAccesBtn").prop("class", function (i, curClass) {
@@ -211,7 +211,7 @@ $(document).ready(function () {
     };
     ShowRatingUx.onclick = function () {
         setTimeout(function () {
-            $("#MainContent_RatingUxList").toggle("slide", { direction: 'up' }, 500, null);
+            $("#RatingUxListHidden").toggle("slide", { direction: 'up' }, 500, null);
         }, 100);
 
         $("#RatingUxBtn").prop("class", function (i, curClass) {
@@ -221,7 +221,7 @@ $(document).ready(function () {
 
     ShowRatingMarketing.onclick = function () {
         setTimeout(function () {
-            $("#MainContent_RatingMarketingList").toggle("slide", { direction: 'up' }, 500, null);
+            $("#RatingMarketingListHidden").toggle("slide", { direction: 'up' }, 500, null);
         }, 100);
 
         $("#RatingMarketingBtn").prop("class", function (i, curClass) {
@@ -230,7 +230,7 @@ $(document).ready(function () {
     };
     ShowRatingTech.onclick = function () {
         setTimeout(function () {
-            $("#MainContent_RatingTechList").toggle("slide", { direction: 'up' }, 500, null);
+            $("#RatingTechListHidden").toggle("slide", { direction: 'up' }, 500, null);
         }, 100);
 
         $("#RatingTechBtn").prop("class", function (i, curClass) {

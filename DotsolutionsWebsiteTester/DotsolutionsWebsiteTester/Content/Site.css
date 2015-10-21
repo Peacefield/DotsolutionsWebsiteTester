@@ -263,12 +263,14 @@ footer {
     margin-left: 50px;
 }
 
-    .ratingList li {
+    .ratingList li a {
         margin-left: -45px;
+        cursor: pointer;
     }
 
 .displayRating {
     margin-left: 5px;
+    cursor: pointer;
 }
 
 #automatedRatingList {

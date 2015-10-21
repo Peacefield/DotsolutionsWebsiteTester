@@ -40,16 +40,16 @@ namespace DotsolutionsWebsiteTester
                 var ths2 = new ThreadStart(GetSiteList);
                 var th2 = new Thread(ths2);
                 th2.Start();
-
-                th.Join();
-                th2.Join();
-
+                
                 if ((bool)Session["ManualTest"])
                 {
                     // Do manual test stuff
                     manualResultHidden.Attributes.Remove("class");
                     GetManualTestResults();
                 }
+
+                th.Join();
+                th2.Join();
 
                 // Set rating sessions
                 Session["RatingAccess"] = 0m;
@@ -74,6 +74,101 @@ namespace DotsolutionsWebsiteTester
                 performedTests.InnerHtml += "<li>" + selectedTests[i] + "</li>";
                 // Display name for user
                 PerformedTestsName.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+            }
+            AddTestToCriteria(selectedTests, selectedTestsName);
+        }
+
+        private void AddTestToCriteria(List<string> selectedTests, List<string> selectedTestsName)
+        {
+            for (int i = 0; i < selectedTests.Count; i++)
+            {
+                switch (selectedTests[i])
+                {
+                    case "CodeQuality":
+                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "PageTitles":
+                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "MobileCompatibility":
+                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "Headings":
+                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "InternalLinks":
+                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "UrlFormat":
+                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "GooglePlus":
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "Twitter":
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "Facebook":
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "SocialInterest":
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "Popularity":
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "AmountOfContent":
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "Images":
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "ServerBehaviour":
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "Printability":
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "Freshness":
+                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "IncomingLinks":
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "Analytics":
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    case "MetaTags":
+                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') >" + selectedTestsName[i] + "</a></li>";
+                        break;
+                    default:
+                        Debug.WriteLine("Default Case");
+                        break;
+                }
+
+
             }
         }
 

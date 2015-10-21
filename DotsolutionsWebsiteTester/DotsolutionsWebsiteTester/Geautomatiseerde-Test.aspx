@@ -85,9 +85,8 @@
                 <span id="ShowRatingAccess" class="displayRating">
                     <i id="RatingAccesBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
-                <div id="RatingAccessList" runat="server" class="well-sm well ratingList">
-                    <ul>
-                        <li>Test</li>
+                <div id="RatingAccessListHidden" class="well-sm well ratingList">
+                    <ul id="RatingAccessList" runat="server" >
                     </ul>
                 </div>
             </li>
@@ -95,9 +94,8 @@
                 <span id="ShowRatingUx" class="displayRating">
                     <i id="RatingUxBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
-                <div id="RatingUxList" runat="server" class="well-sm well ratingList">
-                    <ul>
-                        <li>Test</li>
+                <div id="RatingUxListHidden" class="well-sm well ratingList">
+                    <ul id="RatingUxList" runat="server">
                     </ul>
                 </div>
             </li>
@@ -105,9 +103,8 @@
                 <span id="ShowRatingMarketing" class="displayRating">
                     <i id="RatingMarketingBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
-                <div id="RatingMarketingList" runat="server" class="well-sm well ratingList">
-                    <ul >
-                        <li>Test</li>
+                <div id="RatingMarketingListHidden" class="well-sm well ratingList">
+                    <ul id="RatingMarketingList" runat="server">
                     </ul>
                 </div>
             </li>
@@ -115,9 +112,8 @@
                 <span id="ShowRatingTech" class="displayRating">
                     <i id="RatingTechBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
-                <div id="RatingTechList" runat="server" class="well-sm well ratingList">
-                    <ul>
-                        <li>Test</li>
+                <div id="RatingTechListHidden" class="well-sm well ratingList">
+                    <ul id="RatingTechList" runat="server">
                     </ul>
                 </div>
             </li>
