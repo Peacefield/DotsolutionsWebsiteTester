@@ -84,10 +84,17 @@ namespace DotsolutionsWebsiteTester
             for (int i = 0; i < selectedTests.Count; i++)
             {
                 // Add rating from session
+                // CAN'T DO THIS HERE SINCE THIS IS EXECUTED BEFORE THE RATING IS KNOWN.......
+                // In Javascript: 
+                // for each executed test{ add rating to class with name "[testname]Rating"
+                // Set rating class for newly found rating
+                // Or WebMethod
+
                 //var score = (decimal)Session[selectedTests[i] + "Rating"];
                 var score = 5.5m;
                 // Get class for rating
                 var scoreClass = GetRatingDisplay(score);
+                var ratingClass = selectedTests[i].ToString() + "Rating";
 
                 if (selectedTests[i].ToString() == "CodeQuality" ||
                     selectedTests[i].ToString() == "PageTitles" ||
@@ -96,8 +103,8 @@ namespace DotsolutionsWebsiteTester
                     selectedTests[i].ToString() == "InternalLinks" ||
                     selectedTests[i].ToString() == "UrlFormat")
                 {
-                    RatingAccessList.InnerHtml += "<li><span class='" + scoreClass + "' >" + score
-                        + "</span><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
+                    RatingAccessList.InnerHtml += "<li><span class='" + scoreClass + " " + ratingClass + "' >" + score + "</span>"
+                        + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
                 }
 
                 if (selectedTests[i].ToString() == "GooglePlus" ||
@@ -114,8 +121,8 @@ namespace DotsolutionsWebsiteTester
                     selectedTests[i].ToString() == "UrlFormat" ||
                     selectedTests[i].ToString() == "Freshness")
                 {
-                    RatingUxList.InnerHtml += "<li><span class='" + scoreClass + "' >" + score
-                        + "</span><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
+                    RatingUxList.InnerHtml += "<li><span class='" + scoreClass + " " + ratingClass + "' >" + score + "</span>"
+                        + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
                 }
 
                 if (selectedTests[i].ToString() == "GooglePlus" ||
@@ -132,10 +139,10 @@ namespace DotsolutionsWebsiteTester
                     selectedTests[i].ToString() == "Analytics" ||
                     selectedTests[i].ToString() == "MetaTags")
                 {
-                    RatingMarketingList.InnerHtml += "<li><span class='" + scoreClass + "' >" + score
-                        + "</span><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
+                    RatingMarketingList.InnerHtml += "<li><span class='" + scoreClass + " " + ratingClass + "' >" + score + "</span>"
+                        + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
                 }
-                
+
                 if (selectedTests[i].ToString() == "CodeQuality" ||
                     selectedTests[i].ToString() == "Images" ||
                     selectedTests[i].ToString() == "ServerBehaviour" ||
@@ -144,10 +151,10 @@ namespace DotsolutionsWebsiteTester
                     selectedTests[i].ToString() == "InternalLinks" ||
                     selectedTests[i].ToString() == "MetaTags" ||
                     selectedTests[i].ToString() == "Printability" ||
-                    selectedTests[i].ToString() == "UrlFormat" )
+                    selectedTests[i].ToString() == "UrlFormat")
                 {
-                    RatingTechList.InnerHtml += "<li><span class='" + scoreClass + "' >" + score
-                        + "</span><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
+                    RatingTechList.InnerHtml += "<li><span class='" + scoreClass + " " + ratingClass + "' >" + score + "</span>"
+                        + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
                 }
 
 
