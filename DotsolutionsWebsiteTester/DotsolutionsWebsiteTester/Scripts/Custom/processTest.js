@@ -34,7 +34,7 @@
 }
 
 function animateTo(identifier) {
-   event.srcElement.removeAttribute("href");
+    event.srcElement.removeAttribute("href");
     var target = document.getElementById(identifier);
     $('body,html').animate({
         scrollTop: target.offsetTop - 50
@@ -44,16 +44,13 @@ function animateTo(identifier) {
 function SetRatingDisplay(rating, criteria) {
     var rating = parseInt(rating);
     if (rating < 4) {
-        $("#" + criteria).css("background-color", "red");
-        $("#" + criteria).css("color", "white");
+        $("#" + criteria).attr("class", "lowScore ratingSquare");
     }
     else if (rating < 8) {
-        $("#" + criteria).css("background-color", "orangered");
-        $("#" + criteria).css("color", "white");
+        $("#" + criteria).attr("class", "mediocreScore ratingSquare");
     }
     else {
-        $("#" + criteria).css("background-color", "green");
-        $("#" + criteria).css("color", "white");
+        $("#" + criteria).attr("class", "excellentScore ratingSquare");
     }
 }
 
@@ -195,7 +192,7 @@ $(document).ready(function () {
             scrollTop: 0
         }, 1000);
     });
-    
+
     // Event Handlers showing tests
     var ShowRatingAccess = document.getElementById("ShowRatingAccess");
     var ShowRatingUx = document.getElementById("ShowRatingUx");

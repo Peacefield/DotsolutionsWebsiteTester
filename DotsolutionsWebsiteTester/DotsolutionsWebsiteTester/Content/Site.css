@@ -229,7 +229,7 @@ footer {
 
 /* End Loading div on Geautomatiseerde-Test.aspx */
 
-.rating {
+.ratingSquare {
     font-size: 1.5em;
     background-color: orangered;
     border-radius: 5px;
@@ -263,8 +263,10 @@ footer {
     margin-left: 50px;
 }
 
-    .ratingList li a {
+    .ratingList li span {
         margin-left: -45px;
+    }
+    .ratingList li a{        
         cursor: pointer;
     }
 
@@ -297,19 +299,6 @@ footer {
     display: none;
 }
 
-#MainContent_Rating {
-    display: inline-block;
-    max-width: 60px;
-    width: 50px;
-    height: 50px;
-    font-size: 2em;
-    background-image: linear-gradient(to bottom,orangered 0,black 100%);
-    color: white;
-    border-radius: 200px;
-    margin-right: 5px;
-    padding: 5px;
-    text-align: center;
-}
 
 /* End Geautomatiseerde-Test CSS*/
 
@@ -327,3 +316,28 @@ footer {
 }
 
 /* End Handmatige-Test CSS*/
+
+.lowScore{
+    color: white;
+    background-image: linear-gradient(to bottom,red 0,black 175%);
+}
+.mediocreScore{
+    color: white;
+    background-image: linear-gradient(to bottom,orangered 0,black 175%);
+}
+.excellentScore{
+    color: white;
+    background-image: linear-gradient(to bottom,green 0,black 175%);
+}
+
+.ratingCircle {
+    display: inline-block;
+    max-width: 60px;
+    width: 50px;
+    height: 50px;
+    font-size: 2em;
+    border-radius: 200px;
+    margin-right: 5px;
+    padding: 5px;
+    text-align: center;
+}

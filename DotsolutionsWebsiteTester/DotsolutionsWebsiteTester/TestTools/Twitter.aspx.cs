@@ -199,6 +199,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["RatingUx"] = rounded + temp;
             temp = (decimal)Session["RatingMarketing"];
             Session["RatingMarketing"] = rounded + temp;
+            Session["TwitterRating"] = rounded;
             SetRatingDisplay(rating);
         }
 
@@ -302,23 +303,12 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
         private void SetRatingDisplay(decimal rating)
         {
-            var image = "";
             if (rating < 4)
-            {
-                image = "red";
-                Rating.Style.Add("color", "white");
-            }
+                Rating.Attributes.Add("class", "lowScore ratingCircle");
             else if (rating < 8)
-            {
-                image = "orangered";
-                Rating.Style.Add("color", "white");
-            }
+                Rating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
-            {
-                image = "green";
-                Rating.Style.Add("color", "white");
-            }
-            Rating.Style.Add("background", "linear-gradient(to bottom," + image + " 0,black 175%);");
+                Rating.Attributes.Add("class", "excellentScore ratingCircle");
         }
     }
 }

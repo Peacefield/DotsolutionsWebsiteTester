@@ -112,9 +112,13 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 temp = (decimal)Session["RatingTech"];
                 Session["RatingTech"] = temp + rounded;
+                Session["HeadingsRating"] = rounded;
             }
             else
+            {
+                Session["HeadingsRating"] = 0.0m;
                 Rating.InnerHtml = "0,0";
+            }
 
             SetRatingDisplay(rating);
         }
@@ -243,23 +247,12 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
         private void SetRatingDisplay(decimal rating)
         {
-            var image = "";
             if (rating < 4)
-            {
-                image = "red";
-                Rating.Style.Add("color", "white");
-            }
+                Rating.Attributes.Add("class", "lowScore ratingCircle");
             else if (rating < 8)
-            {
-                image = "orangered";
-                Rating.Style.Add("color", "white");
-            }
+                Rating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
-            {
-                image = "green";
-                Rating.Style.Add("color", "white");
-            }
-            Rating.Style.Add("background", "linear-gradient(to bottom," + image + " 0,black 175%);");
+                Rating.Attributes.Add("class", "excellentScore ratingCircle");
         }
     }
 }

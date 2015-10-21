@@ -78,26 +78,17 @@ namespace DotsolutionsWebsiteTester
             RatingMarketingList.InnerHtml = Session["RatingMarketingList"].ToString();
             RatingTechList.InnerHtml = Session["RatingTechList"].ToString();
         }
-
+        
         private void SetRatingDisplay(string criteria, System.Web.UI.HtmlControls.HtmlGenericControl control)
         {
             var rating = (decimal)Session[criteria];
 
             if (rating < 4)
-            {
-                control.Style.Add("background-color", "red");
-                control.Style.Add("color", "white");
-            }
+                control.Attributes.Add("class", "lowScore ratingSquare");
             else if (rating < 8)
-            {
-                control.Style.Add("background-color", "orangered");
-                control.Style.Add("color", "white");
-            }
+                control.Attributes.Add("class", "mediocreScore ratingSquare");
             else
-            {
-                control.Style.Add("background-color", "green");
-                control.Style.Add("color", "white");
-            }
+                control.Attributes.Add("class", "excellentScore ratingSquare");
         }
 
         /// <summary>

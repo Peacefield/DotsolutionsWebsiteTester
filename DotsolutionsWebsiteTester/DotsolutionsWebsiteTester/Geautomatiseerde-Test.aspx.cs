@@ -80,94 +80,76 @@ namespace DotsolutionsWebsiteTester
 
         private void AddTestToCriteria(List<string> selectedTests, List<string> selectedTestsName)
         {
+
             for (int i = 0; i < selectedTests.Count; i++)
             {
-                var test = "'" + selectedTests[i] + "'";
-                switch (selectedTests[i])
+                // Add rating from session
+                //var score = (decimal)Session[selectedTests[i] + "Rating"];
+                var score = 5.5m;
+                // Get class for rating
+                var scoreClass = GetRatingDisplay(score);
+
+                if (selectedTests[i].ToString() == "CodeQuality" ||
+                    selectedTests[i].ToString() == "PageTitles" ||
+                    selectedTests[i].ToString() == "MobileCompatibility" ||
+                    selectedTests[i].ToString() == "Headings" ||
+                    selectedTests[i].ToString() == "InternalLinks" ||
+                    selectedTests[i].ToString() == "UrlFormat")
                 {
-                    case "CodeQuality":
-                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "PageTitles":
-                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "MobileCompatibility":
-                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "Headings":
-                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "InternalLinks":
-                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "UrlFormat":
-                        RatingAccessList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "GooglePlus":
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "Twitter":
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "Facebook":
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "SocialInterest":
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "Popularity":
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "AmountOfContent":
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "Images":
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "ServerBehaviour":
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "Printability":
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "Freshness":
-                        RatingUxList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "IncomingLinks":
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "Analytics":
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    case "MetaTags":
-                        RatingMarketingList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        RatingTechList.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                        break;
-                    default:
-                        Debug.WriteLine("Default Case");
-                        break;
+                    RatingAccessList.InnerHtml += "<li><span class='" + scoreClass + "' >" + score
+                        + "</span><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
                 }
+
+                if (selectedTests[i].ToString() == "GooglePlus" ||
+                    selectedTests[i].ToString() == "Facebook" ||
+                    selectedTests[i].ToString() == "Twitter" ||
+                    selectedTests[i].ToString() == "SocialInterest" ||
+                    selectedTests[i].ToString() == "Popularity" ||
+                    selectedTests[i].ToString() == "AmountOfContent" ||
+                    selectedTests[i].ToString() == "Images" ||
+                    selectedTests[i].ToString() == "ServerBehaviour" ||
+                    selectedTests[i].ToString() == "MobileCompatibility" ||
+                    selectedTests[i].ToString() == "InternalLinks" ||
+                    selectedTests[i].ToString() == "Printability" ||
+                    selectedTests[i].ToString() == "UrlFormat" ||
+                    selectedTests[i].ToString() == "Freshness")
+                {
+                    RatingUxList.InnerHtml += "<li><span class='" + scoreClass + "' >" + score
+                        + "</span><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
+                }
+
+                if (selectedTests[i].ToString() == "GooglePlus" ||
+                    selectedTests[i].ToString() == "Facebook" ||
+                    selectedTests[i].ToString() == "Twitter" ||
+                    selectedTests[i].ToString() == "SocialInterest" ||
+                    selectedTests[i].ToString() == "Popularity" ||
+                    selectedTests[i].ToString() == "AmountOfContent" ||
+                    selectedTests[i].ToString() == "PageTitles" ||
+                    selectedTests[i].ToString() == "Headings" ||
+                    selectedTests[i].ToString() == "IncomingLinks" ||
+                    selectedTests[i].ToString() == "InternalLinks" ||
+                    selectedTests[i].ToString() == "Freshness" ||
+                    selectedTests[i].ToString() == "Analytics" ||
+                    selectedTests[i].ToString() == "MetaTags")
+                {
+                    RatingMarketingList.InnerHtml += "<li><span class='" + scoreClass + "' >" + score
+                        + "</span><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
+                }
+                
+                if (selectedTests[i].ToString() == "CodeQuality" ||
+                    selectedTests[i].ToString() == "Images" ||
+                    selectedTests[i].ToString() == "ServerBehaviour" ||
+                    selectedTests[i].ToString() == "MobileCompatibility" ||
+                    selectedTests[i].ToString() == "Headings" ||
+                    selectedTests[i].ToString() == "InternalLinks" ||
+                    selectedTests[i].ToString() == "MetaTags" ||
+                    selectedTests[i].ToString() == "Printability" ||
+                    selectedTests[i].ToString() == "UrlFormat" )
+                {
+                    RatingTechList.InnerHtml += "<li><span class='" + scoreClass + "' >" + score
+                        + "</span><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
+                }
+
 
                 var temp = new List<string>() { "RatingAccessList", "RatingUxList", "RatingMarketingList", "RatingTechList" };
                 foreach (var item in temp)
@@ -194,26 +176,19 @@ namespace DotsolutionsWebsiteTester
                     string htmlstring = sb.ToString();
                     Session[item] = htmlstring;
                 }
-
-                //// Read contents from div and add as Session for PDF
-                //var sb = new System.Text.StringBuilder();
-                //RatingAccessList.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-                //string htmlstring = sb.ToString();
-                //Session["RatingAccessList"] = htmlstring;
-
-                //RatingUxList.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-                //htmlstring = sb.ToString();
-                //Session["RatingUxList"] = htmlstring;
-
-                //RatingMarketingList.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-                //htmlstring = sb.ToString();
-                //Session["RatingMarketingList"] = htmlstring;
-
-                //RatingTechList.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-                //htmlstring = sb.ToString();
-                //Session["RatingTechList"] = htmlstring;
-
             }
+        }
+
+        private string GetRatingDisplay(decimal rating)
+        {
+            var scoreClass = "mediocreScore ratingSquare";
+            if (rating < 4)
+                scoreClass = "lowScore ratingSquare";
+            else if (rating < 8)
+                scoreClass = "mediocreScore ratingSquare";
+            else
+                scoreClass = "excellentScore ratingSquare";
+            return scoreClass;
         }
 
         /// <summary>

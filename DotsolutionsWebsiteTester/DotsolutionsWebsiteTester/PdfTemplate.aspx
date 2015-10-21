@@ -41,20 +41,6 @@
                 border-color: #85CC76;
             }
 
-        #MainContent_Rating {
-            display: inline-block;
-            max-width: 60px;
-            width: 50px;
-            height: 50px;
-            font-size: 2em;
-            background-image: linear-gradient(to bottom,orangered 0,black 175%);
-            color: black;
-            border-radius: 200px;
-            margin-right: 5px;
-            padding: 5px;
-            text-align: center;
-        }
-
         #automatedRatingList {
             display: block;
         }
@@ -63,7 +49,7 @@
                 list-style: none;
             }
 
-        .rating {
+        .ratingSquare {
             font-size: 1.5em;
             font-size: 1.5em;
             border-radius: 5px;
@@ -98,11 +84,41 @@
             margin-left: 50px;
         }
 
+            .ratingList li span {
+                margin-left: -80px;
+            }
+
             .ratingList li a {
-                margin-left: -45px;
                 cursor: pointer;
             }
 
+
+        .lowScore {
+            color: white;
+            background-image: linear-gradient(to bottom,red 0,black 175%);
+        }
+
+        .mediocreScore {
+            color: white;
+            background-image: linear-gradient(to bottom,orangered 0,black 175%);
+        }
+
+        .excellentScore {
+            color: white;
+            background-image: linear-gradient(to bottom,green 0,black 175%);
+        }
+
+        .ratingCircle {
+            display: inline-block;
+            max-width: 60px;
+            width: 50px;
+            height: 50px;
+            font-size: 2em;
+            border-radius: 200px;
+            margin-right: 5px;
+            padding: 5px;
+            text-align: center;
+        }
     </style>
     <div class="well well-sm" id="sizeref">
         <h5>Rapport voor</h5>
@@ -113,25 +129,25 @@
     <div class="well well-sm" id="automatedRatingList">
         <h3>Beoordeling Geautomatiseerde Test</h3>
         <ul runat="server">
-            <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="rating" runat="server">[Aan het berekenen...]</span>Toegankelijkheid
+            <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">[Aan het berekenen...]</span>Toegankelijkheid
                 <div class="well-sm well ratingList">
                     <ul id="RatingAccessList" runat="server">
                     </ul>
                 </div>
             </li>
-            <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="rating" runat="server">[Aan het berekenen...]</span>Gebruikerservaring
+            <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="ratingSquare" runat="server">[Aan het berekenen...]</span>Gebruikerservaring
                 <div class="well-sm well ratingList">
                     <ul id="RatingUxList" runat="server">
                     </ul>
                 </div>
             </li>
-            <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="rating" runat="server">[Aan het berekenen...]</span>Marketing
+            <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="ratingSquare" runat="server">[Aan het berekenen...]</span>Marketing
                 <div class="well-sm well ratingList">
                     <ul id="RatingMarketingList" runat="server">
                     </ul>
                 </div>
             </li>
-            <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="rating" runat="server">[Aan het berekenen...]</span>Technologie
+            <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="ratingSquare" runat="server">[Aan het berekenen...]</span>Technologie
                 <div class="well-sm well ratingList">
                     <ul id="RatingTechList" runat="server">
                     </ul>

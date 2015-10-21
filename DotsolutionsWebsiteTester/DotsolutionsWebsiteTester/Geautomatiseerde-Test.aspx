@@ -81,7 +81,7 @@
     <div class="well well-sm" id="automatedRatingList">
         <h3>Beoordeling Geautomatiseerde Test</h3>
         <ul runat="server">
-            <li id="RatingAccessTxt"><span id="RatingAccess" class="rating">[Aan het berekenen...]</span>Toegankelijkheid 
+            <li id="RatingAccessTxt"><span id="RatingAccess" class="ratingSquare">[Aan het berekenen...]</span>Toegankelijkheid 
                 <span id="ShowRatingAccess" class="displayRating">
                     <i id="RatingAccesBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
@@ -90,7 +90,7 @@
                     </ul>
                 </div>
             </li>
-            <li id="RatingUxTxt"><span id="RatingUx" class="rating">[Aan het berekenen...]</span>Gebruikerservaring
+            <li id="RatingUxTxt"><span id="RatingUx" class="ratingSquare">[Aan het berekenen...]</span>Gebruikerservaring
                 <span id="ShowRatingUx" class="displayRating">
                     <i id="RatingUxBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
@@ -99,7 +99,7 @@
                     </ul>
                 </div>
             </li>
-            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="rating">[Aan het berekenen...]</span>Marketing
+            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="ratingSquare">[Aan het berekenen...]</span>Marketing
                 <span id="ShowRatingMarketing" class="displayRating">
                     <i id="RatingMarketingBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
@@ -108,7 +108,7 @@
                     </ul>
                 </div>
             </li>
-            <li id="RatingTechTxt"><span id="RatingTech" class="rating">[Aan het berekenen...]</span>Technologie
+            <li id="RatingTechTxt"><span id="RatingTech" class="ratingSquare">[Aan het berekenen...]</span>Technologie
                 <span id="ShowRatingTech" class="displayRating">
                     <i id="RatingTechBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
