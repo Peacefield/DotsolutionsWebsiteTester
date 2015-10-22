@@ -42,7 +42,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetPageTitles()
         {
-            var rating = 10m;
+            var rating = 10.0m;
             var sitemap = (List<string>)Session["selectedSites"];
             var noTitles = new List<string>();
             var longTitles = new List<string>();
@@ -183,9 +183,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 4)
+            if (rating < 6m)
                 PageTitlesRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8)
+            else if (rating < 8.5m)
                 PageTitlesRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 PageTitlesRating.Attributes.Add("class", "excellentScore ratingCircle");

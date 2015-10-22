@@ -244,7 +244,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void ShowPrintability()
         {
-            var rating = 10m;
+            var rating = 10.0m;
 
             // Er zijn printbare pagina's
             if (printable.Count >= sitemap.Count)
@@ -253,16 +253,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
             }
-
-            //// Less pages printable than there were pages tested
-            //if (printablePages < sitemap.Count)
+            // Less pages printable than there were pages tested
             else
             {
-                //rating = ((decimal)printablePages / (decimal)sitemap.Count) * 10m;
                 string notprintablelist = "";
                 foreach (var item in notPrintable)
                 {
-                    rating = rating - (10m / (decimal)sitemap.Count);
+                    rating = rating - (10.0m / (decimal)sitemap.Count);
                     notprintablelist += "<li>" + item + "</li>";
                 }
                 string amount = "";
@@ -305,9 +302,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 4)
+            if (rating < 6m)
                 PrintabilityRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8)
+            else if (rating < 8.5m)
                 PrintabilityRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 PrintabilityRating.Attributes.Add("class", "excellentScore ratingCircle");

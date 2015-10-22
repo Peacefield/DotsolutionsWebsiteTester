@@ -137,11 +137,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                         Debug.WriteLine("percentage = " + percentage);
                         if (FollowersCount >= TweetCount)
                         {
-                            rating = 10m;
+                            rating = 10.0m;
                         }
                         else if (percentage > 75m)
                         {
-                            rating = 10m;
+                            rating = 10.0m;
                         }
                         else if (percentage > 50m)
                         {
@@ -303,9 +303,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 4)
+            if (rating < 6m)
                 TwitterRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8)
+            else if (rating < 8.5m)
                 TwitterRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 TwitterRating.Attributes.Add("class", "excellentScore ratingCircle");

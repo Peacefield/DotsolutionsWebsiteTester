@@ -382,11 +382,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             return false;
         }
+
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 4)
+            if (rating < 6m)
                 CodeQualityRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8)
+            else if (rating < 8.5m)
                 CodeQualityRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 CodeQualityRating.Attributes.Add("class", "excellentScore ratingCircle");

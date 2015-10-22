@@ -242,9 +242,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 4)
+            if (rating < 6m)
                 AnalyticsRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8)
+            else if (rating < 8.5m)
                 AnalyticsRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 AnalyticsRating.Attributes.Add("class", "excellentScore ratingCircle");

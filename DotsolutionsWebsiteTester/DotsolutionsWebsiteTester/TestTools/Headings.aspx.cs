@@ -43,7 +43,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void GetHeadings()
         {
             var sitemap = (List<string>)Session["selectedSites"];
-            var rating = 10m;
+            var rating = 10.0m;
             foreach (var url in sitemap)
             {
                 GetHeadingsOnUrl(url);
@@ -247,9 +247,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 4)
+            if (rating < 6m)
                 HeadingsRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8)
+            else if (rating < 8.5m)
                 HeadingsRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 HeadingsRating.Attributes.Add("class", "excellentScore ratingCircle");

@@ -135,7 +135,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         var percentage = ((decimal)result.talking_about_count / (decimal)result.likes) * 100;
                         if (percentage > 10m)
                         {
-                            rating = 10m;
+                            rating = 10.0m;
                         }
                         else if (percentage > 1m)
                         {
@@ -265,9 +265,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 4)
+            if (rating < 6m)
                 FacebookRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8)
+            else if (rating < 8.5m)
                 FacebookRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 FacebookRating.Attributes.Add("class", "excellentScore ratingCircle");
