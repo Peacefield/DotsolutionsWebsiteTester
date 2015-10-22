@@ -49,18 +49,6 @@
                 list-style: none;
             }
 
-        .ratingSquare {
-            font-size: 1.5em;
-            font-size: 1.5em;
-            border-radius: 5px;
-            display: inline-block;
-            background-color: orangered;
-            padding-left: 3px;
-            padding-right: 3px;
-            margin-bottom: 4px;
-            margin-right: 5px;
-        }
-
         .resultWell {
             width: 48%;
             float: left;
@@ -94,33 +82,43 @@
 
 
         .lowScore {
-            color: white;
             background-image: linear-gradient(to bottom,red 0,black 175%);
             background-color: red;
         }
 
         .mediocreScore {
-            color: white;
             background-image: linear-gradient(to bottom,orangered 0,black 175%);
             background-color: orangered;
         }
 
         .excellentScore {
-            color: white;
             background-image: linear-gradient(to bottom,green 0,black 175%);
             background-color: green;
         }
 
         .ratingCircle {
             display: inline-block;
-            max-width: 60px;
-            width: 50px;
-            height: 50px;
             font-size: 2em;
+            color: white;
             border-radius: 200px;
             margin-right: 5px;
             padding: 5px;
+            width: 50px;
+            max-width: 60px;
+            height: 50px;
             text-align: center;
+        }
+
+        .ratingSquare {
+            display: inline-block;
+            font-size: 1.5em;
+            color: white;
+            border-radius: 5px;
+            margin-right: 5px;
+            margin-bottom: 4px;
+            padding-left: 3px;
+            padding-right: 3px;
+            background-color: orangered;
         }
     </style>
     <div class="well well-sm" id="sizeref">
