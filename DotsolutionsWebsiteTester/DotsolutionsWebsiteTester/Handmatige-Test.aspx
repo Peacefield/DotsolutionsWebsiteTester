@@ -98,7 +98,7 @@
             Ga verder
             </asp:LinkButton>
         </article>
-
+        <span class="help-block">* Verplichte velden</span>
     </div>
     <script src="Scripts/Custom/bootstrap-rating-input.js"></script>
 </asp:Content>
