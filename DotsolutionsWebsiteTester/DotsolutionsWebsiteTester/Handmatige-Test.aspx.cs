@@ -21,6 +21,16 @@ namespace DotsolutionsWebsiteTester
                 return;
             }
             SiteUrl.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>" + Session["MainUrl"].ToString() + "</a>";
+
+            //var accesskeyid = "1dd9ec6a56c1fac";
+            //var imgUrl = "http://images.shrinktheweb.com/xino.php?"
+            //    + "stwembed=1"
+            //    + "&stwaccesskeyid= " + accesskeyid
+            //    + "&stwinside=1"
+            //    + "&stwsize=xlg"
+            //    + "&stwurl=" + Session["MainUrl"].ToString();
+            var imgUrl = "/Content/images/xino.jpg";
+            websiteImg.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'><img src='" + imgUrl + "' title='Preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'class='center-block'></a>";
         }
 
         protected void SkipTest_Click(Object sender, EventArgs e)

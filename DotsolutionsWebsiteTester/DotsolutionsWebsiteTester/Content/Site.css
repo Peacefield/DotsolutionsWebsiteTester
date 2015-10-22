@@ -21,6 +21,11 @@
     .table-responsive {
         overflow: auto;
     }
+
+    .rating-input {
+        cursor: pointer;
+        font-size: 1.5em;
+    }
 }
 
 @media (min-width: 768px) {
@@ -44,6 +49,11 @@
 
     .table-responsive {
         overflow: visible !important;
+    }
+
+    .rating-input {
+        cursor: pointer;
+        font-size: 2em;
     }
 }
 
@@ -300,9 +310,8 @@ footer {
     resize: none;
 }
 
-.rating-input {
-    cursor: pointer;
-    font-size: 2em;
+.rating-input i {
+    padding-right: 2px;
 }
 
 /* End Handmatige-Test CSS*/
