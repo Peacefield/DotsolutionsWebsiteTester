@@ -118,7 +118,6 @@
             margin-bottom: 4px;
             padding-left: 3px;
             padding-right: 3px;
-            background-color: orangered;
         }
     </style>
     <div class="well well-sm" id="sizeref">
