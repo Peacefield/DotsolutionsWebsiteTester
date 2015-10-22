@@ -8,7 +8,9 @@
         <div class="row urlTextBoxRow">
             <div class="col-md-8 col-xs-8 col-sm-8 col-lg-8 col-md-offset-2 col-xs-offset-2 col-sm-offset-2 col-lg-offset-2">
                 <div class="input-group">
-                    <span class="input-group-addon glyphicon glyphicon-search"></span>
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
                     <asp:TextBox ID="UrlTextBox"
                         CssClass="form-control"
                         Text="http://www."
