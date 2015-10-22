@@ -148,18 +148,6 @@ namespace DotsolutionsWebsiteTester
             }
         }
 
-        private string GetRatingDisplay(decimal rating)
-        {
-            var scoreClass = "mediocreScore ratingSquare";
-            if (rating < 4)
-                scoreClass = "lowScore ratingSquare";
-            else if (rating < 8)
-                scoreClass = "mediocreScore ratingSquare";
-            else
-                scoreClass = "excellentScore ratingSquare";
-            return scoreClass;
-        }
-
         /// <summary>
         /// Get list of sites we can test from the google search api
         /// Adds this list to Session["selectedSites"] so we can access it throughout the application
@@ -171,21 +159,13 @@ namespace DotsolutionsWebsiteTester
             string userAgent = Session["userAgent"].ToString();
             bool isPresent = false;
 
-
-            //sitemap.Add(url);
-            //testedsiteslist.InnerHtml += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
-            //// Add tested sites to session
-            //Session["selectedSites"] = sitemap;
-            //return;
-
             var queryString = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&q=%22" + url + "%22&rsz=5";
-            Debug.WriteLine(">>>> GetSiteList >>> " + queryString);
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(queryString);
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=5&q=%22" + url + "%22");
             // Additional parameters
             // &rsz=[1-8] resultSize can be 1 through 8. Currently using 5.
             // &start=[x] Indicate where to start searching
+            Debug.WriteLine(">>>> GetSiteList >>> " + queryString);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(queryString);
             request.UserAgent = userAgent;
             request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
             // Get the response.
@@ -202,23 +182,25 @@ namespace DotsolutionsWebsiteTester
 
             System.Uri uri = new Uri(url);
             string uriWithoutScheme = uri.Host;
-
-            //if(uriWithoutScheme.Contains("www."))
-            //    uriWithoutScheme = uriWithoutScheme.Remove(uriWithoutScheme.IndexOf)
+            Debug.WriteLine("uriWithoutScheme = " + uriWithoutScheme);
 
             if (results.Count != 0)
             {
                 foreach (JToken item in results)
                 {
-                    sitemap.Add(item["url"].ToString());
+                    if (IsOfDomain(url, item["url"].ToString()))
+                    {
+                        sitemap.Add(item["url"].ToString());
 
-                    // If entered URL is not in found URL's it will be added
-                    // This if-statement detects if it IS among the found URL's by comparing it to several possible URL formats
-                    if (item["url"].ToString() == url || item["url"].ToString() == (url + "/")
-                        || item["url"].ToString() == url.Replace("http://", "https://") || item["url"].ToString() == url.Replace("https://", "http://")
-                        || item["url"].ToString() == url.Replace("http://", "https://") + "/" || item["url"].ToString() == url.Replace("https://", "http://") + "/")
-                        isPresent = true;
+                        System.Uri uriFound = new Uri(item["url"].ToString());
+                        string uriFoundWithoutScheme = uriFound.Host;
+                        Debug.WriteLine("uriFoundWithoutScheme = " + uriFoundWithoutScheme);
+                        // If entered URL is not in found URL's it will be added
+                        // This if-statement detects if it IS among the found URL's by comparing it to several possible URL formats
+                        if (uriFoundWithoutScheme == uriWithoutScheme || "www." + uriFoundWithoutScheme == uriWithoutScheme)
+                            isPresent = true;
 
+                    }
                 }
                 if (!isPresent)
                     sitemap.Add(url);
@@ -236,6 +218,42 @@ namespace DotsolutionsWebsiteTester
 
             // Add tested sites to session
             Session["selectedSites"] = sitemap;
+        }
+
+        private bool IsOfDomain(string url, string addition)
+        {
+            if (addition.Contains(url))
+            {
+                return true;
+            }
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(addition);
+                request.UserAgent = Session["userAgent"].ToString();
+                request.Timeout = 10000;
+                // Get the response.
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                var uri = new Uri(url);
+
+                //Debug.WriteLine("Session['MainUrl'].ToString() uri.host =======> " + uri.Host);
+
+                IPAddress[] addresslistMain = Dns.GetHostAddresses(uri.Host);
+                IPAddress[] addresslist = Dns.GetHostAddresses(response.ResponseUri.Host.ToString());
+
+                foreach (IPAddress theaddress in addresslist)
+                {
+                    if (addresslistMain.Contains(theaddress))
+                        return true;
+                }
+            }
+            catch (WebException we)
+            {
+                Debug.WriteLine("IsTwitter Catch" + we.Message);
+            }
+
+            //IP check
+            return false;
         }
 
         /// <summary>
@@ -294,13 +312,11 @@ namespace DotsolutionsWebsiteTester
         }
 
         #region WebMethods for setting total rating
-        
+
         [System.Web.Services.WebMethod]
-        public static void AddCriteriaSession(string session, string innerhtml)
+        public static void AddCriteriaListSession(string session, string innerhtml)
         {
-            Debug.WriteLine("START ---------- AddCriteriaSession(string session, string innerhtml)");
             HttpContext.Current.Session[session] = innerhtml;
-            Debug.WriteLine("DONE ---------- AddCriteriaSession(string session, string innerhtml)");
         }
 
 

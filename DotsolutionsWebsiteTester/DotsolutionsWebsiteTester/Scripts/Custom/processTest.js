@@ -164,10 +164,10 @@ window.onload = function () {
                             var marketInner = document.getElementById("MainContent_RatingMarketingList").innerHTML;
                             var techInner = document.getElementById("MainContent_RatingTechList").innerHTML;
 
-                            PageMethods.AddCriteriaSession("RatingAccessList", accessInner, OnSuccess, OnError);
-                            PageMethods.AddCriteriaSession("RatingUxList", uxInner, OnSuccess, OnError);
-                            PageMethods.AddCriteriaSession("RatingMarketingList", marketInner, OnSuccess, OnError);
-                            PageMethods.AddCriteriaSession("RatingTechList", techInner, OnSuccess, OnError);
+                            PageMethods.AddCriteriaListSession("RatingAccessList", accessInner, OnSuccess, OnError);
+                            PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
+                            PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
+                            PageMethods.AddCriteriaListSession("RatingTechList", techInner, OnSuccess, OnError);
 
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
