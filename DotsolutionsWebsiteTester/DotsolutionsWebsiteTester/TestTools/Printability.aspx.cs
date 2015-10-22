@@ -174,6 +174,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(cssUrl);
                 request.UserAgent = Session["userAgent"].ToString();
+                request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
                 request.Credentials = CredentialCache.DefaultCredentials;
                 // Get the response.
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();

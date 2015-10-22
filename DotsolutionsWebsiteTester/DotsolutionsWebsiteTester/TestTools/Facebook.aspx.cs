@@ -88,6 +88,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=8&q=facebook%20" + url);
             request.UserAgent = Session["userAgent"].ToString();
+            request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream dataStream = response.GetResponseStream();
             var reader = new StreamReader(dataStream);
@@ -158,14 +159,19 @@ namespace DotsolutionsWebsiteTester.TestTools
                             + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "
                             + "<span> Facebook account <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
 
+                        var likesGrammar = " likes";
+                        if (fbLikes == "1") likesGrammar = " like";
+                        var talkingGrammar = " mensen praten";
+                        if (fbTalking == "1") talkingGrammar = " persoon praat";
+
                         FacebookResults.InnerHtml += "<div class='well well-lg resultWell'>"
                             + "<i class='fa fa-thumbs-o-up fa-3x'></i>"
-                            + "<span> Dit account heeft " + fbLikes + " likes </span></div>"
+                            + "<span> Dit account heeft " + fbLikes + likesGrammar + "</span></div>"
                             + "<div class='resultDivider'></div>"
                             + "<div class='well well-lg resultWell'>"
                             + "<i class='fa fa-commenting-o fa-3x'></i>"
-                            + "<span> " + fbTalking + " mensen praten hier over</span></div>";
-
+                            + "<span> " + fbTalking + talkingGrammar + " hier over</span></div>";
+                        break;
 
                     }
                 }
@@ -235,6 +241,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(fbUrl);
                 request.UserAgent = Session["userAgent"].ToString();
+                request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
                 request.Timeout = 10000;
                 // Get the response.
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();

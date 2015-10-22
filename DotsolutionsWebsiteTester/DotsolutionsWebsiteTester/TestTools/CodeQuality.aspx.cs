@@ -203,6 +203,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/check?uri=" + encoded + "&output=json");
                 request.UserAgent = Session["userAgent"].ToString();
+                request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Timeout = 30000;
                 // Get the response.

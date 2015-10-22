@@ -73,6 +73,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             // &rsz=[1-8] resultSize can be 1 through 8, currently using 8
             // &start=[x] Indicate where to start searching
             request.UserAgent = Session["userAgent"].ToString();
+            request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
             // Get the response.
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             // Get the stream containing content returned by the server.
