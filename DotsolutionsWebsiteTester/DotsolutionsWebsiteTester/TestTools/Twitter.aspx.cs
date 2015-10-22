@@ -137,11 +137,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                         Debug.WriteLine("percentage = " + percentage);
                         if (FollowersCount >= TweetCount)
                         {
-                            rating = 10.0m;
+                            rating = 10m;
                         }
                         else if (percentage > 75m)
                         {
-                            rating = 10.0m;
+                            rating = 10m;
                         }
                         else if (percentage > 50m)
                         {

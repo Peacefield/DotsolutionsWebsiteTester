@@ -55,7 +55,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine(">>>> Analytics");
             var sitemap = (List<string>)Session["selectedSites"];
             var analyticslist = new List<KeyValuePair<string, string>>();
-            var rating = 10m;
+            var rating = 10.0m;
             analyticTypes.Add(new KeyValuePair<string, string>("google-analytics.com", "Google Analytics"));
             //analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
             //analyticTypes.Add(new KeyValuePair<string, string>("placeholder-type", "placeholder-name"));
@@ -140,6 +140,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             else
                 rating = 0.0m;
 
+            if (rating == 10.0m)
+                rating = 10m;
             decimal rounded = decimal.Round(rating, 1);
             AnalyticsRating.InnerHtml = rounded.ToString();
 

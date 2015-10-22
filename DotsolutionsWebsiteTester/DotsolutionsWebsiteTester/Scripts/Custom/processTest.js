@@ -89,10 +89,10 @@ function OnError(error) {
 
 function SetCriteriaListRating(array) {
     $.each(array, function (index, value) {
-        var item = document.getElementById("MainContent_" + value + "Rating");
-        var rating = item.innerText;
+        var rating = $("#MainContent_" + value + "Rating").text();
+
         $("." + value + "Rating").text(rating.toString());
-        
+
         SetRatingClass("." + value + "Rating", rating);
     });
 }
@@ -125,7 +125,6 @@ window.onload = function () {
             array = jQuery.grep(array, function (value) {
                 return value != removeItem;
             });
-            alert(removeItem);
             $("#result").append("<div class = 'panel panel-danger' id='" + removeItem + "'>"
                 + "<div class = 'panel-heading'>" + removeItem + "</div>"
                 + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>");
@@ -159,6 +158,7 @@ window.onload = function () {
                             // Set criteria ratings and give it correct class
                             SetCriteriaListRating(array);
 
+                            // Set InnerHTML of Rating Lists in Session for PDF
                             var accessInner = document.getElementById("MainContent_RatingAccessList").innerHTML;
                             var uxInner = document.getElementById("MainContent_RatingUxList").innerHTML;
                             var marketInner = document.getElementById("MainContent_RatingMarketingList").innerHTML;

@@ -135,7 +135,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         var percentage = ((decimal)result.talking_about_count / (decimal)result.likes) * 100;
                         if (percentage > 10m)
                         {
-                            rating = 10.0m;
+                            rating = 10m;
                         }
                         else if (percentage > 1m)
                         {

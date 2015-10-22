@@ -288,6 +288,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                 }
             }
+            if (rating == 10.0m)
+                rating = 10m;
             var rounded = decimal.Round(rating, 1);
             Session["PrintabilityRating"] = rounded;
             PrintabilityRating.InnerHtml = rounded.ToString();

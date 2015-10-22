@@ -114,6 +114,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 rating = 0.0m;
             }
+            if (rating == 10.0m)
+                rating = 10m;
             decimal rounded = decimal.Round(rating, 1);
             PageTitlesRating.InnerHtml = rounded.ToString();
             var ratingAccess = (decimal)Session["RatingAccess"];

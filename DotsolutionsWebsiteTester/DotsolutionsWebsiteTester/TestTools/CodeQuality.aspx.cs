@@ -173,6 +173,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> " + errorString + " en " + warningString + " gevonden.</span></div>";
             }
 
+            if (rating == 10.0m)
+                rating = 10m;
+
             decimal rounded = decimal.Round(rating, 1);
             CodeQualityRating.InnerHtml = rounded.ToString();
 

@@ -99,6 +99,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> Er zijn geen headers gebruikt op alle geteste pagina's</span></div>";
             }
 
+            if (rating == 10.0m)
+                rating = 10m;
+
             if (rating > 0)
             {
                 decimal rounded = decimal.Round(rating, 1);
