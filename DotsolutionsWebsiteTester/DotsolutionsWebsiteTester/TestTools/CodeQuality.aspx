@@ -6,7 +6,7 @@
         <div id="CodeQuality">
             <div class="panel panel-custom" id="CodeQualitySession" runat="server">
                 <div class="panel-heading">
-                    <span id="Rating" runat="server">?</span> Code kwaliteit
+                    <span id="CodeQualityRating" runat="server">?</span> Code kwaliteit
                 </div>
                 <div class="panel-body">
                     <div id="w3ErrorsFound" class="results" runat="server"></div>

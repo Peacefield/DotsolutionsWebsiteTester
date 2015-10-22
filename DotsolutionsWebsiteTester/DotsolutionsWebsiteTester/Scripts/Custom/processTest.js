@@ -41,17 +41,14 @@ function animateTo(identifier) {
     }, 1000);
 }
 
-function SetRatingDisplay(rating, criteria) {
+function SetRatingClass(identifier, rating) {
     var rating = parseInt(rating);
-    if (rating < 4) {
-        $("#" + criteria).attr("class", "lowScore ratingSquare");
-    }
-    else if (rating < 8) {
-        $("#" + criteria).attr("class", "mediocreScore ratingSquare");
-    }
-    else {
-        $("#" + criteria).attr("class", "excellentScore ratingSquare");
-    }
+    if (rating < 4)
+        $(identifier).attr("class", "lowScore ratingSquare");
+    else if (rating < 8)
+        $(identifier).attr("class", "mediocreScore ratingSquare");
+    else
+        $(identifier).attr("class", "excellentScore ratingSquare");
 }
 
 function OnAccessSuccess(response) {
@@ -59,36 +56,45 @@ function OnAccessSuccess(response) {
     if (response >= 0) {
         $("#RatingAccessTxt").css("display", "list-item");
     }
-    SetRatingDisplay(response, "RatingAccess");
+    SetRatingClass("#RatingAccess", response);
 }
 function OnUserxSuccess(response) {
     $("#RatingUx").text(response);
     if (response >= 0) {
         $("#RatingUxTxt").css("display", "list-item");
     }
-    SetRatingDisplay(response, "RatingUx");
+    SetRatingClass("#RatingUx", response);
 }
 function OnMarketingSuccess(response) {
     $("#RatingMarketing").text(response);
     if (response >= 0) {
         $("#RatingMarketingTxt").css("display", "list-item");
     }
-    SetRatingDisplay(response, "RatingMarketing");
+    SetRatingClass("#RatingMarketing", response);
 }
 function OnTechSuccess(response) {
     $("#RatingTech").text(response);
     if (response >= 0) {
         $("#RatingTechTxt").css("display", "list-item");
     }
-    SetRatingDisplay(response, "RatingTech");
+    SetRatingClass("#RatingTech", response);
 }
-
 
 function OnSuccess(response) {
     // Do nothing
 }
 function OnError(error) {
     alert(error);
+}
+
+function SetCriteriaListRating(array) {
+    $.each(array, function (index, value) {
+        var item = document.getElementById("MainContent_" + value + "Rating");
+        var rating = item.innerText;
+        $("." + value + "Rating").text(rating.toString());
+        
+        SetRatingClass("." + value + "Rating", rating);
+    });
 }
 
 window.onresize = function () {
@@ -149,6 +155,20 @@ window.onload = function () {
                             PageMethods.GetUserxRating(OnUserxSuccess, OnError);
                             PageMethods.GetMarketingRating(OnMarketingSuccess, OnError);
                             PageMethods.GetTechRating(OnTechSuccess, OnError);
+
+                            // Set criteria ratings and give it correct class
+                            SetCriteriaListRating(array);
+
+                            var accessInner = document.getElementById("MainContent_RatingAccessList").innerHTML;
+                            var uxInner = document.getElementById("MainContent_RatingUxList").innerHTML;
+                            var marketInner = document.getElementById("MainContent_RatingMarketingList").innerHTML;
+                            var techInner = document.getElementById("MainContent_RatingTechList").innerHTML;
+
+                            PageMethods.AddCriteriaSession("RatingAccessList", accessInner, OnSuccess, OnError);
+                            PageMethods.AddCriteriaSession("RatingUxList", uxInner, OnSuccess, OnError);
+                            PageMethods.AddCriteriaSession("RatingMarketingList", marketInner, OnSuccess, OnError);
+                            PageMethods.AddCriteriaSession("RatingTechList", techInner, OnSuccess, OnError);
+
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
                                 $("#performedTestshidden").fadeIn();

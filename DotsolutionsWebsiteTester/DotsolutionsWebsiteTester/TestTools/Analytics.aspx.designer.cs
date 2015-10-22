@@ -22,13 +22,13 @@ namespace DotsolutionsWebsiteTester.TestTools {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl AnalyticsSession;
         
         /// <summary>
-        /// Rating control.
+        /// AnalyticsRating control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Rating;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AnalyticsRating;
         
         /// <summary>
         /// AnalyticsResults control.

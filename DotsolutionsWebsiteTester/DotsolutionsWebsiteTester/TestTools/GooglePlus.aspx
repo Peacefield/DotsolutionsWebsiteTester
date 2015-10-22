@@ -6,7 +6,7 @@
         <div id="GooglePlus">
             <div class="panel panel-custom" id="GooglePlusSession" runat="server">
                 <div class="panel-heading">
-                    <span id="Rating" runat="server">?</span> Google+
+                    <span id="GooglePlusRating" runat="server">?</span> Google+
                 </div>
                 <div class="panel-body">
                 </div>

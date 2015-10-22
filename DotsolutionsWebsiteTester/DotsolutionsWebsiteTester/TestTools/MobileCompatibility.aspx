@@ -6,7 +6,7 @@
         <div id="MobileCompatibility">
             <div class="panel panel-custom" id="MobileCompatibilitySession" runat="server">
                 <div class="panel-heading">
-                    <span id="Rating" runat="server">?</span> Mobiele compatibiliteit
+                    <span id="MobileCompatibilityRating" runat="server">?</span> Mobiele compatibiliteit
                 </div>
                 <div class="panel-body">
                 </div>

@@ -61,7 +61,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> Er kon geen beveiligde verbinding worden vastgesteld.</span></div>";
 
                 decimal rounded = decimal.Round(rating, 1);
-                Rating.InnerHtml = rounded.ToString();
+                FacebookRating.InnerHtml = rounded.ToString();
 
                 var temp = (decimal)Session["RatingUx"];
                 Session["RatingUx"] = rounded + temp;
@@ -185,7 +185,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> Er is geen Facebook account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";
             }
             decimal rounded = decimal.Round(rating, 1);
-            Rating.InnerHtml = rounded.ToString();
+            FacebookRating.InnerHtml = rounded.ToString();
 
             var temp = (decimal)Session["RatingUx"];
             Session["RatingUx"] = rounded + temp;
@@ -266,11 +266,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void SetRatingDisplay(decimal rating)
         {
             if (rating < 4)
-                Rating.Attributes.Add("class", "lowScore ratingCircle");
+                FacebookRating.Attributes.Add("class", "lowScore ratingCircle");
             else if (rating < 8)
-                Rating.Attributes.Add("class", "mediocreScore ratingCircle");
+                FacebookRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
-                Rating.Attributes.Add("class", "excellentScore ratingCircle");
+                FacebookRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
     }
 }

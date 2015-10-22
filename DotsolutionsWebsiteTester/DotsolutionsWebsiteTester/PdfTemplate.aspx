@@ -96,16 +96,19 @@
         .lowScore {
             color: white;
             background-image: linear-gradient(to bottom,red 0,black 175%);
+            background-color: red;
         }
 
         .mediocreScore {
             color: white;
             background-image: linear-gradient(to bottom,orangered 0,black 175%);
+            background-color: orangered;
         }
 
         .excellentScore {
             color: white;
             background-image: linear-gradient(to bottom,green 0,black 175%);
+            background-color: green;
         }
 
         .ratingCircle {

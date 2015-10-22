@@ -6,7 +6,7 @@
         <div id="AmountOfContent">
             <div class="panel panel-custom" id="AmountOfContentSession" runat="server">
                 <div class="panel-heading">
-                    <span id="Rating" runat="server">?</span>Hoeveelheid Content
+                    <span id="AmountOfContentRating" runat="server">?</span>Hoeveelheid Content
                 </div>
                 <div class="panel-body">
                 </div>

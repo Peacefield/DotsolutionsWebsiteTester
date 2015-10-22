@@ -193,7 +193,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             decimal rounded = decimal.Round(rating, 1);
-            Rating.InnerHtml = rounded.ToString();
+            TwitterRating.InnerHtml = rounded.ToString();
 
             var temp = (decimal)Session["RatingUx"];
             Session["RatingUx"] = rounded + temp;
@@ -304,11 +304,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void SetRatingDisplay(decimal rating)
         {
             if (rating < 4)
-                Rating.Attributes.Add("class", "lowScore ratingCircle");
+                TwitterRating.Attributes.Add("class", "lowScore ratingCircle");
             else if (rating < 8)
-                Rating.Attributes.Add("class", "mediocreScore ratingCircle");
+                TwitterRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
-                Rating.Attributes.Add("class", "excellentScore ratingCircle");
+                TwitterRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
     }
 }

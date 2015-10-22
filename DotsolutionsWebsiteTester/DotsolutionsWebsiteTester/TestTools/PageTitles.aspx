@@ -6,7 +6,7 @@
         <div id="PageTitles">
             <div class="panel panel-custom" id="PageTitlesSession" runat="server">
                 <div class="panel-heading">
-                    <span id="Rating" runat="server">?</span> Pagina titels
+                    <span id="PageTitlesRating" runat="server">?</span> Pagina titels
                 </div>
                 <div class="panel-body">
                     <div id="PageTitleResults" class="results" runat="server"></div>

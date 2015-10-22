@@ -83,17 +83,6 @@ namespace DotsolutionsWebsiteTester
 
             for (int i = 0; i < selectedTests.Count; i++)
             {
-                // Add rating from session
-                // CAN'T DO THIS HERE SINCE THIS IS EXECUTED BEFORE THE RATING IS KNOWN.......
-                // In Javascript: 
-                // for each executed test{ add rating to class with name "[testname]Rating"
-                // Set rating class for newly found rating
-                // Or WebMethod
-
-                //var score = (decimal)Session[selectedTests[i] + "Rating"];
-                var score = 5.5m;
-                // Get class for rating
-                var scoreClass = GetRatingDisplay(score);
                 var ratingClass = selectedTests[i].ToString() + "Rating";
 
                 if (selectedTests[i].ToString() == "CodeQuality" ||
@@ -103,7 +92,7 @@ namespace DotsolutionsWebsiteTester
                     selectedTests[i].ToString() == "InternalLinks" ||
                     selectedTests[i].ToString() == "UrlFormat")
                 {
-                    RatingAccessList.InnerHtml += "<li><span class='" + scoreClass + " " + ratingClass + "' >" + score + "</span>"
+                    RatingAccessList.InnerHtml += "<li><span class='" + ratingClass + "' >...</span>"
                         + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
                 }
 
@@ -121,7 +110,7 @@ namespace DotsolutionsWebsiteTester
                     selectedTests[i].ToString() == "UrlFormat" ||
                     selectedTests[i].ToString() == "Freshness")
                 {
-                    RatingUxList.InnerHtml += "<li><span class='" + scoreClass + " " + ratingClass + "' >" + score + "</span>"
+                    RatingUxList.InnerHtml += "<li><span class='" + ratingClass + "' >...</span>"
                         + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
                 }
 
@@ -139,7 +128,7 @@ namespace DotsolutionsWebsiteTester
                     selectedTests[i].ToString() == "Analytics" ||
                     selectedTests[i].ToString() == "MetaTags")
                 {
-                    RatingMarketingList.InnerHtml += "<li><span class='" + scoreClass + " " + ratingClass + "' >" + score + "</span>"
+                    RatingMarketingList.InnerHtml += "<li><span class='" + ratingClass + "' >...</span>"
                         + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
                 }
 
@@ -153,35 +142,8 @@ namespace DotsolutionsWebsiteTester
                     selectedTests[i].ToString() == "Printability" ||
                     selectedTests[i].ToString() == "UrlFormat")
                 {
-                    RatingTechList.InnerHtml += "<li><span class='" + scoreClass + " " + ratingClass + "' >" + score + "</span>"
+                    RatingTechList.InnerHtml += "<li><span class='" + ratingClass + "' >...</span>"
                         + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                }
-
-
-                var temp = new List<string>() { "RatingAccessList", "RatingUxList", "RatingMarketingList", "RatingTechList" };
-                foreach (var item in temp)
-                {
-                    // Read contents from div and add as Session for PDF
-                    var sb = new System.Text.StringBuilder();
-                    switch (item)
-                    {
-                        case "RatingAccessList":
-                            RatingAccessList.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-                            break;
-                        case "RatingUxList":
-                            RatingUxList.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-                            break;
-                        case "RatingMarketingList":
-                            RatingMarketingList.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-                            break;
-                        case "RatingTechList":
-                            RatingTechList.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-                            break;
-                        default:
-                            break;
-                    }
-                    string htmlstring = sb.ToString();
-                    Session[item] = htmlstring;
                 }
             }
         }
@@ -332,6 +294,15 @@ namespace DotsolutionsWebsiteTester
         }
 
         #region WebMethods for setting total rating
+        
+        [System.Web.Services.WebMethod]
+        public static void AddCriteriaSession(string session, string innerhtml)
+        {
+            Debug.WriteLine("START ---------- AddCriteriaSession(string session, string innerhtml)");
+            HttpContext.Current.Session[session] = innerhtml;
+            Debug.WriteLine("DONE ---------- AddCriteriaSession(string session, string innerhtml)");
+        }
+
 
         [System.Web.Services.WebMethod]
         public static void ResetRating()

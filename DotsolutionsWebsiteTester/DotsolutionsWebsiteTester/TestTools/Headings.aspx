@@ -6,7 +6,7 @@
         <div id="Headings">
             <div class="panel panel-custom" id="HeadingsSession" runat="server">
                 <div class="panel-heading">
-                    <span id="Rating" runat="server">?</span> Headers
+                    <span id="HeadingsRating" runat="server">?</span> Headers
                 </div>
                 <div class="panel-body">
                     <div id="headingMessages" class="results" runat="server"></div>

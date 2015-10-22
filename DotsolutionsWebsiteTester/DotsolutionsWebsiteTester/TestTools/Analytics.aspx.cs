@@ -141,7 +141,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 0.0m;
 
             decimal rounded = decimal.Round(rating, 1);
-            Rating.InnerHtml = rounded.ToString();
+            AnalyticsRating.InnerHtml = rounded.ToString();
+
             var RatingMarketing = (decimal)Session["RatingMarketing"];
             Session["RatingMarketing"] = rounded + RatingMarketing;
             Session["AnalyticsRating"] = rounded;
@@ -242,11 +243,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void SetRatingDisplay(decimal rating)
         {
             if (rating < 4)
-                Rating.Attributes.Add("class", "lowScore ratingCircle");
+                AnalyticsRating.Attributes.Add("class", "lowScore ratingCircle");
             else if (rating < 8)
-                Rating.Attributes.Add("class", "mediocreScore ratingCircle");
+                AnalyticsRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
-                Rating.Attributes.Add("class", "excellentScore ratingCircle");
+                AnalyticsRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
     }
 }

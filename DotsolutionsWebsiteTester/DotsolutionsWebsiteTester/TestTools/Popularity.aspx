@@ -6,7 +6,7 @@
         <div id="Popularity">
             <div class="panel panel-custom" id="PopularitySession" runat="server">
                 <div class="panel-heading">
-                    <span id="Rating" runat="server">?</span> Populariteit
+                    <span id="PopularityRating" runat="server">?</span> Populariteit
                 </div>
                 <div class="panel-body">
                 </div>

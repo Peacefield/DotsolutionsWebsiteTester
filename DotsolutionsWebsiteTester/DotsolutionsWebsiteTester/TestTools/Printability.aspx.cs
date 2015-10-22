@@ -293,7 +293,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             var rounded = decimal.Round(rating, 1);
             Session["PrintabilityRating"] = rounded;
-            Rating.InnerHtml = rounded.ToString();
+            PrintabilityRating.InnerHtml = rounded.ToString();
 
             var temp = (decimal)Session["RatingUx"];
             Session["RatingUx"] = temp + rounded;
@@ -306,11 +306,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void SetRatingDisplay(decimal rating)
         {
             if (rating < 4)
-                Rating.Attributes.Add("class", "lowScore ratingCircle");
+                PrintabilityRating.Attributes.Add("class", "lowScore ratingCircle");
             else if (rating < 8)
-                Rating.Attributes.Add("class", "mediocreScore ratingCircle");
+                PrintabilityRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
-                Rating.Attributes.Add("class", "excellentScore ratingCircle");
+                PrintabilityRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
     }
 }

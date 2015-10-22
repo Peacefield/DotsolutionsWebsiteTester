@@ -266,7 +266,8 @@ footer {
     .ratingList li span {
         margin-left: -45px;
     }
-    .ratingList li a{        
+
+    .ratingList li a {
         cursor: pointer;
     }
 
@@ -317,17 +318,22 @@ footer {
 
 /* End Handmatige-Test CSS*/
 
-.lowScore{
+.lowScore {
     color: white;
     background-image: linear-gradient(to bottom,red 0,black 175%);
+    background-color: red;
 }
-.mediocreScore{
+
+.mediocreScore {
     color: white;
     background-image: linear-gradient(to bottom,orangered 0,black 175%);
+    background-color: orangered;
 }
-.excellentScore{
+
+.excellentScore {
     color: white;
     background-image: linear-gradient(to bottom,green 0,black 175%);
+    background-color: green;
 }
 
 .ratingCircle {

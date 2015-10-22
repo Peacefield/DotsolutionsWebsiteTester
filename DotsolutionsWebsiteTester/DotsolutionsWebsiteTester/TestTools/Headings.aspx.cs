@@ -102,7 +102,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (rating > 0)
             {
                 decimal rounded = decimal.Round(rating, 1);
-                Rating.InnerHtml = rounded.ToString();
+                HeadingsRating.InnerHtml = rounded.ToString();
 
                 var temp = (decimal)Session["RatingAccess"];
                 Session["RatingAccess"] = temp + rounded;
@@ -117,7 +117,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             else
             {
                 Session["HeadingsRating"] = 0.0m;
-                Rating.InnerHtml = "0,0";
+                HeadingsRating.InnerHtml = "0,0";
             }
 
             SetRatingDisplay(rating);
@@ -248,11 +248,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void SetRatingDisplay(decimal rating)
         {
             if (rating < 4)
-                Rating.Attributes.Add("class", "lowScore ratingCircle");
+                HeadingsRating.Attributes.Add("class", "lowScore ratingCircle");
             else if (rating < 8)
-                Rating.Attributes.Add("class", "mediocreScore ratingCircle");
+                HeadingsRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
-                Rating.Attributes.Add("class", "excellentScore ratingCircle");
+                HeadingsRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
     }
 }
