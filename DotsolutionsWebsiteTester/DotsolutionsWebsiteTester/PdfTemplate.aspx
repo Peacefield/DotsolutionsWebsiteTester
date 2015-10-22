@@ -28,6 +28,10 @@
             padding-left: 15px;
             padding-right: 15px;
         }
+
+        .results {
+            overflow-x: auto;
+        }
         /* Custom panel colouring */
         .panel-custom {
             border-color: #85CC76 !important;
