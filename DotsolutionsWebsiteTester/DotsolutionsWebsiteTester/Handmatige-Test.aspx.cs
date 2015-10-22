@@ -22,6 +22,8 @@ namespace DotsolutionsWebsiteTester
             }
             SiteUrl.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>" + Session["MainUrl"].ToString() + "</a>";
 
+            // http://www.shrinktheweb.com/
+            // http://www.shrinktheweb.com/auth/stw-lobby
             //var accesskeyid = "1dd9ec6a56c1fac";
             //var imgUrl = "http://images.shrinktheweb.com/xino.php?"
             //    + "stwembed=1"
@@ -29,7 +31,7 @@ namespace DotsolutionsWebsiteTester
             //    + "&stwinside=1"
             //    + "&stwsize=xlg"
             //    + "&stwurl=" + Session["MainUrl"].ToString();
-            var imgUrl = "/Content/images/xino.jpg";
+            var imgUrl = "/Content/images/placeholder.jpg";
             websiteImg.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'><img src='" + imgUrl + "' title='Preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'class='center-block'></a>";
         }
 

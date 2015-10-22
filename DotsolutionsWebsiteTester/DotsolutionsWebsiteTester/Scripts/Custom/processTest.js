@@ -84,7 +84,8 @@ function OnSuccess(response) {
     // Do nothing
 }
 function OnError(error) {
-    alert(error);
+    //alert(error);
+    console.log(error);
 }
 
 function SetCriteriaListRating(array) {
@@ -130,6 +131,7 @@ window.onload = function () {
                 + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>");
         }
 
+        console.time("Execute tests");
         if (array.length !== 0) {
             $.each(array, function (index, value) {
                 $.ajax({
@@ -190,6 +192,7 @@ window.onload = function () {
             $("#performedTestshidden").css("display", "block");
             document.title = 'Resultaten - Website tester';
         }
+        console.timeEnd("Execute tests");
     }
 };
 
