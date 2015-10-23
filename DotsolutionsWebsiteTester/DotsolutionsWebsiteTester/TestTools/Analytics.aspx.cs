@@ -57,6 +57,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var analyticslist = new List<KeyValuePair<string, string>>();
             var rating = 10.0m;
             analyticTypes.Add(new KeyValuePair<string, string>("google-analytics.com", "Google Analytics"));
+            analyticTypes.Add(new KeyValuePair<string, string>("yandex.ru/metrika", "Yandex Metrika"));
             //analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
             //analyticTypes.Add(new KeyValuePair<string, string>("placeholder-type", "placeholder-name"));
 

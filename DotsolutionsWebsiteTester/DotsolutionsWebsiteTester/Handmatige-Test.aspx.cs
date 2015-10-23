@@ -24,6 +24,8 @@ namespace DotsolutionsWebsiteTester
 
             // http://www.shrinktheweb.com/
             // http://www.shrinktheweb.com/auth/stw-lobby
+            // https://www.screenshotmachine.com/index.php
+            // https://screenshotlayer.com/
             //var accesskeyid = "1dd9ec6a56c1fac";
             //var imgUrl = "http://images.shrinktheweb.com/xino.php?"
             //    + "stwembed=1"

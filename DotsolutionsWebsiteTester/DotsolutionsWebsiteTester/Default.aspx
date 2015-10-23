@@ -16,7 +16,7 @@
                         Text="http://www."
                         runat="server" />
                 </div>
-                <span class="help-block">Het adres van de website, inclusief http://www. Bijvoorbeeld http://www.example.net</span>
+                <span class="help-block">Het adres van de website, inclusief http://www. Bijvoorbeeld http://www.example.com</span>
             </div>
         </div>
 

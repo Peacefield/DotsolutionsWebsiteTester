@@ -182,7 +182,6 @@ namespace DotsolutionsWebsiteTester
 
             System.Uri uri = new Uri(url);
             string uriWithoutScheme = uri.Host;
-            Debug.WriteLine("uriWithoutScheme = " + uriWithoutScheme);
 
             if (results.Count != 0)
             {
@@ -194,7 +193,6 @@ namespace DotsolutionsWebsiteTester
 
                         System.Uri uriFound = new Uri(item["url"].ToString());
                         string uriFoundWithoutScheme = uriFound.Host;
-                        Debug.WriteLine("uriFoundWithoutScheme = " + uriFoundWithoutScheme);
                         // If entered URL is not in found URL's it will be added
                         // This if-statement detects if it IS among the found URL's by comparing it to several possible URL formats
                         if (uriFoundWithoutScheme == uriWithoutScheme || "www." + uriFoundWithoutScheme == uriWithoutScheme)
@@ -230,7 +228,7 @@ namespace DotsolutionsWebsiteTester
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(addition);
                 request.UserAgent = Session["userAgent"].ToString();
-                request.Timeout = 10000;
+                request.Timeout = 1000;
                 // Get the response.
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
