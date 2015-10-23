@@ -14,6 +14,10 @@ namespace DotsolutionsWebsiteTester
             //settings.AutoRedirectMode = RedirectMode.Permanent;
             //routes.EnableFriendlyUrls(settings);
             //routes.EnableFriendlyUrls();
+
+            routes.MapPageRoute("Handmatige-Test", "Handmatige-Test", "~/Handmatige-Test.aspx");
+            routes.MapPageRoute("Geautomatiseerde-Test", "Geautomatiseerde-Test", "~/Geautomatiseerde-Test.aspx");
+            routes.MapPageRoute("PdfTemplate", "PdfTemplate", "~/PdfTemplate.aspx");
         }
     }
 }

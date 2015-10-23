@@ -261,7 +261,7 @@ namespace DotsolutionsWebsiteTester
         /// <param name="e"></param>
         protected void CreatePdfBtn_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/PdfTemplate.aspx");
+            Response.Redirect("~/PdfTemplate");
 
             return;
         }

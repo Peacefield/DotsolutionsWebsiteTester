@@ -191,8 +191,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                 }
             }
-
-
+            
             if (!done && doc.DocumentNode.SelectSingleNode("//html") != null)
             {
                 var node = doc.DocumentNode.SelectSingleNode("//html");

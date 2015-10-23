@@ -15,7 +15,7 @@
         <article style="width: 100%">
             <h2>Vormgeving</h2>
             Hoe is de vormgeving van de site? Is de site duidelijk en overzichtelijk en kan een bezoeker eenvoudig zijn weg vinden binnen de site?
-        <div id="websiteImg" runat="server"></div>
+        <div id="websiteImg" runat="server" class='center-block'></div>
             <article>
                 <h3>Professionaliteit*</h3>
                 <label class="control-label col-md-2">Opmaak</label>

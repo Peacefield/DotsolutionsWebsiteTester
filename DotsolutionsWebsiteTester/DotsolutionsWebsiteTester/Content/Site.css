@@ -314,6 +314,9 @@ footer {
     padding-right: 2px;
 }
 
+#MainContent_websiteImg {
+    text-align: center;
+}
 /* End Handmatige-Test CSS*/
 
 .lowScore {

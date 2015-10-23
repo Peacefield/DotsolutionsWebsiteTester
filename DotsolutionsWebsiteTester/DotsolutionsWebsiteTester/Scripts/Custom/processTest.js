@@ -104,6 +104,7 @@ window.onresize = function () {
 
 // Execute on window.onload
 window.onload = function () {
+    PageMethods.set_path('Geautomatiseerde-Test.aspx')
     PageMethods.ResetRating(OnSuccess, OnError);
     var url = $("#MainContent_UrlTesting").text();
     if (url !== "") {
@@ -152,6 +153,7 @@ window.onload = function () {
                         $("#testsComplete").append("<li>" + value + "</li>");
 
                         if (progress == 100) {
+                            console.timeEnd("Execute tests");
                             PageMethods.GetAccessRating(OnAccessSuccess, OnError);
                             PageMethods.GetUserxRating(OnUserxSuccess, OnError);
                             PageMethods.GetMarketingRating(OnMarketingSuccess, OnError);
@@ -192,7 +194,6 @@ window.onload = function () {
             $("#performedTestshidden").css("display", "block");
             document.title = 'Resultaten - Website tester';
         }
-        console.timeEnd("Execute tests");
     }
 };
 
