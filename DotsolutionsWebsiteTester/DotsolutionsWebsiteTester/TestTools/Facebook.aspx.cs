@@ -1,4 +1,5 @@
 ﻿using Facebook;
+using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["Facebook"] = htmlstring;
         }
 
+        /// <summary>
+        /// Find Facebook Page using Google and user-entered page-content
+        /// </summary>
         private void GetFacebook()
         {
             Debug.WriteLine("GetFacebook <<< ");
@@ -97,99 +101,67 @@ namespace DotsolutionsWebsiteTester.TestTools
             JObject googleSearch = JObject.Parse(responseFromServer);
             IList<JToken> results = googleSearch["responseData"]["results"].Children().ToList();
 
+            var isFacebookFound = false;
             if (results.Count != 0)
             {
                 foreach (JToken item in results)
                 {
                     var screenName = "";
 
-                    if (item["unescapedUrl"].ToString().Contains("https://www.facebook.com/"))
-                        screenName = item["unescapedUrl"].ToString().Remove(0, 25);
-                    else if (item["unescapedUrl"].ToString().Contains("https://facebook.com/"))
-                        screenName = item["unescapedUrl"].ToString().Remove(0, 21);
-
-                    if (screenName.EndsWith("/"))
-                        screenName = screenName.Remove(screenName.Length - 1);
-
-                    if (screenName.Contains("?"))
-                        screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
-
-                    if (!screenName.Contains("/") && screenName != "")
+                    screenName = SliceScreenName(item["unescapedUrl"].ToString());
+                    if (screenName != "")
                     {
                         screennameList.Add(screenName);
+
+                        Debug.WriteLine(screenName + " toegevoegd aan lijst via Google!");
                     }
                 }
 
-                var isFacebookFound = false;
                 foreach (var screenName in screennameList)
                 {
+                    Debug.WriteLine(screenName + " testen via Facebook API!");
                     if (IsFacebook(screenName))
                     {
-                        Debug.WriteLine(screenName + " facebook gevonden!");
+                        Debug.WriteLine(screenName + " facebook gevonden via Google!");
+                        rating = GetFacebookRating(screenName);
+
                         isFacebookFound = true;
 
-                        dynamic result = fbc.Get(screenName, new { fields = "likes, picture, talking_about_count" });
-                        var fbLikes = result.likes.ToString("#,##0");
-                        var fbPicture = result.picture.data["url"];
-                        var fbTalking = result.talking_about_count.ToString("#,##0");
-
-                        var percentage = ((decimal)result.talking_about_count / (decimal)result.likes) * 100;
-                        if (percentage > 10m)
-                        {
-                            rating = 10m;
-                        }
-                        else if (percentage > 1m)
-                        {
-                            rating = 7.5m;
-                        }
-                        else if (percentage > 0.5m)
-                        {
-                            rating = 5.5m;
-                        }
-                        else if (percentage > 0.25m)
-                        {
-                            rating = 4m;
-                        }
-                        else
-                        {
-                            rating = 1m;
-                        }
-
-                        FacebookResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                            + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "
-                            + "<span> Facebook account <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
-
-                        var likesGrammar = " likes";
-                        if (fbLikes == "1") likesGrammar = " like";
-                        var talkingGrammar = " mensen praten";
-                        if (fbTalking == "1") talkingGrammar = " persoon praat";
-
-                        FacebookResults.InnerHtml += "<div class='well well-lg resultWell'>"
-                            + "<i class='fa fa-thumbs-o-up fa-3x'></i>"
-                            + "<span> Dit account heeft " + fbLikes + likesGrammar + "</span></div>"
-                            + "<div class='resultDivider'></div>"
-                            + "<div class='well well-lg resultWell'>"
-                            + "<i class='fa fa-commenting-o fa-3x'></i>"
-                            + "<span> " + fbTalking + talkingGrammar + " hier over</span></div>";
                         break;
 
                     }
                 }
-                if (!isFacebookFound)
+            }
+
+            // If !isFacebookFound { doorzoek pagina op aanwezigheid facebook.com mbv agility pack
+            if (!isFacebookFound)
+            {
+                var screenNames = GetScreenNamesFromPage(url);
+                if (screenNames.Count > 0)
                 {
-                    rating = 0.0m;
-                    FacebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                        + "<span> Er is geen Facebook account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";
+                    foreach (var screenName in screenNames)
+                    {
+                        if (IsFacebook(screenName))
+                        {
+                            Debug.WriteLine(screenName + " facebook gevonden via pagina!");
+                            rating = GetFacebookRating(screenName);
+
+                            isFacebookFound = true;
+
+                            break;
+                        }
+                    }
                 }
             }
-            else
+
+            if (!isFacebookFound)
             {
-                rating = 1.0m;
+                rating = 0.0m;
                 FacebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er is geen Facebook account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";
             }
+
             decimal rounded = decimal.Round(rating, 1);
             FacebookRating.InnerHtml = rounded.ToString();
 
@@ -201,6 +173,64 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["FacebookRating"] = rounded;
         }
 
+        /// <summary>
+        /// Slice screenName returned from Google results or Page results to try to make it a screen name
+        /// </summary>
+        /// <param name="screenName">URL containing possible screen name</param>
+        /// <returns>string screenName</returns>
+        private string SliceScreenName(string screenName)
+        {
+            if (screenName.Contains("facebook.com/"))
+            {
+                if (screenName.EndsWith("/"))
+                    screenName = screenName.Remove(screenName.Length - 1);
+
+                screenName = screenName.Remove(0, screenName.LastIndexOf("/") + 1);
+
+                if (screenName.Contains("?"))
+                    screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
+
+                if (!screenName.Contains("/") && screenName != "")
+                {
+                    return screenName;
+                }
+            }
+
+            return "";
+        }
+
+        /// <summary>
+        /// Get a list of screen names found on a page
+        /// </summary>
+        /// <param name="url">Page to check for Facebook link</param>
+        /// <returns>List of possible screen names found on page</returns>
+        private List<string> GetScreenNamesFromPage(string url)
+        {
+            Debug.WriteLine("GetScreenNamesFromPage <<< ");
+            var screenNames = new List<string>();
+
+            var webget = new HtmlWeb();
+            var doc = webget.Load(url);
+            if (doc.DocumentNode.SelectNodes("//a[@href]") != null)
+            {
+                foreach (var node in doc.DocumentNode.SelectNodes("//a[@href]"))
+                {
+                    if (node.Attributes["href"].Value.Contains("facebook.com"))
+                    {
+                        var temp = SliceScreenName(node.Attributes["href"].Value);
+                        if (temp != "")
+                            screenNames.Add(temp);
+                    }
+                }
+            }
+            return screenNames;
+        }
+
+        /// <summary>
+        /// Check if screenName is a valid Facebook account with user-entered URL in website section
+        /// </summary>
+        /// <param name="screenName">Screen name you want to test</param>
+        /// <returns>true if it is a valid Facebook account with user-entered URL in website section</returns>
         private bool IsFacebook(string screenName)
         {
             try
@@ -215,6 +245,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (HasWebsite(fbUrl))
                         return true;
+                    else
+                        Debug.WriteLine("Geen URL in beschrijving");
                 }
             }
             catch (FacebookApiException)
@@ -225,6 +257,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return false;
         }
 
+        /// <summary>
+        /// Check if URL in facebook profile is the same that the user entered
+        /// </summary>
+        /// <param name="fbUrl">URL of website found in Facebook profile</param>
+        /// <returns></returns>
         private bool HasWebsite(string fbUrl)
         {
             if (fbUrl == null || fbUrl == "")
@@ -270,6 +307,62 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             return false;
         }
+
+        /// <summary>
+        /// Determine the rating by comparing amount of likes to the amount of people talking about the page
+        /// </summary>
+        /// <param name="screenName">Screen name of page</param>
+        /// <returns>decimal rating</returns>
+        private decimal GetFacebookRating(string screenName)
+        {
+            var rating = 1m;
+            dynamic result = fbc.Get(screenName, new { fields = "likes, picture, talking_about_count" });
+            var fbLikes = result.likes.ToString("#,##0");
+            var fbPicture = result.picture.data["url"];
+            var fbTalking = result.talking_about_count.ToString("#,##0");
+
+            var percentage = ((decimal)result.talking_about_count / (decimal)result.likes) * 100;
+            if (percentage > 10m)
+            {
+                rating = 10m;
+            }
+            else if (percentage > 1m)
+            {
+                rating = 7.5m;
+            }
+            else if (percentage > 0.5m)
+            {
+                rating = 5.5m;
+            }
+            else if (percentage > 0.25m)
+            {
+                rating = 4m;
+            }
+            else
+            {
+                rating = 1m;
+            }
+
+            FacebookResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "
+                + "<span> Facebook account <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
+
+            var likesGrammar = " likes";
+            if (fbLikes == "1") likesGrammar = " like";
+            var talkingGrammar = " mensen praten";
+            if (fbTalking == "1") talkingGrammar = " persoon praat";
+
+            FacebookResults.InnerHtml += "<div class='well well-lg resultWell'>"
+                + "<i class='fa fa-thumbs-o-up fa-3x'></i>"
+                + "<span> Dit account heeft " + fbLikes + likesGrammar + "</span></div>"
+                + "<div class='resultDivider'></div>"
+                + "<div class='well well-lg resultWell'>"
+                + "<i class='fa fa-commenting-o fa-3x'></i>"
+                + "<span> " + fbTalking + talkingGrammar + " hier over</span></div>";
+
+            return rating;
+        }
+
         private void SetRatingDisplay(decimal rating)
         {
             if (rating < 6m)
