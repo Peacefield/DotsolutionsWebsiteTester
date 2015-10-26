@@ -30,8 +30,9 @@ namespace DotsolutionsWebsiteTester
                 UrlTesting.InnerText = Session["MainUrl"].ToString();
 
                 // Set user agent
-                string userAgent = "Mozilla/5.0 (Quality test, http://www.example.net)";
+                string userAgent = "Mozilla/5.0 (DotTestBot, http://www.example.net)";
                 Session["userAgent"] = userAgent;
+                Session["robotsTxt"] = GetRobotsTxt(UrlTesting.InnerText);
 
                 var ths = new ThreadStart(GetTestList);
                 var th = new Thread(ths);
@@ -57,6 +58,50 @@ namespace DotsolutionsWebsiteTester
                 Session["RatingMarketing"] = 0m;
                 Session["RatingTech"] = 0m;
             }
+        }
+
+        private List<string> GetRobotsTxt(string url)
+        {
+            var robots = new List<string>();
+
+            try
+            {
+                var txt = "";
+                using (var wc = new System.Net.WebClient())
+                    txt = wc.DownloadString(url + "/robots.txt");
+
+                using (StringReader reader = new StringReader(txt))
+                {
+                    string line;
+                    var applies = false;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (line == "User-agent: *")
+                        {
+                            applies = true;
+                        }
+                        if (line.Contains("User-agent") && !line.Contains("*"))
+                        {
+                            applies = false;
+                        }
+                        if (line.Contains("Disallow:") && applies == true)
+                        {
+                            line = line.Remove(0, 11);
+                            if (line.EndsWith("/"))
+                            {
+                                line = line.Remove(line.Length-1);
+                            }
+                            robots.Add(line);
+                        }
+                    }
+                }
+            }
+            catch (WebException we)
+            {
+                Debug.WriteLine("WebException " + we.Message);
+            }
+
+            return robots;
         }
 
         /// <summary>
@@ -247,7 +292,7 @@ namespace DotsolutionsWebsiteTester
             }
             catch (WebException we)
             {
-                Debug.WriteLine("IsTwitter Catch" + we.Message);
+                Debug.WriteLine("IsOfDomain Catch" + we.Message);
             }
 
             //IP check
