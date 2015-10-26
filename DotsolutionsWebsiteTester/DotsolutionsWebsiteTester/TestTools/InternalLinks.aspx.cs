@@ -17,6 +17,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private int brokenCnt = 0;
         private List<string> robots;
         private bool unavailable = false;
+        private int threadCnt = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -79,7 +80,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                 foreach (var thread in threadList)
                 {
                     thread.Start();
-                    Thread.Sleep(10);
+                    Thread.Sleep(50);
+                    Debug.WriteLine("50ms Threadsleep");
+                    if (threadCnt == 50)
+                    {
+                        Debug.WriteLine("500ms Threadsleep");
+                        threadCnt = 0;
+                        Thread.Sleep(500);
+                    }
+                    threadCnt++;
                 }
 
                 // Join Threads that were executing TestLink
@@ -260,9 +269,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             if (!unavailable && !nofollow)
             {
-                Thread.Sleep(100);
                 int httpcode = LinkWorks(mainUrl, testLink);
-                if (httpcode != 200)
+                // 405 means request method: HEAD is not allowed, but the URL probably works if this gets returned
+                if (httpcode != 200 && httpcode != 405)
                 {
                     if (brokenCnt < 5)
                     {
@@ -304,7 +313,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 HttpWebRequest request = WebRequest.Create(link) as HttpWebRequest;
                 request.UserAgent = Session["userAgent"].ToString();
                 request.Timeout = 10000; // Set timout of 10 seconds so to not waste time
-                request.Method = "GET";
+                request.Method = "HEAD";
+                //request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
                 //request.Credentials = CredentialCache.DefaultCredentials;
                 request.UnsafeAuthenticatedConnectionSharing = false;
                 request.UseDefaultCredentials = true;
@@ -316,8 +326,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             catch (WebException we)
             {
-                //Any webexception will return true unless it's a 404.
-                Debug.WriteLine("WebException " + we.Message + " <><><><><> met link: " + link + " en Status: " + we.Status);
+                //Debug.WriteLine("WebException " + we.Message + " \n\tmet link: " + link + " en Status: " + we.Status);
 
                 HttpWebResponse response = we.Response as HttpWebResponse;
                 if (response != null)
