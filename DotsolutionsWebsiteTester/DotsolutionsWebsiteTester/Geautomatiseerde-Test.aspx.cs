@@ -64,11 +64,16 @@ namespace DotsolutionsWebsiteTester
         {
             var robots = new List<string>();
 
+            if (!url.EndsWith("/"))
+            {
+                url = url + "/";
+            }
+
             try
             {
                 var txt = "";
                 using (var wc = new System.Net.WebClient())
-                    txt = wc.DownloadString(url + "/robots.txt");
+                    txt = wc.DownloadString(url + "robots.txt");
 
                 using (StringReader reader = new StringReader(txt))
                 {
@@ -76,6 +81,7 @@ namespace DotsolutionsWebsiteTester
                     var applies = false;
                     while ((line = reader.ReadLine()) != null)
                     {
+                        //Debug.WriteLine(line);
                         if (line == "User-agent: *")
                         {
                             applies = true;
@@ -86,11 +92,9 @@ namespace DotsolutionsWebsiteTester
                         }
                         if (line.Contains("Disallow:") && applies == true)
                         {
-                            line = line.Remove(0, 11);
-                            if (line.EndsWith("/"))
-                            {
-                                line = line.Remove(line.Length-1);
-                            }
+                            line = line.Remove(0, 10);
+
+                            Debug.WriteLine(line);
                             robots.Add(line);
                         }
                     }

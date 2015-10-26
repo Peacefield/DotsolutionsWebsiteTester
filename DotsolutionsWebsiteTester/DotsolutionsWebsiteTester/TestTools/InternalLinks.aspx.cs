@@ -229,7 +229,23 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 if (testLink.Contains(item))
                 {
+                    Debug.WriteLine("Link zit in disallow van robots.txt");
                     return;
+                }
+                else if (item.Contains("*"))
+                {
+                    var split = item.Split('*');
+                    foreach (var part in split)
+                    {
+                        if (part != "")
+                        {
+                            if (testLink.Contains(item))
+                            {
+                                Debug.WriteLine("Link zit in disallow van robots.txt");
+                                return;
+                            }
+                        }
+                    }
                 }
             }
 
