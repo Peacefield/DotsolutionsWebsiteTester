@@ -16,6 +16,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private int imageCnt = 0;
         private int brokenCnt = 0;
         private List<string> robots;
+        private bool unavailable = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -49,7 +50,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void TestInternalLinks()
         {
             var sitemap = (List<string>)Session["selectedSites"];
-            var threadList = new List<Thread>();
             foreach (var url in sitemap)
             {
                 Debug.WriteLine("Link check op -> " + url);
@@ -59,6 +59,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 imageCnt = 0;
                 brokenCnt = 0;
 
+                var threadList = new List<Thread>();
                 var Webget = new HtmlWeb();
                 var doc = Webget.Load(url);
 
@@ -70,9 +71,17 @@ namespace DotsolutionsWebsiteTester.TestTools
                         var ths = new ThreadStart(() => TestLink(link, url));
                         var th = new Thread(ths);
                         threadList.Add(th);
-                        th.Start();
+                        //th.Start();
                     }
                 }
+
+                // Start Threads some time apart to prevent spamming
+                foreach (var thread in threadList)
+                {
+                    thread.Start();
+                    Thread.Sleep(10);
+                }
+
                 // Join Threads that were executing TestLink
                 foreach (var thread in threadList)
                 {
@@ -197,7 +206,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             // Test if the link does not return an errorcode
             var testLink = "";
-            if (internalLink.Contains("http://") || internalLink.Contains("https://"))
+            if (internalLink.Contains("http:/") || internalLink.Contains("https:/"))
             {
                 testLink = internalLink;
             }
@@ -217,11 +226,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                     testLink = mainUrl + internalLink;
             }
 
+            var nofollow = false;
             if (link.Attributes["rel"] != null)
             {
                 if (link.Attributes["rel"].Value.ToLower() == "nofollow")
                 {
-                    return;
+                    nofollow = true;
                 }
             }
 
@@ -230,7 +240,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (testLink.Contains(item))
                 {
                     Debug.WriteLine("Link zit in disallow van robots.txt");
-                    return;
+                    nofollow = true;
                 }
                 else if (item.Contains("*"))
                 {
@@ -242,31 +252,36 @@ namespace DotsolutionsWebsiteTester.TestTools
                             if (testLink.Contains(item))
                             {
                                 Debug.WriteLine("Link zit in disallow van robots.txt");
-                                return;
+                                nofollow = true;
                             }
                         }
                     }
                 }
             }
-
-            int httpcode = LinkWorks(mainUrl, testLink);
-            if (httpcode != 200)
+            if (!unavailable && !nofollow)
             {
-                if (brokenCnt < 5)
+                Thread.Sleep(100);
+                int httpcode = LinkWorks(mainUrl, testLink);
+                if (httpcode != 200)
                 {
-                    string tablelink = "<a href='" + testLink + "' target='_blank'>" + testLink + "</a>";
+                    if (brokenCnt < 5)
+                    {
+                        string tablelink = "<a href='" + testLink + "' target='_blank'>" + testLink + "</a>";
 
-                    // add message to table
-                    if (httpcode > 0)
-                        AddToTable(tablelink, "Link werkt niet (HTTP Status Code: " + httpcode + ")", url);
-                    else if (httpcode == -1)
-                        AddToTable(tablelink, "Link werkt niet (Timeout)", url);
-                    else if (httpcode == 0)
-                        AddToTable(tablelink, "Link werkt niet", url);
+                        // add message to table
+                        if (httpcode > 0)
+                            AddToTable(tablelink, "Link werkt niet (HTTP Status Code: " + httpcode + ")", url);
+                        else if (httpcode == -1)
+                            AddToTable(tablelink, "Link werkt niet (Timeout)", url);
+                        else if (httpcode == 0)
+                            AddToTable(tablelink, "Link werkt niet", url);
+                    }
+
+                    brokenCnt++;
+                    errorCnt++;
+                    if (httpcode == 503)
+                        unavailable = true;
                 }
-
-                brokenCnt++;
-                errorCnt++;
             }
 
         }

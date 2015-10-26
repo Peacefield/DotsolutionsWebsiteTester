@@ -92,10 +92,16 @@ namespace DotsolutionsWebsiteTester
                         }
                         if (line.Contains("Disallow:") && applies == true)
                         {
-                            line = line.Remove(0, 10);
+                            try
+                            {
+                                line = line.Remove(0, 10);
 
-                            Debug.WriteLine(line);
-                            robots.Add(line);
+                                robots.Add(line);
+                            }
+                            catch (ArgumentOutOfRangeException)
+                            {
+                                // Nothing in Disallow
+                            }
                         }
                     }
                 }
