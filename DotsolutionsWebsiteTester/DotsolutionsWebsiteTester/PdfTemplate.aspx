@@ -1,18 +1,11 @@
-﻿<%@ Page Title="Testresults" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PdfTemplate.aspx.cs" Inherits="DotsolutionsWebsiteTester.PdfTemplate" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PdfTemplate.aspx.cs" Inherits="DotsolutionsWebsiteTester.PdfTemplate" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Testresultaten PDF</title>
     <style>
-        @media (max-width: 767px) {
-            .table-responsive {
-                overflow: auto;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .table-responsive {
-                overflow: visible !important;
-            }
-        }
         /* Move down content because we have a fixed navbar that is 50px tall */
         body {
             padding-top: 50px;
@@ -38,7 +31,6 @@
         }
 
             .panel-custom .panel-heading {
-                background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);
                 color: white;
                 background-color: #145007;
                 background-repeat: repeat-x;
@@ -86,17 +78,17 @@
 
 
         .lowScore {
-            background-image: linear-gradient(to bottom,red 0,black 175%);
+            /*background-image: linear-gradient(to bottom,red 0,black 175%);*/
             background-color: red;
         }
 
         .mediocreScore {
-            background-image: linear-gradient(to bottom,orangered 0,black 175%);
+            /*background-image: linear-gradient(to bottom,orangered 0,black 175%);*/
             background-color: orangered;
         }
 
         .excellentScore {
-            background-image: linear-gradient(to bottom,green 0,black 175%);
+            /*background-image: linear-gradient(to bottom,green 0,black 175%);*/
             background-color: green;
         }
 
@@ -124,50 +116,60 @@
             padding-right: 3px;
         }
     </style>
-    <div class="well well-sm" id="sizeref">
-        <h5>Rapport voor</h5>
-        <h4 id="UrlTesting" runat="server"></h4>
-    </div>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+</head>
+<body>
+    <form runat="server">
+        <div class="container body-content">
+            <div class="well well-sm" id="sizeref">
+                <h5>Rapport voor</h5>
+                <h4 id="UrlTesting" runat="server"></h4>
+            </div>
 
-    <div id="manualresults" runat="server"></div>
-    <div class="well well-sm" id="automatedRatingList">
-        <h3>Beoordeling Geautomatiseerde Test</h3>
-        <ul runat="server">
-            <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">[Aan het berekenen...]</span>Toegankelijkheid
+            <div id="manualresults" runat="server"></div>
+            <div class="well well-sm" id="automatedRatingList">
+                <h3>Beoordeling Geautomatiseerde Test</h3>
+                <ul runat="server">
+                    <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">...</span>Toegankelijkheid
                 <div class="well-sm well ratingList">
                     <ul id="RatingAccessList" runat="server">
                     </ul>
                 </div>
-            </li>
-            <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="ratingSquare" runat="server">[Aan het berekenen...]</span>Gebruikerservaring
+                    </li>
+                    <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="ratingSquare" runat="server">...</span>Gebruikerservaring
                 <div class="well-sm well ratingList">
                     <ul id="RatingUxList" runat="server">
                     </ul>
                 </div>
-            </li>
-            <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="ratingSquare" runat="server">[Aan het berekenen...]</span>Marketing
+                    </li>
+                    <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="ratingSquare" runat="server">...</span>Marketing
                 <div class="well-sm well ratingList">
                     <ul id="RatingMarketingList" runat="server">
                     </ul>
                 </div>
-            </li>
-            <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="ratingSquare" runat="server">[Aan het berekenen...]</span>Technologie
+                    </li>
+                    <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="ratingSquare" runat="server">...</span>Technologie
                 <div class="well-sm well ratingList">
                     <ul id="RatingTechList" runat="server">
                     </ul>
                 </div>
-            </li>
-        </ul>
-    </div>
-    <div class="well well-sm">
-        <h3>Uitgevoerde tests</h3>
-        <ul id="performedTests" runat="server"></ul>
-    </div>
-    <div class="well well-sm">
-        <h3>Geteste pagina's</h3>
-        <ul id="testedsiteslist" runat="server"></ul>
-    </div>
-    <div id="results" runat="server">
-    </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="well well-sm">
+                <h3>Uitgevoerde tests</h3>
+                <ul id="performedTests" runat="server"></ul>
+            </div>
+            <div class="well well-sm">
+                <h3>Geteste pagina's</h3>
+                <ul id="testedsiteslist" runat="server"></ul>
+            </div>
+            <div id="results" runat="server">
+            </div>
 
-</asp:Content>
+        </div>
+    </form>
+</body>
+</html>
+

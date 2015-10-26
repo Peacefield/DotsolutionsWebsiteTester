@@ -44,9 +44,9 @@
     var DEFAULTS = {
         'min': 1,
         'max': 5,
-        'icon-lib': 'glyphicon',
-        'active-icon': 'glyphicon-star',
-        'inactive-icon': 'glyphicon-star-empty',
+        'icon-lib': 'fa',
+        'active-icon': 'fa-star',
+        'inactive-icon': 'fa-star-o',
         'clearable': '',
         'clearable-icon': 'glyphicon-remove'
     };

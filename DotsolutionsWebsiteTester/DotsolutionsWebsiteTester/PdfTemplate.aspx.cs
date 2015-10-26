@@ -68,15 +68,15 @@ namespace DotsolutionsWebsiteTester
             RatingMarketing.InnerHtml = ((decimal)Session["RatingMarketing"]).ToString("0.0");
             RatingTech.InnerHtml = ((decimal)Session["RatingTech"]).ToString("0.0");
 
-            SetRatingDisplay("RatingAccess", RatingAccess);
-            SetRatingDisplay("RatingUx", RatingUx);
-            SetRatingDisplay("RatingMarketing", RatingMarketing);
-            SetRatingDisplay("RatingTech", RatingTech);
-
             RatingAccessList.InnerHtml = Session["RatingAccessList"].ToString();
             RatingUxList.InnerHtml = Session["RatingUxList"].ToString();
             RatingMarketingList.InnerHtml = Session["RatingMarketingList"].ToString();
             RatingTechList.InnerHtml = Session["RatingTechList"].ToString();
+
+            SetRatingDisplay("RatingAccess", RatingAccess);
+            SetRatingDisplay("RatingUx", RatingUx);
+            SetRatingDisplay("RatingMarketing", RatingMarketing);
+            SetRatingDisplay("RatingTech", RatingTech);
         }
         
         private void SetRatingDisplay(string criteria, System.Web.UI.HtmlControls.HtmlGenericControl control)
@@ -130,38 +130,40 @@ namespace DotsolutionsWebsiteTester
             // Filename with format -> YY-MM-DD_hh.mm Rapportage_http.example.com
             string filename = @"" + date + " Rapportage_" + url;
 
-            //try
-            //{
-            //    // create an API client instance
-            //    //Currently using my personal free license account
-            //    pdfcrowd.Client client = new pdfcrowd.Client("Peacefield", "0db50169ce387c622116d715ea5350ce");
+            try
+            {
+                // create an API client instance
+                //Currently using my personal free license account
+                pdfcrowd.Client client = new pdfcrowd.Client("Peacefield", "0db50169ce387c622116d715ea5350ce");
+                client.setHtmlZoom(100);
 
-            //    // convert a web page and write the generated PDF to a memory stream
-            //    MemoryStream Stream = new MemoryStream();
-            //    client.convertHtml(sOut, Stream);
+                // convert a web page and write the generated PDF to a memory stream
+                MemoryStream Stream = new MemoryStream();
+                client.convertHtml(sOut, Stream);
 
-            //    // set HTTP response headers
-            //    Response.Clear();
-            //    Response.AddHeader("Content-Type", "application/pdf");
-            //    Response.AddHeader("Cache-Control", "max-age=0");
-            //    Response.AddHeader("Accept-Ranges", "none");
-            //    Response.AddHeader("Content-Disposition", "attachment; filename=" + filename + ".pdf");
+                // set HTTP response headers
+                Response.Clear();
+                Response.AddHeader("Content-Type", "application/pdf");
+                Response.AddHeader("Cache-Control", "max-age=0");
+                Response.AddHeader("Accept-Ranges", "none");
+                Response.AddHeader("Content-Disposition", "attachment; filename=" + filename + ".pdf");
 
-            //    // send the generated PDF
-            //    Stream.WriteTo(Response.OutputStream);
-            //    Stream.Close();
-            //    Response.Flush();
-            //    Response.End();
-            //}
-            //catch (pdfcrowd.Error why)
-            //{
-            //    Response.Write(why.ToString());
-            //}
+                // send the generated PDF
+                Stream.WriteTo(Response.OutputStream);
+                Stream.Close();
+                Response.Flush();
+                Response.End();
+            }
+            catch (pdfcrowd.Error why)
+            {
+                Response.Write(why.ToString());
+            }
 
 
             // Saving pdfcrowd tokens by using streamwriter for now
 
             // Write the string to a file with format -> Rapportage_http.example.com_YY-MM-DD--hh.mm.ss
+
             System.IO.StreamWriter file = new System.IO.StreamWriter(@"c:\users\michael\dropbox\hw\Stageopdracht_Dotsolutions\_TestUitrollingen\"
                 + filename + ".html");
             file.WriteLine(sOut);
@@ -169,6 +171,20 @@ namespace DotsolutionsWebsiteTester
 
 
             writer.Write(sOut);
+        }
+        protected override void SavePageStateToPersistenceMedium(object state)
+        {
+            //base.SavePageStateToPersistenceMedium(state);
+        }
+
+        protected override object LoadPageStateFromPersistenceMedium()
+        {
+            return null; //return base.LoadPageStateFromPersistenceMedium();
+        }
+
+        protected override object SaveViewState()
+        {
+            return null;// base.SaveViewState();
         }
     }
 }

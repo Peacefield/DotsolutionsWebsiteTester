@@ -277,7 +277,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         /// <summary>
-        /// Get amount of tweets from account
+        /// Get amount of tweets from user
         /// </summary>
         /// <param name="screenName">string screen name</param>
         /// <returns>Returns int amount of tweets</returns>
@@ -292,6 +292,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return amount;
         }
 
+        /// <summary>
+        /// Get profile image of user
+        /// </summary>
+        /// <param name="screenName">string screen name</param>
+        /// <returns>string url of profile image</returns>
         private string GetProfileImage(List<User> returnedUser)
         {
             var profileimage = "";
@@ -301,6 +306,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 profileimage = item.ProfileImageUrl;
             }
             return profileimage;
+
+            /// <summary>
+            /// Set the colour that indicates the rating accordingly
+            /// </summary>
+            /// <param name="rating">decimal rating</param>
         }
         private void SetRatingDisplay(decimal rating)
         {

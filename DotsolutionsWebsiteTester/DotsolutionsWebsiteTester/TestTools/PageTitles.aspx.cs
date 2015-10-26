@@ -183,6 +183,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             PageTitlesTable.Rows.Add(tRow);
         }
+
+        /// <summary>
+        /// Set the colour that indicates the rating accordingly
+        /// </summary>
+        /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
             if (rating < 6m)

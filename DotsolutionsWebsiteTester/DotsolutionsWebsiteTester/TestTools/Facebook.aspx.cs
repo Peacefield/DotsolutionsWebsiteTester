@@ -112,8 +112,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (screenName != "")
                     {
                         screennameList.Add(screenName);
-
-                        Debug.WriteLine(screenName + " toegevoegd aan lijst via Google!");
                     }
                 }
 
@@ -363,6 +361,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             return rating;
         }
 
+        /// <summary>
+        /// Set the colour that indicates the rating accordingly
+        /// </summary>
+        /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
             if (rating < 6m)

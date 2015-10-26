@@ -297,14 +297,14 @@ namespace DotsolutionsWebsiteTester
         {
             for (int i = 0; i < rating; i++)
             {
-                control.InnerHtml += "<i class='glyphicon glyphicon-star'></i>";
+                control.InnerHtml += "<i class='fa fa-star'></i>";
             }
             if (rating < 10)
             {
                 var remainder = 10 - rating;
                 for (int i = 0; i < remainder; i++)
                 {
-                    control.InnerHtml += "<i class='glyphicon glyphicon-star-empty'></i>";
+                    control.InnerHtml += "<i class='fa fa-star-o'></i>";
                 }
             }
         }
