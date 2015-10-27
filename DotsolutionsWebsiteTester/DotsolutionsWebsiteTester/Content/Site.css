@@ -5,20 +5,24 @@
     }
 
     .jumbotron {
-        font-size: 1em;
+        font-size: 1.6em;
     }
 
     .btn {
         font-size: 1em !important;
     }
 
+    .help-block {
+        font-size: .6em;
+    }
+
     #MainContent_TestsCheckBoxList1,
     #MainContent_TestsCheckBoxList2,
     #MainContent_TestsCheckBoxList3 {
-        margin-left: 40%;
+        margin-left: 10%;
     }
-    
-    .table{
+
+    .table {
         font-size: 0.5em;
     }
 
@@ -38,7 +42,7 @@
     }
 
     .btn {
-        font-size: 0.7em !important;
+        font-size: 1em !important;
     }
 
     #MainContent_TestsCheckBoxList1,

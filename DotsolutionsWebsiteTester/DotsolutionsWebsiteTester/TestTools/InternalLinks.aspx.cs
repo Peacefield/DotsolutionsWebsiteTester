@@ -83,11 +83,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     thread.Start();
                     Thread.Sleep(10);
                     Debug.WriteLine("10ms Threadsleep");
-                    //if (threadCnt == 100)
-                    //{
-                    //    Debug.WriteLine("1000ms Threadsleep");
-                    //    Thread.Sleep(1000);
-                    //}
                     // Limit amount of links checked to prevent spamming/getting blacklisted
                     if (threadCnt == 200)
                     {
@@ -170,7 +165,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             string mainUrl = Session["MainUrl"].ToString();
             string internalLink = link.Attributes["href"].Value;
-
+            string[] badDesc = { "link", "klik", "hier", "klik hier", "lees meer", "lees verder" };
             // Making sure we only test urls, instead of also including mailto: tel: javascript: intent: etc.
             if (!internalLink.Contains("/") || internalLink.Contains("intent://"))
                 return;
@@ -179,7 +174,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (link.InnerText != "")
             {
                 // Check if the description is not too long
-                string[] words = link.InnerText.Split(new char[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] words = link.InnerText.Split(new char[] { ' ', '\n', '\t', ',', '.', '&', ':', '©', '\'', '+' }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (words.Length > 25)
                 {
@@ -191,13 +186,22 @@ namespace DotsolutionsWebsiteTester.TestTools
                     lengthCnt++;
                     errorCnt++;
                 }
+
+                foreach (var item in badDesc)
+                {
+                    if (link.InnerText.ToLower() == item)
+                    {
+                        AddToTable(internalLink, "Slechte beschrijving (" + item + ")", url);
+                        break;
+                    }
+                }
             }
             else
             {
-                // If the link is an image it has to containt a alt attribute
+                // If the link is an image it has to contain a alt attribute
                 if (link.InnerHtml.Contains("<img") || link.InnerHtml.Contains("figure"))
                 {
-                    if (link.InnerHtml.Contains("alt") == false)
+                    if (!link.InnerHtml.Contains("alt="))
                     {
                         if (imageCnt < 5)
                         {
@@ -208,14 +212,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                 }
 
-                // If the link is an icon it has to contain a title attribute
+                // If the link is an icon it still has to contain a title attribute
                 if ((link.InnerHtml.Contains("</i>") || link.InnerHtml.Contains("</span>")))
                 {
                     if (link.InnerHtml.Contains("title") == false)
                     {
                         if (imageCnt < 5)
                         {
-                            AddToTable(internalLink, "i element bevat geen 'title' attribuut", url);
+                            AddToTable(internalLink, "i/span element bevat geen 'title' attribuut", url);
                         }
                         imageCnt++;
                         errorCnt++;
@@ -302,14 +306,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                         else if (httpcode == 0)
                             AddToTable(tablelink, "Link werkt niet", url);
                     }
-
                     brokenCnt++;
                     errorCnt++;
+                    // Emergency break
                     if (httpcode == 503)
                         unavailable = true;
                 }
             }
-
         }
 
         /// <summary>
