@@ -76,17 +76,18 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                 }
 
-                // Start Threads some time apart to prevent spamming
+                // Start Threads some time apart to prevent spamming/getting blacklisted
                 foreach (var thread in threadList)
                 {
                     thread.Start();
                     Thread.Sleep(50);
                     Debug.WriteLine("50ms Threadsleep");
-                    if (threadCnt == 50)
+                    // Limit amount of links check to prevent spamming/getting blacklisted
+                    if (threadCnt == 100)
                     {
-                        Debug.WriteLine("500ms Threadsleep");
+                        Debug.WriteLine("break;");
                         threadCnt = 0;
-                        Thread.Sleep(500);
+                        break;
                     }
                     threadCnt++;
                 }
@@ -94,7 +95,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Join Threads that were executing TestLink
                 foreach (var thread in threadList)
                 {
-                    thread.Join();
+                    if (thread.ThreadState != System.Threading.ThreadState.Unstarted)
+                    {
+                        thread.Join();
+                    }
                 }
 
                 if (lengthCnt >= 5)
@@ -316,8 +320,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 request.Method = "HEAD";
                 //request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
                 //request.Credentials = CredentialCache.DefaultCredentials;
-                request.UnsafeAuthenticatedConnectionSharing = false;
-                request.UseDefaultCredentials = true;
+                request.UnsafeAuthenticatedConnectionSharing = true;
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
 
                 int httpcode = (int)response.StatusCode;

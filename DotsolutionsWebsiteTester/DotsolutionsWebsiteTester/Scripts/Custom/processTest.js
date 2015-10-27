@@ -42,8 +42,7 @@ function animateTo(identifier) {
 }
 
 function SetRatingClass(identifier, rating) {
-    alert(rating);
-    alert(rating < 8.5);
+    var rating = rating.replace(",", ".")
     if (rating < 6)
         $(identifier).attr("class", "lowScore ratingSquare");
     else if (rating < 8.5)
