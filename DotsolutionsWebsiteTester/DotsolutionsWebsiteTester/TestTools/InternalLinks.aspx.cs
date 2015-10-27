@@ -29,8 +29,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Response.Redirect("~/");
                 return;
             }
-
+            // Get Robots.txt as list containing only pages affecting this bot
             this.robots = (List<string>)Session["robotsTxt"];
+
             var ths = new ThreadStart(TestInternalLinks);
             var th = new Thread(ths);
             th.Start();
@@ -80,10 +81,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                 foreach (var thread in threadList)
                 {
                     thread.Start();
-                    Thread.Sleep(50);
-                    Debug.WriteLine("50ms Threadsleep");
-                    // Limit amount of links check to prevent spamming/getting blacklisted
-                    if (threadCnt == 100)
+                    Thread.Sleep(10);
+                    Debug.WriteLine("10ms Threadsleep");
+                    //if (threadCnt == 100)
+                    //{
+                    //    Debug.WriteLine("1000ms Threadsleep");
+                    //    Thread.Sleep(1000);
+                    //}
+                    // Limit amount of links checked to prevent spamming/getting blacklisted
+                    if (threadCnt == 200)
                     {
                         Debug.WriteLine("break;");
                         threadCnt = 0;
@@ -252,22 +258,29 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 if (testLink.Contains(item))
                 {
-                    Debug.WriteLine("Link zit in disallow van robots.txt");
+                    Debug.WriteLine(testLink + " zit in disallow van robots.txt: " + item);
                     nofollow = true;
                 }
                 else if (item.Contains("*"))
                 {
                     var split = item.Split('*');
+                    var count = 0;
                     foreach (var part in split)
                     {
                         if (part != "")
                         {
-                            if (testLink.Contains(item))
+                            if (testLink.Contains(part))
                             {
-                                Debug.WriteLine("Link zit in disallow van robots.txt");
-                                nofollow = true;
+                                count++;
                             }
                         }
+                        else
+                            count++;
+                    }
+                    if (count == split.Length)
+                    {
+                        Debug.WriteLine(testLink + " zit in disallow van robots.txt: " + item);
+                        nofollow = true;
                     }
                 }
             }

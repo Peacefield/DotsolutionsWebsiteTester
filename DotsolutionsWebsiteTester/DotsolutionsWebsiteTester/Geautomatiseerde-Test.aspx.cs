@@ -108,6 +108,7 @@ namespace DotsolutionsWebsiteTester
             }
             catch (WebException we)
             {
+                // Robots.txt probably does not exist, or internet failure
                 Debug.WriteLine("WebException " + we.Message);
             }
 
