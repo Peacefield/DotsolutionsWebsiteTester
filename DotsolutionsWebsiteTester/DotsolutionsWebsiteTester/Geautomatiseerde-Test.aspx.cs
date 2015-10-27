@@ -73,6 +73,7 @@ namespace DotsolutionsWebsiteTester
             }
             return list;
         }
+
         private List<string> GetRobotsTxt(string url)
         {
             var robots = new List<string>();
@@ -228,7 +229,9 @@ namespace DotsolutionsWebsiteTester
             string userAgent = Session["userAgent"].ToString();
             bool isPresent = false;
 
-            var queryString = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&q=%22" + url + "%22&rsz=5";
+            var apiKey = GetFromApiKeys("GoogleAPI");
+
+            var queryString = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&q=%22" + url + "%22&rsz=5";
             // Additional parameters
             // &rsz=[1-8] resultSize can be 1 through 8. Currently using 5.
             // &start=[x] Indicate where to start searching
@@ -285,6 +288,15 @@ namespace DotsolutionsWebsiteTester
 
             // Add tested sites to session
             Session["selectedSites"] = sitemap;
+        }
+
+        private string GetFromApiKeys(string key)
+        {
+            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
+            foreach (var element in list)
+                if (element.Key == key)
+                    return element.Value;
+            return "";
         }
 
         private bool IsOfDomain(string url, string addition)

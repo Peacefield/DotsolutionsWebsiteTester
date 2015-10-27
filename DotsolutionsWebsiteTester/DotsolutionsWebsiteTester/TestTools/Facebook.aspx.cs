@@ -80,17 +80,14 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             Session["Facebook"] = htmlstring;
         }
+
         private string GetFromApiKeys(string key)
         {
             var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
-            var value = "";
-
             foreach (var element in list)
-            {
                 if (element.Key == key)
-                    value = element.Value;
-            }
-            return value;
+                    return element.Value;
+            return "";
         }
 
         /// <summary>
@@ -104,7 +101,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             var screennameList = new List<string>();
             var rating = 1.0m;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=8&q=facebook%20" + url);
+            var apiKey = GetFromApiKeys("GoogleAPI");
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&rsz=8&q=facebook%20" + url);
             request.UserAgent = Session["userAgent"].ToString();
             request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();

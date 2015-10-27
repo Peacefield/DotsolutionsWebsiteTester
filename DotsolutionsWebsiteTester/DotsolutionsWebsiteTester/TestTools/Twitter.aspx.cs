@@ -68,14 +68,10 @@ namespace DotsolutionsWebsiteTester.TestTools
         private string GetFromApiKeys(string key)
         {
             var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
-            var value = "";
-
             foreach (var element in list)
-            {
                 if (element.Key == key)
-                    value = element.Value;
-            }
-            return value;
+                    return element.Value;
+            return "";
         }
 
         private void GetTwitter(string url)
@@ -84,7 +80,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var screennameList = new List<string>();
             var rating = 1.0m;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=AIzaSyCW4MrrpXcOPU6JYkz-aauIctDQEoFymow&rsz=8&q=twitter%20" + url);
+            var apiKey = GetFromApiKeys("GoogleAPI");
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&rsz=8&q=twitter%20" + url);
             // Additional parameters
             // &rsz=[1-8] resultSize can be 1 through 8, currently using 8
             // &start=[x] Indicate where to start searching
