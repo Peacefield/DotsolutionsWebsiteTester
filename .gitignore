@@ -154,3 +154,4 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/DotsolutionsWebsiteTester/DotsolutionsWebsiteTester/App_Data/keys.txt

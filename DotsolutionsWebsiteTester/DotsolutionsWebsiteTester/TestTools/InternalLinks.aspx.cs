@@ -11,13 +11,14 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class InternalLinks : System.Web.UI.Page
     {
         private int errorCnt = 0;
-
         private int lengthCnt = 0;
         private int imageCnt = 0;
         private int brokenCnt = 0;
+        private int threadCnt = 0;
+
         private List<string> robots;
         private bool unavailable = false;
-        private int threadCnt = 0;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -60,6 +61,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 lengthCnt = 0;
                 imageCnt = 0;
                 brokenCnt = 0;
+                threadCnt = 0;
 
                 var threadList = new List<Thread>();
                 var Webget = new HtmlWeb();
@@ -73,7 +75,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                         var ths = new ThreadStart(() => TestLink(link, url));
                         var th = new Thread(ths);
                         threadList.Add(th);
-                        //th.Start();
                     }
                 }
 
@@ -83,23 +84,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                     thread.Start();
                     Thread.Sleep(10);
                     Debug.WriteLine("10ms Threadsleep");
-                    // Limit amount of links checked to prevent spamming/getting blacklisted
-                    if (threadCnt == 200)
-                    {
-                        Debug.WriteLine("break;");
-                        threadCnt = 0;
-                        break;
-                    }
-                    threadCnt++;
                 }
 
                 // Join Threads that were executing TestLink
                 foreach (var thread in threadList)
                 {
-                    if (thread.ThreadState != System.Threading.ThreadState.Unstarted)
-                    {
-                        thread.Join();
-                    }
+                    thread.Join();
                 }
 
                 if (lengthCnt >= 5)
@@ -219,100 +209,107 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         if (imageCnt < 5)
                         {
-                            AddToTable(internalLink, "i/span element bevat geen 'title' attribuut", url);
+                            AddToTable(internalLink, "i of span element bevat geen 'title' attribuut", url);
                         }
                         imageCnt++;
                         errorCnt++;
                     }
                 }
             }
+            #region Broken links
+            // Limit amount of links per page checked to prevent spamming/getting blacklisted when checking for broken links
+            if (threadCnt < 200)
+            {
+                threadCnt++;
 
-            // Test if the link does not return an errorcode
-            var testLink = "";
-            if (internalLink.Contains("http:/") || internalLink.Contains("https:/"))
-            {
-                testLink = internalLink;
-            }
-            else if (internalLink.Contains("//www."))
-            {
-                testLink = "http:" + internalLink;
-            }
-            else if (internalLink.Contains("www."))
-            {
-                testLink = "http://" + internalLink;
-            }
-            else
-            {
-                if (mainUrl.EndsWith("/"))
-                    testLink = mainUrl.Remove(mainUrl.Length - 1) + internalLink;
+                // Test if the link does not return an errorcode
+                var testLink = "";
+                if (internalLink.Contains("http:/") || internalLink.Contains("https:/"))
+                {
+                    testLink = internalLink;
+                }
+                else if (internalLink.Contains("//www."))
+                {
+                    testLink = "http:" + internalLink;
+                }
+                else if (internalLink.Contains("www."))
+                {
+                    testLink = "http://" + internalLink;
+                }
                 else
-                    testLink = mainUrl + internalLink;
-            }
-
-            var nofollow = false;
-            if (link.Attributes["rel"] != null)
-            {
-                if (link.Attributes["rel"].Value.ToLower() == "nofollow")
                 {
-                    nofollow = true;
+                    if (mainUrl.EndsWith("/"))
+                        testLink = mainUrl.Remove(mainUrl.Length - 1) + internalLink;
+                    else
+                        testLink = mainUrl + internalLink;
                 }
-            }
 
-            foreach (var item in robots)
-            {
-                if (testLink.Contains(item))
+                var nofollow = false;
+                if (link.Attributes["rel"] != null)
                 {
-                    Debug.WriteLine(testLink + " zit in disallow van robots.txt: " + item);
-                    nofollow = true;
-                }
-                else if (item.Contains("*"))
-                {
-                    var split = item.Split('*');
-                    var count = 0;
-                    foreach (var part in split)
+                    if (link.Attributes["rel"].Value.ToLower() == "nofollow")
                     {
-                        if (part != "")
-                        {
-                            if (testLink.Contains(part))
-                            {
-                                count++;
-                            }
-                        }
-                        else
-                            count++;
+                        nofollow = true;
                     }
-                    if (count == split.Length)
+                }
+
+                foreach (var item in robots)
+                {
+                    if (testLink.Contains(item))
                     {
                         Debug.WriteLine(testLink + " zit in disallow van robots.txt: " + item);
                         nofollow = true;
                     }
-                }
-            }
-            if (!unavailable && !nofollow)
-            {
-                int httpcode = LinkWorks(mainUrl, testLink);
-                // 405 means request method: HEAD is not allowed, but the URL probably works if this gets returned
-                if (httpcode != 200 && httpcode != 405)
-                {
-                    if (brokenCnt < 5)
+                    else if (item.Contains("*"))
                     {
-                        string tablelink = "<a href='" + testLink + "' target='_blank'>" + testLink + "</a>";
-
-                        // add message to table
-                        if (httpcode > 0)
-                            AddToTable(tablelink, "Link werkt niet (HTTP Status Code: " + httpcode + ")", url);
-                        else if (httpcode == -1)
-                            AddToTable(tablelink, "Link werkt niet (Timeout)", url);
-                        else if (httpcode == 0)
-                            AddToTable(tablelink, "Link werkt niet", url);
+                        var split = item.Split('*');
+                        var count = 0;
+                        foreach (var part in split)
+                        {
+                            if (part != "")
+                            {
+                                if (testLink.Contains(part))
+                                {
+                                    count++;
+                                }
+                            }
+                            else
+                                count++;
+                        }
+                        if (count == split.Length)
+                        {
+                            Debug.WriteLine(testLink + " zit in disallow van robots.txt: " + item);
+                            nofollow = true;
+                        }
                     }
-                    brokenCnt++;
-                    errorCnt++;
-                    // Emergency break
-                    if (httpcode == 503)
-                        unavailable = true;
+                }
+                if (!unavailable && !nofollow)
+                {
+                    int httpcode = LinkWorks(mainUrl, testLink);
+                    // 405 means request method: HEAD is not allowed, but the URL probably works if this gets returned
+                    if (httpcode != 200 && httpcode != 405)
+                    {
+                        if (brokenCnt < 5)
+                        {
+                            string tablelink = "<a href='" + testLink + "' target='_blank'>" + testLink + "</a>";
+
+                            // add message to table
+                            if (httpcode > 0)
+                                AddToTable(tablelink, "Link werkt niet (HTTP Status Code: " + httpcode + ")", url);
+                            else if (httpcode == -1)
+                                AddToTable(tablelink, "Link werkt niet (Timeout)", url);
+                            else if (httpcode == 0)
+                                AddToTable(tablelink, "Link werkt niet", url);
+                        }
+                        brokenCnt++;
+                        errorCnt++;
+                        // Emergency break
+                        if (httpcode == 503)
+                            unavailable = true;
+                    }
                 }
             }
+            #endregion
         }
 
         /// <summary>

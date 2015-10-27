@@ -31,6 +31,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            var ConsumerSecret = GetFromApiKeys("TwitterConsumerSecret");
+            var AccesTokenSecret = GetFromApiKeys("TwitterAccesTokenSecret");
+
             this.authorizer = new SingleUserAuthorizer
                 {
                     CredentialStore =
@@ -39,11 +42,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                            ConsumerKey =
                                "lZiItDrOsCPBBIiKioA3QV6IS",
                            ConsumerSecret =
-                              "tQNgdYtIwqzMGTOVlL8J7Ye7l1FiUHtdnVVFohZgAbjyRCBrtj",
+                              ConsumerSecret,
                            AccessToken =
                               "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
                            AccessTokenSecret =
-                              "QzV1lfatNovTwLfWJn2lbJMhtRt5WNHGHowT0wHDKo5ld"
+                              AccesTokenSecret
                        }
                 };
 
@@ -60,6 +63,19 @@ namespace DotsolutionsWebsiteTester.TestTools
             string htmlstring = sb.ToString();
 
             Session["Twitter"] = htmlstring;
+        }
+
+        private string GetFromApiKeys(string key)
+        {
+            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
+            var value = "";
+
+            foreach (var element in list)
+            {
+                if (element.Key == key)
+                    value = element.Value;
+            }
+            return value;
         }
 
         private void GetTwitter(string url)

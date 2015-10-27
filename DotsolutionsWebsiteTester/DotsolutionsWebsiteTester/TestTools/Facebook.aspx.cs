@@ -29,6 +29,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            var AccesTokenSecret = GetFromApiKeys("FacebookAppSecret");
+
             fbc = new FacebookClient();
             try
             {
@@ -37,7 +39,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 dynamic result = fbc.Get("oauth/access_token", new
                 {
                     client_id = "1506552426310758", // App ID
-                    client_secret = "a7d0d5c36c32dc43d82bb39df60ebe52", // App Secret
+                    client_secret = AccesTokenSecret, // App Secret
                     grant_type = "client_credentials"
                 });
 
@@ -77,6 +79,18 @@ namespace DotsolutionsWebsiteTester.TestTools
             string htmlstring = sb.ToString();
 
             Session["Facebook"] = htmlstring;
+        }
+        private string GetFromApiKeys(string key)
+        {
+            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
+            var value = "";
+
+            foreach (var element in list)
+            {
+                if (element.Key == key)
+                    value = element.Value;
+            }
+            return value;
         }
 
         /// <summary>

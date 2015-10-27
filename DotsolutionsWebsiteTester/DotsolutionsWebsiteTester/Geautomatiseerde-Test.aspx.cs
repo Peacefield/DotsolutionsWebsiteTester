@@ -33,6 +33,7 @@ namespace DotsolutionsWebsiteTester
                 string userAgent = "Mozilla/5.0 (DotTestBot, http://www.example.net)";
                 Session["userAgent"] = userAgent;
                 Session["robotsTxt"] = GetRobotsTxt(UrlTesting.InnerText);
+                Session["ApiKeys"] = GetApiKeys();
 
                 var ths = new ThreadStart(GetTestList);
                 var th = new Thread(ths);
@@ -60,6 +61,18 @@ namespace DotsolutionsWebsiteTester
             }
         }
 
+        private List<KeyValuePair<string, string>> GetApiKeys()
+        {
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Michael\Documents\Visual Studio 2013\Projects\DotsolutionsWebsiteTester\DotsolutionsWebsiteTester\DotsolutionsWebsiteTester\App_Data\keys.txt");
+            var list = new List<KeyValuePair<string, string>>();
+            foreach (string line in lines)
+            {
+                // Use a tab to indent each line of the file.
+                var item = line.Split(':');
+                list.Add(new KeyValuePair<string, string>(item[0], item[1]));
+            }
+            return list;
+        }
         private List<string> GetRobotsTxt(string url)
         {
             var robots = new List<string>();

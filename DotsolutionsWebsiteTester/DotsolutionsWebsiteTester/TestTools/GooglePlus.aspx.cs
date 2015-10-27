@@ -26,5 +26,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             Session["GooglePlus"] = htmlstring;
         }
+        // URL van profiel is: https://www.googleapis.com/plus/v1/people/+dotsolutionsNl?key=AIzaSyCzstyvlPc3tRtHKjmjnYkARP5-SaoOp2I
+        // Returned urls[] met daarin de ingevoerde URLs waaronder website als type "website"
+        // Kan ook facebook/twitter bevatten als, bijvoorbeeld, other.
     }
 }
