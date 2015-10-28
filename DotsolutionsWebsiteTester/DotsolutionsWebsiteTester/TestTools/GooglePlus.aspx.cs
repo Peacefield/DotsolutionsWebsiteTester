@@ -213,6 +213,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var profileImage = googleSearch["image"]["url"].ToString();
             var googlePlusOnes = (int)googleSearch["plusOneCount"];
             var followersCount = (int)googleSearch["circledByCount"];
+            var displayName = googleSearch["displayName"].ToString();
 
             var rating = 10m;
 
@@ -251,7 +252,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             googlePlusResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://plus.google.com/" + screenName + "' target='_blank'><img src='" + profileImage + "' alt='profileimage'/></a> "
-                + "<span> Google+ account <a href='https://plus.google.com/" + screenName + "' target='_blank' font-size='large'>" + screenName + "</a> gevonden</span>"
+                + "<span> Google+ account <a href='https://plus.google.com/" + screenName + "' target='_blank' font-size='large'>" + displayName + "</a> gevonden</span>"
                 + "</div>";
 
             googlePlusResults.InnerHtml += "<div class='well well-lg resultWell'>"
@@ -284,38 +285,38 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         /// <param name="screenName">URL containing possible screen name</param>
         /// <returns>string screenName</returns>
-        private string SliceScreenName(string screenName)
+        private string SliceScreenName(string url)
         {
-            Debug.WriteLine("SliceScreenName <<<<< " + screenName);
+            Debug.WriteLine("SliceScreenName <<<<< " + url);
 
-            if (screenName.Contains("plus.google.com/"))
+            if (url.Contains("plus.google.com/"))
             {
-                if (screenName.EndsWith("/"))
-                    screenName = screenName.Remove(screenName.Length - 1);
+                if (url.EndsWith("/"))
+                    url = url.Remove(url.Length - 1);
 
                 // If URL is custom made it contains a +
-                if (screenName.IndexOf("+") != -1)
+                if (url.IndexOf("+") != -1)
                 {
                     // Cut off first part of the URL
-                    screenName = screenName.Remove(0, screenName.IndexOf("+"));
+                    url = url.Remove(0, url.IndexOf("+"));
                 }
                 else
                 {
-                    screenName = screenName.Remove(0, screenName.LastIndexOf("/") + 1);
+                    url = url.Remove(0, url.LastIndexOf("/") + 1);
                 }
 
                 // Check if still contains a /
                 // This most probably indicates a part after the username
-                if (screenName.Contains("/"))
-                    screenName = screenName.Remove(screenName.IndexOf("/"), (screenName.Length - screenName.IndexOf("/")));
+                if (url.Contains("/"))
+                    url = url.Remove(url.IndexOf("/"), (url.Length - url.IndexOf("/")));
 
                 // Remove any possible parameters
-                if (screenName.Contains("?"))
-                    screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
+                if (url.Contains("?"))
+                    url = url.Remove(url.IndexOf("?"), (url.Length - url.IndexOf("?")));
 
-                if (!screenName.Contains("/") && screenName != "")
+                if (!url.Contains("/") && url != "")
                 {
-                    return screenName;
+                    return url;
                 }
             }
 

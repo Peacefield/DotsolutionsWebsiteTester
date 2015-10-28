@@ -83,7 +83,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     thread.Start();
                     Thread.Sleep(10);
-                    Debug.WriteLine("10ms Threadsleep");
                 }
 
                 // Join Threads that were executing TestLink
