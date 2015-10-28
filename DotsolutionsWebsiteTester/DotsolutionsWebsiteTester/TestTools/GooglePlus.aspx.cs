@@ -141,8 +141,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 foreach (JToken item in results)
                 {
                     var screenName = "";
-                    if (item["unescapedUrl"].ToString().Contains("+"))
-                        screenName = SliceScreenName(item["unescapedUrl"].ToString());
+                    screenName = SliceScreenName(item["unescapedUrl"].ToString());
                     if (screenName != "")
                     {
                         googleList.Add(screenName);
@@ -291,17 +290,25 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (screenName.Contains("plus.google.com/"))
             {
-                // Cut off first part of the URL
-                screenName = screenName.Remove(0, screenName.IndexOf("+"));
-
                 if (screenName.EndsWith("/"))
                     screenName = screenName.Remove(screenName.Length - 1);
+
+                // If URL is custom made it contains a +
+                if (screenName.IndexOf("+") != -1)
+                {
+                    // Cut off first part of the URL
+                    screenName = screenName.Remove(0, screenName.IndexOf("+"));
+                }
+                else
+                {
+                    screenName = screenName.Remove(0, screenName.LastIndexOf("/") + 1);
+                }
 
                 // Check if still contains a /
                 // This most probably indicates a part after the username
                 if (screenName.Contains("/"))
                     screenName = screenName.Remove(screenName.IndexOf("/"), (screenName.Length - screenName.IndexOf("/")));
-                
+
                 // Remove any possible parameters
                 if (screenName.Contains("?"))
                     screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
