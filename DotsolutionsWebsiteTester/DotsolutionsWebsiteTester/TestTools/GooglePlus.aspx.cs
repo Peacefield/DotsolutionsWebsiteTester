@@ -91,15 +91,17 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 rating = GetGooglePlusRating(screenName);
             }
-            
+
             decimal rounded = decimal.Round(rating, 1);
             GooglePlusRating.InnerHtml = rounded.ToString();
 
             var temp = (decimal)Session["RatingUx"];
             Session["RatingUx"] = rounded + temp;
+
             temp = (decimal)Session["RatingMarketing"];
             Session["RatingMarketing"] = rounded + temp;
-            Session["TwitterRating"] = rounded;
+
+            Session["GooglePlusRating"] = rounded;
             SetRatingDisplay(rating);
 
         }
@@ -111,18 +113,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns>Returns true if profile has entered URL associated with page</returns>
         private bool IsGooglePage(string screenName)
         {
-            var apiKey = GetFromApiKeys("GoogleAPI");
-            var requestString = "https://www.googleapis.com/plus/v1/people/" + screenName + "?key=" + apiKey;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestString);
-            request.UserAgent = Session["userAgent"].ToString();
-            request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            var reader = new StreamReader(dataStream);
-            string responseFromServer = reader.ReadToEnd();
-
-            JObject googleSearch = JObject.Parse(responseFromServer);
+            var googleSearch = GetFromApi(screenName);
             try
             {
                 IList<JToken> results = googleSearch["urls"].Children().ToList();
@@ -295,10 +286,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             return false;
         }
 
-        private string GetProfileImage(string screenName)
+        private JObject GetFromApi(string screenName)
         {
-            var profileImage = "";
-
             var apiKey = GetFromApiKeys("GoogleAPI");
             var requestString = "https://www.googleapis.com/plus/v1/people/" + screenName + "?key=" + apiKey;
 
@@ -311,85 +300,24 @@ namespace DotsolutionsWebsiteTester.TestTools
             string responseFromServer = reader.ReadToEnd();
 
             JObject googleSearch = JObject.Parse(responseFromServer);
-            try
-            {
-                profileImage = googleSearch["image"]["url"].ToString();
-            }
-            catch (NullReferenceException)
-            {
-                Debug.WriteLine("Page has no URLs");
-            }
-
-            return profileImage;
-        }
-
-        private string GetGooglePlusOnes(string screenName)
-        {
-            var count = "";
-
-            var apiKey = GetFromApiKeys("GoogleAPI");
-            var requestString = "https://www.googleapis.com/plus/v1/people/" + screenName + "?key=" + apiKey;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestString);
-            request.UserAgent = Session["userAgent"].ToString();
-            request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            var reader = new StreamReader(dataStream);
-            string responseFromServer = reader.ReadToEnd();
-
-            JObject googleSearch = JObject.Parse(responseFromServer);
-            try
-            {
-                count = googleSearch["plusOneCount"].ToString();
-            }
-            catch (NullReferenceException)
-            {
-                Debug.WriteLine("Page has no URLs");
-            }
-            return count;
-        }
-
-        private string GetFollowersCountString(string screenName)
-        {
-            var count = "";
-
-            var apiKey = GetFromApiKeys("GoogleAPI");
-            var requestString = "https://www.googleapis.com/plus/v1/people/" + screenName + "?key=" + apiKey;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestString);
-            request.UserAgent = Session["userAgent"].ToString();
-            request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            var reader = new StreamReader(dataStream);
-            string responseFromServer = reader.ReadToEnd();
-
-            JObject googleSearch = JObject.Parse(responseFromServer);
-            try
-            {
-                count = googleSearch["circledByCount"].ToString();
-            }
-            catch (NullReferenceException)
-            {
-                Debug.WriteLine("Page has no URLs");
-            }
-            return count;
+            return googleSearch;
         }
 
         private decimal GetGooglePlusRating(string screenName)
         {
-            var image = GetProfileImage(screenName);
-            var googlePlusOnes = GetGooglePlusOnes(screenName);
-            var followersCountString = GetFollowersCountString(screenName);
+            var googleSearch = GetFromApi(screenName);
+
+            var profileImage = googleSearch["image"]["url"].ToString();
+            var googlePlusOnes = (int)googleSearch["plusOneCount"];
+            var followersCount = (int)googleSearch["circledByCount"];
 
             var rating = 10m;
 
-            var percentage = Decimal.Parse(followersCountString) / Decimal.Parse(googlePlusOnes) * 100;
+            var percentage = (decimal)followersCount / (decimal)googlePlusOnes * 100;
 
             Debug.WriteLine("Percentage: " + percentage);
 
-            if (Decimal.Parse(followersCountString) >= Decimal.Parse(googlePlusOnes))
+            if (followersCount >= googlePlusOnes)
             {
                 rating = 10m;
             }
@@ -419,17 +347,17 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             googlePlusResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                + "<a href='https://plus.google.com/" + screenName + "' target='_blank'><img src='" + image + "' alt='profileimage'/></a> "
+                + "<a href='https://plus.google.com/" + screenName + "' target='_blank'><img src='" + profileImage + "' alt='profileimage'/></a> "
                 + "<span> Google+ account <a href='https://plus.google.com/" + screenName + "' target='_blank' font-size='large'>" + screenName + "</a> gevonden</span>"
                 + "</div>";
 
             googlePlusResults.InnerHtml += "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-google-plus-square fa-3x'></i>"
-                + "<span> Dit account heeft " + googlePlusOnes + " Google +1's </span></div>"
+                + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") +" Google +1's </span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-users fa-3x'></i>"
-                + "<span> Dit account heeft " + followersCountString + " volgers</span></div>";
+                + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") + " volgers</span></div>";
 
             return rating;
         }
@@ -443,10 +371,5 @@ namespace DotsolutionsWebsiteTester.TestTools
             else
                 GooglePlusRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
-
-
-        // URL van profiel is: https://www.googleapis.com/plus/v1/people/+dotsolutionsNl?key=AIzaSyCzstyvlPc3tRtHKjmjnYkARP5-SaoOp2I
-        // Returned urls[] met daarin de ingevoerde URLs waaronder website als type "website"
-        // Kan ook facebook/twitter bevatten als, bijvoorbeeld, other.
     }
 }

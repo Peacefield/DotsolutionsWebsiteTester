@@ -83,9 +83,9 @@ namespace DotsolutionsWebsiteTester
         {
             var rating = (decimal)Session[criteria];
 
-            if (rating < 6)
+            if (rating < 6m)
                 control.Attributes.Add("class", "lowScore ratingSquare");
-            else if (rating < 8)
+            else if (rating < 8.5m)
                 control.Attributes.Add("class", "mediocreScore ratingSquare");
             else
                 control.Attributes.Add("class", "excellentScore ratingSquare");
