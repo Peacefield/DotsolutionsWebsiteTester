@@ -132,10 +132,9 @@
       <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="App_Data\keys.txt" />
     <Content Include="Content\images\bckgnd.jpg" />
     <Content Include="Content\images\bckgnd_grn.jpg" />
     <Content Include="Content\images\favicon.ico" />
