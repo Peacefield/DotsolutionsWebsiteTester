@@ -35,6 +35,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["GooglePlus"] = htmlstring;
         }
 
+        /// <summary>
+        /// Get ApiKey from Session["ApiKeys"]
+        /// </summary>
+        /// <param name="key">ApiKey</param>
+        /// <returns>ApiKey Value</returns>
         private string GetFromApiKeys(string key)
         {
             var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
@@ -44,6 +49,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             return "";
         }
 
+        /// <summary>
+        /// Find a Google Plus page via either Google Search or URL entered by user
+        /// </summary>
         private void GetGooglePlus()
         {
             Debug.WriteLine("GetGooglePlus >>>> ");
@@ -103,37 +111,6 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             Session["GooglePlusRating"] = rounded;
             SetRatingDisplay(rating);
-
-        }
-
-        /// <summary>
-        /// Compares found screenName with content of the associated page
-        /// </summary>
-        /// <param name="screenName">Google+ Page Name</param>
-        /// <returns>Returns true if profile has entered URL associated with page</returns>
-        private bool IsGooglePage(string screenName)
-        {
-            var googleSearch = GetFromApi(screenName);
-            try
-            {
-                IList<JToken> results = googleSearch["urls"].Children().ToList();
-
-                if (results.Count != 0)
-                {
-                    foreach (JToken item in results)
-                    {
-                        if (HasWebsite(item["value"].ToString()))
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-            catch (NullReferenceException)
-            {
-                Debug.WriteLine("Page has no URLs");
-            }
-            return false;
         }
 
         /// <summary>
@@ -203,89 +180,10 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         /// <summary>
-        /// Slice screenName returned from Google results or Page results to try to make it a screen name
+        /// Get the response from Google+ API as JObject for a profile name
         /// </summary>
-        /// <param name="screenName">URL containing possible screen name</param>
-        /// <returns>string screenName</returns>
-        private string SliceScreenName(string screenName)
-        {
-            Debug.WriteLine("SliceScreenName <<<<< " + screenName);
-
-            if (screenName.Contains("plus.google.com/"))
-            {
-                if (screenName.EndsWith("/"))
-                    screenName = screenName.Remove(screenName.Length - 1);
-
-                screenName = screenName.Remove(0, screenName.IndexOf("+"));
-
-                if (screenName.Contains("?"))
-                    screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
-
-                if (screenName.Contains("/"))
-                {
-                    screenName = screenName.Remove(screenName.IndexOf("/"), (screenName.Length - screenName.IndexOf("/")));
-                }
-
-                if (!screenName.Contains("/") && screenName != "")
-                {
-                    return screenName;
-                }
-            }
-
-            return "";
-        }
-
-        /// <summary>
-        /// Check if URL in Google+ profile is the same as the one the user entered
-        /// </summary>
-        /// <param name="fbUrl">URL of website found in Facebook profile</param>
-        /// <returns></returns>
-        private bool HasWebsite(string url)
-        {
-            if (url == null || url == "")
-            {
-                return false;
-            }
-
-            if (!url.Contains("http://") && !url.Contains("https://"))
-            {
-                url = "http://" + url;
-            }
-
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.UserAgent = Session["userAgent"].ToString();
-                request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
-                request.Timeout = 10000;
-                // Get the response.
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-                var uriMain = new Uri(Session["MainUrl"].ToString());
-
-                //Debug.WriteLine("Session['MainUrl'].ToString() uri.host =======> " + uri.Host);
-
-                IPAddress[] addresslistMain = Dns.GetHostAddresses(uriMain.Host);
-                IPAddress[] addresslist = Dns.GetHostAddresses(response.ResponseUri.Host.ToString());
-
-                foreach (IPAddress theaddress in addresslist)
-                    if (addresslistMain.Contains(theaddress))
-                        return true;
-            }
-            catch (UriFormatException)
-            {
-                Debug.WriteLine("IsWebsite UriFormatException Catch --- " + url);
-                return false;
-            }
-            catch (WebException)
-            {
-                Debug.WriteLine("IsWebsite WebException Catch --- " + url);
-                return false;
-            }
-
-            return false;
-        }
-
+        /// <param name="screenName">Profile name</param>
+        /// <returns>JSON Object responseFromServer</returns>
         private JObject GetFromApi(string screenName)
         {
             var apiKey = GetFromApiKeys("GoogleAPI");
@@ -303,6 +201,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             return googleSearch;
         }
 
+        /// <summary>
+        /// Calculate rating according to Plus Ones and followers
+        /// Show found Plus Ones and followers on page
+        /// </summary>
+        /// <param name="screenName">Username</param>
+        /// <returns>decimal rating</returns>
         private decimal GetGooglePlusRating(string screenName)
         {
             var googleSearch = GetFromApi(screenName);
@@ -353,15 +257,19 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             googlePlusResults.InnerHtml += "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-google-plus-square fa-3x'></i>"
-                + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") +" Google +1's </span></div>"
+                + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") + " Google +1's </span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-users fa-3x'></i>"
-                + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") + " volgers</span></div>";
+                + "<span> Dit account heeft " + followersCount.ToString("#,##0") + " volgers</span></div>";
 
             return rating;
         }
 
+        /// <summary>
+        /// Set the colour that indicates the rating accordingly
+        /// </summary>
+        /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
             if (rating < 6m)
@@ -370,6 +278,123 @@ namespace DotsolutionsWebsiteTester.TestTools
                 GooglePlusRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 GooglePlusRating.Attributes.Add("class", "excellentScore ratingCircle");
+        }
+
+        /// <summary>
+        /// Slice screenName returned from Google results or Page results to try to make it a screen name
+        /// </summary>
+        /// <param name="screenName">URL containing possible screen name</param>
+        /// <returns>string screenName</returns>
+        private string SliceScreenName(string screenName)
+        {
+            Debug.WriteLine("SliceScreenName <<<<< " + screenName);
+
+            if (screenName.Contains("plus.google.com/"))
+            {
+                // Cut off first part of the URL
+                screenName = screenName.Remove(0, screenName.IndexOf("+"));
+
+                if (screenName.EndsWith("/"))
+                    screenName = screenName.Remove(screenName.Length - 1);
+
+                // Check if still contains a /
+                // This most probably indicates a part after the username
+                if (screenName.Contains("/"))
+                    screenName = screenName.Remove(screenName.IndexOf("/"), (screenName.Length - screenName.IndexOf("/")));
+                
+                // Remove any possible parameters
+                if (screenName.Contains("?"))
+                    screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
+
+                if (!screenName.Contains("/") && screenName != "")
+                {
+                    return screenName;
+                }
+            }
+
+            return "";
+        }
+
+
+        /// <summary>
+        /// Compares found screenName with content of the associated page
+        /// </summary>
+        /// <param name="screenName">Google+ Page Name</param>
+        /// <returns>Returns true if profile has entered URL associated with page</returns>
+        private bool IsGooglePage(string screenName)
+        {
+            var googleSearch = GetFromApi(screenName);
+            try
+            {
+                IList<JToken> results = googleSearch["urls"].Children().ToList();
+
+                if (results.Count != 0)
+                {
+                    foreach (JToken item in results)
+                    {
+                        if (HasWebsite(item["value"].ToString()))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (NullReferenceException)
+            {
+                Debug.WriteLine("Page has no URLs");
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Check if URL in the Google+ profile is the same as the one the user entered
+        /// </summary>
+        /// <param name="fbUrl">URL of website found in Facebook profile</param>
+        /// <returns></returns>
+        private bool HasWebsite(string url)
+        {
+            if (url == null || url == "")
+            {
+                return false;
+            }
+
+            if (!url.Contains("http://") && !url.Contains("https://"))
+            {
+                url = "http://" + url;
+            }
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.UserAgent = Session["userAgent"].ToString();
+                request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
+                request.Timeout = 10000;
+                // Get the response.
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                var uriMain = new Uri(Session["MainUrl"].ToString());
+
+                //Debug.WriteLine("Session['MainUrl'].ToString() uri.host =======> " + uri.Host);
+
+                IPAddress[] addresslistMain = Dns.GetHostAddresses(uriMain.Host);
+                IPAddress[] addresslist = Dns.GetHostAddresses(response.ResponseUri.Host.ToString());
+
+                foreach (IPAddress theaddress in addresslist)
+                    if (addresslistMain.Contains(theaddress))
+                        return true;
+            }
+            catch (UriFormatException)
+            {
+                Debug.WriteLine("IsWebsite UriFormatException Catch --- " + url);
+                return false;
+            }
+            catch (WebException)
+            {
+                Debug.WriteLine("IsWebsite WebException Catch --- " + url);
+                return false;
+            }
+
+            return false;
         }
     }
 }
