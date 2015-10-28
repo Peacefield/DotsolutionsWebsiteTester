@@ -66,7 +66,7 @@
                 <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
                     <asp:CheckBoxList ID="TestsCheckBoxList2"
                         runat="server">
-                        <asp:ListItem Text="Google+ Pagina" Value="GooglePlus" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Google+ Pagina" Value="GooglePlus" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Facebook Pagina" Value="Facebook" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Twitter Pagina" Value="Twitter" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Sociale interesse" Value="SocialInterest" Selected="false" Enabled="false"></asp:ListItem>

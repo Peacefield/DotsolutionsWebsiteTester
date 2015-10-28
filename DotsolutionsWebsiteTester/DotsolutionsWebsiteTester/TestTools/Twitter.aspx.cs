@@ -1,4 +1,5 @@
-﻿using LinqToTwitter;
+﻿using HtmlAgilityPack;
+using LinqToTwitter;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             this.twitterContext = new TwitterContext(authorizer);
 
-            var ths = new ThreadStart(() => GetTwitter(Session["MainUrl"].ToString()));
+            var ths = new ThreadStart(GetTwitter);
             var th = new Thread(ths);
             th.Start();
 
@@ -74,8 +75,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             return "";
         }
 
-        private void GetTwitter(string url)
+        private void GetTwitter()
         {
+            var url = Session["MainUrl"].ToString();
             Debug.WriteLine("GetTwitter <<< ");
 
             var screennameList = new List<string>();
@@ -100,108 +102,56 @@ namespace DotsolutionsWebsiteTester.TestTools
             JObject googleSearch = JObject.Parse(responseFromServer);
             IList<JToken> results = googleSearch["responseData"]["results"].Children().ToList();
 
+            var isTwitterfound = false;
             if (results.Count != 0)
             {
                 foreach (JToken item in results)
                 {
-                    var screenName = "";
-
-                    if (item["unescapedUrl"].ToString().Contains("https://www.twitter.com/"))
-                        screenName = item["unescapedUrl"].ToString().Remove(0, 24);
-                    else if (item["unescapedUrl"].ToString().Contains("https://twitter.com/"))
-                    {
-                        screenName = item["unescapedUrl"].ToString().Remove(0, 20);
-                        if (screenName.Contains("/"))
-                            screenName = screenName.Remove(screenName.Length - 1);
-                    }
-
-                    if (screenName.EndsWith("/"))
-                        screenName = screenName.Remove(screenName.Length - 1);
-
-                    if (screenName.Contains("?"))
-                        screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
-
-                    if (!screenName.Contains("/") && screenName != "")
+                    var screenName = SliceScreenName(item["unescapedUrl"].ToString());
+                    if (screenName != "")
                     {
                         screennameList.Add(screenName);
                     }
                 }
 
-                var twitterfound = false;
                 foreach (var screenName in screennameList)
                 {
                     if (IsTwitter(screenName))
                     {
-                        Debug.WriteLine(screenName + " gevonden!");
-                        twitterfound = true;
+                        Debug.WriteLine(screenName + " gevonden via Google!");
+                        isTwitterfound = true;
 
-                        var users = from user in twitterContext.User
-                                    where user.Type == UserType.Show &&
-                                    user.ScreenName == screenName
-                                    select user;
-                        var returnedUser = users.ToList();
+                        rating = GetTwitterRating(screenName);
 
-                        var TweetCount = GetTweetCount(returnedUser);
-                        var FollowersCount = GetFollowerCount(returnedUser);
-
-                        var TweetCountString = TweetCount.ToString("#,##0");
-                        var FollowersCountString = FollowersCount.ToString("#,##0");
-                        var ProfileImage = GetProfileImage(returnedUser);
-
-                        var percentage = ((decimal)FollowersCount / (decimal)TweetCount) * 100m;
-                        Debug.WriteLine("percentage = " + percentage);
-                        if (FollowersCount >= TweetCount)
-                        {
-                            rating = 10m;
-                        }
-                        else if (percentage > 75m)
-                        {
-                            rating = 10m;
-                        }
-                        else if (percentage > 50m)
-                        {
-                            rating = 7.5m;
-                        }
-                        else if (percentage > 33m)
-                        {
-                            rating = 5.5m;
-                        }
-                        else if (percentage > 10m)
-                        {
-                            rating = 4m;
-                        }
-                        else
-                        {
-                            rating = 1m;
-                        }
-
-
-                        twitterResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                            + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
-                            + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
-                            + "</div>";
-
-                        twitterResults.InnerHtml += "<div class='well well-lg resultWell'>"
-                            + "<i class='fa fa-retweet fa-3x'></i>"
-                            + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
-                            + "<div class='resultDivider'></div>"
-                            + "<div class='well well-lg resultWell'>"
-                            + "<i class='fa fa-users fa-3x'></i>"
-                            + "<span> Dit account heeft " + FollowersCountString + " volgers</span></div>";
                         break;
                     }
                 }
-                if (!twitterfound)
+            }
+
+            // If !isTwitterfound { doorzoek pagina op aanwezigheid twitter.com mbv agility pack
+            if (!isTwitterfound)
+            {
+                var screenNames = GetScreenNamesFromPage(url);
+                if (screenNames.Count > 0)
                 {
-                    rating = 0.0m;
-                    twitterResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                        + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Twitter-profiel staat</span></div>";
+                    foreach (var screenName in screenNames)
+                    {
+                        if (IsTwitter(screenName))
+                        {
+                            Debug.WriteLine(screenName + " gevonden via pagina!");
+                            rating = GetTwitterRating(screenName);
+
+                            isTwitterfound = true;
+
+                            break;
+                        }
+                    }
                 }
             }
-            else
+
+            if (!isTwitterfound)
             {
-                rating = 1.0m;
+                rating = 0.0m;
                 twitterResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Twitter-profiel staat</span></div>";
@@ -218,6 +168,119 @@ namespace DotsolutionsWebsiteTester.TestTools
             SetRatingDisplay(rating);
         }
 
+        /// <summary>
+        /// Get a list of screen names found on a page
+        /// </summary>
+        /// <param name="url">Page to check for Facebook link</param>
+        /// <returns>List of possible screen names found on page</returns>
+        private List<string> GetScreenNamesFromPage(string url)
+        {
+            Debug.WriteLine("GetScreenNamesFromPage <<< ");
+            var screenNames = new List<string>();
+
+            var webget = new HtmlWeb();
+            var doc = webget.Load(url);
+            if (doc.DocumentNode.SelectNodes("//a[@href]") != null)
+            {
+                foreach (var node in doc.DocumentNode.SelectNodes("//a[@href]"))
+                {
+                    if (node.Attributes["href"].Value.Contains("twitter.com"))
+                    {
+                        var temp = SliceScreenName(node.Attributes["href"].Value);
+                        if (temp != "")
+                            screenNames.Add(temp);
+                    }
+                }
+            }
+            return screenNames;
+        }
+
+        /// <summary>
+        /// Slice screenName returned from Google results or Page results to try to make it a screen name
+        /// </summary>
+        /// <param name="screenName">URL containing possible screen name</param>
+        /// <returns>string screenName</returns>
+        private string SliceScreenName(string screenName)
+        {
+            if (screenName.Contains("twitter.com/"))
+            {
+                if (screenName.EndsWith("/"))
+                    screenName = screenName.Remove(screenName.Length - 1);
+
+                screenName = screenName.Remove(0, screenName.LastIndexOf("/") + 1);
+
+                if (screenName.Contains("?"))
+                    screenName = screenName.Remove(screenName.IndexOf("?"), (screenName.Length - screenName.IndexOf("?")));
+
+                if (!screenName.Contains("/") && screenName != "")
+                {
+                    return screenName;
+                }
+            }
+
+            return "";
+        }
+
+        private decimal GetTwitterRating(string screenName)
+        {
+            var rating = 1m;
+            var users = from user in twitterContext.User
+                        where user.Type == UserType.Show &&
+                        user.ScreenName == screenName
+                        select user;
+            var returnedUser = users.ToList();
+
+            var TweetCount = GetTweetCount(returnedUser);
+            var FollowersCount = GetFollowerCount(returnedUser);
+
+            var TweetCountString = TweetCount.ToString("#,##0");
+            var FollowersCountString = FollowersCount.ToString("#,##0");
+            var ProfileImage = GetProfileImage(returnedUser);
+
+            var percentage = ((decimal)FollowersCount / (decimal)TweetCount) * 100m;
+
+            Debug.WriteLine("percentage = " + percentage);
+
+            if (FollowersCount >= TweetCount)
+            {
+                rating = 10m;
+            }
+            else if (percentage > 75m)
+            {
+                rating = 10m;
+            }
+            else if (percentage > 50m)
+            {
+                rating = 7.5m;
+            }
+            else if (percentage > 33m)
+            {
+                rating = 5.5m;
+            }
+            else if (percentage > 10m)
+            {
+                rating = 4m;
+            }
+            else
+            {
+                rating = 1m;
+            }
+
+            twitterResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
+                + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
+                + "</div>";
+
+            twitterResults.InnerHtml += "<div class='well well-lg resultWell'>"
+                + "<i class='fa fa-retweet fa-3x'></i>"
+                + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
+                + "<div class='resultDivider'></div>"
+                + "<div class='well well-lg resultWell'>"
+                + "<i class='fa fa-users fa-3x'></i>"
+                + "<span> Dit account heeft " + FollowersCountString + " volgers</span></div>";
+
+            return rating;
+        }
 
         /// <summary>
         /// Find if the found name is a Twitteraccount with the URL in the description
