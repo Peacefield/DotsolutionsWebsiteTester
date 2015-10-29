@@ -612,7 +612,7 @@ namespace DotsolutionsWebsiteTester
                 var ratingClass = item.Key + "Rating " + GetRatingClass(item.Value);
 
                 list += "<li><span class='" + ratingClass + "' >" + item.Value + "</span>"
-                        + "<a onclick=animateTo('" + item.Key + "') href='#" + item.Value + "'>" + GetTestName(item.Key) + "</a></li>";
+                        + "<a onclick=animateTo('" + item.Key + "') href='#" + item.Key + "'>" + GetTestName(item.Key) + "</a></li>";
             }
             return list;
         }

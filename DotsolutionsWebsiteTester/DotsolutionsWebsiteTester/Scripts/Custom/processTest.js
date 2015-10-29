@@ -167,7 +167,7 @@ window.onload = function () {
                             PageMethods.GetRatingMarketingList(OnMarketingListSuccess, OnError);
                             PageMethods.GetRatingTechList(OnTechListSuccess, OnError);
 
-
+                            // Timeout because it has to be executed after WebMethods
                             setTimeout(function () {
                                 // Set InnerHTML of Rating Lists in Session for PDF
                                 var accessInner = document.getElementById("RatingAccessList").innerHTML;
