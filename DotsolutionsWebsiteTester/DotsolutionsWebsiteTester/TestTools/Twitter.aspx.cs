@@ -111,6 +111,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (screenName != "")
                     {
                         screennameList.Add(screenName);
+                        Debug.WriteLine(screenName + " aan lijst toegevoegd!");
                     }
                 }
 
@@ -187,6 +188,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (node.Attributes["href"].Value.Contains("twitter.com"))
                     {
                         var temp = SliceScreenName(node.Attributes["href"].Value);
+
+                        Debug.WriteLine(temp + " aan lijst toevoegen!");
                         if (temp != "")
                             screenNames.Add(temp);
                     }
@@ -289,6 +292,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns>Boolean true if the account has the URL in description</returns>
         private bool IsTwitter(string screenName)
         {
+            Debug.WriteLine("IsTwitter <<<<< " + screenName);
             var allUsers = new List<User>();
 
             var users = from user in twitterContext.User
@@ -301,30 +305,65 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 foreach (var item in allUsers)
                 {
+                    Debug.WriteLine("Er zit een item in allUsers");
                     if (item.Url != null)
                     {
+                        Debug.WriteLine("Er zit een item in allUsers die een URL heeft in de profielinformatie: " + item.Url);
+
                         try
                         {
-                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(item.Url);
-                            request.UserAgent = Session["userAgent"].ToString();
-                            request.Timeout = 10000;
+                            Debug.WriteLine("trying IsTwitter HttpWebReq");
+
+                            #region shortened URL in bio
+
+                            WebRequest request = WebRequest.Create(item.Url);
+                            request.Method = WebRequestMethods.Http.Head;
+                            WebResponse response = request.GetResponse();
+                            var destination = response.ResponseUri.ToString();
+
+                            request = WebRequest.Create(Session["MainUrl"].ToString());
+                            request.Method = WebRequestMethods.Http.Head;
+                            response = request.GetResponse();
+                            var destinationOriginal = response.ResponseUri.ToString();
+                            
+                            if (destination == destinationOriginal)
+                                return true;
+
+                            #endregion
+
+                            #region non-shortened URL in bio
+
+                            var HttpWebRequest = (HttpWebRequest)WebRequest.Create(item.Url);
+                            HttpWebRequest.UserAgent = Session["userAgent"].ToString();
+                            HttpWebRequest.Timeout = 10000;
                             // Get the response.
-                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                            var HttpWebResponse = (HttpWebResponse)HttpWebRequest.GetResponse();
 
-                            var uri = new Uri(Session["MainUrl"].ToString());
+                            var uriMain = new Uri(Session["MainUrl"].ToString());
+                            var uriOther = new Uri(item.Url);
 
-                            //Debug.WriteLine("Session['MainUrl'].ToString() uri.host =======> " + uri.Host);
-
-                            IPAddress[] addresslistMain = Dns.GetHostAddresses(uri.Host);
-                            IPAddress[] addresslist = Dns.GetHostAddresses(response.ResponseUri.Host.ToString());
+                            IPAddress[] addresslistMain = Dns.GetHostAddresses(uriMain.Host);
+                            IPAddress[] addresslist = Dns.GetHostAddresses(HttpWebResponse.ResponseUri.Host.ToString());
 
                             foreach (IPAddress theaddress in addresslist)
                                 if (addresslistMain.Contains(theaddress))
                                     return true;
+
+                            #endregion
+
+                            Debug.WriteLine("tried IsTwitter HttpWebReq");
+
+
+                        }
+                        catch (UriFormatException)
+                        {
+                            Debug.WriteLine("IsTwitter UriFormatException Catch --- " + item.Url);
+                            return false;
                         }
                         catch (WebException we)
                         {
                             Debug.WriteLine("IsTwitter Catch" + we.Message);
+                            return false;
                         }
                     }
                 }

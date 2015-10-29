@@ -119,11 +119,32 @@
             padding-left: 3px;
             padding-right: 3px;
         }
+
+        .googleResult_title, .googleResult_url, .googleResult_desc {
+            margin: 0 0 0 0;
+            cursor: default;
+        }
+
+        .googleResult_title {
+            color: #1a0dab;
+            text-decoration: underline;
+            font-size: 1.3em;
+        }
+
+        .googleResult_url {
+            color: #006621;
+            font-size: 1em;
+        }
+
+        .googleResult_desc {
+            color: #545454;
+            font-size: 1em;
+        }
     </style>
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
 </head>
 <body>
     <form runat="server">

@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 namespace DotsolutionsWebsiteTester.TestTools
 {
     // Meta keywords zijn helemaal niet belangrijk!
-    // Meta beschrijving is belangrijk, 115-145 karakters // http://blog.hubspot.com/marketing/seo-tactics-2015 // https://support.google.com/webmasters/answer/79812?hl=en
+    // Meta beschrijving is belangrijk, 115-150 karakters // http://blog.hubspot.com/marketing/seo-tactics-2015 // https://support.google.com/webmasters/answer/79812?hl=en
     // Title is geen meta tag maar wordt wel gebruikt in SERP
     // Robots is belangrijk; content all is alles laten indexeren
 
@@ -78,7 +78,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                             if (item.Key == "description" && item.Value.Length > 0)
                             {
                                 hasDescription++;
-                                if (item.Value.Length > 145)
+                                if (item.Value.Length > 150)
                                     hasLongDescription.Add(url);
                             }
 
@@ -95,9 +95,88 @@ namespace DotsolutionsWebsiteTester.TestTools
                         hasNoRobots.Add(url);
                 }
             }
+            GetSERPDisplay();
             rating = GetDescriptionRating(rating, hasNoDescription, hasLongDescription);
             rating = GetRobotRating(rating, hasNoRobots);
             SetRating(rating);
+        }
+
+        private void GetSERPDisplay()
+        {
+            var url = Session["MainUrl"].ToString();
+            var Webget = new HtmlWeb();
+            var doc = Webget.Load(url);
+            if (doc.DocumentNode.SelectSingleNode("//head") != null)
+            {
+                var title = "";
+                var desc = "";
+                var normalMetas = GetNormalMetaTags(doc);
+
+                foreach (var item in normalMetas)
+                {
+                    if (item.Key == "description")
+                    {
+                        desc = item.Value;
+                        if (desc.Length > 150)
+                        {
+                            string[] split = desc.Split(' ', ',');
+                            var temp = "";
+                            foreach (var word in split)
+                            {
+                                temp += word + " ";
+                                if (temp.Length <= 150)
+                                {
+                                    desc = temp;
+                                }
+                                else
+                                    break;
+                            }
+                            desc += "...";
+                        }
+                    }
+                }
+
+                if (doc.DocumentNode.SelectNodes("//title[parent::head]") != null)
+                {
+                    foreach (var node in doc.DocumentNode.SelectNodes("//title[parent::head]"))
+                    {
+                        if (node.InnerText != "")
+                        {
+                            title = node.InnerText;
+                            Debug.WriteLine("Gevonden titel is: " + title);
+                            if (title.Length > 55)
+                            {
+                                string[] split = title.Split(' ', ',');
+                                var temp = "";
+                                foreach (var word in split)
+                                {
+                                    temp += word + " ";
+                                    if (temp.Length <= 55)
+                                    {
+                                        title = temp;
+                                    }
+                                    else
+                                        break;
+                                }
+                                title += "...";
+                            }
+
+                        }
+                    }
+                }
+
+                if (title == "")
+                    title = "Untitled";
+                if (desc == "")
+                    desc = "No description set";
+
+                MetaErrorsFound.InnerHtml += "<span class='help-block'>Zo ziet de website er uit op de resultatenpagina van Google:</span>";
+                MetaErrorsFound.InnerHtml += "<div class='well well-sm col-md-6 col-sm-7'>"
+                            + "<h3 class='googleResult_title noselect'>" + title + "</h3>"
+                            + "<p class='googleResult_url noselect'>" + url + "</p>"
+                            + "<p class='googleResult_desc noselect'>" + desc + "</p>"
+                            + "</div>";
+            }
         }
 
         private Dictionary<string, string> GetNormalMetaTags(HtmlDocument doc)
