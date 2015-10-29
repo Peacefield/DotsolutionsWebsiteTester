@@ -55,9 +55,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 if (doc.DocumentNode.SelectSingleNode("//head") != null)
                 {
-                    var normalMetas = GetNormalMeta(doc);
-                    var openGraphMeta = GetOpenGraphMeta(doc);
-                    var httpEquivMeta = GetHttpEquivMeta(doc);
+                    var normalMetas = GetNormalMetaTags(doc);
+                    var openGraphMeta = GetOpenGraphMetaTags(doc);
+                    var httpEquivMeta = GetHttpEquivMetaTags(doc);
                     var hasDescription = 0;
                     var hasRobots = 0;
 
@@ -95,29 +95,39 @@ namespace DotsolutionsWebsiteTester.TestTools
                         hasNoRobots.Add(url);
                 }
             }
-
             rating = GetDescriptionRating(rating, hasNoDescription, hasLongDescription);
             rating = GetRobotRating(rating, hasNoRobots);
+            SetRating(rating);
+        }
 
-            // Set Rating
-            if (rating < 0m)
-                rating = 0.0m;
-            if (rating == 10.0m)
-                rating = 10m;
+        private Dictionary<string, string> GetNormalMetaTags(HtmlDocument doc)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            // Add to HTMl
-            decimal rounded = decimal.Round(rating, 1);
-            MetaTagsRating.InnerHtml = rounded.ToString();
-            SetRatingDisplay(rating);
+            if (doc.DocumentNode.SelectNodes("//meta[@name and @content][parent::head]") != null)
+                foreach (var node in doc.DocumentNode.SelectNodes("//meta[@name and @content][parent::head]"))
+                    dictionary.Add(node.Attributes["name"].Value, node.Attributes["content"].Value);
+            return dictionary;
+        }
 
-            // Set sessions
-            var temp = (decimal)Session["RatingMarketing"];
-            Session["RatingMarketing"] = temp + rounded;
+        private Dictionary<string, string> GetOpenGraphMetaTags(HtmlDocument doc)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            temp = (decimal)Session["RatingTech"];
-            Session["RatingTech"] = temp + rounded;
+            if (doc.DocumentNode.SelectNodes("//meta[@property and @content][parent::head]") != null)
+                foreach (var node in doc.DocumentNode.SelectNodes("//meta[@property and @content][parent::head]"))
+                    dictionary.Add(node.Attributes["property"].Value, node.Attributes["content"].Value);
+            return dictionary;
+        }
 
-            Session["MetaTagsRating"] = rounded;
+        private Dictionary<string, string> GetHttpEquivMetaTags(HtmlDocument doc)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+            if (doc.DocumentNode.SelectNodes("//meta[@http-equiv and @content][parent::head]") != null)
+                foreach (var node in doc.DocumentNode.SelectNodes("//meta[@http-equiv and @content][parent::head]"))
+                    dictionary.Add(node.Attributes["http-equiv"].Value, node.Attributes["content"].Value);
+            return dictionary;
         }
 
         private decimal GetDescriptionRating(decimal rating, List<string> hasNoDescription, List<string> hasLongDescription)
@@ -132,32 +142,37 @@ namespace DotsolutionsWebsiteTester.TestTools
             else
             {
                 // Booo
-                var ul = "";
-                foreach (var item in hasNoDescription)
+                if (hasNoDescription.Count > 0)
                 {
-                    ul += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
-                    rating = rating - (10m / (decimal)sitemap.Count);
+                    var ul = "";
+                    foreach (var item in hasNoDescription)
+                    {
+                        ul += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
+                        rating = rating - (10m / (decimal)sitemap.Count);
+                    }
+
+                    MetaErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> De volgende pagina's gebruiken geen description meta-tag:</span>"
+                        + "<ul>" + ul + "</ul></div>";
                 }
 
-                MetaErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> De volgende pagina's gebruiken geen description meta-tag:</span>"
-                    + "<ul>" + ul + "</ul></div>";
-
-                ul = "";
-                foreach (var item in hasLongDescription)
+                if (hasLongDescription.Count > 0)
                 {
-                    rating = rating - (5m / (decimal)sitemap.Count);
-                    ul += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
+                    var ul = "";
+                    foreach (var item in hasLongDescription)
+                    {
+                        rating = rating - (5m / (decimal)sitemap.Count);
+                        ul += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
+                    }
+                    MetaErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> De volgende pagina's hebben een te lange meta-description:</span>"
+                        + "<ul>" + ul + "</ul></div>";
                 }
-                MetaErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> De volgende pagina's hebben een te lange meta-description:</span>"
-                    + "<ul>" + ul + "</ul></div>";
             }
             return rating;
         }
-
 
         private decimal GetRobotRating(decimal rating, List<string> hasNoRobots)
         {
@@ -183,35 +198,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<ul>" + ul + "</ul></div>";
             }
             return rating;
-        }
-
-        private Dictionary<string, string> GetNormalMeta(HtmlDocument doc)
-        {
-            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-
-            if (doc.DocumentNode.SelectNodes("//meta[@name and @content][parent::head]") != null)
-                foreach (var node in doc.DocumentNode.SelectNodes("//meta[@name and @content][parent::head]"))
-                    dictionary.Add(node.Attributes["name"].Value, node.Attributes["content"].Value);
-            return dictionary;
-        }
-
-        private Dictionary<string, string> GetOpenGraphMeta(HtmlDocument doc)
-        {
-            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-
-            if (doc.DocumentNode.SelectNodes("//meta[@property and @content][parent::head]") != null)
-                foreach (var node in doc.DocumentNode.SelectNodes("//meta[@property and @content][parent::head]"))
-                    dictionary.Add(node.Attributes["property"].Value, node.Attributes["content"].Value);
-            return dictionary;
-        }
-        private Dictionary<string, string> GetHttpEquivMeta(HtmlDocument doc)
-        {
-            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-
-            if (doc.DocumentNode.SelectNodes("//meta[@http-equiv and @content][parent::head]") != null)
-                foreach (var node in doc.DocumentNode.SelectNodes("//meta[@http-equiv and @content][parent::head]"))
-                    dictionary.Add(node.Attributes["http-equiv"].Value, node.Attributes["content"].Value);
-            return dictionary;
         }
 
         /// <summary>
@@ -243,6 +229,32 @@ namespace DotsolutionsWebsiteTester.TestTools
             tRow.Cells.Add(tCellContent);
 
             table.Rows.Add(tRow);
+        }
+
+        /// <summary>
+        /// Set rating in HTML and Sessions
+        /// </summary>
+        /// <param name="rating">decimal rating</param>
+        private void SetRating(decimal rating)
+        {
+            if (rating < 0m)
+                rating = 0.0m;
+            if (rating == 10.0m)
+                rating = 10m;
+
+            // Add to HTMl
+            decimal rounded = decimal.Round(rating, 1);
+            MetaTagsRating.InnerHtml = rounded.ToString();
+            SetRatingDisplay(rating);
+
+            // Set sessions
+            var temp = (decimal)Session["RatingMarketing"];
+            Session["RatingMarketing"] = temp + rounded;
+
+            temp = (decimal)Session["RatingTech"];
+            Session["RatingTech"] = temp + rounded;
+
+            Session["MetaTagsRating"] = rounded;
         }
 
         /// <summary>
