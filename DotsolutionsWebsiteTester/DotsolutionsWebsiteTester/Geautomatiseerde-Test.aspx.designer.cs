@@ -94,42 +94,6 @@ namespace DotsolutionsWebsiteTester {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl VormComment;
         
         /// <summary>
-        /// RatingAccessList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingAccessList;
-        
-        /// <summary>
-        /// RatingUxList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingUxList;
-        
-        /// <summary>
-        /// RatingMarketingList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingMarketingList;
-        
-        /// <summary>
-        /// RatingTechList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RatingTechList;
-        
-        /// <summary>
         /// PerformedTestsName control.
         /// </summary>
         /// <remarks>

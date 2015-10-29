@@ -80,22 +80,25 @@ function OnTechSuccess(response) {
     SetRatingClass("#RatingTech", response);
 }
 
+function OnAccesListSuccess(response) {
+    $("#RatingAccessList").html(response);
+}
+function OnUxListSuccess(response) {
+    $("#RatingUxList").html(response);
+}
+function OnMarketingListSuccess(response) {
+    $("#RatingMarketingList").html(response);
+}
+function OnTechListSuccess(response) {
+    $("#RatingTechList").html(response);
+}
+
 function OnSuccess(response) {
     // Do nothing
 }
 function OnError(error) {
     //alert(error);
     console.log(error);
-}
-
-function SetCriteriaListRating(array) {
-    $.each(array, function (index, value) {
-        var rating = $("#MainContent_" + value + "Rating").text();
-
-        $("." + value + "Rating").text(rating.toString());
-
-        SetRatingClass("." + value + "Rating", rating);
-    });
 }
 
 window.onresize = function () {
@@ -159,19 +162,24 @@ window.onload = function () {
                             PageMethods.GetMarketingRating(OnMarketingSuccess, OnError);
                             PageMethods.GetTechRating(OnTechSuccess, OnError);
 
-                            // Set criteria ratings and give it correct class
-                            SetCriteriaListRating(array);
+                            PageMethods.GetRatingAccessList(OnAccesListSuccess, OnError);
+                            PageMethods.GetRatingUxList(OnUxListSuccess, OnError);
+                            PageMethods.GetRatingMarketingList(OnMarketingListSuccess, OnError);
+                            PageMethods.GetRatingTechList(OnTechListSuccess, OnError);
 
-                            // Set InnerHTML of Rating Lists in Session for PDF
-                            var accessInner = document.getElementById("MainContent_RatingAccessList").innerHTML;
-                            var uxInner = document.getElementById("MainContent_RatingUxList").innerHTML;
-                            var marketInner = document.getElementById("MainContent_RatingMarketingList").innerHTML;
-                            var techInner = document.getElementById("MainContent_RatingTechList").innerHTML;
 
-                            PageMethods.AddCriteriaListSession("RatingAccessList", accessInner, OnSuccess, OnError);
-                            PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
-                            PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
-                            PageMethods.AddCriteriaListSession("RatingTechList", techInner, OnSuccess, OnError);
+                            setTimeout(function () {
+                                // Set InnerHTML of Rating Lists in Session for PDF
+                                var accessInner = document.getElementById("RatingAccessList").innerHTML;
+                                var uxInner = document.getElementById("RatingUxList").innerHTML;
+                                var marketInner = document.getElementById("RatingMarketingList").innerHTML;
+                                var techInner = document.getElementById("RatingTechList").innerHTML;
+
+                                PageMethods.AddCriteriaListSession("RatingAccessList", accessInner, OnSuccess, OnError);
+                                PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
+                                PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
+                                PageMethods.AddCriteriaListSession("RatingTechList", techInner, OnSuccess, OnError);
+                            }, 1000);
 
                             setTimeout(function () {
                                 $("#overlay").fadeOut();

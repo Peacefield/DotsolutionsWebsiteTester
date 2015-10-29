@@ -86,7 +86,7 @@
                     <i id="RatingAccesBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
                 <div id="RatingAccessListHidden" class="well-sm well ratingList">
-                    <ul id="RatingAccessList" runat="server" >
+                    <ul id="RatingAccessList">
                     </ul>
                 </div>
             </li>
@@ -95,7 +95,7 @@
                     <i id="RatingUxBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
                 <div id="RatingUxListHidden" class="well-sm well ratingList">
-                    <ul id="RatingUxList" runat="server">
+                    <ul id="RatingUxList">
                     </ul>
                 </div>
             </li>
@@ -104,7 +104,7 @@
                     <i id="RatingMarketingBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
                 <div id="RatingMarketingListHidden" class="well-sm well ratingList">
-                    <ul id="RatingMarketingList" runat="server">
+                    <ul id="RatingMarketingList">
                     </ul>
                 </div>
             </li>
@@ -113,7 +113,7 @@
                     <i id="RatingTechBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
                 <div id="RatingTechListHidden" class="well-sm well ratingList">
-                    <ul id="RatingTechList" runat="server">
+                    <ul id="RatingTechList">
                     </ul>
                 </div>
             </li>

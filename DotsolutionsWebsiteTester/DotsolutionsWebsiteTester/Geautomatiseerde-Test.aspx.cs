@@ -146,77 +146,7 @@ namespace DotsolutionsWebsiteTester
                 // Display name for user
                 PerformedTestsName.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
             }
-            AddTestToCriteria(selectedTests, selectedTestsName);
-        }
-
-        private void AddTestToCriteria(List<string> selectedTests, List<string> selectedTestsName)
-        {
-
-            for (int i = 0; i < selectedTests.Count; i++)
-            {
-                var ratingClass = selectedTests[i].ToString() + "Rating";
-
-                if (selectedTests[i].ToString() == "CodeQuality" ||
-                    selectedTests[i].ToString() == "PageTitles" ||
-                    selectedTests[i].ToString() == "MobileCompatibility" ||
-                    selectedTests[i].ToString() == "Headings" ||
-                    selectedTests[i].ToString() == "InternalLinks" ||
-                    selectedTests[i].ToString() == "UrlFormat")
-                {
-                    RatingAccessList.InnerHtml += "<li><span class='" + ratingClass + "' >...</span>"
-                        + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                }
-
-                if (selectedTests[i].ToString() == "GooglePlus" ||
-                    selectedTests[i].ToString() == "Facebook" ||
-                    selectedTests[i].ToString() == "Twitter" ||
-                    selectedTests[i].ToString() == "SocialInterest" ||
-                    selectedTests[i].ToString() == "Popularity" ||
-                    selectedTests[i].ToString() == "AmountOfContent" ||
-                    selectedTests[i].ToString() == "Images" ||
-                    selectedTests[i].ToString() == "ServerBehaviour" ||
-                    selectedTests[i].ToString() == "MobileCompatibility" ||
-                    selectedTests[i].ToString() == "InternalLinks" ||
-                    selectedTests[i].ToString() == "Printability" ||
-                    selectedTests[i].ToString() == "UrlFormat" ||
-                    selectedTests[i].ToString() == "Freshness")
-                {
-                    RatingUxList.InnerHtml += "<li><span class='" + ratingClass + "' >...</span>"
-                        + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                }
-
-                if (selectedTests[i].ToString() == "GooglePlus" ||
-                    selectedTests[i].ToString() == "Facebook" ||
-                    selectedTests[i].ToString() == "Twitter" ||
-                    selectedTests[i].ToString() == "SocialInterest" ||
-                    selectedTests[i].ToString() == "Popularity" ||
-                    selectedTests[i].ToString() == "AmountOfContent" ||
-                    selectedTests[i].ToString() == "PageTitles" ||
-                    selectedTests[i].ToString() == "Headings" ||
-                    selectedTests[i].ToString() == "IncomingLinks" ||
-                    selectedTests[i].ToString() == "InternalLinks" ||
-                    selectedTests[i].ToString() == "Freshness" ||
-                    selectedTests[i].ToString() == "Analytics" ||
-                    selectedTests[i].ToString() == "MetaTags")
-                {
-                    RatingMarketingList.InnerHtml += "<li><span class='" + ratingClass + "' >...</span>"
-                        + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                }
-
-                if (selectedTests[i].ToString() == "CodeQuality" ||
-                    selectedTests[i].ToString() == "Images" ||
-                    selectedTests[i].ToString() == "ServerBehaviour" ||
-                    selectedTests[i].ToString() == "MobileCompatibility" ||
-                    selectedTests[i].ToString() == "Headings" ||
-                    selectedTests[i].ToString() == "InternalLinks" ||
-                    selectedTests[i].ToString() == "MetaTags" ||
-                    selectedTests[i].ToString() == "Printability" ||
-                    selectedTests[i].ToString() == "UrlFormat")
-                {
-                    RatingTechList.InnerHtml += "<li><span class='" + ratingClass + "' >...</span>"
-                        + "<a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-                }
-            }
+            //AddTestToCriteria(selectedTests, selectedTestsName);
         }
 
         /// <summary>
@@ -391,13 +321,19 @@ namespace DotsolutionsWebsiteTester
             }
         }
 
-        #region WebMethods for setting total rating
 
+        /// <summary>
+        /// Add Criteria List to Session so it is accessible from PdfTemplate
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="innerhtml"></param>
         [System.Web.Services.WebMethod]
         public static void AddCriteriaListSession(string session, string innerhtml)
         {
             HttpContext.Current.Session[session] = innerhtml;
         }
+
+        #region WebMethods for setting total rating
 
 
         [System.Web.Services.WebMethod]
@@ -558,6 +494,217 @@ namespace DotsolutionsWebsiteTester
             }
             return "0,0";
         }
+        #endregion
+
+        #region WebMethods for setting individual rating
+
+        [System.Web.Services.WebMethod]
+        public static string GetRatingAccessList()
+        {
+            var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
+            var accessTests = new List<string>();
+
+            foreach (var item in selectedTests)
+            {
+                if (item == "CodeQuality" ||
+                    item == "PageTitles" ||
+                    item == "MobileCompatibility" ||
+                    item == "Headings" ||
+                    item == "InternalLinks" ||
+                    item == "UrlFormat")
+                    accessTests.Add(item);
+            }
+
+            var orderedList = OrderByRating(accessTests);
+            var list = GetList(orderedList);
+            return list;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static string GetRatingUxList()
+        {
+            var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
+            var applicableTests = new List<string>();
+
+            foreach (var item in selectedTests)
+            {
+                if (item == "GooglePlus" ||
+                    item == "Facebook" ||
+                    item == "Twitter" ||
+                    item == "SocialInterest" ||
+                    item == "Popularity" ||
+                    item == "AmountOfContent" ||
+                    item == "Images" ||
+                    item == "ServerBehaviour" ||
+                    item == "MobileCompatibility" ||
+                    item == "InternalLinks" ||
+                    item == "Printability" ||
+                    item == "UrlFormat" ||
+                    item == "Freshness")
+                    applicableTests.Add(item);
+            }
+
+            var orderedList = OrderByRating(applicableTests);
+            var list = GetList(orderedList);
+            return list;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static string GetRatingMarketingList()
+        {
+            var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
+            var applicableTests = new List<string>();
+
+            foreach (var item in selectedTests)
+            {
+                if (item == "GooglePlus" ||
+                    item == "Facebook" ||
+                    item == "Twitter" ||
+                    item == "SocialInterest" ||
+                    item == "Popularity" ||
+                    item == "AmountOfContent" ||
+                    item == "PageTitles" ||
+                    item == "Headings" ||
+                    item == "IncomingLinks" ||
+                    item == "InternalLinks" ||
+                    item == "Freshness" ||
+                    item == "Analytics" ||
+                    item == "MetaTags")
+                    applicableTests.Add(item);
+            }
+
+            var orderedList = OrderByRating(applicableTests);
+            var list = GetList(orderedList);
+            return list;
+        }
+
+
+        [System.Web.Services.WebMethod]
+        public static string GetRatingTechList()
+        {
+            var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
+            var applicableTests = new List<string>();
+
+            foreach (var item in selectedTests)
+            {
+                if (item == "CodeQuality" ||
+                    item == "Images" ||
+                    item == "ServerBehaviour" ||
+                    item == "MobileCompatibility" ||
+                    item == "Headings" ||
+                    item == "InternalLinks" ||
+                    item == "MetaTags" ||
+                    item == "Printability" ||
+                    item == "UrlFormat")
+                    applicableTests.Add(item);
+            }
+
+            var orderedList = OrderByRating(applicableTests);
+            var list = GetList(orderedList);
+            return list;
+        }
+
+        public static string GetList(Dictionary<string, decimal> orderedList)
+        {
+            var list = "";
+            foreach (var item in orderedList)
+            {
+                var ratingClass = item.Key + "Rating " + GetRatingClass(item.Value);
+
+                list += "<li><span class='" + ratingClass + "' >" + item.Value + "</span>"
+                        + "<a onclick=animateTo('" + item.Key + "') href='#" + item.Value + "'>" + GetTestName(item.Key) + "</a></li>";
+            }
+            return list;
+        }
+
+        public static string GetRatingClass(decimal rating)
+        {
+            if (rating < 6m)
+                return "lowScore ratingSquare";
+            else if (rating < 8.5m)
+                return "mediocreScore ratingSquare";
+            else
+                return "excellentScore ratingSquare";
+        }
+
+        /// <summary>
+        /// Sort the ratings of a list in ascending order
+        /// </summary>
+        /// <param name="ratingList">Unordered list of a criterium</param>
+        /// <returns>Ordered dictionary<string, decimal></returns>
+        public static Dictionary<string, decimal> OrderByRating(List<string> ratingList)
+        {
+            var ratings = new Dictionary<string, decimal>();
+            foreach (var item in ratingList)
+            {
+                Debug.WriteLine(item + "Rating");
+                //ratings.Add(new KeyValuePair<string, int>(item, (int)Session[item + "Rating"]));
+                ratings.Add(item, (decimal)HttpContext.Current.Session[item + "Rating"]);
+            }
+
+            var sortedDict = from entry in ratings orderby entry.Value ascending select entry;
+            var orderedList = new Dictionary<string, decimal>();
+            foreach (var pair in sortedDict)
+                orderedList.Add(pair.Key, pair.Value);
+
+            return orderedList;
+        }
+
+        /// <summary>
+        /// Get the name of the test that is familiair to the user
+        /// </summary>
+        /// <param name="test"></param>
+        /// <returns></returns>
+        public static string GetTestName(string test)
+        {
+            switch (test)
+            {
+                case "CodeQuality":
+                    return "Code Kwaliteit";
+                case "PageTitles":
+                    return "Pagina titels";
+                case "MobileCompatibility":
+                    return "Mobiele compatibiliteit";
+                case "Headings":
+                    return "Headers";
+                case "InternalLinks":
+                    return "Interne links";
+                case "UrlFormat":
+                    return "URL formaat";
+
+                case "GooglePlus":
+                    return "Google+ Pagina";
+                case "Facebook":
+                    return "Facebook Pagina";
+                case "Twitter":
+                    return "Twitter Pagina";
+                case "SocialInterest":
+                    return "Sociale interesse";
+                case "Popularity":
+                    return "Populariteit";
+                case "AmountOfContent":
+                    return "Hoeveelheid content";
+                case "Images":
+                    return "Afbeeldingen";
+
+                case "ServerBehaviour":
+                    return "Server gedrag";
+                case "Printability":
+                    return "Printbaarheid";
+                case "Freshness":
+                    return "Actueelheid";
+                case "IncomingLinks":
+                    return "Binnenkomende links";
+                case "Analytics":
+                    return "Analytics";
+                case "MetaTags":
+                    return "Meta tags";
+
+                default:
+                    return "";
+            }
+        }
+
         #endregion
     }
 }

@@ -141,7 +141,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             temp = (decimal)Session["RatingTech"];
             Session["RatingTech"] = temp + rounded;
 
-            Session["CodeQualityRating"] = rounded;
+            Session["InternalLinksRating"] = rounded;
             SetRatingDisplay(rating);
         }
 
