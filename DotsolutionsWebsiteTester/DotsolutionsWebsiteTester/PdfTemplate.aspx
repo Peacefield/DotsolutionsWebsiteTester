@@ -9,7 +9,8 @@
         /* Move down content because we have a fixed navbar that is 50px tall */
         body {
             padding-bottom: 20px;
-            background: url("/Content/images/dotlogo.png") fixed no-repeat 100% 100%;
+            background-color: #396B02 !important;
+            /*background: url("/Content/images/dotlogo.png") fixed no-repeat 100% 100%;*/
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -122,6 +123,7 @@
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <meta charset="UTF-8"/>
 </head>
 <body>
     <form runat="server">

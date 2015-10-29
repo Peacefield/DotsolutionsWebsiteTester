@@ -91,7 +91,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (!isGoogleFound)
             {
                 rating = 0.0m;
-                googlePlusResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                GooglePlusResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er is geen Google+ account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Google+-profiel staat</span></div>";
             }
@@ -187,16 +187,24 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             var apiKey = GetFromApiKeys("GoogleAPI");
             var requestString = "https://www.googleapis.com/plus/v1/people/" + screenName + "?key=" + apiKey;
+            var googleSearch = new JObject();
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestString);
-            request.UserAgent = Session["userAgent"].ToString();
-            request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            var reader = new StreamReader(dataStream);
-            string responseFromServer = reader.ReadToEnd();
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestString);
+                request.UserAgent = Session["userAgent"].ToString();
+                request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream dataStream = response.GetResponseStream();
+                var reader = new StreamReader(dataStream);
+                string responseFromServer = reader.ReadToEnd();
 
-            JObject googleSearch = JObject.Parse(responseFromServer);
+                googleSearch = JObject.Parse(responseFromServer);
+            }
+            catch (WebException)
+            {
+                Debug.WriteLine("ScreenName does not exist");
+            }
             return googleSearch;
         }
 
@@ -250,12 +258,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 1.0m;
             }
 
-            googlePlusResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+            GooglePlusResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://plus.google.com/" + screenName + "' target='_blank'><img src='" + profileImage + "' alt='profileimage'/></a> "
                 + "<span> Google+ account <a href='https://plus.google.com/" + screenName + "' target='_blank' font-size='large'>" + displayName + "</a> gevonden</span>"
                 + "</div>";
 
-            googlePlusResults.InnerHtml += "<div class='well well-lg resultWell'>"
+            GooglePlusResults.InnerHtml += "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-google-plus-square fa-3x'></i>"
                 + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") + " Google +1's </span></div>"
                 + "<div class='resultDivider'></div>"
@@ -332,6 +340,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         private bool IsGooglePage(string screenName)
         {
             var googleSearch = GetFromApi(screenName);
+            if (googleSearch.Count < 0)
+                return false;
+
             try
             {
                 IList<JToken> results = googleSearch["urls"].Children().ToList();

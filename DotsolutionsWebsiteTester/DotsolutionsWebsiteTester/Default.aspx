@@ -83,7 +83,7 @@
                         <asp:ListItem Text="Actueelheid" Value="Freshness" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Binnenkomende links" Value="IncomingLinks" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Analytics" Value="Analytics" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Meta tags" Value="MetaTags" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Meta tags" Value="MetaTags" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>
                 </div>
             </div>

@@ -31,12 +31,12 @@ namespace DotsolutionsWebsiteTester.TestTools {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl GooglePlusRating;
         
         /// <summary>
-        /// googlePlusResults control.
+        /// GooglePlusResults control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl googlePlusResults;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl GooglePlusResults;
     }
 }

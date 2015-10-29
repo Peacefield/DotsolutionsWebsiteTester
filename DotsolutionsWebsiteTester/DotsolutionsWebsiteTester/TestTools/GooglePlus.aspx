@@ -9,7 +9,7 @@
                     <span id="GooglePlusRating" runat="server">?</span> Google+
                 </div>
                 <div class="panel-body">
-                <div id="googlePlusResults" runat="server"></div>
+                <div id="GooglePlusResults" runat="server"></div>
                 </div>
             </div>
         </div>

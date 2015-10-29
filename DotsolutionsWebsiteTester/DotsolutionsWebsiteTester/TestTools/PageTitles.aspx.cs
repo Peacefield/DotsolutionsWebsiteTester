@@ -157,7 +157,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns>true if title > 55 chars</returns>
         private bool IsLongTitle(string title)
         {
-            if (title.Length < 55)
+            if (title.Length <= 55)
             {
                 return false;
             }

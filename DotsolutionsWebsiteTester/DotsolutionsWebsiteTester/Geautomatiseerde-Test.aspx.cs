@@ -30,7 +30,8 @@ namespace DotsolutionsWebsiteTester
                 UrlTesting.InnerText = Session["MainUrl"].ToString();
 
                 // Set user agent
-                string userAgent = "Mozilla/5.0 (DotTestBot, http://www.example.net)";
+                //string userAgent = "Mozilla/5.0 (DotTestBot, http://www.example.net)";
+                string userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
                 Session["userAgent"] = userAgent;
                 Session["robotsTxt"] = GetRobotsTxt(UrlTesting.InnerText);
                 Session["ApiKeys"] = GetApiKeys();
@@ -259,11 +260,11 @@ namespace DotsolutionsWebsiteTester
             {
                 foreach (JToken item in results)
                 {
-                    if (IsOfDomain(url, item["url"].ToString()))
+                    if (IsOfDomain(url, item["unescapedUrl"].ToString()))
                     {
-                        sitemap.Add(item["url"].ToString());
+                        sitemap.Add(item["unescapedUrl"].ToString());
 
-                        System.Uri uriFound = new Uri(item["url"].ToString());
+                        System.Uri uriFound = new Uri(item["unescapedUrl"].ToString());
                         string uriFoundWithoutScheme = uriFound.Host;
                         // If entered URL is not in found URL's it will be added
                         // This if-statement detects if it IS among the found URL's by comparing it to several possible URL formats
