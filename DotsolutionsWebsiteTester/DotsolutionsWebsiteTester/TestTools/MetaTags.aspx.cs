@@ -17,6 +17,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
     public partial class MetaTags : System.Web.UI.Page
     {
+        List<string> sitemap;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -29,6 +30,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            this.sitemap = (List<string>)Session["selectedSites"];
             GetMetaTags();
 
             var sb = new System.Text.StringBuilder();
@@ -40,11 +42,10 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetMetaTags()
         {
-            var sitemap = (List<string>)Session["selectedSites"];
             var hasLongDescription = new List<string>();
             var hasNoDescription = new List<string>();
             var hasNoRobots = new List<string>();
-            var rating = 10m;
+            var rating = 10.0m;
 
             foreach (var url in sitemap)
             {
@@ -74,18 +75,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                                 AddToTable(url, list.Key, item.Key, item.Value);
                             count++;
 
-                            if (item.Key == "description")
+                            if (item.Key == "description" && item.Value.Length > 0)
                             {
-                                if (item.Value.Length > 0)
-                                {
-                                    Debug.WriteLine("DIT IS DE VALUE -----------> " + item.Value);
-                                    hasDescription++;
-                                    if (item.Value.Length > 145)
-                                        hasLongDescription.Add(url);
-                                }
+                                hasDescription++;
+                                if (item.Value.Length > 145)
+                                    hasLongDescription.Add(url);
                             }
 
-                            if (item.Key == "robots")
+                            if (item.Key == "robots" && item.Value.Length > 0)
                                 hasRobots++;
                         }
                         if (count >= 5)
@@ -99,6 +96,32 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
             }
 
+            rating = GetDescriptionRating(rating, hasNoDescription, hasLongDescription);
+            rating = GetRobotRating(rating, hasNoRobots);
+
+            // Set Rating
+            if (rating < 0m)
+                rating = 0.0m;
+            if (rating == 10.0m)
+                rating = 10m;
+
+            // Add to HTMl
+            decimal rounded = decimal.Round(rating, 1);
+            MetaTagsRating.InnerHtml = rounded.ToString();
+            SetRatingDisplay(rating);
+
+            // Set sessions
+            var temp = (decimal)Session["RatingMarketing"];
+            Session["RatingMarketing"] = temp + rounded;
+
+            temp = (decimal)Session["RatingTech"];
+            Session["RatingTech"] = temp + rounded;
+
+            Session["MetaTagsRating"] = rounded;
+        }
+
+        private decimal GetDescriptionRating(decimal rating, List<string> hasNoDescription, List<string> hasLongDescription)
+        {
             if (hasNoDescription.Count == 0 && hasLongDescription.Count == 0)
             {
                 // Good job, using no long descriptions!
@@ -120,12 +143,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> De volgende pagina's gebruiken geen description meta-tag:</span>"
                     + "<ul>" + ul + "</ul></div>";
-            }
 
-            if (hasLongDescription.Count > 0)
-            {
-                var ul = "";
-                // Could do better
+                ul = "";
                 foreach (var item in hasLongDescription)
                 {
                     rating = rating - (5m / (decimal)sitemap.Count);
@@ -136,7 +155,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> De volgende pagina's hebben een te lange meta-description:</span>"
                     + "<ul>" + ul + "</ul></div>";
             }
+            return rating;
+        }
 
+
+        private decimal GetRobotRating(decimal rating, List<string> hasNoRobots)
+        {
             if (hasNoRobots.Count == 0)
             {
                 // Good job, using robots!
@@ -146,8 +170,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                var ul = "";
                 // Booo
+                var ul = "";
                 foreach (var item in hasNoRobots)
                 {
                     rating = rating - (10m / (decimal)sitemap.Count);
@@ -158,23 +182,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span> De volgende pagina's gebruiken geen robots meta-tag:</span>"
                     + "<ul>" + ul + "</ul></div>";
             }
-
-            if (rating < 0m)
-                rating = 0.0m;
-
-            // Add to HTMl
-            decimal rounded = decimal.Round(rating, 1);
-            MetaTagsRating.InnerHtml = rounded.ToString();
-            SetRatingDisplay(rating);
-
-            // Set sessions
-            var temp = (decimal)Session["RatingMarketing"];
-            Session["RatingMarketing"] = temp + rounded;
-
-            temp = (decimal)Session["RatingTech"];
-            Session["RatingTech"] = temp + rounded;
-
-            Session["MetaTagsRating"] = rounded;
+            return rating;
         }
 
         private Dictionary<string, string> GetNormalMeta(HtmlDocument doc)
