@@ -170,10 +170,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                 }
             }
-            if (!boolean)
-            {
-                Debug.WriteLine("Geen media stylesheet(s) aanwezig");
-            }
             return boolean;
         }
 
@@ -316,6 +312,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             else
                 MobileCompatibilityRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
+
         private string GetFromApiKeys(string key)
         {
             var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
