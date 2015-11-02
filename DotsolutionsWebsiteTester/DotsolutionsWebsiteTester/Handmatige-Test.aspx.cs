@@ -21,23 +21,6 @@ namespace DotsolutionsWebsiteTester
                 return;
             }
             SiteUrl.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>" + Session["MainUrl"].ToString() + "</a>";
-
-            // Payed services with 100 free requests per month, but WITH mobile resolution ability
-            // https://www.screenshotmachine.com/index.php
-            // https://screenshotlayer.com/
-            // Free service without mobile resolutionn ability
-            // http://www.shrinktheweb.com/
-            // http://www.shrinktheweb.com/auth/stw-lobby
-            //var accesskeyid = "1dd9ec6a56c1fac";
-            //var imgUrl = "http://images.shrinktheweb.com/xino.php?"
-            //    + "stwembed=1"
-            //    + "&stwaccesskeyid= " + accesskeyid
-            //    + "&stwinside=1"
-            //    + "&stwsize=xlg"
-            //    + "&stwurl=" + Session["MainUrl"].ToString();
-            var imgUrl = "/Content/images/placeholder.jpg";
-            websiteImg.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>"
-                +"<img src='" + imgUrl + "' title='Preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "' /></a>";
         }
 
         /// <summary>

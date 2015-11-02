@@ -36,7 +36,7 @@
         width: 250px;
         height: 150px;
         background-image: url("/Content/images/laptop_template.png");
-        padding: 10px 35px 37px 35px;
+        padding: 10px 35px 36px 35px;
         display: inline-block;
         background-size: contain;
         background-repeat: no-repeat;
@@ -46,7 +46,7 @@
         width: 150px;
         height: 250px;
         background-image: url("/Content/images/phone_template.png");
-        padding: 39px 31px 45px 9px;
+        padding: 39px 30px 45px 9px;
         background-size: contain;
         background-repeat: no-repeat;
     }
@@ -75,8 +75,6 @@
         cursor: pointer;
         font-size: 2em;
     }
-
-
 
     .computercontainer {
         background-image: url("/Content/images/laptop_template.png");

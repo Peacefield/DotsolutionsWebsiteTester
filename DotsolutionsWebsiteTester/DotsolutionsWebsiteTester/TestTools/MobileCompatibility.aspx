@@ -11,10 +11,10 @@
                 <div class="panel-body">
                     <div id="MobileCompatibilityResults" class="results" runat="server"></div>
                     <div class="row">
-                        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8">
-                            <div id="websiteImg" runat="server"></div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div id="computerImg" runat="server"></div>
                         </div>
-                        <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div id="mobileImg" runat="server"></div>
                         </div>
                     </div>

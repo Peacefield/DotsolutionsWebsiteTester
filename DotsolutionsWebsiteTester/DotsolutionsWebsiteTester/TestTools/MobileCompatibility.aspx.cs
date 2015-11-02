@@ -70,7 +70,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 foreach (var item in notCompatiblePage)
                 {
                     rating = rating - (10.0m / (decimal)sitemap.Count);
-                    notcompatiblelist += "<li>" + item + "</li>";
+                    notcompatiblelist += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
                 }
                 string amount = "";
                 if (notCompatiblePage.Count > 1)
@@ -118,18 +118,20 @@ namespace DotsolutionsWebsiteTester.TestTools
             // Free service without mobile resolutionn ability
             // http://www.shrinktheweb.com/
             // http://www.shrinktheweb.com/auth/stw-lobby
-            //var accesskeyid = "1dd9ec6a56c1fac";
+            //var accesskeyid = GetFromApiKeys("ShrinkTheWeb");
             //var imgUrl = "http://images.shrinktheweb.com/xino.php?"
             //    + "stwembed=1"
             //    + "&stwaccesskeyid= " + accesskeyid
             //    + "&stwinside=1"
             //    + "&stwsize=xlg"
             //    + "&stwurl=" + Session["MainUrl"].ToString();
-            var imgUrl = "/Content/images/placeholder.jpg";
-            websiteImg.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>"
-                + "<img class='computercontainer' src='" + imgUrl + "' title='Preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "' width='450' height='260'/></a>";
+            var imgUrlComputer = "https://s3.amazonaws.com/deviceshot.silktide.com/fb5b606a89b36ef50d3ac24702119ede.png";
+            var imgUrlMobile = "https://s3.amazonaws.com/deviceshot.silktide.com/c6a6119fbfb98908f8943f4171fb3a45.png";
+            //var imgUrlMobile = "/Content/images/placeholder.jpg";
+            computerImg.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>"
+                + "<img class='computercontainer center-block' src='" + imgUrlComputer + "' title='Preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "' width='450' height='260'/></a>";
             mobileImg.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>"
-                + "<img class='mobilecontainer' src='" + imgUrl + "' title='Preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "' width='144' height='220'/></a>";
+                + "<img class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "' width='144' height='220'/></a>";
         }
         private bool HasNoCss(HtmlDocument doc)
         {
@@ -304,6 +306,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 MobileCompatibilityRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 MobileCompatibilityRating.Attributes.Add("class", "excellentScore ratingCircle");
+        }
+        private string GetFromApiKeys(string key)
+        {
+            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
+            foreach (var element in list)
+                if (element.Key == key)
+                    return element.Value;
+            return "";
         }
     }
 }

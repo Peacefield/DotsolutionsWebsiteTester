@@ -140,6 +140,20 @@
             color: #545454;
             font-size: 1em;
         }
+
+        .computercontainer {
+            background-image: url("/Content/images/laptop_template.png");
+            padding: 18px 60px 50px 60px;
+            display: inline-block;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .mobilecontainer {
+            background-image: url("/Content/images/phone_template.png");
+            padding: 34px 38px 39px 8px;
+            background-size: contain;
+            background-repeat: no-repeat;
     </style>
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
