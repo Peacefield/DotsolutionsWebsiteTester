@@ -53,7 +53,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 if (HasNoCss(doc))
                 {
-                    notCompatiblePage.Add(url);
+                    if (!HasMobileRedirect(url))
+                        notCompatiblePage.Add(url);
                 }
                 else if (HasMobileCssSheet(doc) || HasMobileRedirect(url) || HasMobileCssQuery(doc))
                 {
