@@ -139,7 +139,9 @@
     <Content Include="Content\images\bckgnd_grn.jpg" />
     <Content Include="Content\images\dotlogo.png" />
     <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\laptop_template.png" />
     <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\phone_template.png" />
     <Content Include="Content\images\placeholder.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />

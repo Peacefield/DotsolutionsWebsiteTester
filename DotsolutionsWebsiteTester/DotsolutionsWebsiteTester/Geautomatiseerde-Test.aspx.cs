@@ -146,7 +146,6 @@ namespace DotsolutionsWebsiteTester
                 // Display name for user
                 PerformedTestsName.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
             }
-            //AddTestToCriteria(selectedTests, selectedTestsName);
         }
 
         /// <summary>
@@ -321,7 +320,6 @@ namespace DotsolutionsWebsiteTester
             }
         }
 
-
         /// <summary>
         /// Add Criteria List to Session so it is accessible from PdfTemplate
         /// </summary>
@@ -371,7 +369,9 @@ namespace DotsolutionsWebsiteTester
                         count++;
                     }
                 }
+                Debug.WriteLine("AccessRatingSession divide by " + count);
                 var temp = decimal.Round(AccessRatingSession / count, 1);
+                Debug.WriteLine("AccessRatingSession = " + temp);
                 HttpContext.Current.Session["RatingAccess"] = temp;
                 return temp.ToString("0.0");
             }
@@ -411,7 +411,9 @@ namespace DotsolutionsWebsiteTester
                         count++;
                     }
                 }
+                Debug.WriteLine("UserxRatingSession divide by " + count);
                 var temp = decimal.Round(UserxRatingSession / count, 1);
+                Debug.WriteLine("UserxRatingSession = " + temp);
                 HttpContext.Current.Session["RatingUx"] = temp;
                 return temp.ToString("0.0");
             }
@@ -451,7 +453,9 @@ namespace DotsolutionsWebsiteTester
                         count++;
                     }
                 }
+                Debug.WriteLine("MarketingRatingSession divide by " + count);
                 var temp = decimal.Round(MarketingRatingSession / count, 1);
+                Debug.WriteLine("MarketingRatingSession = " + temp);
                 HttpContext.Current.Session["RatingMarketing"] = temp;
                 return temp.ToString("0.0");
             }
@@ -488,7 +492,9 @@ namespace DotsolutionsWebsiteTester
                         count++;
                     }
                 }
+                Debug.WriteLine("TechRatingSession divide by " + count);
                 var temp = decimal.Round(TechRatingSession / count, 1);
+                Debug.WriteLine("TechRatingSession = " + temp);
                 HttpContext.Current.Session["RatingTech"] = temp;
                 return temp.ToString("0.0");
             }
@@ -502,7 +508,7 @@ namespace DotsolutionsWebsiteTester
         public static string GetRatingAccessList()
         {
             var selectedTests = (List<string>)HttpContext.Current.Session["selectedTests"];
-            var accessTests = new List<string>();
+            var applicableTests = new List<string>();
 
             foreach (var item in selectedTests)
             {
@@ -512,10 +518,10 @@ namespace DotsolutionsWebsiteTester
                     item == "Headings" ||
                     item == "InternalLinks" ||
                     item == "UrlFormat")
-                    accessTests.Add(item);
+                    applicableTests.Add(item);
             }
 
-            var orderedList = OrderByRating(accessTests);
+            var orderedList = OrderByRating(applicableTests);
             var list = GetList(orderedList);
             return list;
         }
@@ -637,7 +643,6 @@ namespace DotsolutionsWebsiteTester
             var ratings = new Dictionary<string, decimal>();
             foreach (var item in ratingList)
             {
-                Debug.WriteLine(item + "Rating");
                 //ratings.Add(new KeyValuePair<string, int>(item, (int)Session[item + "Rating"]));
                 ratings.Add(item, (decimal)HttpContext.Current.Session[item + "Rating"]);
             }

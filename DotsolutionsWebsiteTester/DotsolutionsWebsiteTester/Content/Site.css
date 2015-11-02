@@ -30,6 +30,26 @@
         cursor: pointer;
         font-size: 1.5em;
     }
+
+
+    .computercontainer {
+        width: 250px;
+        height: 150px;
+        background-image: url("/Content/images/laptop_template.png");
+        padding: 10px 35px 37px 35px;
+        display: inline-block;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .mobilecontainer {
+        width: 150px;
+        height: 250px;
+        background-image: url("/Content/images/phone_template.png");
+        padding: 39px 31px 45px 9px;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
 }
 
 @media (min-width: 768px) {
@@ -54,6 +74,23 @@
     .rating-input {
         cursor: pointer;
         font-size: 2em;
+    }
+
+
+
+    .computercontainer {
+        background-image: url("/Content/images/laptop_template.png");
+        padding: 18px 60px 50px 60px;
+        display: inline-block;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .mobilecontainer {
+        background-image: url("/Content/images/phone_template.png");
+        padding: 34px 38px 39px 8px;
+        background-size: contain;
+        background-repeat: no-repeat;
     }
 }
 

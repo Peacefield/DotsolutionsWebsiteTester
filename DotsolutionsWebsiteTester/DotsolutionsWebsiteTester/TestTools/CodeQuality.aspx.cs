@@ -303,7 +303,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 reqSuccess = false;
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span>W3C Validatie niet uit kunnen voeren voor " + url + ": " + e.Message + "</span></div>";
+                    + "<span>W3C Validatie niet uit kunnen voeren voor <a href='https://validator.w3.org/nu/?doc=" + url + "' target='_blank'>" + url + "</a>: " + e.Message + "</span></div>";
                 Debug.WriteLine(e.Message);
             }
         }

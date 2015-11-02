@@ -157,6 +157,8 @@ window.onload = function () {
 
                         if (progress == 100) {
                             console.timeEnd("Execute tests");
+                            $("#progresstext").text("Totaalscore's berekenen");
+
                             PageMethods.GetAccessRating(OnAccessSuccess, OnError);
                             PageMethods.GetUserxRating(OnUserxSuccess, OnError);
                             PageMethods.GetMarketingRating(OnMarketingSuccess, OnError);
@@ -166,6 +168,7 @@ window.onload = function () {
                             PageMethods.GetRatingUxList(OnUxListSuccess, OnError);
                             PageMethods.GetRatingMarketingList(OnMarketingListSuccess, OnError);
                             PageMethods.GetRatingTechList(OnTechListSuccess, OnError);
+
 
                             // Timeout because it has to be executed after WebMethods
                             setTimeout(function () {
@@ -179,7 +182,7 @@ window.onload = function () {
                                 PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
                                 PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
                                 PageMethods.AddCriteriaListSession("RatingTechList", techInner, OnSuccess, OnError);
-                            }, 1000);
+                            }, 5000);
 
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
@@ -187,7 +190,7 @@ window.onload = function () {
                                 $("#automatedRatingList").fadeIn();
                                 $("#MainContent_CreatePdfBtn").css("display", "block");
                                 document.title = 'Resultaten - Website tester';
-                            }, 1000);
+                            }, 5000);
                         }
                     },
                     error: function (response) {

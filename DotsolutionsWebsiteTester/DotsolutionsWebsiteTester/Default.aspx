@@ -45,9 +45,7 @@
         <div id="checkboxHolder" class="noselect">
             <div class="row">
                 
-            <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4 btn btn-default btn-sm" id="CheckAllCheckboxes">
-                Niks selecteren
-            </div>
+            <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4 btn btn-default btn-sm" id="CheckAllCheckboxes">Alles selecteren</div>
 
             </div>
             <div class="row checkboxlistrow text-left">
@@ -57,7 +55,7 @@
                         TextAlign="right">
                         <asp:ListItem Text="Code kwaliteit" Value="CodeQuality" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Pagina titels" Value="PageTitles" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Mobiele compatibiliteit" Value="MobileCompatibility" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Mobiele compatibiliteit" Value="MobileCompatibility" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Headers" Value="Headings" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Interne links" Value="InternalLinks" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="URL formaat" Value="UrlFormat" Selected="false" Enabled="false"></asp:ListItem>
