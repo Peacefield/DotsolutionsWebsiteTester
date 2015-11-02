@@ -40,6 +40,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetMC()
         {
+            Debug.WriteLine("MobileCompatibility >>>>>");
             var compatible = new List<string>();
             var notCompatiblePage = new List<string>();
             var sitemap = (List<string>)Session["selectedSites"];
@@ -112,9 +113,6 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void SetPreviewImages()
         {
-            // Payed services with 100 free requests per month, but WITH mobile resolution ability
-            // https://www.screenshotmachine.com/index.php
-            // https://screenshotlayer.com/
             // Free service without mobile resolutionn ability
             // http://www.shrinktheweb.com/
             // http://www.shrinktheweb.com/auth/stw-lobby
@@ -125,8 +123,20 @@ namespace DotsolutionsWebsiteTester.TestTools
             //    + "&stwinside=1"
             //    + "&stwsize=xlg"
             //    + "&stwurl=" + Session["MainUrl"].ToString();
-            var imgUrlComputer = "https://s3.amazonaws.com/deviceshot.silktide.com/fb5b606a89b36ef50d3ac24702119ede.png";
-            var imgUrlMobile = "https://s3.amazonaws.com/deviceshot.silktide.com/c6a6119fbfb98908f8943f4171fb3a45.png";
+            var imgUrlComputer = "http://i.imgur.com/Elyj1XA.png";
+            var imgUrlMobile = "http://i.imgur.com/8UIGhLL.png";
+
+
+            // Payed services with 100 free unique requests per month, but WITH mobile resolution ability
+            // https://www.screenshotmachine.com/
+            //var ApiKey = GetFromApiKeys("ScreenshotMachine");
+            //var format = "PNG";
+            //var url = HttpUtility.UrlEncode(Session["mainUrl"].ToString());
+            //var size = "Nmob";
+            //var imgUrlMobile = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            //size = "M"
+            //var imgUrlComputer = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+
             //var imgUrlMobile = "/Content/images/placeholder.jpg";
             computerImg.InnerHtml = "<img width='450' height='260' class='computercontainer center-block' src='" + imgUrlComputer + "' title='Laptop preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
             mobileImg.InnerHtml = "<img width='144' height='260' class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Smartphone preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
@@ -150,7 +160,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 foreach (var node in doc.DocumentNode.SelectNodes("//link[@media]"))
                 {
-                    Debug.WriteLine("stylesheet in html: " + node.Attributes["media"]);
+                    Debug.WriteLine("stylesheet in html: " + node.Attributes["media"].Value);
                     if (node.Attributes["media"].Value.Contains("max-width") || node.Attributes["media"].Value.Contains("min-width"))
                     {
                         boolean = true;

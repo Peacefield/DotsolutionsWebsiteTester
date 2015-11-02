@@ -142,18 +142,23 @@
         }
 
         .computercontainer {
-            background-image: url("/Content/images/laptop_template.png");
-            padding: 18px 60px 50px 60px;
+            background-image: url("http://i.imgur.com/BTpnDci.png");
+            padding: 26px 141px 26px 31px;
             display: inline-block;
             background-size: contain;
             background-repeat: no-repeat;
         }
 
         .mobilecontainer {
-            background-image: url("/Content/images/phone_template.png");
-            padding: 34px 38px 39px 8px;
+            background-image: url("http://i.imgur.com/BDKytvF.png");
+            padding: 40px 20px 47px 10px;
             background-size: contain;
             background-repeat: no-repeat;
+        }
+
+        #MainContent_computerImg, #MainContent_mobileImg {
+            margin-left: 25%;
+        }
     </style>
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />

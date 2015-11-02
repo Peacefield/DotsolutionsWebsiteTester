@@ -160,14 +160,12 @@ namespace DotsolutionsWebsiteTester
             bool isPresent = false;
 
             var apiKey = GetFromApiKeys("GoogleAPI");
+            Debug.WriteLine(">>>> GetSiteList >>> ");
 
-            var queryString = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&q=%22" + url + "%22&rsz=5";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&q=%22" + url + "%22&rsz=5");
             // Additional parameters
             // &rsz=[1-8] resultSize can be 1 through 8. Currently using 5.
             // &start=[x] Indicate where to start searching
-            Debug.WriteLine(">>>> GetSiteList >>> " + queryString);
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(queryString);
             request.UserAgent = userAgent;
             request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
             // Get the response.

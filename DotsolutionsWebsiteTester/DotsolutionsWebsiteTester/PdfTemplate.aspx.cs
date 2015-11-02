@@ -134,7 +134,8 @@ namespace DotsolutionsWebsiteTester
             //{
             //    // create an API client instance
             //    //Currently using my personal free license account
-            //    pdfcrowd.Client client = new pdfcrowd.Client("Peacefield", "0db50169ce387c622116d715ea5350ce");
+            //    var ApiKey = GetFromApiKeys("PdfCrowd");
+            //    pdfcrowd.Client client = new pdfcrowd.Client("Peacefield", ApiKey);
             //    client.setHtmlZoom(100);
 
             //    // convert a web page and write the generated PDF to a memory stream
@@ -159,7 +160,6 @@ namespace DotsolutionsWebsiteTester
             //    Response.Write(why.ToString());
             //}
 
-
             // Saving pdfcrowd tokens by using streamwriter for now
 
             // Write the string to a file with format -> Rapportage_http.example.com_YY-MM-DD--hh.mm.ss
@@ -172,6 +172,15 @@ namespace DotsolutionsWebsiteTester
 
             writer.Write(sOut);
         }
+        private string GetFromApiKeys(string key)
+        {
+            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
+            foreach (var element in list)
+                if (element.Key == key)
+                    return element.Value;
+            return "";
+        }
+
         protected override void SavePageStateToPersistenceMedium(object state)
         {
             //base.SavePageStateToPersistenceMedium(state);

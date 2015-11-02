@@ -42,6 +42,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetHeadings()
         {
+            Debug.WriteLine("Headings >>>>>");
             var sitemap = (List<string>)Session["selectedSites"];
             var rating = 10.0m;
             foreach (var url in sitemap)

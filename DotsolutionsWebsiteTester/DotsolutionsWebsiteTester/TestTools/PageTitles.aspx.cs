@@ -42,6 +42,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetPageTitles()
         {
+            Debug.WriteLine("PageTitles >>>>>");
             var rating = 10.0m;
             var sitemap = (List<string>)Session["selectedSites"];
             var noTitles = new List<string>();

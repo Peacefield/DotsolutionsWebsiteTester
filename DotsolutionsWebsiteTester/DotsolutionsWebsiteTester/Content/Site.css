@@ -27,8 +27,7 @@
     }
 
     .rating-input {
-        cursor: pointer;
-        font-size: 1.5em;
+        font-size: 1em;
     }
 
 
@@ -52,6 +51,10 @@
         background-size: contain;
         background-repeat: no-repeat;
     }
+
+    #MainContent_computerImg, #MainContent_mobileImg {
+        margin-left: auto;
+    }
 }
 
 @media (min-width: 768px) {
@@ -74,14 +77,13 @@
     }
 
     .rating-input {
-        cursor: pointer;
         font-size: 2em;
     }
 
     .computercontainer {
         /*background-image: url("/Content/images/laptop_template.png");*/
         /*padding: 18px 60px 50px 60px;*/
-        background-image: url("/Content/images/tablet_template.png");
+        background-image: url("http://i.imgur.com/BTpnDci.png");
         padding: 26px 141px 26px 31px;
         display: inline-block;
         background-size: contain;
@@ -89,10 +91,14 @@
     }
 
     .mobilecontainer {
-        background-image: url("/Content/images/phone_template.png");
+        background-image: url("http://i.imgur.com/BDKytvF.png");
         padding: 40px 20px 47px 10px;
         background-size: contain;
         background-repeat: no-repeat;
+    }
+
+    #MainContent_computerImg, #MainContent_mobileImg {
+        margin-left: 25%;
     }
 }
 
@@ -350,6 +356,7 @@ footer {
 }
 
 .rating-input i {
+    cursor: pointer;
     padding-right: 2px;
 }
 

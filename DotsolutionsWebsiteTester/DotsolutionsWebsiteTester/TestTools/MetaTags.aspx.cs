@@ -42,6 +42,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetMetaTags()
         {
+            Debug.WriteLine("MetaTags >>>>>");
             var hasLongDescription = new List<string>();
             var hasNoDescription = new List<string>();
             var hasNoRobots = new List<string>();

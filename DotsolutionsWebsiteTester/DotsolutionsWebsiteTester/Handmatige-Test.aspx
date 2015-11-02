@@ -71,9 +71,9 @@
                 </div>
             </article>
 
-            <article>
+            <article class="col-md-12">
                 <h3>Opmerkingen</h3>
-                <span class="help-block">Eventuele opmerkingen over de vormgeving.</span>
+                <span class="help-block col-md-12">Eventuele opmerkingen over de vormgeving.</span>
                 <asp:TextBox ID="VormgevingOpmerking"
                     TextMode="MultiLine"
                     Rows="4"
@@ -82,7 +82,7 @@
             </article>
         </article>
 
-        <article id="buttons">
+        <article id="buttons" class="col-md-12">
             <asp:LinkButton ID="StartTestBtn"
                 OnClick="StartTest_Click"
                 CssClass="btn btn-success btn-md"

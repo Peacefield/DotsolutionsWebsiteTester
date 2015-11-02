@@ -165,16 +165,15 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (doc.DocumentNode.SelectNodes("//script") != null)
             {
-                Debug.WriteLine("Scipts <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! " + url);
+                Debug.WriteLine("Scipts check for Analytics " + url);
                 foreach (var node in doc.DocumentNode.SelectNodes("//script"))
                 {
                     // if type from list is detected do this
                     if (node.InnerHtml.Contains(analyticTypes[index].Key))
                     {
+                        Debug.WriteLine("Scipts check for Analytics gevonden:" + analyticTypes[index].Value);
                         found++;
                         done = true;
-                        //Debug.WriteLine("Done naar true <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
-                        //Debug.WriteLine(url);
                         // Add to list that tested positive to some kind of analytics software if it's not already in there
                         if (!yesAnalytics.Contains(url))
                         {
@@ -195,12 +194,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (!done && doc.DocumentNode.SelectSingleNode("//html") != null)
             {
                 var node = doc.DocumentNode.SelectSingleNode("//html");
-                Debug.WriteLine("HTML <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! " + url);
+                Debug.WriteLine("HTML check for Analytics " + url);
 
                 // if type from list is detected do this
                 if (node.InnerHtml.Contains(analyticTypes[index].Key))
                 {
-                    Debug.WriteLine("Gevonden <<<<<<<<<<<<<<<<< !!!!!!!!!!!!!!!!!!!!! ");
+                    Debug.WriteLine("HTML check for Analytics gevonden:" + analyticTypes[index].Value);
                     found++;
                     // Add to list that tested positive to some kind of analytics software if it's not already in there
                     if (!yesAnalytics.Contains(url))
