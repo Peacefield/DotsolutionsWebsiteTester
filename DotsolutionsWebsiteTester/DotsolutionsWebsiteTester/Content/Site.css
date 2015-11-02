@@ -33,10 +33,12 @@
 
 
     .computercontainer {
-        width: 250px;
-        height: 150px;
-        background-image: url("/Content/images/laptop_template.png");
-        padding: 10px 35px 36px 35px;
+        width: 310px;
+        height: 250px;
+        /*background-image: url("/Content/images/laptop_template.png");*/
+        /*padding: 10px 35px 36px 35px;*/
+        background-image: url("/Content/images/tablet_template.png");
+        padding: 24px 25px 35px 28px;
         display: inline-block;
         background-size: contain;
         background-repeat: no-repeat;
@@ -77,8 +79,10 @@
     }
 
     .computercontainer {
-        background-image: url("/Content/images/laptop_template.png");
-        padding: 18px 60px 50px 60px;
+        /*background-image: url("/Content/images/laptop_template.png");*/
+        /*padding: 18px 60px 50px 60px;*/
+        background-image: url("/Content/images/tablet_template.png");
+        padding: 26px 141px 26px 31px;
         display: inline-block;
         background-size: contain;
         background-repeat: no-repeat;
@@ -86,7 +90,7 @@
 
     .mobilecontainer {
         background-image: url("/Content/images/phone_template.png");
-        padding: 34px 38px 39px 8px;
+        padding: 40px 20px 47px 10px;
         background-size: contain;
         background-repeat: no-repeat;
     }

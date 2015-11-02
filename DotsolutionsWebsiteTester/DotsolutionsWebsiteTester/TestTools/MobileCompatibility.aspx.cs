@@ -128,10 +128,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             var imgUrlComputer = "https://s3.amazonaws.com/deviceshot.silktide.com/fb5b606a89b36ef50d3ac24702119ede.png";
             var imgUrlMobile = "https://s3.amazonaws.com/deviceshot.silktide.com/c6a6119fbfb98908f8943f4171fb3a45.png";
             //var imgUrlMobile = "/Content/images/placeholder.jpg";
-            computerImg.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>"
-                + "<img class='computercontainer center-block' src='" + imgUrlComputer + "' title='Preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "' width='450' height='260'/></a>";
-            mobileImg.InnerHtml = "<a href='" + Session["MainUrl"].ToString() + "' target='_blank'>"
-                + "<img class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "' width='144' height='220'/></a>";
+            computerImg.InnerHtml = "<img width='450' height='260' class='computercontainer center-block' src='" + imgUrlComputer + "' title='Laptop preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
+            mobileImg.InnerHtml = "<img width='144' height='260' class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Smartphone preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
         }
         private bool HasNoCss(HtmlDocument doc)
         {
