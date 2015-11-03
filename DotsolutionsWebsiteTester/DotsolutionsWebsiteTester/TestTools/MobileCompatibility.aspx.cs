@@ -196,6 +196,33 @@ namespace DotsolutionsWebsiteTester.TestTools
             catch (WebException we)
             {
                 Debug.WriteLine("we.Message: " + we.Message);
+                if (we.Status == WebExceptionStatus.ProtocolError)
+                {
+                    try
+                    {
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                        request.UserAgent = Session["userAgent"].ToString();
+                        request.Method = "GET";
+                        request.AllowAutoRedirect = false;
+
+                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                        Debug.WriteLine("response.StatusCode: " + response.StatusCode);
+                        if (response.StatusCode != HttpStatusCode.OK)
+                        {
+                            boolean = true;
+                            Debug.WriteLine("HasMobileRedirect true");
+                        }
+                    }
+                    catch (WebException we2)
+                    {
+                        Debug.WriteLine("we2.Message: " + we2.Message);
+                    }
+                    catch (Exception e2)
+                    {
+                        Debug.WriteLine("e2.Message: " + e2.Message);
+                    }
+                }
             }
             catch (Exception e)
             {
