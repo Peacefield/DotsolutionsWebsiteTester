@@ -72,22 +72,33 @@ namespace DotsolutionsWebsiteTester.TestTools
                         var count = 0;
                         foreach (var item in list.Value)
                         {
-                            if (count < 3)
-                                AddToTable(url, list.Key, item.Key, item.Value);
                             count++;
 
-                            if (item.Key == "description" && item.Value.Length > 0)
+                            if (item.Key == "description")
                             {
-                                hasDescription = true;
-                                if (item.Value.Length > 150)
-                                    hasLongDescription.Add(url);
+                                AddToTable(url, list.Key, item.Key, item.Value);
+                                if (item.Value.Length > 0)
+                                {
+                                    hasDescription = true;
+                                    if (HttpUtility.HtmlDecode(item.Value).Length > 150)
+                                        hasLongDescription.Add(url);
+                                }
                             }
 
                             if (item.Key == "robots" && item.Value.Length > 0)
+                            {
+                                AddToTable(url, list.Key, item.Key, item.Value);
                                 hasRobots = true;
+                            }
                         }
-                        if (count >= 3)
-                            AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + (count - 2) + " niet getoond</strong>");
+                        if (count > 0)
+                        {
+                            if (count > 1)
+                                AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + count + " meta tags van dit type gevonden</strong>");
+                            else
+                                AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + count + " meta tag van dit type gevonden</strong>");
+                        }
+
                     }
 
                     if (!hasDescription)
@@ -117,10 +128,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (item.Key == "description")
                     {
-                        desc = item.Value;
+                        desc = HttpUtility.HtmlDecode(item.Value);
+                        Debug.WriteLine("desc: " + desc);
+                        Debug.WriteLine("desc length: " + desc.Length);
+
                         if (desc.Length > 150)
                         {
-                            string[] split = desc.Split(' ', ',');
+                            string[] split = desc.Split(' ');
                             var temp = "";
                             foreach (var word in split)
                             {
@@ -143,11 +157,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         if (node.InnerText != "")
                         {
-                            title = node.InnerText;
+                            title = HttpUtility.HtmlDecode(node.InnerText);
                             Debug.WriteLine("Gevonden titel is: " + title);
                             if (title.Length > 55)
                             {
-                                string[] split = title.Split(' ', ',');
+                                string[] split = title.Split(' ');
                                 var temp = "";
                                 foreach (var word in split)
                                 {
