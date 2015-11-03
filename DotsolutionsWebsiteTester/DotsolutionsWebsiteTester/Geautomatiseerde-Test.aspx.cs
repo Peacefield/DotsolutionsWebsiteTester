@@ -30,8 +30,8 @@ namespace DotsolutionsWebsiteTester
                 UrlTesting.InnerText = Session["MainUrl"].ToString();
 
                 // Set user agent
-                //string userAgent = "Mozilla/5.0 (DotTestBot, http://www.example.net)";
-                string userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
+                string userAgent = "Mozilla/5.0 (DotTestBot, http://www.example.net)";
+                //string userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
                 Session["userAgent"] = userAgent;
                 Session["robotsTxt"] = GetRobotsTxt(UrlTesting.InnerText);
                 Session["ApiKeys"] = GetApiKeys();
@@ -370,10 +370,13 @@ namespace DotsolutionsWebsiteTester
                         count++;
                     }
                 }
+
                 Debug.WriteLine("AccessRatingSession divide by " + count);
                 var temp = decimal.Round(AccessRatingSession / count, 1);
                 Debug.WriteLine("AccessRatingSession = " + temp);
                 HttpContext.Current.Session["RatingAccess"] = temp;
+                if (temp == 10.0m)
+                    return temp.ToString();
                 return temp.ToString("0.0");
             }
             return "0,0";
@@ -416,6 +419,8 @@ namespace DotsolutionsWebsiteTester
                 var temp = decimal.Round(UserxRatingSession / count, 1);
                 Debug.WriteLine("UserxRatingSession = " + temp);
                 HttpContext.Current.Session["RatingUx"] = temp;
+                if (temp == 10.0m)
+                    return temp.ToString();
                 return temp.ToString("0.0");
             }
             return "0,0";
@@ -458,6 +463,8 @@ namespace DotsolutionsWebsiteTester
                 var temp = decimal.Round(MarketingRatingSession / count, 1);
                 Debug.WriteLine("MarketingRatingSession = " + temp);
                 HttpContext.Current.Session["RatingMarketing"] = temp;
+                if (temp == 10.0m)
+                    return temp.ToString();
                 return temp.ToString("0.0");
             }
             return "0,0";
@@ -497,6 +504,8 @@ namespace DotsolutionsWebsiteTester
                 var temp = decimal.Round(TechRatingSession / count, 1);
                 Debug.WriteLine("TechRatingSession = " + temp);
                 HttpContext.Current.Session["RatingTech"] = temp;
+                if (temp == 10.0m)
+                    return temp.ToString();
                 return temp.ToString("0.0");
             }
             return "0,0";

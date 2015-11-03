@@ -59,8 +59,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     var normalMetas = GetNormalMetaTags(doc);
                     var openGraphMeta = GetOpenGraphMetaTags(doc);
                     var httpEquivMeta = GetHttpEquivMetaTags(doc);
-                    var hasDescription = 0;
-                    var hasRobots = 0;
+                    var hasDescription = false;
+                    var hasRobots = false;
 
                     var metaListContainer = new List<KeyValuePair<string, Dictionary<string, string>>>();
                     metaListContainer.Add(new KeyValuePair<string, Dictionary<string, string>>("name", normalMetas));
@@ -72,27 +72,27 @@ namespace DotsolutionsWebsiteTester.TestTools
                         var count = 0;
                         foreach (var item in list.Value)
                         {
-                            if (count < 5)
+                            if (count < 3)
                                 AddToTable(url, list.Key, item.Key, item.Value);
                             count++;
 
                             if (item.Key == "description" && item.Value.Length > 0)
                             {
-                                hasDescription++;
+                                hasDescription = true;
                                 if (item.Value.Length > 150)
                                     hasLongDescription.Add(url);
                             }
 
                             if (item.Key == "robots" && item.Value.Length > 0)
-                                hasRobots++;
+                                hasRobots = true;
                         }
-                        if (count >= 5)
-                            AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + (count - 4) + " niet getoond</strong>");
+                        if (count >= 3)
+                            AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + (count - 2) + " niet getoond</strong>");
                     }
 
-                    if (hasDescription == 0)
+                    if (!hasDescription)
                         hasNoDescription.Add(url);
-                    if (hasRobots == 0)
+                    if (!hasRobots)
                         hasNoRobots.Add(url);
                 }
             }

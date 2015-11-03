@@ -148,7 +148,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (errorCnt > 0 || warningCnt > 0)
             {
                 // Maximum reduction of 6 because of previous tests. Margin dependent of amount of sites found
-                var margin = 6m / (decimal)sitemap.Count;
+                var margin = 8m / (decimal)sitemap.Count;
                 rating = rating - ((decimal)notW3cCompliant.Count * margin);
                 if (rating < 0)
                     rating = 0.0m;
@@ -175,6 +175,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (rating == 10.0m)
                 rating = 10m;
+
+            if (rating < 0m)
+                rating = 0.0m;
 
             decimal rounded = decimal.Round(rating, 1);
             CodeQualityRating.InnerHtml = rounded.ToString();
@@ -203,7 +206,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/check?uri=" + encoded + "&output=json");
                 request.UserAgent = Session["userAgent"].ToString();
-                request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Timeout = 30000;
                 // Get the response.

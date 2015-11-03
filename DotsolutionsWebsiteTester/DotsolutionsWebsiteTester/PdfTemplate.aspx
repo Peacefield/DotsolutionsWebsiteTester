@@ -73,7 +73,7 @@
         }
 
             .ratingList li span {
-                margin-left: -80px;
+                margin-left: -40px;
             }
 
             .ratingList li a {
@@ -110,14 +110,16 @@
         }
 
         .ratingSquare {
+            width: 35px;
+            height: 35px;
+            padding: 2px 2px 2px 2px;
+            text-align: center;
             display: inline-block;
             font-size: 1.5em;
             color: white;
             border-radius: 5px;
             margin-right: 5px;
             margin-bottom: 4px;
-            padding-left: 3px;
-            padding-right: 3px;
         }
 
         .googleResult_title, .googleResult_url, .googleResult_desc {
