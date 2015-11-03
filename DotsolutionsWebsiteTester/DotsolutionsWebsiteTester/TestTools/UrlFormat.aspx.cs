@@ -1,6 +1,9 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -9,6 +12,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class UrlFormat : System.Web.UI.Page
     {
+        decimal rating = 10.0m;
+        List<string> sitemap;
+        List<string> longUrl = new List<string>();
+        List<string> dirtyUrl = new List<string>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -20,11 +28,201 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Response.Redirect("~/");
                 return;
             }
+            this.sitemap = (List<string>)Session["selectedSites"];
+            var ths = new ThreadStart(GetUrlFormat);
+            var th = new Thread(ths);
+            th.Start();
+
+            th.Join();
+
             var sb = new System.Text.StringBuilder();
             UrlFormatSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
             string htmlstring = sb.ToString();
 
             Session["UrlFormat"] = htmlstring;
+        }
+
+        private void GetUrlFormat()
+        {
+            foreach (var page in sitemap)
+            {
+                var threadList = new List<Thread>();
+                var Webget = new HtmlWeb();
+                var doc = Webget.Load(page);
+                if (doc.DocumentNode.SelectNodes("//a[@href]") != null)
+                {
+                    foreach (var link in doc.DocumentNode.SelectNodes("//a[@href]"))
+                    {
+                        var ths = new ThreadStart(() => TestFormat(link.Attributes["href"].Value, page));
+                        var th = new Thread(ths);
+                        threadList.Add(th);
+                        th.Start();
+                    }
+                }
+                foreach (var th in threadList)
+                {
+                    th.Join();
+                }
+
+                var count = 0;
+                foreach (var item in longUrl)
+                {
+                    if (count <= 5)
+                    {
+                        AddToTable(item, "URL is te lang", page);
+                    }
+                    count++;
+                }
+                if (count > 5)
+                {
+                    AddToTable("...", "<strong>" + (count - 4) + " overige te lange URLs niet getoond</strong>", page);
+                }
+
+                count = 0;
+                foreach (var item in dirtyUrl)
+                {
+                    if (count <= 5)
+                    {
+                        AddToTable(item, "URL is niet gebruikersvriendelijk", page);
+                    }
+                    count++;
+                }
+                if (count > 5)
+                {
+                    AddToTable("...", "<strong>" + (count - 4) + " overige niet gebruikersvriendelijke URLs niet getoond</strong>", page);
+                }
+
+                longUrl.Clear();
+                dirtyUrl.Clear();
+            }
+
+            if (rating <= 0m)
+                rating = 0.0m;
+            if (rating == 10.0m)
+                rating = 10m;
+
+            decimal rounded = decimal.Round(rating, 1);
+
+            var temp = (decimal)Session["RatingAccess"];
+            Session["RatingAccess"] = temp + rounded;
+
+            temp = (decimal)Session["RatingUx"];
+            Session["RatingUx"] = temp + rounded;
+
+            temp = (decimal)Session["RatingTech"];
+            Session["RatingTech"] = temp + rounded;
+
+            UrlFormatRating.InnerHtml = rounded.ToString();
+            Session["UrlFormatRating"] = rounded;
+
+            SetRatingDisplay(rounded);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="link">Found URL that gets tested</param>
+        /// <param name="page">Page of origin where the URL was found</param>
+        private void TestFormat(string link, string page)
+        {
+            var uri = new Uri(page);
+            if (link.Contains("/"))
+            {
+                var path = link;
+                if (link.Contains("http"))
+                {
+                    if (link.StartsWith(uri.Scheme + "://" + uri.Host + "/"))
+                        path = link.Replace(uri.Scheme + "://" + uri.Host + "/", "");
+                    else
+                        return;
+                }
+
+                if (IsLong(path))
+                {
+                    rating = rating - (5m / sitemap.Count);
+                    longUrl.Add(path);
+                }
+
+                if (IsDirty(path))
+                {
+                    rating = rating - (5m / sitemap.Count);
+                    dirtyUrl.Add(path);
+                }
+            }
+        }
+
+        private bool IsLong(string page)
+        {
+            var parts = page.Split('/');
+            foreach (var part in parts)
+            {
+                var words = part.Split('-', '_');
+                if (words.Length > 15)
+                {
+                    Debug.WriteLine(" >>>>> " + page + " IsLong()");
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsDirty(string page)
+        {
+            //https://perishablepress.com/stop-using-unsafe-characters-in-urls/
+            //https://d1avok0lzls2w.cloudfront.net/uploads/blog/54ea8746e0e803.90711764.jpg
+
+            string[] dirtyChars = { "?", "_", "%20", "!", "$", "&", "+", ":", "=", "@" };
+
+            foreach (var item in dirtyChars)
+            {
+                if (page.Contains(item))
+                {
+                    Debug.WriteLine(" >>>>> " + page + " contains: " + item);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Set the colour that indicates the rating accordingly
+        /// </summary>
+        /// <param name="rating">decimal rating</param>
+        private void SetRatingDisplay(decimal rating)
+        {
+            if (rating < 6m)
+                UrlFormatRating.Attributes.Add("class", "lowScore ratingCircle");
+            else if (rating < 8.5m)
+                UrlFormatRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            else
+                UrlFormatRating.Attributes.Add("class", "excellentScore ratingCircle");
+        }
+
+        /// <summary>
+        /// Adds result to table UrlFormatTable
+        /// </summary>
+        /// <param name="link">Tested link</param>
+        /// <param name="text">Description of the notification</param>
+        /// <param name="page">Page of origin</param>
+        private void AddToTable(string link, string text, string page)
+        {
+            UrlFormatHiddenTable.Attributes.Remove("class");
+
+            var tRow = new TableRow();
+
+            var tCellLink = new TableCell();
+            tCellLink.Text = link;
+            tRow.Cells.Add(tCellLink);
+
+            var tCellMsg = new TableCell();
+            tCellMsg.Text = text;
+            tRow.Cells.Add(tCellMsg);
+
+            var tCellPage = new TableCell();
+            tCellPage.Text = "<a href='" + page + "' target='_blank'>" + page + "</a>";
+            tRow.Cells.Add(tCellPage);
+
+            UrlFormatTable.Rows.Add(tRow);
         }
     }
 }

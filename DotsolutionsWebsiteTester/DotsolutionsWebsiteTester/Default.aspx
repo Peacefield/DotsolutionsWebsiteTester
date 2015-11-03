@@ -58,7 +58,7 @@
                         <asp:ListItem Text="Mobiele compatibiliteit" Value="MobileCompatibility" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Headers" Value="Headings" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Interne links" Value="InternalLinks" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="URL formaat" Value="UrlFormat" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="URL Formaat" Value="UrlFormat" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>
                 </div>
                 <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
