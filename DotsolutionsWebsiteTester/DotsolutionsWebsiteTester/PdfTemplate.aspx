@@ -143,7 +143,7 @@
             font-size: 1em;
         }
 
-        .computercontainer {
+        .tabletcontainer {
             width: 450px;
             height: 260px;
             background-image: url("http://i.imgur.com/BTpnDci.png");
@@ -162,7 +162,7 @@
             background-repeat: no-repeat;
         }
 
-        #MainContent_computerImg, #MainContent_mobileImg {
+        #MainContent_tabletImg, #MainContent_mobileImg {
             margin-left: 25%;
         }
     </style>

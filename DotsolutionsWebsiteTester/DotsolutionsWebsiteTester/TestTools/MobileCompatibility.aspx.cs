@@ -38,6 +38,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["MobileCompatibility"] = htmlstring;
         }
 
+        /// <summary>
+        /// Get Mobile Compatibilit rating from pages in Session["selectedSites"] by performing multiple tests
+        /// </summary>
         private void GetMC()
         {
             Debug.WriteLine("MobileCompatibility >>>>>");
@@ -45,6 +48,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             var notCompatiblePage = new List<string>();
             var sitemap = (List<string>)Session["selectedSites"];
             var rating = 10m;
+
+            SetPreviewImages();
 
             foreach (var url in sitemap)
             {
@@ -108,10 +113,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             temp = (decimal)Session["RatingTech"];
             Session["RatingTech"] = temp + rounded;
             SetRatingDisplay(rating);
-
-            SetPreviewImages();
         }
 
+        /// <summary>
+        /// Add preview images to the page of tablet and smartphone viewings using Screenshot Machine
+        /// </summary>
         private void SetPreviewImages()
         {
             // Free service without mobile resolutionn ability
@@ -133,14 +139,20 @@ namespace DotsolutionsWebsiteTester.TestTools
             //var size = "Nmob";
             //var imgUrlMobile = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
             //size = "N";
-            //var imgUrlComputer = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            //var imgUrlTablet = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
 
-            var imgUrlComputer = "http://i.imgur.com/PtcoFun.png";
+            var imgUrlTablet = "http://i.imgur.com/PtcoFun.png";
             var imgUrlMobile = "http://i.imgur.com/8UIGhLL.png";
 
-            computerImg.InnerHtml = "<img width='400' height='300' class='computercontainer center-block' src='" + imgUrlComputer + "' title='Laptop preview " + Session["MainUrl"].ToString() + "' alt='Laptop preview " + Session["MainUrl"].ToString() + "'/>";
+            tabletImg.InnerHtml = "<img width='400' height='300' class='tabletcontainer center-block' src='" + imgUrlTablet + "' title='Tablet preview " + Session["MainUrl"].ToString() + "' alt='Tablet preview " + Session["MainUrl"].ToString() + "'/>";
             mobileImg.InnerHtml = "<img width='480' height='800' class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Smartphone preview " + Session["MainUrl"].ToString() + "' alt='Smartphone preview " + Session["MainUrl"].ToString() + "'/>";
         }
+        
+        /// <summary>
+        /// Check if page has no CSS
+        /// </summary>
+        /// <param name="doc">HtmlDocument page</param>
+        /// <returns>true if page has no CSS</returns>
         private bool HasNoCss(HtmlDocument doc)
         {
             var boolean = false;
@@ -153,6 +165,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return boolean;
         }
 
+        /// <summary>
+        /// Check if page has stylesheet dedicated to mobile viewing
+        /// </summary>
+        /// <param name="doc">HtmlDocument page</param>
+        /// <returns>true if page has stylesheet dedicated to mobile viewing</returns>
         private bool HasMobileCssSheet(HtmlDocument doc)
         {
             var boolean = false;
@@ -172,6 +189,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return boolean;
         }
 
+        /// <summary>
+        /// Check if page redirects
+        /// </summary>
+        /// <param name="url">String url page</param>
+        /// <returns>true if page redirects</returns>
         private bool HasMobileRedirect(string url)
         {
             var boolean = false;
@@ -231,6 +253,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return boolean;
         }
 
+        /// <summary>
+        /// Check if stylesheet of a page contains @media queries
+        /// </summary>
+        /// <param name="doc">HtmlDocument page</param>
+        /// <returns>True if page has stylesheet that uses @media queries</returns>
         private bool HasMobileCssQuery(HtmlDocument doc)
         {
             var boolean = false;
@@ -270,6 +297,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return boolean;
         }
 
+        /// <summary>
+        /// Get a list of used stylesheet on a page
+        /// </summary>
+        /// <param name="doc">HtmlDocument page</param>
+        /// <returns>String list of stylesheets used on the page</returns>
         private List<string> GetCssList(HtmlDocument doc)
         {
             var cssList = new List<string>();
@@ -339,6 +371,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 MobileCompatibilityRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
 
+        /// <summary>
+        /// Get ApiKey from Session["ApiKeys"]
+        /// </summary>
+        /// <param name="key">ApiKey</param>
+        /// <returns>ApiKey Value</returns>
         private string GetFromApiKeys(string key)
         {
             var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];

@@ -172,6 +172,12 @@ namespace DotsolutionsWebsiteTester
 
             writer.Write(sOut);
         }
+
+        /// <summary>
+        /// Get ApiKey from Session["ApiKeys"]
+        /// </summary>
+        /// <param name="key">ApiKey</param>
+        /// <returns>ApiKey Value</returns>
         private string GetFromApiKeys(string key)
         {
             var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];

@@ -113,7 +113,6 @@ namespace DotsolutionsWebsiteTester
                             try
                             {
                                 line = line.Remove(0, 10);
-                                Debug.WriteLine(line);
                                 robots.Add(line);
                             }
                             catch (ArgumentOutOfRangeException)
@@ -221,6 +220,11 @@ namespace DotsolutionsWebsiteTester
             Session["selectedSites"] = sitemap;
         }
 
+        /// <summary>
+        /// Get ApiKey from Session["ApiKeys"]
+        /// </summary>
+        /// <param name="key">ApiKey</param>
+        /// <returns>ApiKey Value</returns>
         private string GetFromApiKeys(string key)
         {
             var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
