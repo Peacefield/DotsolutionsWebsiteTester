@@ -75,14 +75,17 @@ namespace DotsolutionsWebsiteTester
             return list;
         }
 
+        /// <summary>
+        /// Get the robots.txt file from a domain
+        /// </summary>
+        /// <param name="url">URL of origin</param>
+        /// <returns>String list of files in Disallow for all bots</returns>
         private List<string> GetRobotsTxt(string url)
         {
             var robots = new List<string>();
 
-            if (!url.EndsWith("/"))
-            {
-                url = url + "/";
-            }
+            var uri = new Uri(url);
+            url = uri.Scheme + "://" + uri.Host + "/";
 
             try
             {
@@ -110,7 +113,7 @@ namespace DotsolutionsWebsiteTester
                             try
                             {
                                 line = line.Remove(0, 10);
-
+                                Debug.WriteLine(line);
                                 robots.Add(line);
                             }
                             catch (ArgumentOutOfRangeException)

@@ -124,8 +124,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             //    + "&stwinside=1"
             //    + "&stwsize=xlg"
             //    + "&stwurl=" + Session["MainUrl"].ToString();
-            var imgUrlComputer = "http://i.imgur.com/Elyj1XA.png";
-            var imgUrlMobile = "http://i.imgur.com/8UIGhLL.png";
 
 
             // Payed services with 100 free unique requests per month, but WITH mobile resolution ability
@@ -137,8 +135,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             //var imgUrlMobile = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
             //size = "M"
             //var imgUrlComputer = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            
+            var imgUrlComputer = "http://i.imgur.com/Elyj1XA.png";
+            var imgUrlMobile = "http://i.imgur.com/8UIGhLL.png";
 
-            //var imgUrlMobile = "/Content/images/placeholder.jpg";
             computerImg.InnerHtml = "<img width='640' height='480' class='computercontainer center-block' src='" + imgUrlComputer + "' title='Laptop preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
             mobileImg.InnerHtml = "<img width='480' height='800' class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Smartphone preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
         }
