@@ -142,6 +142,8 @@
         }
 
         .computercontainer {
+            width: 450px;
+            height: 260px;
             background-image: url("http://i.imgur.com/BTpnDci.png");
             padding: 26px 141px 26px 31px;
             display: inline-block;
@@ -150,6 +152,8 @@
         }
 
         .mobilecontainer {
+            width: 144px;
+            height: 260px;
             background-image: url("http://i.imgur.com/BDKytvF.png");
             padding: 40px 20px 47px 10px;
             background-size: contain;

@@ -139,8 +139,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             //var imgUrlComputer = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
 
             //var imgUrlMobile = "/Content/images/placeholder.jpg";
-            computerImg.InnerHtml = "<img width='450' height='260' class='computercontainer center-block' src='" + imgUrlComputer + "' title='Laptop preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
-            mobileImg.InnerHtml = "<img width='144' height='260' class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Smartphone preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
+            computerImg.InnerHtml = "<img width='640' height='480' class='computercontainer center-block' src='" + imgUrlComputer + "' title='Laptop preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
+            mobileImg.InnerHtml = "<img width='480' height='800' class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Smartphone preview " + Session["MainUrl"].ToString() + "' alt='Preview " + Session["MainUrl"].ToString() + "'/>";
         }
         private bool HasNoCss(HtmlDocument doc)
         {

@@ -34,8 +34,6 @@
     .computercontainer {
         width: 310px;
         height: 250px;
-        /*background-image: url("/Content/images/laptop_template.png");*/
-        /*padding: 10px 35px 36px 35px;*/
         background-image: url("/Content/images/tablet_template.png");
         padding: 24px 25px 35px 28px;
         display: inline-block;
@@ -81,8 +79,8 @@
     }
 
     .computercontainer {
-        /*background-image: url("/Content/images/laptop_template.png");*/
-        /*padding: 18px 60px 50px 60px;*/
+        width: 450px;
+        height: 260px;
         background-image: url("http://i.imgur.com/BTpnDci.png");
         padding: 26px 141px 26px 31px;
         display: inline-block;
@@ -91,6 +89,8 @@
     }
 
     .mobilecontainer {
+        width: 144px;
+        height: 260px;
         background-image: url("http://i.imgur.com/BDKytvF.png");
         padding: 40px 20px 47px 10px;
         background-size: contain;
