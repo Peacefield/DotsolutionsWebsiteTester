@@ -42,6 +42,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["UrlFormat"] = htmlstring;
         }
 
+        /// <summary>
+        /// Rate the URLs on the pages in Session["selectedSites"] 
+        /// </summary>
         private void GetUrlFormat()
         {
             var totalCount = 0;
@@ -142,7 +145,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         /// <summary>
-        /// 
+        /// Test a found URL on a page
         /// </summary>
         /// <param name="link">Found URL that gets tested</param>
         /// <param name="page">Page of origin where the URL was found</param>
@@ -174,22 +177,32 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
-        private bool IsLong(string page)
+        /// <summary>
+        /// Check if URL is longer than 15 words when split on '-' and '_'
+        /// </summary>
+        /// <param name="path">URL path</param>
+        /// <returns>true if URL is longer than 15 words</returns>
+        private bool IsLong(string path)
         {
-            var parts = page.Split('/');
+            var parts = path.Split('/');
             foreach (var part in parts)
             {
                 var words = part.Split('-', '_');
                 if (words.Length > 15)
                 {
-                    Debug.WriteLine(" >>>>> " + page + " IsLong()");
+                    Debug.WriteLine(" >>>>> " + path + " IsLong()");
                     return true;
                 }
             }
             return false;
         }
 
-        private bool IsDirty(string page)
+        /// <summary>
+        /// Check if URL is userfriendly by checking for several characters
+        /// </summary>
+        /// <param name="path">URL path</param>
+        /// <returns>true if URL contains any of the 'dirty' characters</returns>
+        private bool IsDirty(string path)
         {
             //https://perishablepress.com/stop-using-unsafe-characters-in-urls/
             //https://d1avok0lzls2w.cloudfront.net/uploads/blog/54ea8746e0e803.90711764.jpg
@@ -198,9 +211,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             foreach (var item in dirtyChars)
             {
-                if (page.Contains(item))
+                if (path.Contains(item))
                 {
-                    Debug.WriteLine(" >>>>> " + page + " contains: " + item);
+                    Debug.WriteLine(" >>>>> " + path + " contains: " + item);
                     return true;
                 }
             }
