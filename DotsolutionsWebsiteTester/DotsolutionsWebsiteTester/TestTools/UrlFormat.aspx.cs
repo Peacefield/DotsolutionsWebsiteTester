@@ -44,6 +44,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetUrlFormat()
         {
+            var totalCount = 0;
             foreach (var page in sitemap)
             {
                 var threadList = new List<Thread>();
@@ -64,36 +65,58 @@ namespace DotsolutionsWebsiteTester.TestTools
                     th.Join();
                 }
 
-                var count = 0;
-                foreach (var item in longUrl)
+                if (longUrl.Count > 0)
                 {
-                    if (count <= 5)
+
+                    var count = 0;
+                    foreach (var item in longUrl)
                     {
-                        AddToTable(item, "URL is te lang", page);
+                        if (count <= 5)
+                        {
+                            AddToTable(item, "URL is te lang", page);
+                        }
+                        count++;
                     }
-                    count++;
-                }
-                if (count > 5)
-                {
-                    AddToTable("...", "<strong>" + (count - 4) + " overige te lange URLs niet getoond</strong>", page);
+                    if (count > 5)
+                    {
+                        AddToTable("...", "<strong>" + (count - 4) + " overige te lange URLs gevonden</strong>", page);
+                    }
+                    totalCount += count;
                 }
 
-                count = 0;
-                foreach (var item in dirtyUrl)
+                if (dirtyUrl.Count > 0)
                 {
-                    if (count <= 5)
+                    var count = 0;
+                    foreach (var item in dirtyUrl)
                     {
-                        AddToTable(item, "URL is niet gebruikersvriendelijk", page);
+                        if (count <= 5)
+                        {
+                            AddToTable(item, "URL is niet gebruikersvriendelijk", page);
+                        }
+                        count++;
                     }
-                    count++;
-                }
-                if (count > 5)
-                {
-                    AddToTable("...", "<strong>" + (count - 4) + " overige niet gebruikersvriendelijke URLs niet getoond</strong>", page);
+                    if (count > 5)
+                    {
+                        AddToTable("...", "<strong>" + (count - 4) + " overige niet gebruikersvriendelijke URLs gevonden</strong>", page);
+                    }
+                    totalCount += count;
                 }
 
                 longUrl.Clear();
                 dirtyUrl.Clear();
+            }
+
+            if (UrlFormatHiddenTable.Attributes["class"] != null)
+            {
+                UrlFormatNotifications.InnerHtml = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                    + "<span> Alle URLs zijn schoon en gebruiksvriendelijk.</span></div>";
+            }
+            else
+            {
+                UrlFormatNotifications.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                    + "<span> " + totalCount + " foutieve URLs gevonden.</span></div>";
             }
 
             if (rating <= 0m)

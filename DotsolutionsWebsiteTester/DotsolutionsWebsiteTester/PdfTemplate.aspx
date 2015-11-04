@@ -29,6 +29,11 @@
         .results {
             overflow-x: auto;
         }
+
+        .word-break {
+            word-break: break-word;
+        }
+
         /* Custom panel colouring */
         .panel-custom {
             border-color: #85CC76 !important;

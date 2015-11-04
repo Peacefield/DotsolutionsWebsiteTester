@@ -169,6 +169,10 @@ footer {
     overflow-x: auto;
 }
 
+.word-break {
+    word-break: break-word;
+}
+
 .jumbotron {
     margin-top: 20px;
 }
@@ -395,9 +399,9 @@ footer {
 
 .ratingSquare {
     width: 35px;
-    height:35px;
+    height: 35px;
     padding: 2px 2px 2px 2px;
-    text-align:center;
+    text-align: center;
     display: inline-block;
     font-size: 1.5em;
     color: white;
