@@ -124,11 +124,6 @@
             </li>
         </ul>
     </div>
-    <!-- List with test names to show to user -->
-    <div id="performedTestshidden" class="well well-sm">
-        <h3>Uitgevoerde tests</h3>
-        <ul id="PerformedTestsName" runat="server"></ul>
-    </div>
     <!-- Hidden list with page-names used for the AJAX requests -->
     <div class="hidden">
         <ul id="performedTests" runat="server"></ul>

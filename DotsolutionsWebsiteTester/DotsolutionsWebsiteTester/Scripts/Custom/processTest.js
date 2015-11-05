@@ -218,7 +218,6 @@ window.onload = function () {
 
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
-                                $("#performedTestshidden").fadeIn();
                                 $("#automatedRatingList").fadeIn();
                                 $("#MainContent_CreatePdfBtn").css("display", "block");
                                 document.title = 'Resultaten - Website tester';
@@ -234,7 +233,6 @@ window.onload = function () {
         }
         else {
             $("#overlay").fadeOut();
-            $("#performedTestshidden").css("display", "block");
             document.title = 'Resultaten - Website tester';
         }
     }

@@ -139,15 +139,9 @@ namespace DotsolutionsWebsiteTester
         private void GetTestList()
         {
             var selectedTests = (List<string>)Session["selectedTests"];
-            var selectedTestsName = (List<string>)Session["selectedTestsName"];
 
-            for (int i = 0; i < selectedTests.Count; i++)
-            {
-                // Set list for ajax requests
-                performedTests.InnerHtml += "<li>" + selectedTests[i] + "</li>";
-                // Display name for user
-                PerformedTestsName.InnerHtml += "<li><a onclick=animateTo('" + selectedTests[i] + "') href='#" + selectedTests[i] + "'>" + selectedTestsName[i] + "</a></li>";
-            }
+            foreach (var item in selectedTests)
+                performedTests.InnerHtml += "<li>" + item + "</li>";
         }
 
         /// <summary>
