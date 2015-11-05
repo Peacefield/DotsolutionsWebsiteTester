@@ -133,6 +133,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<ul>" + nothing + "</ul></div>";
             }
 
+            AnalyticsResults.InnerHtml = message;
+
             if(isDetailed)
                 AnalyticsTableHidden.Attributes.Remove("class");
 

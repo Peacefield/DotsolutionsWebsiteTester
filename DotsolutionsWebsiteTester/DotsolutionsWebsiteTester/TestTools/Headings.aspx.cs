@@ -46,6 +46,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var sitemap = (List<string>)Session["selectedSites"];
             var rating = 10.0m;
             var message = "";
+            var isDetailed = (bool)Session["IsDetailedTest"];
             foreach (var url in sitemap)
             {
                 GetHeadingsOnUrl(url);
@@ -76,16 +77,24 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (totalHeadingCnt > 0)
             {
-
                 if (errorCnt > 0)
                 {
+                    if (isDetailed)
+                    {
+                        headingTableHidden.Attributes.Remove("class");
+                        message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                            + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                            + "<span> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
+                    }
+                    else
+                        message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                            + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                            + "<span> Kort verhaal over het belang van volgorde van headers en dat dit hier niet overal goed is gedaan.</span></div>";
+
                     // Every misplaced heading causes a reduction in relation the the total amount of headers used
                     // E.g. 3 misplaced headings while there was a total of 20 headings used cause a reduction of 3/20th * 10
                     rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 10m);
-                    headingTableHidden.Attributes.Remove("class");
-                    message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        + "<span> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
+
                 }
                 else
                 {

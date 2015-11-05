@@ -31,15 +31,21 @@ namespace DotsolutionsWebsiteTester
             // Check if any tests were selected
             if (!IsTestAvailable()) return;
 
-            if (IsDetailedTestBtn.Checked)
-                Session["IsDetailedTest"] = true;
-            else
-                Session["IsDetailedTest"] = false;
-
             // Set session that contains the url the user wants to test
             // This session is also checked throughout the application to check if all the needed sessions are set.
             Session["MainUrl"] = url;
-            Response.Redirect("Handmatige-Test");
+            
+            if (IsDetailedTestBtn.Checked)
+            {
+                Session["IsDetailedTest"] = true;
+                Response.Redirect("Handmatige-Test");
+            }
+            else
+            {
+                Session["ManualTest"] = false;
+                Session["IsDetailedTest"] = false;
+                Response.Redirect("Geautomatiseerde-Test");
+            }
             return;
         }
 
