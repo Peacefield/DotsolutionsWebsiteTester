@@ -115,6 +115,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             GetSERPDisplay();
             rating = GetDescriptionRating(rating, hasNoDescription, hasLongDescription);
             rating = GetRobotRating(rating, hasNoRobots);
+            rating = GetTitleRating(rating);
             SetRating(rating);
             MetaErrorsFound.InnerHtml = message;
         }
@@ -171,9 +172,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                                 var temp = "";
                                 foreach (var word in split)
                                 {
-                                    temp += word + " ";
+                                    temp += word;
                                     if (temp.Length <= 55)
                                     {
+                                        temp += " ";
                                         title = temp;
                                     }
                                     else
@@ -181,8 +183,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                                 }
                                 title += "...";
                             }
-
                         }
+                        else
+                            title = "Untitled";
                     }
                 }
 
@@ -299,7 +302,50 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             return rating;
         }
+        private decimal GetTitleRating(decimal rating)
+        {
+            var url = Session["MainUrl"].ToString();
+            var Webget = new HtmlWeb();
+            var doc = Webget.Load(url);
+            var isLong = false;
+            var isEmpty = false;
 
+            if (doc.DocumentNode.SelectNodes("//title[parent::head]") != null)
+            {
+                foreach (var node in doc.DocumentNode.SelectNodes("//title[parent::head]"))
+                {
+                    if (node.InnerText != "")
+                    {
+                        var title = HttpUtility.HtmlDecode(node.InnerText);
+                        Debug.WriteLine("Gevonden titel is: " + title);
+                        if (title.Length > 55)
+                        {
+                            isLong = true;
+                        }
+                    }
+                    else
+                        isEmpty = true;
+                }
+            }
+            else
+                isEmpty = true;
+
+            if (isEmpty)
+            {
+                rating = rating - 2m;
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                    + "<span> Er wordt geen titel gebruikt op de ingevoerde pagina</span></div>";
+            }
+            if (isLong)
+            {
+                rating = rating - 1m;
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                    + "<span> Er wordt een te lange titel gebruikt op de ingevoerde pagina</span></div>";
+            }
+            return rating;
+        }
         /// <summary>
         /// Add a meta tag to the table
         /// </summary>

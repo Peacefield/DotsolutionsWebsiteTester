@@ -337,12 +337,14 @@ namespace DotsolutionsWebsiteTester
         }
 
         [System.Web.Services.WebMethod]
-        public static void AddOverallRatingSession(string rating)
+        public static void AddOverallRatingSession(decimal rating)
         {
+            Debug.WriteLine("OverallRating: " + rating);
+
             HttpContext.Current.Session["RatingOverall"] = rating;
         }
-        #region WebMethods for setting total rating
 
+        #region WebMethods for setting total rating
 
         [System.Web.Services.WebMethod]
         public static void ResetRating()

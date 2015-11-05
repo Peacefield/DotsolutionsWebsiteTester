@@ -64,6 +64,7 @@ namespace DotsolutionsWebsiteTester
         private void SetTotalRating()
         {
             RatingOverall.InnerHtml = Session["RatingOverall"].ToString();
+            SetRatingDisplay("RatingOverall", RatingOverall);
 
             RatingAccess.InnerHtml = GetRoundedRating((decimal)Session["RatingAccess"]);
             RatingUx.InnerHtml = GetRoundedRating((decimal)Session["RatingUx"]);
@@ -94,12 +95,24 @@ namespace DotsolutionsWebsiteTester
         {
             var rating = (decimal)Session[criteria];
 
-            if (rating < 6m)
-                control.Attributes.Add("class", "lowScore ratingSquare");
-            else if (rating < 8.5m)
-                control.Attributes.Add("class", "mediocreScore ratingSquare");
+            if (criteria == "RatingOverall")
+            {
+                if (rating < 6m)
+                    control.Attributes.Add("class", "lowScore ratingCircle");
+                else if (rating < 8.5m)
+                    control.Attributes.Add("class", "mediocreScore ratingCircle");
+                else
+                    control.Attributes.Add("class", "excellentScore ratingCircle");
+            }
             else
-                control.Attributes.Add("class", "excellentScore ratingSquare");
+            {
+                if (rating < 6m)
+                    control.Attributes.Add("class", "lowScore ratingSquare");
+                else if (rating < 8.5m)
+                    control.Attributes.Add("class", "mediocreScore ratingSquare");
+                else
+                    control.Attributes.Add("class", "excellentScore ratingSquare");
+            }
         }
 
         /// <summary>

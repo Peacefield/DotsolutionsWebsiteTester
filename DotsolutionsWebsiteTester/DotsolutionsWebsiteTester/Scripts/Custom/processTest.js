@@ -42,7 +42,7 @@ function animateTo(identifier) {
 }
 
 function SetRatingClass(identifier, rating, overall) {
-    var rating = rating.replace(",", ".")
+    var rating = rating.replace(",", ".");
     if (overall) {
         if (rating < 6)
             $(identifier).attr("class", "lowScore ratingCircle");
@@ -96,13 +96,19 @@ function GetOverallRating() {
     var market = $("#RatingMarketing").text().replace(",", ".");
     var tech = $("#RatingTech").text().replace(",", ".");
 
-    var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / 4).toFixed(1);
+    var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / 4);
 
-    if (total === 10.0) {
-        total = 10;
+    if (total !== 10) {
+        total = total.toFixed(1);
+        $("#RatingOverall").text(total.replace(".", ","));
+    }
+    else {
+        total = total.toFixed(0);
+        $("#RatingOverall").text(total);
     }
 
-    $("#RatingOverall").text(total.replace(".", ","));
+    PageMethods.AddOverallRatingSession(total, OnSuccess, OnError);
+
     SetRatingClass("#RatingOverall", total, true);
 }
 
@@ -204,8 +210,6 @@ window.onload = function () {
                                 var uxInner = document.getElementById("RatingUxList").innerHTML;
                                 var marketInner = document.getElementById("RatingMarketingList").innerHTML;
                                 var techInner = document.getElementById("RatingTechList").innerHTML;
-
-                                PageMethods.AddOverallRatingSession($("#RatingOverall").text(), OnSuccess, OnError);
                                 PageMethods.AddCriteriaListSession("RatingAccessList", accessInner, OnSuccess, OnError);
                                 PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
                                 PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
