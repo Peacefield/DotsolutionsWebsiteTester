@@ -336,6 +336,11 @@ namespace DotsolutionsWebsiteTester
             HttpContext.Current.Session[session] = innerhtml;
         }
 
+        [System.Web.Services.WebMethod]
+        public static void AddOverallRatingSession(string rating)
+        {
+            HttpContext.Current.Session["RatingOverall"] = rating;
+        }
         #region WebMethods for setting total rating
 
 

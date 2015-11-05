@@ -78,8 +78,13 @@
             </div>
         </div>
     </div>
+
     <div class="well well-sm" id="automatedRatingList">
         <h3>Beoordeling Geautomatiseerde Test</h3>
+        <div>
+            <span id="RatingOverall" class="mediocreScore ratingCircle">...</span>Totaal
+        </div>
+        <hr />
         <ul runat="server">
             <li id="RatingAccessTxt"><span id="RatingAccess" class="ratingSquare">...</span>Toegankelijkheid 
                 <span id="ShowRatingAccess" class="displayRating">

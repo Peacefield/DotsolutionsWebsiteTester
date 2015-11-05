@@ -63,10 +63,12 @@ namespace DotsolutionsWebsiteTester
 
         private void SetTotalRating()
         {
-            RatingAccess.InnerHtml = ((decimal)Session["RatingAccess"]).ToString("0.0");
-            RatingUx.InnerHtml = ((decimal)Session["RatingUx"]).ToString("0.0");
-            RatingMarketing.InnerHtml = ((decimal)Session["RatingMarketing"]).ToString("0.0");
-            RatingTech.InnerHtml = ((decimal)Session["RatingTech"]).ToString("0.0");
+            RatingOverall.InnerHtml = Session["RatingOverall"].ToString();
+
+            RatingAccess.InnerHtml = GetRoundedRating((decimal)Session["RatingAccess"]);
+            RatingUx.InnerHtml = GetRoundedRating((decimal)Session["RatingUx"]);
+            RatingMarketing.InnerHtml = GetRoundedRating((decimal)Session["RatingMarketing"]);
+            RatingTech.InnerHtml = GetRoundedRating((decimal)Session["RatingTech"]);
 
             RatingAccessList.InnerHtml = Session["RatingAccessList"].ToString();
             RatingUxList.InnerHtml = Session["RatingUxList"].ToString();
@@ -77,6 +79,15 @@ namespace DotsolutionsWebsiteTester
             SetRatingDisplay("RatingUx", RatingUx);
             SetRatingDisplay("RatingMarketing", RatingMarketing);
             SetRatingDisplay("RatingTech", RatingTech);
+        }
+
+        private string GetRoundedRating(decimal rating)
+        {
+            var roundedRating = rating.ToString("0.0");
+            if (rating == 10m)
+                roundedRating = "10";
+
+            return roundedRating;
         }
         
         private void SetRatingDisplay(string criteria, System.Web.UI.HtmlControls.HtmlGenericControl control)

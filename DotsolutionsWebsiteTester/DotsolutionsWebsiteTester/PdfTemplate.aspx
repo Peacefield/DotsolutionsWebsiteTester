@@ -187,6 +187,10 @@
             <div id="manualresults" runat="server"></div>
             <div class="well well-sm" id="automatedRatingList">
                 <h3>Beoordeling Geautomatiseerde Test</h3>
+                <div>
+                    <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span>Totaal
+                </div>
+                <hr />
                 <ul runat="server">
                     <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">...</span>Toegankelijkheid
                 <div class="well-sm well ratingList">

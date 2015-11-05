@@ -101,11 +101,17 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (sitemap.Count == 1)
                     siteMapGrammer = "pagina";
 
-                if(isDetailed)
+                if (isDetailed)
+                {
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> " + longTitles.Count + " van de " + sitemap.Count + " geteste " + siteMapGrammer + " " + longTitlesGrammar + " een te lange titel:</span></div>";
                     PageTitlesTableHidden.Attributes.Remove("class");
-                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> " + longTitles.Count + " van de " + sitemap.Count + " geteste " + siteMapGrammer + " " + longTitlesGrammar + " een te lange titel:</span></div>";
+                }
+                else
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> Kort verhaal over hoe lange titels gebruikt worden op sommige pagina's en waarom dit niet goed is</span></div>";
             }
 
             if (longTitles.Count == 0 && noTitles.Count == 0)
