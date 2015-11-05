@@ -56,6 +56,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             var sitemap = (List<string>)Session["selectedSites"];
             var analyticslist = new List<KeyValuePair<string, string>>();
             var rating = 10.0m;
+            var message = "";
+            var isDetailed = (bool)Session["IsDetailedTest"];
+
             analyticTypes.Add(new KeyValuePair<string, string>("google-analytics.com", "Google Analytics"));
             analyticTypes.Add(new KeyValuePair<string, string>("yandex.ru/metrika", "Yandex Metrika"));
             //analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
@@ -93,14 +96,13 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                     AddToTable(analyticTypes[i].Value, percentage);
                     analyticslist.Add(new KeyValuePair<string, string>(analyticTypes[i].Value, percentage));
-                    AnalyticsTableHidden.Attributes.Remove("class");
                 }
             }
 
             // Nothing found vs some things found
             if (analyticslist.Count == 0)
             {
-                AnalyticsResults.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                     + "<span> Geen analytics software gevonden.</span></div>";
             }
@@ -112,7 +114,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var sitemapGrammar = sitemap.Count + " pagina's";
                 if (sitemap.Count == 1)
                     sitemapGrammar = sitemap.Count + " pagina";
-                AnalyticsResults.InnerHtml = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> " + analyticsGrammar + " analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemapGrammar + "</span></div>";
             }
@@ -125,11 +127,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 foreach (var item in noAnalytics)
                     nothing += "<li><a href='" + item + "' target='blank'>" + item + "</a></li>";
 
-                AnalyticsResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                     + "<span> Geen analytics software gevonden op volgende pagina's</span>"
                     + "<ul>" + nothing + "</ul></div>";
             }
+
+            if(isDetailed)
+                AnalyticsTableHidden.Attributes.Remove("class");
 
             if (analyticslist.Count > 0)
             {

@@ -48,6 +48,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             var notCompatiblePage = new List<string>();
             var sitemap = (List<string>)Session["selectedSites"];
             var rating = 10m;
+            var message = "";
+            var isDetailed = (bool)Session["IsDetailedTest"];
 
             SetPreviewImages();
 
@@ -85,18 +87,38 @@ namespace DotsolutionsWebsiteTester.TestTools
                 else
                     amount = "bevat " + notCompatiblePage.Count + " pagina";
 
-                // Geen rekening gehouden op sommige pagina's
-                MobileCompatibilityResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de mobiele compatibiliteit:</span>"
-                    + "<ul>" + notcompatiblelist + "</ul></div>";
+                if (isDetailed)
+                {
+                    // Geen rekening gehouden op sommige pagina's
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                        + "<span> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de mobiele compatibiliteit:</span>"
+                        + "<ul>" + notcompatiblelist + "</ul></div>";
+                }
+                else
+                {
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                        + "<span> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
+                }
             }
             else
             {
-                MobileCompatibilityResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Er is rekening gehouden met de mobiele compatibiliteit op alle geteste pagina's</span></div>";
+                if (isDetailed)
+                {
+                    message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                         + "<span> Er is rekening gehouden met de mobiele compatibiliteit op alle geteste pagina's</span></div>";
+                }
+                else
+                {
+                    message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
+                }
             }
+
+            MobileCompatibilityResults.InnerHtml = message;
 
             if (rating == 10.0m)
                 rating = 10m;
@@ -130,7 +152,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             //    + "&stwinside=1"
             //    + "&stwsize=xlg"
             //    + "&stwurl=" + Session["MainUrl"].ToString();
-            
+
             // Payed services with 100 free unique requests per month, but WITH mobile resolution ability
             // https://www.screenshotmachine.com/
             //var ApiKey = GetFromApiKeys("ScreenshotMachine");
@@ -147,7 +169,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             tabletImg.InnerHtml = "<img width='400' height='300' class='tabletcontainer center-block' src='" + imgUrlTablet + "' title='Tablet preview " + Session["MainUrl"].ToString() + "' alt='Tablet preview " + Session["MainUrl"].ToString() + "'/>";
             mobileImg.InnerHtml = "<img width='480' height='800' class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Smartphone preview " + Session["MainUrl"].ToString() + "' alt='Smartphone preview " + Session["MainUrl"].ToString() + "'/>";
         }
-        
+
         /// <summary>
         /// Check if page has no CSS
         /// </summary>

@@ -19,6 +19,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         // Currently using my personal twitter keys
         private SingleUserAuthorizer authorizer;
         private TwitterContext twitterContext;
+        private string message;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -158,11 +159,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (!isTwitterfound)
             {
                 rating = 0.0m;
-                twitterResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Twitter-profiel staat</span></div>";
             }
-
+            twitterResults.InnerHtml = message;
             decimal rounded = decimal.Round(rating, 1);
             TwitterRating.InnerHtml = rounded.ToString();
 
@@ -274,12 +275,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 1m;
             }
 
-            twitterResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+            message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
                 + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
                 + "</div>";
 
-            twitterResults.InnerHtml += "<div class='well well-lg resultWell'>"
+            message += "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-retweet fa-3x'></i>"
                 + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
                 + "<div class='resultDivider'></div>"

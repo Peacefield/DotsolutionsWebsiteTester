@@ -53,6 +53,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void TestInternalLinks()
         {
             var sitemap = (List<string>)Session["selectedSites"];
+            var message = "";
+            var isDetailed = (bool)Session["IsDetailedTest"];
             foreach (var url in sitemap)
             {
                 Debug.WriteLine("Link check op -> " + url);
@@ -108,18 +110,38 @@ namespace DotsolutionsWebsiteTester.TestTools
             // Show message with findings
             if (errorCnt > 0)
             {
-                // Show table when errors are found 
-                IntLinksHiddenTable.Attributes.Remove("class");
-                internalLinksErrorsFound.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> " + errorCnt + " meldingen gevonden.</span></div>";
+                if (isDetailed)
+                {
+                    // Show table when errors are found 
+                    IntLinksHiddenTable.Attributes.Remove("class");
+                    message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                        + "<span> " + errorCnt + " meldingen gevonden.</span></div>";
+                }
+                else
+                {
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
+                        + "<span> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
+                }
             }
             else
             {
-                internalLinksErrorsFound.InnerHtml = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> " + errorCnt + " meldingen gevonden.</span></div>";
+                if (isDetailed)
+                {
+                    message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Alle gevonden linken zijn goed gedeclareerd en zijn werkend.</span></div>";
+                }
+                else
+                {
+                    message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
+                }
             }
+
+            internalLinksErrorsFound.InnerHtml = message;
 
             var rating = 10m - ((decimal)errorCnt / 5m);
 
@@ -148,8 +170,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <summary>
         /// Test individual link
         /// </summary>
-        /// <param name="link"></param>
-        /// <param name="url"></param>
+        /// <param name="link">Found HtmlNode containing href</param>
+        /// <param name="url">Page of origin</param>
         private void TestLink(HtmlNode link, string url)
         {
             string mainUrl = Session["MainUrl"].ToString();
@@ -315,7 +337,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// Test if a link is broken, a.k.a. returns anything other than statuscode 200 OK or Redirect
         /// </summary>
         /// <param name="url">URL to be tested</param>
-        /// <returns></returns>
+        /// <returns>int httpcode</returns>
         private int LinkWorks(string mainurl, string link)
         {
             try

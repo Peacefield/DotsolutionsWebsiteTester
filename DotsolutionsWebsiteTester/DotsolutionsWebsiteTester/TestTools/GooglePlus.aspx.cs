@@ -14,6 +14,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class GooglePlus : System.Web.UI.Page
     {
+        private string message;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -91,7 +92,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (!isGoogleFound)
             {
                 rating = 0.0m;
-                GooglePlusResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er is geen Google+ account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Google+-profiel staat</span></div>";
             }
@@ -99,6 +100,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 rating = GetGooglePlusRating(screenName);
             }
+
+            GooglePlusResults.InnerHtml = message;
 
             decimal rounded = decimal.Round(rating, 1);
             GooglePlusRating.InnerHtml = rounded.ToString();
@@ -258,12 +261,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 1.0m;
             }
 
-            GooglePlusResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+            message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://plus.google.com/" + screenName + "' target='_blank'><img src='" + profileImage + "' alt='profileimage'/></a> "
                 + "<span> Google+ account <a href='https://plus.google.com/" + screenName + "' target='_blank' font-size='large'>" + displayName + "</a> gevonden</span>"
                 + "</div>";
 
-            GooglePlusResults.InnerHtml += "<div class='well well-lg resultWell'>"
+            message += "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-google-plus-square fa-3x'></i>"
                 + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") + " Google +1's </span></div>"
                 + "<div class='resultDivider'></div>"

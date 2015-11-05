@@ -48,6 +48,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void GetUrlFormat()
         {
             var totalCount = 0;
+            var message = "";
+            var isDetailed = (bool)Session["IsDetailedTest"];
+
             foreach (var page in sitemap)
             {
                 var threadList = new List<Thread>();
@@ -85,6 +88,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                         AddToTable("...", "<strong>" + (count - 4) + " overige te lange URLs gevonden</strong>", page);
                     }
                     totalCount += count;
+
+                    if (isDetailed)
+                        UrlFormatHiddenTable.Attributes.Remove("class");
                 }
 
                 if (dirtyUrl.Count > 0)
@@ -103,6 +109,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                         AddToTable("...", "<strong>" + (count - 4) + " overige niet gebruikersvriendelijke URLs gevonden</strong>", page);
                     }
                     totalCount += count;
+
+                    if(isDetailed)
+                        UrlFormatHiddenTable.Attributes.Remove("class");
                 }
 
                 longUrl.Clear();
@@ -111,16 +120,18 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (UrlFormatHiddenTable.Attributes["class"] != null)
             {
-                UrlFormatNotifications.InnerHtml = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Alle URLs zijn schoon en gebruiksvriendelijk.</span></div>";
             }
             else
             {
-                UrlFormatNotifications.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                     + "<span> " + totalCount + " foutieve URLs gevonden.</span></div>";
             }
+
+            UrlFormatNotifications.InnerHtml = message;
 
             if (rating <= 0m)
                 rating = 0.0m;
@@ -204,9 +215,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns>true if URL contains any of the 'dirty' characters</returns>
         private bool IsDirty(string path)
         {
-            //https://perishablepress.com/stop-using-unsafe-characters-in-urls/
-            //https://d1avok0lzls2w.cloudfront.net/uploads/blog/54ea8746e0e803.90711764.jpg
-
             string[] dirtyChars = { "?", "_", "%20", "!", "$", "&", "+", ":", "=", "@" };
 
             foreach (var item in dirtyChars)
@@ -242,8 +250,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="page">Page of origin</param>
         private void AddToTable(string link, string text, string page)
         {
-            UrlFormatHiddenTable.Attributes.Remove("class");
-
             var tRow = new TableRow();
 
             var tCellLink = new TableCell();

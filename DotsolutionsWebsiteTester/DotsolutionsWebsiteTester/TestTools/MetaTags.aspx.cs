@@ -18,6 +18,9 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class MetaTags : System.Web.UI.Page
     {
         List<string> sitemap;
+        private string message;
+        private bool isDetailed;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -47,7 +50,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var hasNoDescription = new List<string>();
             var hasNoRobots = new List<string>();
             var rating = 10.0m;
-
+            isDetailed =  (bool)Session["IsDetailedTest"];
             foreach (var url in sitemap)
             {
                 Debug.WriteLine("Getting meta tags from: " + url);
@@ -99,6 +102,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                                 AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + count + " meta tag van dit type gevonden</strong>");
                         }
 
+                        if (isDetailed)
+                            MetaResultsTableHidden.Attributes.Remove("class");
                     }
 
                     if (!hasDescription)
@@ -111,6 +116,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             rating = GetDescriptionRating(rating, hasNoDescription, hasLongDescription);
             rating = GetRobotRating(rating, hasNoRobots);
             SetRating(rating);
+            MetaErrorsFound.InnerHtml = message;
         }
 
         private void GetSERPDisplay()
@@ -185,8 +191,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (desc == "")
                     desc = "No description set";
 
-                MetaErrorsFound.InnerHtml += "<span class='help-block'>Zo ziet de website er uit op de resultatenpagina van Google:</span>";
-                MetaErrorsFound.InnerHtml += "<div class='well well-sm col-md-6 col-sm-7'>"
+                message += "<span class='help-block'>Zo ziet de website er uit op de resultatenpagina van Google:</span>";
+                message += "<div class='well well-sm col-md-6 col-sm-7'>"
                             + "<h3 class='googleResult_title noselect'>" + title + "</h3>"
                             + "<p class='googleResult_url noselect'>" + url + "</p>"
                             + "<p class='googleResult_desc noselect'>" + desc + "</p>"
@@ -229,7 +235,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (hasNoDescription.Count == 0 && hasLongDescription.Count == 0)
             {
                 // Good job, using no long descriptions!
-                MetaErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Er wordt op alle pagina's correct gebruik gemaakt van de description meta-tag</span></div>";
             }
@@ -245,7 +251,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         rating = rating - (10m / (decimal)sitemap.Count);
                     }
 
-                    MetaErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                         + "<span> De volgende pagina's gebruiken geen description meta-tag:</span>"
                         + "<ul>" + ul + "</ul></div>";
@@ -259,7 +265,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         rating = rating - (5m / (decimal)sitemap.Count);
                         ul += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
                     }
-                    MetaErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                         + "<span> De volgende pagina's hebben een te lange meta-description:</span>"
                         + "<ul>" + ul + "</ul></div>";
@@ -273,7 +279,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (hasNoRobots.Count == 0)
             {
                 // Good job, using robots!
-                MetaErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Er wordt op alle pagina's gebruik gemaakt van de robots meta-tag</span></div>";
             }
@@ -286,7 +292,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     rating = rating - (10m / (decimal)sitemap.Count);
                     ul += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
                 }
-                MetaErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> De volgende pagina's gebruiken geen robots meta-tag:</span>"
                     + "<ul>" + ul + "</ul></div>";
@@ -303,7 +309,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="content">Value</param>
         private void AddToTable(string url, string type, string name, string content)
         {
-            MetaResultsTableHidden.Attributes.Remove("class");
             var tRow = new TableRow();
 
             var tCellUrl = new TableCell();

@@ -246,11 +246,12 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void ShowPrintability()
         {
             var rating = 10.0m;
+            var message = "";
 
             // Er zijn printbare pagina's
             if (printable.Count >= sitemap.Count)
             {
-                PrintResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
             }
@@ -269,7 +270,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 else
                     amount = "bevat " + (sitemap.Count - printablePages) + " pagina";
 
-                PrintResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                     + "<span> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de printbaarheid:</span>"
                     + "<ul>" + notprintablelist + "</ul></div>";
@@ -289,6 +290,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                 }
             }
+
+            PrintResults.InnerHtml = message;
+
             if (rating == 10.0m)
                 rating = 10m;
             var rounded = decimal.Round(rating, 1);

@@ -47,6 +47,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             var sitemap = (List<string>)Session["selectedSites"];
             var noTitles = new List<string>();
             var longTitles = new List<string>();
+            var message = "";
+            var isDetailed = (bool)Session["IsDetailedTest"];
+
             foreach (var page in sitemap)
             {
                 var title = GetTitle(page);
@@ -84,7 +87,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     noTitleUl += "<li>" + page + "</li>";
                 }
 
-                PageTitleResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er " + noTitleGrammar + " gevonden zonder titel:</span><ul>" + noTitleUl + "</ul></div>";
             }
@@ -98,18 +101,21 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (sitemap.Count == 1)
                     siteMapGrammer = "pagina";
 
-                PageTitlesTableHidden.Attributes.Remove("class");
-                PageTitleResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                if(isDetailed)
+                    PageTitlesTableHidden.Attributes.Remove("class");
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> " + longTitles.Count + " van de " + sitemap.Count + " geteste " + siteMapGrammer + " " + longTitlesGrammar + " een te lange titel:</span></div>";
             }
 
             if (longTitles.Count == 0 && noTitles.Count == 0)
             {
-                PageTitleResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Op elke pagina is een goede titel aanwezig</span></div>";
             }
+
+            PageTitleResults.InnerHtml = message;
 
             if (rating < 0m)
             {

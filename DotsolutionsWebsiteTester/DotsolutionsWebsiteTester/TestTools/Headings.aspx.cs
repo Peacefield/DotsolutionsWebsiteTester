@@ -45,6 +45,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine("Headings >>>>>");
             var sitemap = (List<string>)Session["selectedSites"];
             var rating = 10.0m;
+            var message = "";
             foreach (var url in sitemap)
             {
                 GetHeadingsOnUrl(url);
@@ -62,13 +63,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
                 unorderedlist += "</ul>";
 
-                headingMessages.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> De volgende pagina's gebruiken geen headers</span>" + unorderedlist + "</div>";
             }
             else
             {
-                headingMessages.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                     + "<span> Er wordt op alle pagina's gebruik gemaakt van headers</span></div>";
             }
@@ -82,23 +83,25 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // E.g. 3 misplaced headings while there was a total of 20 headings used cause a reduction of 3/20th * 10
                     rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 10m);
                     headingTableHidden.Attributes.Remove("class");
-                    headingMessages.InnerHtml += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                         + "<span> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
                 }
                 else
                 {
-                    headingMessages.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                         + "<span> Alle headers zijn correct ingedeeld</span></div>";
                 }
             }
             else
             {
-                headingMessages.InnerHtml = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er zijn geen headers gebruikt op alle geteste pagina's</span></div>";
             }
+
+            headingMessages.InnerHtml = message;
 
             if (rating == 10.0m)
                 rating = 10m;

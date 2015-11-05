@@ -17,6 +17,7 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class Facebook : System.Web.UI.Page
     {
         private FacebookClient fbc;
+        private string message;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -59,7 +60,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             catch (FacebookOAuthException)
             {
                 var rating = 5.5m;
-                FacebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er kon geen beveiligde verbinding worden vastgesteld.</span></div>";
 
@@ -73,6 +74,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Session["FacebookRating"] = rounded;
                 SetRatingDisplay(rating);
             }
+
+            FacebookResults.InnerHtml = message;
 
             var sb = new System.Text.StringBuilder();
             FacebookSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -173,7 +176,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (!isFacebookFound)
             {
                 rating = 0.0m;
-                FacebookResults.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> Er is geen Facebook account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";
             }
@@ -359,7 +362,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 1m;
             }
 
-            FacebookResults.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+            message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "
                 + "<span> Facebook account <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
 
@@ -368,7 +371,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var talkingGrammar = " mensen praten";
             if (fbTalking == "1") talkingGrammar = " persoon praat";
 
-            FacebookResults.InnerHtml += "<div class='well well-lg resultWell'>"
+            message += "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-thumbs-o-up fa-3x'></i>"
                 + "<span> Dit account heeft " + fbLikes + likesGrammar + "</span></div>"
                 + "<div class='resultDivider'></div>"

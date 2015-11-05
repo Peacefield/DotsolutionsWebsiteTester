@@ -57,6 +57,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             var tableLayOutList = new List<string>();
             var noSemanticList = new List<string>();
             decimal rating = 10.0m;
+            var message = "";
+            var isDetailed = (bool)Session["IsDetailedTest"];
 
             foreach (string url in this.sitemap)
             {
@@ -78,9 +80,19 @@ namespace DotsolutionsWebsiteTester.TestTools
             // Show results from IsTableLayout()
             if (tableLayOutList.Count == 0)
             {
-                w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Er wordt op alle pagina's waarschijnlijk geen tabel gebruikt voor lay-out.</span></div>";
+                if (isDetailed)
+                {
+                    message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Er wordt op alle pagina's waarschijnlijk geen tabel gebruikt voor lay-out.</span></div>";
+                }
+                else
+                {
+                    message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
+                }
+
             }
             else
             {
@@ -90,17 +102,35 @@ namespace DotsolutionsWebsiteTester.TestTools
                     unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
                 unorderedlist += "</ul>";
 
-                w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> De volgende pagina's gebruiken misschien een tabel voor lay-out. Dit wordt over het algemeen beschouwd als bad practice.</span>" + unorderedlist + "</div>";
+                if (isDetailed)
+                {
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> De volgende pagina's gebruiken misschien een tabel voor lay-out. Dit wordt over het algemeen beschouwd als bad practice.</span>" + unorderedlist + "</div>";
+                }
+                else
+                {
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
+                }
             }
 
             // Show results from IsUsingSemantics()
             if (noSemanticList.Count == 0)
             {
-                w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Er wordt op alle pagina's gebruik gemaakt van semantic HTML elements</span></div>";
+                if (isDetailed)
+                {
+                    message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Er wordt op alle pagina's gebruik gemaakt van semantic HTML elements</span></div>";
+                }
+                else
+                {
+                    message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
+                }
             }
             else
             {
@@ -114,9 +144,18 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 unorderedlist += "</ul>";
 
-                w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                if (isDetailed)
+                {
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> De volgende pagina's gebruiken geen semantic HTML elements</span> " + unorderedlist + "</div>";
+                }
+                else
+                {
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
+                }
             }
 
             // Join Threads
@@ -128,9 +167,18 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Show results from W3CValidate()
                 if (notW3cCompliant.Count == 0)
                 {
-                    w3ErrorsFound.InnerHtml += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    if (isDetailed)
+                    {
+                        message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
                         + "<span> Alle geteste pagina's zijn W3C compliant</span></div>";
+                    }
+                    else
+                    {
+                        message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                            + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                            + "<span> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
+                    }
                 }
                 else
                 {
@@ -139,9 +187,18 @@ namespace DotsolutionsWebsiteTester.TestTools
                         unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
                     unorderedlist += "</ul>";
 
-                    w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    if (isDetailed)
+                    {
+                        message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                         + "<span> De volgende pagina's zijn niet W3C compliant.</span>" + unorderedlist + "</div>";
+                    }
+                    else
+                    {
+                        message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                            + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                            + "<span> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
+                    }
                 }
             }
 
@@ -154,7 +211,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     rating = 0.0m;
 
                 // Show table when W3C notifications are encountered 
-                W3ResultsTableHidden.Attributes.Remove("class");
                 var errorString = "";
                 var warningString = "";
 
@@ -168,10 +224,23 @@ namespace DotsolutionsWebsiteTester.TestTools
                 else
                     warningString = warningCnt + " waarschuwingen";
 
-                w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                if (isDetailed)
+                {
+                    W3ResultsTableHidden.Attributes.Remove("class");
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
                     + "<span> " + errorString + " en " + warningString + " gevonden.</span></div>";
+                }
+                else
+                {
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
+                        + "<span> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
+                }
+
             }
+
+            w3ErrorsFound.InnerHtml = message;
 
             if (rating == 10.0m)
                 rating = 10m;
