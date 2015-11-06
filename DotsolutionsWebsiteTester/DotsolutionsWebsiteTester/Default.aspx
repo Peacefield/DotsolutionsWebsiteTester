@@ -27,10 +27,11 @@
         </div>
 
         <div class="center-block">
-            <asp:CheckBox ID="IsDetailedTestBtn"
-                Text="Gedetailleerde test"
-                CssClass="noselect"
-                runat="server" />
+            <asp:DropDownList ID="TestMethodList"
+                runat="server">
+                <asp:ListItem Text="Standaard test" Value="DefaultTest"></asp:ListItem>
+                <asp:ListItem Text="Gedetailleerde test" Value="DetailedTest"></asp:ListItem>
+            </asp:DropDownList>
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4">

@@ -34,8 +34,8 @@ namespace DotsolutionsWebsiteTester
             // Set session that contains the url the user wants to test
             // This session is also checked throughout the application to check if all the needed sessions are set.
             Session["MainUrl"] = url;
-            
-            if (IsDetailedTestBtn.Checked)
+
+            if (TestMethodList.SelectedValue == "DetailedTest")
             {
                 Session["IsDetailedTest"] = true;
                 Response.Redirect("Handmatige-Test");
