@@ -25,14 +25,6 @@
                 <i class="glyphicon glyphicon-alert glyphicons-lg"></i><span class="" id="invalidUrl" runat="server"></span>
             </div>
         </div>
-
-        <div class="center-block">
-            <asp:DropDownList ID="TestMethodList"
-                runat="server">
-                <asp:ListItem Text="Standaard test" Value="DefaultTest"></asp:ListItem>
-                <asp:ListItem Text="Gedetailleerde test" Value="DetailedTest"></asp:ListItem>
-            </asp:DropDownList>
-        </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4">
                 <asp:Button ID="StartScanBtn"
@@ -51,9 +43,16 @@
 
         <div id="checkboxHolder" class="noselect">
             <div class="row">
-                
-            <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4 btn btn-default btn-sm" id="CheckAllCheckboxes">Alles selecteren</div>
-
+                <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4 btn btn-default btn-sm" id="CheckAllCheckboxes">Alles selecteren</div>
+            </div>
+            <div class="row">
+                <div class="center-block">
+                    <asp:DropDownList ID="TestMethodList"
+                        runat="server">
+                        <asp:ListItem Text="Standaard test" Value="DefaultTest"></asp:ListItem>
+                        <asp:ListItem Text="Gedetailleerde test" Value="DetailedTest"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
             </div>
             <div class="row checkboxlistrow text-left">
                 <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
