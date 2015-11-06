@@ -61,33 +61,39 @@ function SetRatingClass(identifier, rating, overall) {
     }
 }
 
+var testedcriteria = 0;
+
 function OnAccessSuccess(response) {
-    $("#RatingAccess").text(response);
     if (response >= 0) {
+        $("#RatingAccess").text(response);
         $("#RatingAccessTxt").css("display", "list-item");
+        testedcriteria++;
+        SetRatingClass("#RatingAccess", response);
     }
-    SetRatingClass("#RatingAccess", response);
 }
 function OnUserxSuccess(response) {
-    $("#RatingUx").text(response);
     if (response >= 0) {
+        $("#RatingUx").text(response);
         $("#RatingUxTxt").css("display", "list-item");
+        testedcriteria++;
+        SetRatingClass("#RatingUx", response);
     }
-    SetRatingClass("#RatingUx", response);
 }
 function OnMarketingSuccess(response) {
-    $("#RatingMarketing").text(response);
     if (response >= 0) {
+        $("#RatingMarketing").text(response);
         $("#RatingMarketingTxt").css("display", "list-item");
+        testedcriteria++;
+        SetRatingClass("#RatingMarketing", response);
     }
-    SetRatingClass("#RatingMarketing", response);
 }
 function OnTechSuccess(response) {
-    $("#RatingTech").text(response);
     if (response >= 0) {
+        $("#RatingTech").text(response);
         $("#RatingTechTxt").css("display", "list-item");
+        testedcriteria++;
+        SetRatingClass("#RatingTech", response);
     }
-    SetRatingClass("#RatingTech", response);
 }
 
 function GetOverallRating() {
@@ -96,7 +102,7 @@ function GetOverallRating() {
     var market = $("#RatingMarketing").text().replace(",", ".");
     var tech = $("#RatingTech").text().replace(",", ".");
 
-    var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / 4);
+    var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / testedcriteria);
 
     if (total !== 10) {
         total = total.toFixed(1);

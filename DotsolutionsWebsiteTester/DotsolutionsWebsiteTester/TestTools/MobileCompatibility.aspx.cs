@@ -47,7 +47,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var compatible = new List<string>();
             var notCompatiblePage = new List<string>();
             var sitemap = (List<string>)Session["selectedSites"];
-            var rating = 10m;
+            var rating = 10.0m;
             var message = "";
             var isDetailed = (bool)Session["IsDetailedTest"];
 

@@ -143,10 +143,12 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             internalLinksErrorsFound.InnerHtml = message;
 
-            var rating = 10m - ((decimal)errorCnt / 5m);
+            var rating = 10.0m - ((decimal)errorCnt / 5m);
 
             if (rating < 0)
                 rating = 0.0m;
+            if (rating == 10.0m)
+                rating = 10m;
 
             decimal rounded = decimal.Round(rating, 1);
             InternalLinksRating.InnerHtml = rounded.ToString();
@@ -185,13 +187,32 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (link.InnerText != "")
             {
                 // Check if the description is not too long
-                string[] words = link.InnerText.Split(new char[] { ' ', '\n', '\t', ',', '.', '&', ':', '©', '\'', '+' }, StringSplitOptions.RemoveEmptyEntries);
+                //string[] words = link.InnerText.Split(new char[] { ' ', ',', '.', '&', ':', '©', '\'', '+' }, StringSplitOptions.RemoveEmptyEntries);
 
-                if (words.Length > 25)
+                string[] splitLink = link.InnerText.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                var words = new List<string>();
+
+                foreach (var item in splitLink)
                 {
+                    if (item is string && item.Length > 1)
+                    {
+                        words.Add(item);
+                    }
+                }
+
+                if (words.Count > 25)
+                {
+                    var placeholder = "";
+                    foreach (var item in words)
+                    {
+                        placeholder += item;
+                    }
+
+                    Debug.WriteLine("Zin > 25 woorden = " + placeholder);
+
                     if (lengthCnt < 5)
                     {
-                        AddToTable(internalLink, "Beschrijvende tekst is te lang (" + words.Length + " woorden)", url);
+                        AddToTable(internalLink, "Beschrijvende tekst is te lang (" + words.Count + " woorden)", url);
                     }
 
                     lengthCnt++;

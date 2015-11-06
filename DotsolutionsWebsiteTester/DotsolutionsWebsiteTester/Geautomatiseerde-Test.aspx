@@ -82,11 +82,11 @@
     <div class="well well-sm" id="automatedRatingList">
         <h3>Beoordeling Geautomatiseerde Test</h3>
         <div>
-            <span id="RatingOverall" class="mediocreScore ratingCircle">...</span>Totaal
+            <span id="RatingOverall" class="mediocreScore ratingCircle">0</span>Totaal
         </div>
         <hr />
         <ul runat="server">
-            <li id="RatingAccessTxt"><span id="RatingAccess" class="ratingSquare">...</span>Toegankelijkheid 
+            <li id="RatingAccessTxt"><span id="RatingAccess" class="ratingSquare lowScore">0,0</span>Toegankelijkheid 
                 <span id="ShowRatingAccess" class="displayRating">
                     <i id="RatingAccesBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
@@ -95,7 +95,7 @@
                     </ul>
                 </div>
             </li>
-            <li id="RatingUxTxt"><span id="RatingUx" class="ratingSquare">...</span>Gebruikerservaring
+            <li id="RatingUxTxt"><span id="RatingUx" class="ratingSquare lowScore">0,0</span>Gebruikerservaring
                 <span id="ShowRatingUx" class="displayRating">
                     <i id="RatingUxBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
@@ -104,7 +104,7 @@
                     </ul>
                 </div>
             </li>
-            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="ratingSquare">...</span>Marketing
+            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="ratingSquare lowScore">0,0</span>Marketing
                 <span id="ShowRatingMarketing" class="displayRating">
                     <i id="RatingMarketingBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
@@ -113,7 +113,7 @@
                     </ul>
                 </div>
             </li>
-            <li id="RatingTechTxt"><span id="RatingTech" class="ratingSquare">...</span>Technologie
+            <li id="RatingTechTxt"><span id="RatingTech" class="ratingSquare lowScore">0,0</span>Technologie
                 <span id="ShowRatingTech" class="displayRating">
                     <i id="RatingTechBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 

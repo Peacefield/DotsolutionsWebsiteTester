@@ -329,6 +329,7 @@ footer {
 }
 
     #automatedRatingList li {
+        /*display: none;*/
         list-style: none;
     }
 

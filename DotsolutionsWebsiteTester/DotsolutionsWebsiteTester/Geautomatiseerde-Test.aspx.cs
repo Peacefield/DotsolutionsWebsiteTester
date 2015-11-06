@@ -62,6 +62,22 @@ namespace DotsolutionsWebsiteTester
             }
         }
 
+        /// <summary>
+        /// Click event handler to initiate Pdf creation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void CreatePdfBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/PdfTemplate");
+
+            return;
+        }
+
+        /// <summary>
+        /// Get the API Keys needed for the used API's from local file and set them in Session
+        /// </summary>
+        /// <returns></returns>
         private List<KeyValuePair<string, string>> GetApiKeys()
         {
             string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Michael\Documents\Visual Studio 2013\Projects\DotsolutionsWebsiteTester\DotsolutionsWebsiteTester\DotsolutionsWebsiteTester\App_Data\keys.txt");
@@ -265,17 +281,8 @@ namespace DotsolutionsWebsiteTester
         }
 
         /// <summary>
-        /// Click event handler to initiate Pdf creation
+        /// Retrieve manual test results from Sessions and display them using CalculateStars()
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void CreatePdfBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/PdfTemplate");
-
-            return;
-        }
-
         private void GetManualTestResults()
         {
             var vormProfOpma = Convert.ToInt32(Session["VormProfOpma"]);
@@ -303,6 +310,11 @@ namespace DotsolutionsWebsiteTester
             Session["ManualTestResults"] = htmlstring;
         }
 
+        /// <summary>
+        /// Add filled in stars to the page representing the manual results. When rating is lower than 10 it adds the remaining stars as empty stars.
+        /// </summary>
+        /// <param name="rating">int rating</param>
+        /// <param name="control">HtmlGenericControl control</param>
         private void CalculateStars(int rating, System.Web.UI.HtmlControls.HtmlGenericControl control)
         {
             for (int i = 0; i < rating; i++)
@@ -330,6 +342,10 @@ namespace DotsolutionsWebsiteTester
             HttpContext.Current.Session[session] = innerhtml;
         }
 
+        /// <summary>
+        /// Add overall rating to Session so it is accessible from PdfTemplate
+        /// </summary>
+        /// <param name="rating"></param>
         [System.Web.Services.WebMethod]
         public static void AddOverallRatingSession(decimal rating)
         {
@@ -384,7 +400,7 @@ namespace DotsolutionsWebsiteTester
                     return temp.ToString();
                 return temp.ToString("0.0");
             }
-            return "0,0";
+            return "-1";
         }
 
         [System.Web.Services.WebMethod]
@@ -428,7 +444,7 @@ namespace DotsolutionsWebsiteTester
                     return temp.ToString();
                 return temp.ToString("0.0");
             }
-            return "0,0";
+            return "-1";
         }
 
         [System.Web.Services.WebMethod]
@@ -472,7 +488,7 @@ namespace DotsolutionsWebsiteTester
                     return temp.ToString();
                 return temp.ToString("0.0");
             }
-            return "0,0";
+            return "-1";
         }
 
         [System.Web.Services.WebMethod]
@@ -513,7 +529,7 @@ namespace DotsolutionsWebsiteTester
                     return temp.ToString();
                 return temp.ToString("0.0");
             }
-            return "0,0";
+            return "-1";
         }
         #endregion
 
