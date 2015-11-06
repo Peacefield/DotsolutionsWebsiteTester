@@ -379,19 +379,18 @@ namespace DotsolutionsWebsiteTester
                                                 "UrlFormat" };
             AccessRatingList.AddRange(accessRatingList);
 
-            if (HttpContext.Current.Session["RatingAccess"] != null)
+            var AccessRatingSession = (decimal)HttpContext.Current.Session["RatingAccess"];
+            var count = 0m;
+            Debug.WriteLine("AccessRatingSession -- " + AccessRatingSession);
+            foreach (var item in selectedTests)
             {
-                var AccessRatingSession = (decimal)HttpContext.Current.Session["RatingAccess"];
-                var count = 0m;
-                Debug.WriteLine("AccessRatingSession -- " + AccessRatingSession);
-                foreach (var item in selectedTests)
+                if (AccessRatingList.Contains(item))
                 {
-                    if (AccessRatingList.Contains(item))
-                    {
-                        count++;
-                    }
+                    count++;
                 }
-
+            }
+            if (count > 0m)
+            {
                 Debug.WriteLine("AccessRatingSession divide by " + count);
                 var temp = decimal.Round(AccessRatingSession / count, 1);
                 Debug.WriteLine("AccessRatingSession = " + temp);
@@ -400,7 +399,8 @@ namespace DotsolutionsWebsiteTester
                     return temp.ToString();
                 return temp.ToString("0.0");
             }
-            return "-1";
+            else
+                return "-1";
         }
 
         [System.Web.Services.WebMethod]
@@ -424,18 +424,18 @@ namespace DotsolutionsWebsiteTester
                                                "Freshness" };
             UserxRatingList.AddRange(userxRatingList);
 
-            if (HttpContext.Current.Session["RatingUx"] != null)
+            var UserxRatingSession = (decimal)HttpContext.Current.Session["RatingUx"];
+            var count = 0m;
+            Debug.WriteLine("UserxRatingSession -- " + UserxRatingSession);
+            foreach (var item in selectedTests)
             {
-                var UserxRatingSession = (decimal)HttpContext.Current.Session["RatingUx"];
-                var count = 0m;
-                Debug.WriteLine("UserxRatingSession -- " + UserxRatingSession);
-                foreach (var item in selectedTests)
+                if (UserxRatingList.Contains(item))
                 {
-                    if (UserxRatingList.Contains(item))
-                    {
-                        count++;
-                    }
+                    count++;
                 }
+            }
+            if (count > 0m)
+            {
                 Debug.WriteLine("UserxRatingSession divide by " + count);
                 var temp = decimal.Round(UserxRatingSession / count, 1);
                 Debug.WriteLine("UserxRatingSession = " + temp);
@@ -444,7 +444,8 @@ namespace DotsolutionsWebsiteTester
                     return temp.ToString();
                 return temp.ToString("0.0");
             }
-            return "-1";
+            else
+                return "-1";
         }
 
         [System.Web.Services.WebMethod]
@@ -468,18 +469,18 @@ namespace DotsolutionsWebsiteTester
                                                "MetaTags" };
             MarketingRatingList.AddRange(marketingRatingList);
 
-            if (HttpContext.Current.Session["RatingMarketing"] != null)
+            var MarketingRatingSession = (decimal)HttpContext.Current.Session["RatingMarketing"];
+            var count = 0m;
+            Debug.WriteLine("MarketingRatingSession -- " + MarketingRatingSession);
+            foreach (var item in selectedTests)
             {
-                var MarketingRatingSession = (decimal)HttpContext.Current.Session["RatingMarketing"];
-                var count = 0m;
-                Debug.WriteLine("MarketingRatingSession -- " + MarketingRatingSession);
-                foreach (var item in selectedTests)
+                if (MarketingRatingList.Contains(item))
                 {
-                    if (MarketingRatingList.Contains(item))
-                    {
-                        count++;
-                    }
+                    count++;
                 }
+            }
+            if (count > 0m)
+            {
                 Debug.WriteLine("MarketingRatingSession divide by " + count);
                 var temp = decimal.Round(MarketingRatingSession / count, 1);
                 Debug.WriteLine("MarketingRatingSession = " + temp);
@@ -488,7 +489,8 @@ namespace DotsolutionsWebsiteTester
                     return temp.ToString();
                 return temp.ToString("0.0");
             }
-            return "-1";
+            else
+                return "-1";
         }
 
         [System.Web.Services.WebMethod]
@@ -509,18 +511,18 @@ namespace DotsolutionsWebsiteTester
 
             TechRatingList.AddRange(techRatingList);
 
-            if (HttpContext.Current.Session["RatingTech"] != null)
+            var TechRatingSession = (decimal)HttpContext.Current.Session["RatingTech"];
+            var count = 0m;
+            Debug.WriteLine("TechRatingSession -- " + TechRatingSession);
+            foreach (var item in selectedTests)
             {
-                var TechRatingSession = (decimal)HttpContext.Current.Session["RatingTech"];
-                var count = 0m;
-                Debug.WriteLine("TechRatingSession -- " + TechRatingSession);
-                foreach (var item in selectedTests)
+                if (TechRatingList.Contains(item))
                 {
-                    if (TechRatingList.Contains(item))
-                    {
-                        count++;
-                    }
+                    count++;
                 }
+            }
+            if (count > 0m)
+            {
                 Debug.WriteLine("TechRatingSession divide by " + count);
                 var temp = decimal.Round(TechRatingSession / count, 1);
                 Debug.WriteLine("TechRatingSession = " + temp);
@@ -529,7 +531,8 @@ namespace DotsolutionsWebsiteTester
                     return temp.ToString();
                 return temp.ToString("0.0");
             }
-            return "-1";
+            else
+                return "-1";
         }
         #endregion
 

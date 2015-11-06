@@ -149,6 +149,19 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<ul>" + nothing + "</ul></div>";
 
             }
+            
+            var percentageUsed = (yesAnalytics.Count / sitemap.Count) * 100;
+            var amountFound = analyticslist.Count + " soorten";
+            if (analyticslist.Count == 1)
+                amountFound = analyticslist.Count + " soort";
+
+            message += "<div class='well well-lg resultWell text-center'>"
+                + "<span class='largetext'>" + percentageUsed + "%</span><br/>"
+                + "<span>van de pagina's gebruiken analytics</span></div>"
+                + "<div class='resultDivider'></div>"
+                + "<div class='well well-lg resultWell text-center'>"
+                + "<i class='fa fa-search fa-3x'></i><br/>"
+                + "<span>" + amountFound + " analytics gevonden</span></div>";
 
             AnalyticsResults.InnerHtml = message;
 

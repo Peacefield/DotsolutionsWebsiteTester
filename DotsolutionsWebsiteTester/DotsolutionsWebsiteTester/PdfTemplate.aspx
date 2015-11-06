@@ -148,6 +148,10 @@
             font-size: 1em;
         }
 
+        .largetext {
+            font-size: 2em;
+        }
+
         .tabletcontainer {
             width: 450px;
             height: 260px;

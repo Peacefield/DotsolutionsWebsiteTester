@@ -100,6 +100,13 @@ function GetOverallRating() {
 
     var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / testedcriteria);
 
+    //alert("access " +access);
+    //alert("userx " + userx);
+    //alert("market " +market);
+    //alert("tech " + tech);
+    //alert("testedcriteria " +testedcriteria);
+    //alert("total " + total);
+
     if (total !== 10) {
         total = total.toFixed(1);
         $("#RatingOverall").text(total.replace(".", ","));

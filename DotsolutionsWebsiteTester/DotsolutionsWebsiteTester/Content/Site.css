@@ -30,7 +30,6 @@
         font-size: 1em;
     }
 
-
     .tabletcontainer {
         width: 310px;
         height: 250px;
@@ -179,6 +178,10 @@ footer {
 
 .btn {
     margin-bottom: 5px !important;
+}
+
+.largetext {
+    font-size: 2em;
 }
 
 .noselect {
