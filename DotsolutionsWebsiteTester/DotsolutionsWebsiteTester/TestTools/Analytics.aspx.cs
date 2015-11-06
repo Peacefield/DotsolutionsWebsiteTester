@@ -104,7 +104,13 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> Geen analytics software gevonden.</span></div>";
+                    + "<span> Geen analytics software gevonden. Dit is slecht doordat analytics software er voor zorgt dat het gedrag van een bezoeker is te analyseren.</span></div>";
+            }
+            else if (yesAnalytics.Count == sitemap.Count)
+            {
+                message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                    + "<span> Op alle pagina's is een soort analytics software gevonden. Dit is perfect, analytics software zorgt er namelijk voor dat het gedrag van een bezoeker is te analyseren.</span></div>";
             }
             else
             {
@@ -114,9 +120,19 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var sitemapGrammar = sitemap.Count + " pagina's";
                 if (sitemap.Count == 1)
                     sitemapGrammar = sitemap.Count + " pagina";
-                message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> " + analyticsGrammar + " analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemapGrammar + "</span></div>";
+                if (isDetailed)
+                {
+                    message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> " + analyticsGrammar + " analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemapGrammar + "</span></div>";
+                }
+                else
+                {
+                    message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
+                        + "<span> Op " + yesAnalytics.Count + " van de " + sitemapGrammar + " is een soort analytics software gevonden. Dit kan beter door op alle pagina's gebruik te maken van analytics software. "
+                        + "Analytics software zorgt er namelijk voor dat het gedrag van een bezoeker is te analyseren.</span></div>";
+                }
             }
 
             // Did not find analytics software on every page
@@ -131,11 +147,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
                     + "<span> Geen analytics software gevonden op volgende pagina's</span>"
                     + "<ul>" + nothing + "</ul></div>";
+
             }
 
             AnalyticsResults.InnerHtml = message;
 
-            if(isDetailed)
+            if (isDetailed)
                 AnalyticsTableHidden.Attributes.Remove("class");
 
             if (analyticslist.Count > 0)
@@ -197,7 +214,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                 }
             }
-            
+
             if (!done && doc.DocumentNode.SelectSingleNode("//html") != null)
             {
                 var node = doc.DocumentNode.SelectSingleNode("//html");

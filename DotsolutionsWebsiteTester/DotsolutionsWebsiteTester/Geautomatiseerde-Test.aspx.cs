@@ -379,7 +379,7 @@ namespace DotsolutionsWebsiteTester
                                                 "UrlFormat" };
             AccessRatingList.AddRange(accessRatingList);
 
-            if ((decimal)HttpContext.Current.Session["RatingAccess"] != 0m)
+            if (HttpContext.Current.Session["RatingAccess"] != null)
             {
                 var AccessRatingSession = (decimal)HttpContext.Current.Session["RatingAccess"];
                 var count = 0m;
@@ -424,7 +424,7 @@ namespace DotsolutionsWebsiteTester
                                                "Freshness" };
             UserxRatingList.AddRange(userxRatingList);
 
-            if ((decimal)HttpContext.Current.Session["RatingUx"] != 0m)
+            if (HttpContext.Current.Session["RatingUx"] != null)
             {
                 var UserxRatingSession = (decimal)HttpContext.Current.Session["RatingUx"];
                 var count = 0m;
@@ -468,7 +468,7 @@ namespace DotsolutionsWebsiteTester
                                                "MetaTags" };
             MarketingRatingList.AddRange(marketingRatingList);
 
-            if ((decimal)HttpContext.Current.Session["RatingMarketing"] != 0m)
+            if (HttpContext.Current.Session["RatingMarketing"] != null)
             {
                 var MarketingRatingSession = (decimal)HttpContext.Current.Session["RatingMarketing"];
                 var count = 0m;
@@ -509,7 +509,7 @@ namespace DotsolutionsWebsiteTester
 
             TechRatingList.AddRange(techRatingList);
 
-            if ((decimal)HttpContext.Current.Session["RatingTech"] != 0m)
+            if (HttpContext.Current.Session["RatingTech"] != null)
             {
                 var TechRatingSession = (decimal)HttpContext.Current.Session["RatingTech"];
                 var count = 0m;

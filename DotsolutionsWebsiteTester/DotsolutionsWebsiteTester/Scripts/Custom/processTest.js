@@ -64,28 +64,28 @@ function SetRatingClass(identifier, rating, overall) {
 var testedcriteria = 0;
 
 function OnAccessSuccess(response) {
-    if (response >= 0) {
+    if (response !== "-1") {
         $("#RatingAccess").text(response);
         testedcriteria++;
         SetRatingClass("#RatingAccess", response);
     }
 }
 function OnUserxSuccess(response) {
-    if (response >= 0) {
+    if (response !== "-1") {
         $("#RatingUx").text(response);
         testedcriteria++;
         SetRatingClass("#RatingUx", response);
     }
 }
 function OnMarketingSuccess(response) {
-    if (response >= 0) {
+    if (response !== "-1") {
         $("#RatingMarketing").text(response);
         testedcriteria++;
         SetRatingClass("#RatingMarketing", response);
     }
 }
 function OnTechSuccess(response) {
-    if (response >= 0) {
+    if (response !== "-1") {
         $("#RatingTech").text(response);
         testedcriteria++;
         SetRatingClass("#RatingTech", response);
