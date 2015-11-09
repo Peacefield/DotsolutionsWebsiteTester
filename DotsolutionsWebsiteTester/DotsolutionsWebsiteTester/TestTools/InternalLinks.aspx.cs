@@ -110,35 +110,19 @@ namespace DotsolutionsWebsiteTester.TestTools
             // Show message with findings
             if (errorCnt > 0)
             {
-                if (isDetailed)
-                {
-                    // Show table when errors are found 
+                // Show table when errors are found and is a detailed test
+                if(isDetailed)
                     IntLinksHiddenTable.Attributes.Remove("class");
-                    message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
-                        + "<span class='messageText'> " + errorCnt + " meldingen gevonden.</span></div>";
-                }
-                else
-                {
-                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
-                        + "<span class='messageText'> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
-                }
+
+                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
+                    + "<i class='fa fa-chain-broken fa-3x'></i><br/>"
+                    + "<span>Er zijn " + errorCnt + " meldingen gevonden van linken die niet goed gedeclareerd zijn en/of niet werken.</span></div>";
             }
             else
             {
-                if (isDetailed)
-                {
-                    message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
-                        + "<span class='messageText'> Alle gevonden linken zijn goed gedeclareerd en zijn werkend.</span></div>";
-                }
-                else
-                {
-                    message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
-                        + "<span class='messageText'> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
-                }
+                message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
+                    + "<i class='fa fa-link fa-3x'></i><br/>"
+                    + "<span class='messageText'> Alle gevonden linken zijn goed gedeclareerd en zijn werkend.</span></div>";
             }
 
             internalLinksErrorsFound.InnerHtml = message;
@@ -189,7 +173,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Check if the description is not too long
                 //string[] words = link.InnerText.Split(new char[] { ' ', ',', '.', '&', ':', '©', '\'', '+' }, StringSplitOptions.RemoveEmptyEntries);
 
-                string[] splitLink = link.InnerText.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                string[] splitLink = link.InnerText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 var words = new List<string>();
 
                 foreach (var item in splitLink)

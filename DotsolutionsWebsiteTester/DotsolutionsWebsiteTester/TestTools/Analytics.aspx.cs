@@ -110,7 +110,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Op alle pagina's is een soort analytics software gevonden. Dit is perfect, analytics software zorgt er namelijk voor dat het gedrag van een bezoeker is te analyseren.</span></div>";
+                    + "<span class='messageText'> Op alle pagina's is een soort analytics software gevonden. Dit is uitstekend, analytics software zorgt er namelijk voor dat het gedrag van een bezoeker is te analyseren.</span></div>";
             }
             else
             {

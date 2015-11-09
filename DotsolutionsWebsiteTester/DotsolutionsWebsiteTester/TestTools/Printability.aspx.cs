@@ -237,7 +237,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             tRow.Cells.Add(tCellCssUrl);
 
             PrintabilityTable.Rows.Add(tRow);
-            PrintabilityTableHidden.Attributes.Remove("class");
         }
 
         /// <summary>
@@ -247,6 +246,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             var rating = 10.0m;
             var message = "";
+            var isDetailed = (bool)Session["IsDetailedTest"];
 
             // Er zijn printbare pagina's
             if (printable.Count >= sitemap.Count)
@@ -258,6 +258,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             // Less pages printable than there were pages tested
             else
             {
+                if(isDetailed)
+                    PrintabilityTableHidden.Attributes.Remove("class");
+
                 string notprintablelist = "";
                 foreach (var item in notPrintable)
                 {
