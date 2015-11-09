@@ -245,6 +245,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var TweetCountString = TweetCount.ToString("#,##0");
             var FollowersCountString = FollowersCount.ToString("#,##0");
             var ProfileImage = GetProfileImage(returnedUser);
+            var CoverImage = GetCoverImage(returnedUser);
 
             var percentage = ((decimal)FollowersCount / (decimal)TweetCount) * 100m;
 
@@ -274,6 +275,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 rating = 1m;
             }
+
+            message += "<div class='well well-lg coverpicture' style='background-image: url(" + CoverImage + ")'></div>";
 
             message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
@@ -323,12 +326,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                             #region shortened URL in bio
 
                             WebRequest request = WebRequest.Create(item.Url);
-                            request.Method = WebRequestMethods.Http.Head;
+                            request.Method = WebRequestMethods.Http.Get;
                             WebResponse response = request.GetResponse();
                             var destination = response.ResponseUri.ToString();
 
                             request = WebRequest.Create(Session["MainUrl"].ToString());
-                            request.Method = WebRequestMethods.Http.Head;
+                            request.Method = WebRequestMethods.Http.Get;
                             response = request.GetResponse();
                             var destinationOriginal = response.ResponseUri.ToString();
                             
@@ -428,11 +431,22 @@ namespace DotsolutionsWebsiteTester.TestTools
                 profileimage = item.ProfileImageUrl;
             }
             return profileimage;
+        }
 
-            /// <summary>
-            /// Set the colour that indicates the rating accordingly
-            /// </summary>
-            /// <param name="rating">decimal rating</param>
+        /// <summary>
+        /// Get profile image of user
+        /// </summary>
+        /// <param name="screenName">string screen name</param>
+        /// <returns>string url of profile image</returns>
+        private string GetCoverImage(List<User> returnedUser)
+        {
+            var coverImage = "";
+
+            foreach (var item in returnedUser)
+            {
+                coverImage = item.ProfileBannerUrl;
+            }
+            return coverImage;
         }
 
         /// <summary>
