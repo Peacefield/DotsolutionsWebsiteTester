@@ -100,13 +100,6 @@ function GetOverallRating() {
 
     var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / testedcriteria);
 
-    //alert("access " +access);
-    //alert("userx " + userx);
-    //alert("market " +market);
-    //alert("tech " + tech);
-    //alert("testedcriteria " +testedcriteria);
-    //alert("total " + total);
-
     if (total !== 10) {
         total = total.toFixed(1);
         $("#RatingOverall").text(total.replace(".", ","));
@@ -219,6 +212,7 @@ window.onload = function () {
                                 var uxInner = document.getElementById("RatingUxList").innerHTML;
                                 var marketInner = document.getElementById("RatingMarketingList").innerHTML;
                                 var techInner = document.getElementById("RatingTechList").innerHTML;
+
                                 PageMethods.AddCriteriaListSession("RatingAccessList", accessInner, OnSuccess, OnError);
                                 PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
                                 PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
