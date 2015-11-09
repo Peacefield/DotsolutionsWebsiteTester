@@ -60,7 +60,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // Point reduction equal to percentage of the total amount of tested sites
                     // E.g. when 1/5 has no heading it gets 1/5th of 10 reduction from remaining rating
                     rating = rating - ((1m / (decimal)sitemap.Count) * 10m);
-                    unorderedlist += "<li>" + item + "</li>";
+                    unorderedlist += "<li><a href='"+item+"' target='_blank'>" + item + "</a></li>";
                 }
                 unorderedlist += "</ul>";
 
@@ -89,7 +89,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     else
                         message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                            + "<span> Kort verhaal over het belang van volgorde van headers en dat dit hier niet overal goed is gedaan.</span></div>";
+                            + "<span> Niet alle geteste pagina's gebruiken headers in een aflopende volgorde. Dit kan de gebruikerservaring negatief beïnvloeden doordat de indeling minder duidelijk kan zijn.</span></div>";
 
                     // Every misplaced heading causes a reduction in relation the the total amount of headers used
                     // E.g. 3 misplaced headings while there was a total of 20 headings used cause a reduction of 3/20th * 10
@@ -100,14 +100,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Alle headers zijn correct ingedeeld</span></div>";
+                        + "<span> Alle headers zijn correct ingedeeld. Dit is uitstekend aangezien dit de indeling van een pagina direct duidelijk kan maken voor bezoeker.</span></div>";
                 }
             }
             else
             {
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er zijn geen headers gebruikt op alle geteste pagina's</span></div>";
+                    + "<span> Geen enkele geteste pagina bevat headers. Dit is zeer slecht doordat de gebruiker niet snel een idee krijgt van de indeling van een pagina, maar dit is ook slecht voor de SEO. "
+                    + "Zoekmachines gebruiken headers namelijk om o.a. in te schatten waar de pagina over gaat.</span></div>";
             }
 
             headingMessages.InnerHtml = message;
