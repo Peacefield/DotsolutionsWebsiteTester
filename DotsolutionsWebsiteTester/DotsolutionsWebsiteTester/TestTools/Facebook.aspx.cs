@@ -178,7 +178,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 0.0m;
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er is geen Facebook account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";
+                    + "<span> Er is geen Facebook pagina gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";
             }
 
             decimal rounded = decimal.Round(rating, 1);
@@ -246,10 +246,10 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         /// <summary>
-        /// Check if screenName is a valid Facebook account with user-entered URL in website section
+        /// Check if screenName is a valid Facebook page with user-entered URL in website section
         /// </summary>
         /// <param name="screenName">Screen name you want to test</param>
-        /// <returns>true if it is a valid Facebook account with user-entered URL in website section</returns>
+        /// <returns>true if it is a valid Facebook page with user-entered URL in website section</returns>
         private bool IsFacebook(string screenName)
         {
             try
@@ -335,10 +335,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         private decimal GetFacebookRating(string screenName)
         {
             var rating = 1m;
-            dynamic result = fbc.Get(screenName, new { fields = "likes, picture, talking_about_count" });
+            dynamic result = fbc.Get(screenName, new { fields = "likes, picture, talking_about_count, cover" });
             var fbLikes = result.likes.ToString("#,##0");
             var fbPicture = result.picture.data["url"];
             var fbTalking = result.talking_about_count.ToString("#,##0");
+            var fbCover = result.cover["source"];
 
             var percentage = ((decimal)result.talking_about_count / (decimal)result.likes) * 100;
             if (percentage > 10m)
@@ -362,9 +363,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 1m;
             }
 
+            message += "<div class='well well-lg fb-cover' style='background-image: url(" + fbCover + ")'></div>";
+
             message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "
-                + "<span> Facebook account <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
+                + "<span> Facebook pagina <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
 
             var likesGrammar = " likes";
             if (fbLikes == "1") likesGrammar = " like";
@@ -373,7 +376,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             message += "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-thumbs-o-up fa-3x'></i>"
-                + "<span> Dit account heeft " + fbLikes + likesGrammar + "</span></div>"
+                + "<span> Deze pagina heeft " + fbLikes + likesGrammar + "</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell'>"
                 + "<i class='fa fa-commenting-o fa-3x'></i>"
