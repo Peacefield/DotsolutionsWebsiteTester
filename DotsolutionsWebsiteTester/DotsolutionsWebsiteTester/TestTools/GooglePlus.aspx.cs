@@ -269,12 +269,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + "<span> Google+ account <a href='https://plus.google.com/" + screenName + "' target='_blank' font-size='large'>" + displayName + "</a> gevonden</span>"
                 + "</div>";
 
-            message += "<div class='well well-lg resultWell'>"
-                + "<i class='fa fa-google-plus-square fa-3x'></i>"
+            message += "<div class='well well-lg resultWell text-center'>"
+                + "<i class='fa fa-google-plus-square fa-3x'></i><br/>"
                 + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") + " Google +1's </span></div>"
                 + "<div class='resultDivider'></div>"
-                + "<div class='well well-lg resultWell'>"
-                + "<i class='fa fa-users fa-3x'></i>"
+                + "<div class='well well-lg resultWell text-center'>"
+                + "<i class='fa fa-users fa-3x'></i><br/>"
                 + "<span> Dit account heeft " + followersCount.ToString("#,##0") + " volgers</span></div>";
 
             return rating;

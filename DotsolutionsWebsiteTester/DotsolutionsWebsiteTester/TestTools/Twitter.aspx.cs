@@ -280,12 +280,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
                 + "</div>";
 
-            message += "<div class='well well-lg resultWell'>"
-                + "<i class='fa fa-retweet fa-3x'></i>"
+            message += "<div class='well well-lg resultWell text-center'>"
+                + "<i class='fa fa-retweet fa-3x'></i><br/>"
                 + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
                 + "<div class='resultDivider'></div>"
-                + "<div class='well well-lg resultWell'>"
-                + "<i class='fa fa-users fa-3x'></i>"
+                + "<div class='well well-lg resultWell text-center'>"
+                + "<i class='fa fa-users fa-3x'></i><br/>"
                 + "<span> Dit account heeft " + FollowersCountString + " volgers</span></div>";
 
             return rating;

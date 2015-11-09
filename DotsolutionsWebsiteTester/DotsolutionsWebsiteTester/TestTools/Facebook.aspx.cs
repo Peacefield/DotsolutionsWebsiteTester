@@ -374,12 +374,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             var talkingGrammar = " mensen praten";
             if (fbTalking == "1") talkingGrammar = " persoon praat";
 
-            message += "<div class='well well-lg resultWell'>"
-                + "<i class='fa fa-thumbs-o-up fa-3x'></i>"
+            message += "<div class='well well-lg resultWell text-center'>"
+                + "<i class='fa fa-thumbs-o-up fa-3x'></i><br/>"
                 + "<span> Deze pagina heeft " + fbLikes + likesGrammar + "</span></div>"
                 + "<div class='resultDivider'></div>"
-                + "<div class='well well-lg resultWell'>"
-                + "<i class='fa fa-commenting-o fa-3x'></i>"
+                + "<div class='well well-lg resultWell text-center'>"
+                + "<i class='fa fa-commenting-o fa-3x'></i><br/>"
                 + "<span> " + fbTalking + talkingGrammar + " hier over</span></div>";
 
             return rating;
