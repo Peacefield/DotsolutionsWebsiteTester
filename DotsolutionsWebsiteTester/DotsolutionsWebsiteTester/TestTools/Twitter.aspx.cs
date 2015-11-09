@@ -160,8 +160,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 rating = 0.0m;
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Twitter-profiel staat</span></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er is geen Twitter account gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Twitter-profiel staat</span></div>";
             }
             twitterResults.InnerHtml = message;
             decimal rounded = decimal.Round(rating, 1);

@@ -239,8 +239,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 // Good job, using no long descriptions!
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Er wordt op alle pagina's correct gebruik gemaakt van de description meta-tag</span></div>";
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er wordt op alle pagina's correct gebruik gemaakt van de description meta-tag</span></div>";
             }
             else
             {
@@ -255,9 +255,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
 
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                        + "<span> De volgende pagina's gebruiken geen description meta-tag:</span>"
-                        + "<ul>" + ul + "</ul></div>";
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> De volgende pagina's gebruiken geen description meta-tag:"
+                        + "<ul>" + ul + "</ul></span></div>";
                 }
 
                 if (hasLongDescription.Count > 0)
@@ -269,9 +269,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                         ul += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
                     }
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                        + "<span> De volgende pagina's hebben een te lange meta-description:</span>"
-                        + "<ul>" + ul + "</ul></div>";
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> De volgende pagina's hebben een te lange meta-description:"
+                        + "<ul>" + ul + "</ul></span>n</div>";
                 }
             }
             return rating;
@@ -283,8 +283,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 // Good job, using robots!
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Er wordt op alle pagina's gebruik gemaakt van de robots meta-tag</span></div>";
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er wordt op alle pagina's gebruik gemaakt van de robots meta-tag</span></div>";
             }
             else
             {
@@ -296,9 +296,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     ul += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
                 }
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> De volgende pagina's gebruiken geen robots meta-tag:</span>"
-                    + "<ul>" + ul + "</ul></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> De volgende pagina's gebruiken geen robots meta-tag:"
+                    + "<ul>" + ul + "</ul></span></div>";
             }
             return rating;
         }
@@ -334,15 +334,15 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 rating = rating - 2m;
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er wordt geen titel gebruikt op de ingevoerde pagina</span></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er wordt geen titel gebruikt op de ingevoerde pagina</span></div>";
             }
             if (isLong)
             {
                 rating = rating - 1m;
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er wordt een te lange titel gebruikt op de ingevoerde pagina</span></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er wordt een te lange titel gebruikt op de ingevoerde pagina</span></div>";
             }
             return rating;
         }

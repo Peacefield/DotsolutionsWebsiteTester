@@ -91,15 +91,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     // Geen rekening gehouden op sommige pagina's
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        + "<span> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de mobiele compatibiliteit:</span>"
-                        + "<ul>" + notcompatiblelist + "</ul></div>";
+                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de mobiele compatibiliteit:"
+                        + "<ul>" + notcompatiblelist + "</ul></span></div>";
                 }
                 else
                 {
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        + "<span> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
+                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
                 }
             }
             else
@@ -107,14 +107,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (isDetailed)
                 {
                     message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                         + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                         + "<span> Er is rekening gehouden met de mobiele compatibiliteit op alle geteste pagina's</span></div>";
+                         + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                         + "<span class='messageText'> Er is rekening gehouden met de mobiele compatibiliteit op alle geteste pagina's</span></div>";
                 }
                 else
                 {
                     message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
                 }
             }
 

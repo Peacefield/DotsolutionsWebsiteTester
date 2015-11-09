@@ -115,14 +115,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // Show table when errors are found 
                     IntLinksHiddenTable.Attributes.Remove("class");
                     message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        + "<span> " + errorCnt + " meldingen gevonden.</span></div>";
+                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> " + errorCnt + " meldingen gevonden.</span></div>";
                 }
                 else
                 {
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                        + "<span> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
+                        + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Korte tekst over hoe dit slecht is en waarom dit slecht is</span></div>";
                 }
             }
             else
@@ -130,14 +130,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (isDetailed)
                 {
                     message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Alle gevonden linken zijn goed gedeclareerd en zijn werkend.</span></div>";
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Alle gevonden linken zijn goed gedeclareerd en zijn werkend.</span></div>";
                 }
                 else
                 {
                     message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Korte tekst over hoe dit goed is en waarom dit goed is</span></div>";
                 }
             }
 

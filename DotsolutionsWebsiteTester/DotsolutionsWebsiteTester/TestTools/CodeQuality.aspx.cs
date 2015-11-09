@@ -81,9 +81,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (tableLayOutList.Count == 0)
             {
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Er wordt op alle geteste pagina's waarschijnlijk geen tabel gebruikt voor lay-out. Dit is uitstekend doordat de lay-out geregeld moet door middel van div-elementen met styling via de CSS.</span></div>";
-                
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Er wordt op alle geteste pagina's waarschijnlijk geen tabel gebruikt voor lay-out. Dit is uitstekend doordat de lay-out geregeld moet door middel van div-elementen met styling via de CSS.</span></div>";
+
 
             }
             else
@@ -95,16 +95,16 @@ namespace DotsolutionsWebsiteTester.TestTools
                 unorderedlist += "</ul>";
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                        + "<span> De volgende pagina's gebruiken misschien een tabel voor lay-out. Dit is slecht, de lay-out moet worden geregeld door middel van div-elementen met styling via de CSS.</span>" + unorderedlist + "</div>";
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> De volgende pagina's gebruiken misschien een tabel voor lay-out. Dit is slecht, de lay-out moet worden geregeld door middel van div-elementen met styling via de CSS." + unorderedlist + "</span></div>";
             }
 
             // Show results from IsUsingSemantics()
             if (noSemanticList.Count == 0)
             {
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Er wordt op alle pagina's gebruik gemaakt van semantic HTML5 elementen. Dit is uitstekend aangezien zoekmachines en browsers weten wat ze kunnen verwachten binnen deze elementen.</span></div>";
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er wordt op alle pagina's gebruik gemaakt van semantic HTML5 elementen. Dit is uitstekend aangezien zoekmachines en browsers weten wat ze kunnen verwachten binnen deze elementen.</span></div>";
 
             }
             else
@@ -120,8 +120,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 unorderedlist += "</ul>";
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                        + "<span> De volgende pagina's gebruiken geen semantic HTML5 elementen. Dit is slecht doordat zoekmachines en browsers niet kunnen voorspellen wat er op een pagina kan staan.</span> " + unorderedlist + "</div>";
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> De volgende pagina's gebruiken geen semantic HTML5 elementen. Dit is slecht doordat zoekmachines en browsers niet kunnen voorspellen wat er op een pagina kan staan." + unorderedlist + "</span></div>";
 
             }
 
@@ -135,8 +135,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (notW3cCompliant.Count == 0)
                 {
                     message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                            + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                            + "<span> Alle geteste pagina's zijn W3C gevalideerd. Dit is uitstekend en betekend dat de website kan worden gelezen door het maximaal mogelijk aantal applicaties.</span></div>";
+                            + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                            + "<span class='messageText'> Alle geteste pagina's zijn W3C gevalideerd. Dit is uitstekend en betekend dat de website kan worden gelezen door het maximaal mogelijk aantal applicaties.</span></div>";
 
                 }
                 else
@@ -147,8 +147,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     unorderedlist += "</ul>";
 
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> De volgende pagina's zijn niet W3C gevalideerd. Hierdoor is het mogelijk dat de website niet gelezen kan worden door sommige browsers of niet goed wordt weergegeven. Om dit op te lossen dienen de gevonden errors worden opgelost.</span>" + unorderedlist + "</div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> De volgende pagina's zijn niet W3C gevalideerd. Hierdoor is het mogelijk dat de website niet gelezen kan worden door sommige browsers of niet goed wordt weergegeven. "
+                    + "Om dit op te lossen dienen de gevonden errors worden opgelost." + unorderedlist + "</span></div>";
                 }
             }
 
@@ -178,8 +179,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     W3ResultsTableHidden.Attributes.Remove("class");
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                + "<span> " + errorString + " en " + warningString + " gevonden.</span></div>";
+                + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                + "<span class='messageText'> " + errorString + " en " + warningString + " gevonden.</span></div>";
             }
 
             var usingSemanticsIcon = "";
@@ -351,8 +352,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 reqSuccess = false;
                 w3ErrorsFound.InnerHtml += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span>W3C Validatie niet uit kunnen voeren voor <a href='https://validator.w3.org/nu/?doc=" + url + "' target='_blank'>" + url + "</a>: " + e.Message + "</span></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'>W3C Validatie niet uit kunnen voeren voor <a href='https://validator.w3.org/nu/?doc=" + url + "' target='_blank'>" + url + "</a>: " + e.Message + "</span></div>";
                 Debug.WriteLine(e.Message);
             }
         }

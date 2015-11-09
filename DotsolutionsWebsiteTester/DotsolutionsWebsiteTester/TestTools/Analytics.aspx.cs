@@ -103,14 +103,14 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (analyticslist.Count == 0)
             {
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> Geen analytics software gevonden. Dit is slecht doordat analytics software er voor zorgt dat het gedrag van een bezoeker is te analyseren.</span></div>";
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Geen analytics software gevonden. Dit is slecht doordat analytics software er voor zorgt dat het gedrag van een bezoeker is te analyseren.</span></div>";
             }
             else if (yesAnalytics.Count == sitemap.Count)
             {
                 message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Op alle pagina's is een soort analytics software gevonden. Dit is perfect, analytics software zorgt er namelijk voor dat het gedrag van een bezoeker is te analyseren.</span></div>";
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Op alle pagina's is een soort analytics software gevonden. Dit is perfect, analytics software zorgt er namelijk voor dat het gedrag van een bezoeker is te analyseren.</span></div>";
             }
             else
             {
@@ -123,14 +123,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (isDetailed)
                 {
                     message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> " + analyticsGrammar + " analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemapGrammar + "</span></div>";
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> " + analyticsGrammar + " analytics software gevonden op " + yesAnalytics.Count + " van de " + sitemapGrammar + "</span></div>";
                 }
                 else
                 {
                     message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Op " + yesAnalytics.Count + " van de " + sitemapGrammar + " is een soort analytics software gevonden. Dit kan beter door op alle pagina's gebruik te maken van analytics software. "
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Op " + yesAnalytics.Count + " van de " + sitemapGrammar + " is een soort analytics software gevonden. Dit kan beter door op alle pagina's gebruik te maken van analytics software. "
                         + "Analytics software zorgt er namelijk voor dat het gedrag van een bezoeker is te analyseren.</span></div>";
                 }
             }
@@ -144,9 +144,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     nothing += "<li><a href='" + item + "' target='blank'>" + item + "</a></li>";
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> Geen analytics software gevonden op volgende pagina's</span>"
-                    + "<ul>" + nothing + "</ul></div>";
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Geen analytics software gevonden op volgende pagina's"
+                    + "<ul>" + nothing + "</ul></span></div>";
 
             }
             

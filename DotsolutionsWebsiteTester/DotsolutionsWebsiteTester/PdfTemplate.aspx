@@ -158,6 +158,16 @@
             font-size: 2em;
         }
 
+        .messageIcon {
+            float: left;
+            width: 5%;
+        }
+
+        .messageText {
+            float: left;
+            width: 95%;
+        }
+
         .tabletcontainer {
             width: 450px;
             height: 260px;
@@ -227,10 +237,6 @@
                 </div>
                     </li>
                 </ul>
-            </div>
-            <div class="well well-sm">
-                <h3>Uitgevoerde tests</h3>
-                <ul id="performedTests" runat="server"></ul>
             </div>
             <div class="well well-sm">
                 <h3>Geteste pagina's</h3>

@@ -61,8 +61,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 var rating = 5.5m;
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er kon geen beveiligde verbinding worden vastgesteld.</span></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er kon geen beveiligde verbinding worden vastgesteld.</span></div>";
 
                 decimal rounded = decimal.Round(rating, 1);
                 FacebookRating.InnerHtml = rounded.ToString();
@@ -177,8 +177,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 rating = 0.0m;
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er is geen Facebook pagina gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat.</span></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er is geen Facebook pagina gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat.</span></div>";
             }
 
             decimal rounded = decimal.Round(rating, 1);

@@ -121,14 +121,14 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (UrlFormatHiddenTable.Attributes["class"] != null)
             {
                 message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Alle URLs zijn schoon en gebruiksvriendelijk.</span></div>";
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Alle URLs zijn schoon en gebruiksvriendelijk.</span></div>";
             }
             else
             {
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> " + totalCount + " foutieve URLs gevonden.</span></div>";
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> " + totalCount + " foutieve URLs gevonden.</span></div>";
             }
 
             UrlFormatNotifications.InnerHtml = message;

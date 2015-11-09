@@ -252,8 +252,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (printable.Count >= sitemap.Count)
             {
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
             }
             // Less pages printable than there were pages tested
             else
@@ -271,9 +271,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     amount = "bevat " + (sitemap.Count - printablePages) + " pagina";
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                    + "<span> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de printbaarheid:</span>"
-                    + "<ul>" + notprintablelist + "</ul></div>";
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de printbaarheid:"
+                    + "<ul>" + notprintablelist + "</ul></span></div>";
             }
 
             // Add every page that's not printable

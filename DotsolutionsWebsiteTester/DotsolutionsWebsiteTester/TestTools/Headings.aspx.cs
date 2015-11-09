@@ -65,14 +65,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 unorderedlist += "</ul>";
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> De volgende pagina's gebruiken geen headers</span>" + unorderedlist + "</div>";
-            }
-            else
-            {
-                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Er wordt op alle pagina's gebruik gemaakt van headers</span></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> De volgende pagina's gebruiken geen headers" + unorderedlist + "</span></div>";
             }
 
             if (totalHeadingCnt > 0)
@@ -83,13 +77,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         headingTableHidden.Attributes.Remove("class");
                         message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                            + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                            + "<span> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
+                            + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                            + "<span class='messageText'> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
                     }
                     else
                         message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                            + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg'></i>"
-                            + "<span> Niet alle geteste pagina's gebruiken headers in een aflopende volgorde. Dit kan de gebruikerservaring negatief beïnvloeden doordat de indeling minder duidelijk kan zijn.</span></div>";
+                            + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                            + "<span class='messageText'> Niet alle geteste pagina's gebruiken headers in een aflopende volgorde. Dit kan de gebruikerservaring negatief beïnvloeden doordat de indeling minder duidelijk kan zijn.</span></div>";
 
                     // Every misplaced heading causes a reduction in relation the the total amount of headers used
                     // E.g. 3 misplaced headings while there was a total of 20 headings used cause a reduction of 3/20th * 10
@@ -99,15 +93,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                 else
                 {
                     message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                        + "<span> Alle headers zijn correct ingedeeld. Dit is uitstekend aangezien dit de indeling van een pagina direct duidelijk kan maken voor bezoeker.</span></div>";
+                        + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Alle headers zijn correct ingedeeld. Dit is uitstekend aangezien dit de indeling van een pagina direct duidelijk kan maken voor bezoekers en zoekmachines kunnen de website zo beter indelen op inhoud.</span></div>";
                 }
             }
             else
             {
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Geen enkele geteste pagina bevat headers. Dit is zeer slecht doordat de gebruiker niet snel een idee krijgt van de indeling van een pagina, maar dit is ook slecht voor de SEO. "
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Geen enkele geteste pagina bevat headers. Dit is zeer slecht doordat de gebruiker niet snel een idee krijgt van de indeling van een pagina, maar dit is ook slecht voor de SEO. "
                     + "Zoekmachines gebruiken headers namelijk om o.a. in te schatten waar de pagina over gaat.</span></div>";
             }
 

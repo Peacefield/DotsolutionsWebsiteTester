@@ -184,6 +184,16 @@ footer {
     font-size: 2em;
 }
 
+.messageIcon {
+    float: left;
+    width: 5%;
+}
+
+.messageText {
+    float: left;
+    width: 95%;
+}
+
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -303,7 +313,7 @@ footer {
     position: relative;
 }
 
-.coverpicture{
+.coverpicture {
     background-size: cover;
     height: 125px;
     background-position: center;

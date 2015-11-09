@@ -88,8 +88,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er " + noTitleGrammar + " gevonden zonder titel:</span><ul>" + noTitleUl + "</ul></div>";
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er " + noTitleGrammar + " gevonden zonder titel:<ul>" + noTitleUl + "</ul></span></div>";
             }
 
             if (longTitles.Count > 0)
@@ -104,21 +104,21 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (isDetailed)
                 {
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                        + "<span> " + longTitles.Count + " van de " + sitemap.Count + " geteste " + siteMapGrammer + " " + longTitlesGrammar + " een te lange titel:</span></div>";
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> " + longTitles.Count + " van de " + sitemap.Count + " geteste " + siteMapGrammer + " " + longTitlesGrammar + " een te lange titel:</span></div>";
                     PageTitlesTableHidden.Attributes.Remove("class");
                 }
                 else
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                        + "<span> Kort verhaal over hoe lange titels gebruikt worden op sommige pagina's en waarom dit niet goed is</span></div>";
+                        + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                        + "<span class='messageText'> Kort verhaal over hoe lange titels gebruikt worden op sommige pagina's en waarom dit niet goed is</span></div>";
             }
 
             if (longTitles.Count == 0 && noTitles.Count == 0)
             {
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg'></i>"
-                    + "<span> Op elke pagina is een goede titel aanwezig</span></div>";
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Op elke pagina is een goede titel aanwezig</span></div>";
             }
 
             PageTitleResults.InnerHtml = message;

@@ -34,10 +34,6 @@ namespace DotsolutionsWebsiteTester
             foreach (var item in selectedSites)
                 testedsiteslist.InnerHtml += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
 
-            // Add a list of performed tests with navigation option
-            for (int i = 0; i < selectedTests.Count; i++)
-                performedTests.InnerHtml += "<li><a href='#" + selectedTests[i] + "' >" + selectedTestsName[i] + "</a></li>";
-
             SetTotalRating();
 
             if ((bool)Session["ManualTest"])
