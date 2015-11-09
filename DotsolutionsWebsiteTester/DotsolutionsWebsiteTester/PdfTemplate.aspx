@@ -66,6 +66,12 @@
             position: relative;
         }
 
+        .fb-cover {
+            background-size: cover;
+            height: 125px;
+            background-position: center;
+        }
+
         .manualTest {
             left: 2%;
             position: relative;
