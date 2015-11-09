@@ -222,6 +222,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var googleSearch = GetFromApi(screenName);
 
             var profileImage = googleSearch["image"]["url"].ToString();
+            var coverImage = googleSearch["cover"]["coverPhoto"]["url"].ToString();
             var googlePlusOnes = (int)googleSearch["plusOneCount"];
             var followersCount = (int)googleSearch["circledByCount"];
             var displayName = googleSearch["displayName"].ToString();
@@ -260,6 +261,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 rating = 1.0m;
             }
+
+            message += "<div class='well well-lg coverpicture' style='background-image: url(" + coverImage + ")'></div>";
 
             message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://plus.google.com/" + screenName + "' target='_blank'><img src='" + profileImage + "' alt='profileimage'/></a> "

@@ -178,7 +178,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 0.0m;
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg'></i>"
-                    + "<span> Er is geen Facebook pagina gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat</span></div>";
+                    + "<span> Er is geen Facebook pagina gevonden die geassocieerd is met deze website. Zorg ervoor dat de URL van uw pagina in uw Facebook-profiel staat.</span></div>";
             }
 
             decimal rounded = decimal.Round(rating, 1);
@@ -363,7 +363,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 1m;
             }
 
-            message += "<div class='well well-lg fb-cover' style='background-image: url(" + fbCover + ")'></div>";
+            message += "<div class='well well-lg coverpicture' style='background-image: url(" + fbCover + ")'></div>";
 
             message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "

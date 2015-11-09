@@ -66,7 +66,7 @@
             position: relative;
         }
 
-        .fb-cover {
+        .coverpicture {
             background-size: cover;
             height: 125px;
             background-position: center;
