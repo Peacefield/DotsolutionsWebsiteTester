@@ -155,13 +155,14 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (analyticslist.Count == 1)
                 amountFound = analyticslist.Count + " soort";
 
-            message += "<div class='well well-lg resultWell text-center'>"
+            message = "<div class='well well-lg resultWell text-center'>"
                 + "<span class='largetext'>" + percentageUsed + "%</span><br/>"
                 + "<span>van de pagina's gebruiken analytics</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
                 + "<i class='fa fa-search fa-3x'></i><br/>"
-                + "<span>" + amountFound + " analytics gevonden</span></div>";
+                + "<span>" + amountFound + " analytics gevonden</span></div>"
+                + message;
 
             AnalyticsResults.InnerHtml = message;
 
