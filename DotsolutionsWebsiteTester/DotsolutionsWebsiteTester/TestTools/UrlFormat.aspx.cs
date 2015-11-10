@@ -128,7 +128,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
                     + "<i class='fa fa-chain-broken fa-3x'></i><br/>"
-                    + "<span class='messageText'> " + totalCount + " foutieve URLs gevonden.</span></div>";
+                    + "<span class='messageText'> " + totalCount.ToString("#,##0") +" foutieve URLs gevonden.</span></div>";
             }
 
             UrlFormatNotifications.InnerHtml = message;

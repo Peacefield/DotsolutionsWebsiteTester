@@ -116,7 +116,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
                     + "<i class='fa fa-chain-broken fa-3x'></i><br/>"
-                    + "<span>Er zijn " + errorCnt + " meldingen gevonden van linken die niet goed gedeclareerd zijn en/of niet werken.</span></div>";
+                    + "<span>Er zijn " + errorCnt.ToString("#,##0") +" meldingen gevonden van linken die niet goed gedeclareerd zijn en/of niet werken.</span></div>";
             }
             else
             {

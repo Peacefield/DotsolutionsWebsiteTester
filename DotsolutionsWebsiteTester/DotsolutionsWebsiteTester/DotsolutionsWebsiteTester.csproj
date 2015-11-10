@@ -186,6 +186,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="MozscapeAPI\README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="PdfTemplate.aspx" />
     <Content Include="Geautomatiseerde-Test.aspx" />
@@ -292,6 +293,8 @@
     <Compile Include="Handmatige-Test.aspx.designer.cs">
       <DependentUpon>Handmatige-Test.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MozscapeAPI\MozscapeAPI.cs" />
+    <Compile Include="MozscapeAPI\MozscapeResults.cs" />
     <Compile Include="PdfTemplate.aspx.cs">
       <DependentUpon>PdfTemplate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

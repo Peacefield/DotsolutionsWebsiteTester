@@ -167,13 +167,13 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 // Uphold grammar
                 if (errorCnt == 1)
-                    errorString = errorCnt + " error";
+                    errorString = errorCnt.ToString("#,##0") + " error";
                 else
-                    errorString = errorCnt + " errors";
+                    errorString = errorCnt.ToString("#,##0") +" errors";
                 if (warningCnt == 1)
-                    warningString = warningCnt + " waarschuwing";
+                    warningString = warningCnt.ToString("#,##0") + " waarschuwing";
                 else
-                    warningString = warningCnt + " waarschuwingen";
+                    warningString = warningCnt.ToString("#,##0") + " waarschuwingen";
 
                 if (isDetailed)
                     W3ResultsTableHidden.Attributes.Remove("class");
