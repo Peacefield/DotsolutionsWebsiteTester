@@ -50,7 +50,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var hasNoDescription = new List<string>();
             var hasNoRobots = new List<string>();
             var rating = 10.0m;
-            isDetailed =  (bool)Session["IsDetailedTest"];
+            isDetailed = (bool)Session["IsDetailedTest"];
             foreach (var url in sitemap)
             {
                 Debug.WriteLine("Getting meta tags from: " + url);
@@ -192,7 +192,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (title == "")
                     title = "Untitled";
                 if (desc == "")
-                    desc = "No description set";
+                    desc = "Geen description meta-tag gevonden.";
 
                 message += "<span class='help-block'>Zo ziet de website er uit op de resultatenpagina van Google:</span>";
                 message += "<div class='well well-sm col-md-6 col-sm-7'>"
@@ -240,7 +240,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Good job, using no long descriptions!
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Er wordt op alle pagina's correct gebruik gemaakt van de description meta-tag</span></div>";
+                    + "<span class='messageText'> Er wordt op alle pagina's correct gebruik gemaakt van de description meta-tag. Dit is uitstekend doordat dit getoond wordt op de resultatenpagina van een zoekmachine en een zoekmachine weet wat er zich op de website kan bevinden.</span></div>";
             }
             else
             {
@@ -257,7 +257,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                         + "<span class='messageText'> De volgende pagina's gebruiken geen description meta-tag:"
-                        + "<ul>" + ul + "</ul></span></div>";
+                        + "<ul>" + ul + "</ul>Dit is zeer slecht doordat dit getoond wordt op de resultatenpagina van een zoekmachine. Nu zal er een willekeurig stuk tekst worden getoond. Met de description meta-tag heeft de website hier zelf invloed op.</span></div>";
                 }
 
                 if (hasLongDescription.Count > 0)
@@ -271,7 +271,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                         + "<span class='messageText'> De volgende pagina's hebben een te lange meta-description:"
-                        + "<ul>" + ul + "</ul></span>n</div>";
+                        + "<ul>" + ul + "</ul>Dit is slecht doordat de zoekmachine deze zal afkappen bij het tonen van de website beschrijving.</span></div>";
                 }
             }
             return rating;
@@ -284,7 +284,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Good job, using robots!
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Er wordt op alle pagina's gebruik gemaakt van de robots meta-tag</span></div>";
+                    + "<span class='messageText'> Er wordt op alle pagina's gebruik gemaakt van de robots meta-tag. Dit is uitstekend aangezien zo wordt aangegeven welke delen van de website geïndexeerd mogen worden.</span></div>";
             }
             else
             {
@@ -298,7 +298,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                     + "<span class='messageText'> De volgende pagina's gebruiken geen robots meta-tag:"
-                    + "<ul>" + ul + "</ul></span></div>";
+                    + "<ul>" + ul + "</ul>Het gebruik van de robots meta-tag heeft veel invloed op de beoordeling en positionering vanuit een zoekmachine en is daarom zeer belangrijk.</span></div>";
             }
             return rating;
         }
@@ -335,14 +335,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = rating - 2m;
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Er wordt geen titel gebruikt op de ingevoerde pagina</span></div>";
+                    + "<span class='messageText'> Er wordt geen titel gebruikt op de ingevoerde pagina. "
+                    + "Dit is zeer slecht doordat dit de titel is die op een resultatenpagina te zien is van een zoekopdracht. Dit zal ook een negatieve invloed hebben op de positionering binnen deze pagina.</span></div>";
             }
             if (isLong)
             {
                 rating = rating - 1m;
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Er wordt een te lange titel gebruikt op de ingevoerde pagina</span></div>";
+                    + "<span class='messageText'> Er wordt een te lange titel gebruikt op de ingevoerde pagina. Dit is slecht doordat de zoekmachine deze titel zal afkappen waardoor er niet het maximale uit een titel wordt gehaald.</span></div>";
             }
             return rating;
         }

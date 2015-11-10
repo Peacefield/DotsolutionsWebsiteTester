@@ -9,7 +9,7 @@
         /* Move down content because we have a fixed navbar that is 50px tall */
         body {
             padding-bottom: 20px;
-            background-color: #396B02 !important;
+            background-color: #67BE45 !important;
             /*background: url("/Content/images/dotlogo.png") fixed no-repeat 100% 100%;*/
             -webkit-background-size: cover;
             -moz-background-size: cover;
@@ -36,14 +36,14 @@
 
         /* Custom panel colouring */
         .panel-custom {
-            border-color: #85CC76 !important;
+            border-color: #32A389 !important;
         }
 
             .panel-custom .panel-heading {
                 color: white;
-                background-color: #145007;
+                background-color: #20856E;
                 background-repeat: repeat-x;
-                border-color: #85CC76;
+                border-color: #32A389  ;
             }
 
         #automatedRatingList {

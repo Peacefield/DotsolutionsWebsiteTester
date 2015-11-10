@@ -16,7 +16,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         private List<string> notPrintable = new List<string>();
         private List<string> notPrintableCss = new List<string>();
         private List<Thread> threadList = new List<Thread>();
-        private int printablePages = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -77,7 +76,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (node.Attributes["media"].Value == "print")
                     {
                         found = true;
-                        printablePages++;
                         printable.Add(url);
                     }
                 }
@@ -195,7 +193,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
                 else
                 {
-                    printablePages++;
                     if (!printable.Contains(url))
                         printable.Add(url);
 
@@ -251,32 +248,27 @@ namespace DotsolutionsWebsiteTester.TestTools
             // Er zijn printbare pagina's
             if (printable.Count >= sitemap.Count)
             {
-                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Er is rekening gehouden met de printbaarheid op alle geteste pagina's</span></div>";
+                var percentage = ((decimal)printable.Count / (decimal)sitemap.Count) * 100m;
+                if (percentage > 100m)
+                    percentage = 100m;
+                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
+                    + "<i class='fa fa-print fa-3x'></i><br/>"
+                    + "<span class='messageText'>" + percentage.ToString("#,0") + "% van de geteste pagina's is printbaar.</span></div>";
+
             }
             // Less pages printable than there were pages tested
             else
             {
-                if(isDetailed)
+                if (isDetailed)
                     PrintabilityTableHidden.Attributes.Remove("class");
 
-                string notprintablelist = "";
-                foreach (var item in notPrintable)
-                {
-                    rating = rating - (10.0m / (decimal)sitemap.Count);
-                    notprintablelist += "<li>" + item + "</li>";
-                }
-                string amount = "";
-                if ((sitemap.Count - printablePages) > 1)
-                    amount = "bevatten " + (sitemap.Count - printablePages) + " pagina's";
-                else
-                    amount = "bevat " + (sitemap.Count - printablePages) + " pagina";
+                var notprintable = sitemap.Count - printable.Count;
 
-                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Van de " + sitemap.Count + " geteste pagina's " + amount + " geen CSS die rekening houdt met de printbaarheid:"
-                    + "<ul>" + notprintablelist + "</ul></span></div>";
+                var percentage = ((decimal)notprintable / (decimal)sitemap.Count) * 100m;
+
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
+                    + "<i class='fa fa-print fa-3x'></i><br/>"
+                    + "<span class='messageText'>" + percentage.ToString("#,0") + "% van de geteste pagina's is niet printbaar.</span></div>";
             }
 
             // Add every page that's not printable

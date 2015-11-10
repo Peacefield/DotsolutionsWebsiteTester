@@ -137,7 +137,8 @@ body {
 }
 
 body {
-    background: url("/Content/images/bckgnd_grn.jpg") fixed no-repeat;
+    background-color: #67BE45 !important;
+    /*background: url("/Content/images/bckgnd_grn.jpg") fixed no-repeat;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -204,15 +205,15 @@ footer {
 }
 
 .panel-custom {
-    border-color: #85CC76 !important;
+    border-color: #32A389   !important;
 }
 
     .panel-custom .panel-heading {
-        background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);
+        /*background-image: linear-gradient(to bottom,#85CC76 0,#145007 100%);*/
         color: white;
-        background-color: #145007;
+        background-color: #20856E;
         background-repeat: repeat-x;
-        border-color: #85CC76;
+        border-color: #32A389  ;
     }
 
 /* Start Default Page CSS */
@@ -389,17 +390,17 @@ footer {
 /* End Handmatige-Test CSS*/
 
 .lowScore {
-    background-image: linear-gradient(to bottom,red 0,black 175%);
+    /*background-image: linear-gradient(to bottom,red 0,black 175%);*/
     background-color: red;
 }
 
 .mediocreScore {
-    background-image: linear-gradient(to bottom,orangered 0,black 175%);
+    /*background-image: linear-gradient(to bottom,orangered 0,black 175%);*/
     background-color: orangered;
 }
 
 .excellentScore {
-    background-image: linear-gradient(to bottom,green 0,black 175%);
+    /*background-image: linear-gradient(to bottom,green 0,black 175%);*/
     background-color: green;
 }
 

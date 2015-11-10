@@ -100,13 +100,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         if (count <= 5)
                         {
-                            AddToTable(item, "URL is niet gebruikersvriendelijk", page);
+                            AddToTable(item, "URL is niet gebruiksvriendelijk", page);
                         }
                         count++;
                     }
                     if (count > 5)
                     {
-                        AddToTable("...", "<strong>" + (count - 4) + " overige niet gebruikersvriendelijke URLs gevonden</strong>", page);
+                        AddToTable("...", "<strong>" + (count - 4) + " overige niet gebruiksvriendelijke URLs gevonden</strong>", page);
                     }
                     totalCount += count;
 
@@ -118,16 +118,16 @@ namespace DotsolutionsWebsiteTester.TestTools
                 dirtyUrl.Clear();
             }
 
-            if (UrlFormatHiddenTable.Attributes["class"] != null)
+            if (totalCount == 0)
             {
-                message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
+                    + "<i class='fa fa-link fa-3x'></i><br/>"
                     + "<span class='messageText'> Alle URLs zijn schoon en gebruiksvriendelijk.</span></div>";
             }
             else
             {
-                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
+                    + "<i class='fa fa-chain-broken fa-3x'></i><br/>"
                     + "<span class='messageText'> " + totalCount + " foutieve URLs gevonden.</span></div>";
             }
 

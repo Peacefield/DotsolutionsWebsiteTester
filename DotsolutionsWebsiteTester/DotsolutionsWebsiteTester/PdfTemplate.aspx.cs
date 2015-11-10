@@ -135,6 +135,7 @@ namespace DotsolutionsWebsiteTester
             var htwOut = new HtmlTextWriter(swOut);
             base.Render(htwOut);
             string sOut = sbOut.ToString();
+            var isDetailed = (bool)Session["IsDetailedTest"];
 
             string year = System.DateTime.Today.Year.ToString();
             int month = System.DateTime.Today.Month;
@@ -149,6 +150,9 @@ namespace DotsolutionsWebsiteTester
 
             // Filename with format -> YY-MM-DD_hh.mm Rapportage_http.example.com
             string filename = @"" + date + " Rapportage_" + url;
+
+            if (!isDetailed)
+                filename = filename + "_basis";
 
             //try
             //{

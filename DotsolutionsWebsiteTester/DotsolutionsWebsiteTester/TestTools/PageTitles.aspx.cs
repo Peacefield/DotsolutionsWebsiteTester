@@ -84,12 +84,13 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 foreach (var page in noTitles)
                 {
-                    noTitleUl += "<li>" + page + "</li>";
+                    noTitleUl += "<li><a href='" + page + "' target='_blank'>" + page + "</a></li>";
                 }
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Er " + noTitleGrammar + " gevonden zonder titel:<ul>" + noTitleUl + "</ul></span></div>";
+                    + "<span class='messageText'> Er " + noTitleGrammar + " gevonden zonder titel:<ul>" + noTitleUl + "</ul>"
+                    + "Dit is zeer slecht doordat een gebruiker snel moet kunnen weten waar deze zich bevindt en doordat zoekmachines de titel weergeven op de resultatenpagina.</span></div>";
             }
 
             if (longTitles.Count > 0)
@@ -103,23 +104,33 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 if (isDetailed)
                 {
-                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
-                        + "<span class='messageText'> " + longTitles.Count + " van de " + sitemap.Count + " geteste " + siteMapGrammer + " " + longTitlesGrammar + " een te lange titel:</span></div>";
                     PageTitlesTableHidden.Attributes.Remove("class");
                 }
-                else
-                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                        + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
-                        + "<span class='messageText'> Kort verhaal over hoe lange titels gebruikt worden op sommige pagina's en waarom dit niet goed is</span></div>";
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> " + longTitles.Count + " van de " + sitemap.Count + " geteste " + siteMapGrammer + " " + longTitlesGrammar + " een te lange titel.<br/>"
+                    + "Dit is slecht doordat een gebruiker snel moet kunnen weten waar deze zich bevindt en zoekmachines zullen te lange titels afkappen waardoor er niet het maximale uit een titel kan worden gehaald op een resultatenpagina.</span></div>";
             }
 
             if (longTitles.Count == 0 && noTitles.Count == 0)
             {
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Op elke pagina is een goede titel aanwezig</span></div>";
+                    + "<span class='messageText'> Op elke pagina is een goede titel aanwezig.<br/>"
+                    + "Dit is uitstekend doordat een gebruiker snel moet kunnen weten waar deze zich bevindt en doordat zoekmachines de titel weergeven op de resultatenpagina.</span></div>";
             }
+
+            var longTitlePerc = ((decimal)longTitles.Count / (decimal)sitemap.Count) * 100m;
+            var noTitlePerc = ((decimal)noTitles.Count / (decimal)sitemap.Count) * 100m;
+
+            message = "<div class='well well-lg resultWell text-center'>"
+                + "<i class='fa fa-text-width fa-3x'></i><br/>"
+                + "<span>" + longTitlePerc.ToString("#,0") + "% van de pagina's bevat een te lange titel</span></div>"
+                + "<div class='resultDivider'></div>"
+                + "<div class='well well-lg resultWell text-center'>"
+                + "<span class='largetext'>" + noTitlePerc.ToString("#,0") + "%</span><br/>"
+                + "<span>van de pagina's bevat geen titel</span></div>"
+                + message;
 
             PageTitleResults.InnerHtml = message;
 
