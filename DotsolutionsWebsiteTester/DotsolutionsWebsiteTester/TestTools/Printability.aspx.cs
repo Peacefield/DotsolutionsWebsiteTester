@@ -278,6 +278,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (!printable.Contains(url))
                     {
+                        rating = rating - ((1m / (decimal)sitemap.Count) * 10m);
                         var index = notPrintable.IndexOf(url);
                         var cssUrl = notPrintableCss[index].ToString();
                         if (cssUrl != "-")

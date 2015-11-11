@@ -137,16 +137,16 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             // Payed services with 100 free unique requests per month, but WITH mobile resolution ability
             // https://www.screenshotmachine.com/
-            //var ApiKey = GetFromApiKeys("ScreenshotMachine");
-            //var format = "PNG";
-            //var url = HttpUtility.UrlEncode(Session["mainUrl"].ToString());
-            //var size = "Nmob";
-            //var imgUrlMobile = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
-            //size = "N";
-            //var imgUrlTablet = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            var ApiKey = GetFromApiKeys("ScreenshotMachine");
+            var format = "PNG";
+            var url = HttpUtility.UrlEncode(Session["mainUrl"].ToString());
+            var size = "Nmob";
+            var imgUrlMobile = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            size = "N";
+            var imgUrlTablet = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
 
-            var imgUrlTablet = "http://i.imgur.com/PtcoFun.png";
-            var imgUrlMobile = "http://i.imgur.com/8UIGhLL.png";
+            //var imgUrlTablet = "http://i.imgur.com/PtcoFun.png";
+            //var imgUrlMobile = "http://i.imgur.com/8UIGhLL.png";
 
             tabletImg.InnerHtml = "<img width='400' height='300' class='tabletcontainer center-block' src='" + imgUrlTablet + "' title='Tablet preview " + Session["MainUrl"].ToString() + "' alt='Tablet preview " + Session["MainUrl"].ToString() + "'/>";
             mobileImg.InnerHtml = "<img width='480' height='800' class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Smartphone preview " + Session["MainUrl"].ToString() + "' alt='Smartphone preview " + Session["MainUrl"].ToString() + "'/>";
