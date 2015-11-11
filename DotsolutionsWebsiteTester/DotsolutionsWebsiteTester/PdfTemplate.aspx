@@ -9,7 +9,7 @@
         /* Move down content because we have a fixed navbar that is 50px tall */
         body {
             padding-bottom: 20px;
-            background-color: #67BE45 !important;
+            background-color: #2F4F4F !important;
             /*background: url("/Content/images/dotlogo.png") fixed no-repeat 100% 100%;*/
             -webkit-background-size: cover;
             -moz-background-size: cover;
