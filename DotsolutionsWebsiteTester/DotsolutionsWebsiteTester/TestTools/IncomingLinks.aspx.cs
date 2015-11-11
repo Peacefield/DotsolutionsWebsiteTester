@@ -62,9 +62,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 totalRating += decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
 
                 if (strMozRankCrawled == "0")
-                {
                     strMozRankCrawledDate = "Niet bekend";
-                }
                 var strMozRankUrlRounded = decimal.Round(decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture), 1).ToString();
                 var intExternalLinks = Int32.Parse(strExternalLinks);
                 AddToTable(page, intExternalLinks.ToString("#,##0"), strMozRankUrlRounded, strMozRankCrawledDate);
@@ -82,6 +80,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + "<div class='well well-lg resultWell text-center'>"
                 + "<span class='largetext'>" + totalRating + "</span><br/>"
                 + "<span>Gemiddelde MozRank score</span></div>";
+
+            message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                + "<span class='messageText'>De hoeveelheid links die verwijzen naar een pagina worden door zoekmachines gezien als <i>stemmen</i> die verantwoordelijk zijn voor de positie in de zoekresultaten.</span></div>";
 
             IncomingLinksResults.InnerHtml = message;
 
