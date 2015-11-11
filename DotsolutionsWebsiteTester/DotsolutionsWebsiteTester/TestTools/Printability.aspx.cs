@@ -267,7 +267,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var percentage = ((decimal)notprintable / (decimal)sitemap.Count) * 100m;
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
-                    + "<i class='fa fa-print fa-3x'></i><br/>"
+                    + "<span class='fa-stack fa-2x'>"
+                    + "<i class='fa fa-ban fa-stack-2x'></i>"
+                    + "<i class='fa fa-print fa-stack-1x'></i></span>"
+                    + "<br/>"
                     + "<span class='messageText'>" + percentage.ToString("#,0") + "% van de geteste pagina's is niet printbaar.</span></div>";
             }
 

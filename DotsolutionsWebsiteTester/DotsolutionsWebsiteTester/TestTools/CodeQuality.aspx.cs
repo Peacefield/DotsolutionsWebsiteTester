@@ -191,12 +191,16 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (noSemanticList.Count == 0)
             {
-                usingSemanticsIcon = "fa-html5";
+                usingSemanticsIcon = "<i class='fa fa-html5 fa-3x'></i>";
+
                 usingSemantics = "HTML5";
             }
             else
             {
-                usingSemanticsIcon = "fa-times-circle";
+                usingSemanticsIcon = "<span class='fa-stack fa-2x'>"
+                    + "<i class='fa fa-ban fa-stack-2x'></i>"
+                    + "<i class='fa fa-html5 fa-stack-1x'></i></span>";
+
                 usingSemantics = "Geen gebruik van HTML5";
             }
 
@@ -212,8 +216,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             message = "<div class='well well-lg resultWell text-center'>"
-                + "<i class='fa " + usingSemanticsIcon + " fa-3x'></i><br/>"
+                + usingSemanticsIcon
+                + "<br/>"
                 + "<span>" + usingSemantics + "</span></div>"
+
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
                 + "<i class='fa " + w3cValidatedIcon + " fa-3x'></i><br/>"
