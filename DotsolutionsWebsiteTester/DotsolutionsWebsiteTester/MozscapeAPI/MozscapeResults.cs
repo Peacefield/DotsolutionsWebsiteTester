@@ -19,6 +19,7 @@ namespace Scoop
         public string pda { get; set; }
         public string prid { get; set; }
         public string ueid { get; set; }
+        public string uid { get; set; }
         public string ufq { get; set; }
         public string umrp { get; set; }
         public string umrr { get; set; }

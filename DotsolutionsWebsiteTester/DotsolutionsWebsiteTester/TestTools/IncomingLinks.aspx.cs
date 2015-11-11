@@ -52,19 +52,19 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var strAPIURL = mozAPI.CreateAPIURL(strAccessID, strPrivateKey, 1, "url metrics", page, "");
                 var strResults = mozAPI.FetchResults(strAPIURL);
                 var msURLMetrics = mozAPI.ParseURLMetrics(strResults);
-                var strExternalLinks = msURLMetrics.ueid;
+                var strBackLinks = msURLMetrics.uid;
                 var strMozRankUrl = msURLMetrics.umrp;
                 var strMozRankCrawled = msURLMetrics.ulc;
 
                 var strMozRankCrawledDate = UnixTimeStampToDateTime(strMozRankCrawled);
 
-                totalLinks += Int32.Parse(strExternalLinks);
+                totalLinks += Int32.Parse(strBackLinks);
                 totalRating += decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
 
                 if (strMozRankCrawled == "0")
                     strMozRankCrawledDate = "Niet bekend";
                 var strMozRankUrlRounded = decimal.Round(decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture), 1).ToString();
-                var intExternalLinks = Int32.Parse(strExternalLinks);
+                var intExternalLinks = Int32.Parse(strBackLinks);
                 AddToTable(page, intExternalLinks.ToString("#,##0"), strMozRankUrlRounded, strMozRankCrawledDate);
             }
 
@@ -78,7 +78,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + "<span>links gevonden die naar de geteste pagina's verwijzen</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
-                + "<span class='largetext'>" + totalRating + "</span><br/>"
+                + "<span class='largetext'>" + totalRating + "/10</span><br/>"
                 + "<span>Gemiddelde MozRank score</span></div>";
 
             message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
@@ -151,7 +151,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// Add the found MozRank results to the table
         /// </summary>
         /// <param name="page">Page of origin</param>
-        /// <param name="linkAmount">amount of equity links found</param>
+        /// <param name="linkAmount">amount of equity  and non-equity links found</param>
         /// <param name="mozRank">MozRank score</param>
         /// <param name="lastCrawled">Last time Mozscape crawled the URL</param>
         private void AddToTable(string page, string linkAmount, string mozRank, string lastCrawled)
