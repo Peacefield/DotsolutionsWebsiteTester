@@ -27,6 +27,7 @@ namespace Scoop
         public string us { get; set; }
         public string ut { get; set; }
         public string uu { get; set; }
+        public string ulc { get; set; }
 
     }
 

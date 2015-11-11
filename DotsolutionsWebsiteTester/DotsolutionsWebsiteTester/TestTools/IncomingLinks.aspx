@@ -9,6 +9,17 @@
                     <span id="IncomingLinksRating" runat="server">?</span> Binnenkomende links
                 </div>
                 <div class="panel-body">
+                    <div id="IncomingLinksResults" class="results" runat="server"></div>
+                    <div class="hidden" id="IncomingLinksTableHidden" runat="server">
+                        <asp:Table ID="IncomingLinksTable" CssClass="table table-hover" runat="server">
+                            <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">
+                                <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-4" />
+                                <asp:TableHeaderCell Scope="Column" Text="Aantal verwijzende links" CssClass="col-md-3" />
+                                <asp:TableHeaderCell Scope="Column" Text="Mozrank Score" CssClass="col-md-2" />
+                                <asp:TableHeaderCell Scope="Column" Text="Laatst gemeten" CssClass="col-md-3" />
+                            </asp:TableHeaderRow>
+                        </asp:Table>
+                    </div>
                 </div>
             </div>
         </div>

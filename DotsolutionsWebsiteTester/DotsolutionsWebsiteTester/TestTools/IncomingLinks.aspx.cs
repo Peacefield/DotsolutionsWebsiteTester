@@ -36,24 +36,59 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void GetIncomingLinks()
         {
             var rating = 10m;
-
+            var sitemap = (List<string>)Session["selectedSites"];
+            var message = "";
+            // Start setting up MozscapeAPI
             var strAccessID = GetFromApiKeys("MozscapeAccessId");
             var strPrivateKey = GetFromApiKeys("MozscapeSecretKey");
+            var mozAPI = new MozscapeAPI();
+            // End setting up MozscapeAPI
+            var totalLinks = 0;
+            var totalRating = 0.0m;
+            var isDetailed = (bool)Session["IsDetailedTest"];
 
-            MozscapeAPI mozAPI = new MozscapeAPI();
+            foreach (var page in sitemap)
+            {
+                var strAPIURL = mozAPI.CreateAPIURL(strAccessID, strPrivateKey, 1, "url metrics", page, "");
+                var strResults = mozAPI.FetchResults(strAPIURL);
+                var msURLMetrics = mozAPI.ParseURLMetrics(strResults);
+                var strExternalLinks = msURLMetrics.ueid;
+                var strMozRankUrl = msURLMetrics.umrp;
+                var strMozRankCrawled = msURLMetrics.ulc;
 
-            string strAPIURL = mozAPI.CreateAPIURL(strAccessID, strPrivateKey, 1, "url metrics", "www.dotsolutions.nl", "");
-            string strResults = mozAPI.FetchResults(strAPIURL);
-            MozscapeURLMetric msURLMetrics = mozAPI.ParseURLMetrics(strResults);
-            string strExternalLinks = msURLMetrics.ueid;
-            string strMozRankUrl = msURLMetrics.umrp;
+                var strMozRankCrawledDate = UnixTimeStampToDateTime(strMozRankCrawled);
 
-            Debug.WriteLine("strAPIURL: " + strAPIURL);
-            Debug.WriteLine("strResults: " + strResults);
-            Debug.WriteLine("strExternalLinks: " + strExternalLinks);
-            Debug.WriteLine("strMozRankUrl: " + strMozRankUrl);
-                        
-            decimal rounded = decimal.Round(rating, 1);
+                totalLinks += Int32.Parse(strExternalLinks);
+                totalRating += decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
+
+                if (strMozRankCrawled == "0")
+                {
+                    strMozRankCrawledDate = "Niet bekend";
+                }
+                var strMozRankUrlRounded = decimal.Round(decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture), 1).ToString();
+                var intExternalLinks = Int32.Parse(strExternalLinks);
+                AddToTable(page, intExternalLinks.ToString("#,##0"), strMozRankUrlRounded, strMozRankCrawledDate);
+            }
+
+            if (isDetailed)
+                IncomingLinksTableHidden.Attributes.Remove("class");
+
+            totalRating = decimal.Round(totalRating / sitemap.Count, 1);
+
+            message += "<div class='well well-lg resultWell text-center'>"
+                + "<span class='largetext'>" + totalLinks.ToString("#,##0") + "</span><br/>"
+                + "<span>links gevonden die naar de geteste pagina's verwijzen</span></div>"
+                + "<div class='resultDivider'></div>"
+                + "<div class='well well-lg resultWell text-center'>"
+                + "<span class='largetext'>" + totalRating + "</span><br/>"
+                + "<span>Gemiddelde MozRank score</span></div>";
+
+            IncomingLinksResults.InnerHtml = message;
+
+            rating = totalRating;
+            var rounded = decimal.Round(rating, 1);
+            IncomingLinksRating.InnerHtml = rounded.ToString();
+            SetRatingDisplay(rounded);
             var temp = (decimal)Session["RatingMarketing"];
             Session["RatingMarketing"] = temp + rounded;
 
@@ -81,5 +116,77 @@ namespace DotsolutionsWebsiteTester.TestTools
             return "";
         }
 
+        /// <summary>
+        /// Add a 0 to the start of an integer if it's less than 10 to improve readability
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        private string AddZero(int date)
+        {
+            string temp = date.ToString();
+            if (date < 10)
+                temp = "0" + date;
+            return temp;
+        }
+
+        /// <summary>
+        /// Convert Unix Timestamp to DateTime
+        /// </summary>
+        /// <param name="unixTimeStamp"></param>
+        /// <returns></returns>
+        private string UnixTimeStampToDateTime(string unixTimeStamp)
+        {
+            var unix = Convert.ToDouble(unixTimeStamp);
+            // Unix timestamp is seconds past epoch
+            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unix).ToLocalTime();
+
+            var result = dtDateTime.Year + "/" + AddZero(dtDateTime.Month) + "/" + AddZero(dtDateTime.Day);
+            return result;
+        }
+
+        /// <summary>
+        /// Add the found MozRank results to the table
+        /// </summary>
+        /// <param name="page">Page of origin</param>
+        /// <param name="linkAmount">amount of equity links found</param>
+        /// <param name="mozRank">MozRank score</param>
+        /// <param name="lastCrawled">Last time Mozscape crawled the URL</param>
+        private void AddToTable(string page, string linkAmount, string mozRank, string lastCrawled)
+        {
+            var tRow = new TableRow();
+
+            var tCellPage = new TableCell();
+            tCellPage.Text = "<a href='" + page + "' target='_blank'>" + page + "</a>";
+            tRow.Cells.Add(tCellPage);
+
+            var tCellLink = new TableCell();
+            tCellLink.Text = linkAmount;
+            tRow.Cells.Add(tCellLink);
+
+            var tCellMozRank = new TableCell();
+            tCellMozRank.Text = mozRank;
+            tRow.Cells.Add(tCellMozRank);
+
+            var tCellLastCrawled = new TableCell();
+            tCellLastCrawled.Text = lastCrawled;
+            tRow.Cells.Add(tCellLastCrawled);
+
+            IncomingLinksTable.Rows.Add(tRow);
+        }
+
+        /// <summary>
+        /// Set the colour that indicates the rating accordingly
+        /// </summary>
+        /// <param name="rating">decimal rating</param>
+        private void SetRatingDisplay(decimal rating)
+        {
+            if (rating < 6m)
+                IncomingLinksRating.Attributes.Add("class", "lowScore ratingCircle");
+            else if (rating < 8.5m)
+                IncomingLinksRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            else
+                IncomingLinksRating.Attributes.Add("class", "excellentScore ratingCircle");
+        }
     }
 }
