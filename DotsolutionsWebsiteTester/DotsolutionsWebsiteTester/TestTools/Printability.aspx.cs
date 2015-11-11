@@ -265,7 +265,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var notprintable = sitemap.Count - printable.Count;
 
                 var percentage = ((decimal)notprintable / (decimal)sitemap.Count) * 100m;
-
+                
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
                     + "<span class='fa-stack fa-2x'>"
                     + "<i class='fa fa-ban fa-stack-2x'></i>"

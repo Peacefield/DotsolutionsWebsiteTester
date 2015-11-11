@@ -182,6 +182,7 @@
     <Content Include="ErrorPages\GeneralError.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Handmatige-Test.aspx" />
+    <Content Include="humans.txt" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
