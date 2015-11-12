@@ -76,7 +76,7 @@
                         <asp:ListItem Text="Sociale interesse" Value="SocialInterest" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Populariteit" Value="Popularity" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Hoeveelheid content" Value="AmountOfContent" Selected="false" Enabled="false"></asp:ListItem>
-                        <asp:ListItem Text="Afbeeldingen" Value="Images" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Afbeeldingen" Value="Images" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>
                 </div>
                 <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">

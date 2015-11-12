@@ -9,6 +9,16 @@
                     <span id="ImagesRating" runat="server">?</span> Afbeeldingen
                 </div>
                 <div class="panel-body">
+                    <div id="ImagesMessages" class="results" runat="server"></div>
+                    <div class="hidden" id="ImagesTableHidden" runat="server">
+                        <asp:Table ID="table" CssClass="table table-hover" runat="server">
+                            <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">
+                                <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-3" />
+                                <asp:TableHeaderCell Scope="Column" Text="Afbeelding" CssClass="col-md-3" />
+                                <asp:TableHeaderCell Scope="Column" Text="Melding" CssClass="col-md-6" />
+                            </asp:TableHeaderRow>
+                        </asp:Table>
+                    </div>
                 </div>
             </div>
         </div>

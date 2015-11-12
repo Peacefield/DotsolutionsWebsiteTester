@@ -33,6 +33,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["IncomingLinks"] = htmlstring;
         }
 
+        /// <summary>
+        /// Get and show results from Mozscape API
+        /// </summary>
         private void GetIncomingLinks()
         {
             var rating = 10m;
