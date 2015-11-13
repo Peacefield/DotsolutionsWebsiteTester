@@ -21,7 +21,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         private int imgResized = 0;
         private int img404Count = 0;
         private string message;
-        private List<string> imgNotFound = new List<string>();
+        private List<string> imgNotFoundList = new List<string>();
+        private List<string> imgMissingSizeList = new List<string>();
+        private List<string> imgMissingDescList = new List<string>();
+        private List<string> imgStretchedList = new List<string>();
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -60,8 +64,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 missingDesc = 0;
                 missingSize = 0;
                 imgResized = 0;
-                img404Count = 0;
-                imgNotFound.Clear();
+                imgNotFoundList.Clear();
+                imgMissingSizeList.Clear();
+                imgMissingDescList.Clear();
+                imgStretchedList.Clear();
 
                 Debug.WriteLine(" ---------- Testen op: " + page + " ---------- ");
                 var imagelist = GetAllImages(page);
@@ -83,19 +89,19 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 if (missingDesc > 5)
                 {
-                    AddToTable(page, "<span class='text-center'>--</span>", "<strong>" + (missingDesc - 4) + " overige afbeeldingen gevonden zonder alt en/of title attributen.</strong>");
+                    AddToTable(page, "---", "<strong>" + (missingDesc - 4) + " overige afbeeldingen gevonden zonder alt en/of title attributen.</strong>");
                 }
                 if (missingSize > 5)
                 {
-                    AddToTable(page, "<span class='text-center'>--</span>", "<strong>" + (missingSize - 4) + " overige afbeeldingen gevonden zonder height en/of width  attributen.</strong>");
+                    AddToTable(page, "---", "<strong>" + (missingSize - 4) + " overige afbeeldingen gevonden zonder height en/of width  attributen.</strong>");
                 }
                 if (imgResized > 5)
                 {
-                    AddToTable(page, "<span class='text-center'>--</span>", "<strong>" + (imgResized - 4) + " overige afbeeldingen gevonden waarvan de in HTML gedeclareerde grootte niet overeen komt met de originele grootte van de afbeelding.</strong>");
+                    AddToTable(page, "---", "<strong>" + (imgResized - 4) + " overige afbeeldingen gevonden waarvan de in HTML gedeclareerde grootte niet overeen komt met de originele grootte van de afbeelding.</strong>");
                 }
                 if (img404Count > 5)
                 {
-                    AddToTable(page, "<span class='text-center'>--</span>", "<strong>" + (img404Count - 4) + " overige afbeeldingen niet gevonden.</strong>");
+                    AddToTable(page, "---", "<strong>" + (img404Count - 4) + " overige afbeeldingen niet gevonden.</strong>");
                 }
             }
             Debug.WriteLine("totalimages: " + totalimages);
@@ -116,8 +122,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
                 + "<i class='fa fa-picture-o fa-3x'></i><br/>"
-                + "<span>" + percentageStretched.ToString("#,0") + "% van de afbeelding worden vervormd door de browser</span></div>"
-                + message;
+                + "<span>" + percentageStretched.ToString("#,0") + "% van de afbeelding worden vervormd door de browser</span></div>";
+
+            message += GetMessage();
 
             ImagesMessages.InnerHtml = message;
 
@@ -131,6 +138,59 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             temp = (decimal)Session["RatingTech"];
             Session["RatingTech"] = temp + rounded;
+        }
+
+        private string GetMessage()
+        {
+            var temp = "";
+
+
+            if (imgDeclare > 0)
+            {
+                string[] grammar = { "zijn " + imgDeclare + " afbeeldingen", "zijn" };
+                if (imgDeclare == 1)
+                {
+                    grammar[0] = "is " + imgDeclare + " afbeelding";
+                    grammar[1] = "is";
+                }
+
+                temp += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                   + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                   + "<span class='messageText'> Er " + grammar[0] + " gevonden die niet goed gedeclareerd " + grammar[1] + ". "
+                   + "Dit betekent dat een afbeelding geen height, width, title en/of alt attribuut bevat.</span></div>";
+            }
+
+            if (imgResized > 0)
+            {
+                string[] grammar = { "zijn " + imgResized + " afbeeldingen", "bestaan" };
+                if (imgResized == 1)
+                {
+                    grammar[0] = "is " + imgResized + " afbeelding";
+                    grammar[1] = "wordt";
+                }
+                temp += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                   + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                   + "<span class='messageText'> Er " + grammar[0] + " gevonden die " + grammar[1] + " vervormd door de browser. "
+                   + "Dit wordt veroorzaakt doordat de height en width attributen niet overeen komen met de originele grootte van de afbeelding.</span></div>";
+            }
+
+            if (img404Count > 0)
+            {
+                string[] grammar = { "zijn " + img404Count + " afbeeldingen", "bestaan" };
+                if (img404Count == 1)
+                {
+                    grammar[0] = "is " + img404Count + " afbeelding";
+                    grammar[1] = "bestaat";
+                }
+                temp += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                   + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                   + "<span class='messageText'> Er " + grammar[0] + " gevonden die niet (meer) " + grammar[1] + ". "
+                   + "Dit kan worden veroorzaakt door een typefout of doordat de afbeelding verwijderd is van de server.</span></div>";
+            }
+
+
+
+            return temp;
         }
 
         private void TestImage(HtmlNode imageNode, string page, int imagelistCount)
@@ -161,33 +221,49 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var imgFaultyDeclare = false;
                 if (!HasImgSizeAttributes(imageNode))
                 {
-                    missingSize++;
-                    imgFaultyDeclare = true;
-                    rating = rating - ((1m / (decimal)imagelistCount) * 10m);
-                    if (missingSize < 5)
-                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                            "Geen height en/of width attributen aanwezig.");
+                    if (!imgMissingSizeList.Contains(imageUrl))
+                    {
+                        imgMissingSizeList.Add(imageUrl);
+
+                        missingSize++;
+                        imgFaultyDeclare = true;
+                        rating = rating - ((1m / (decimal)imagelistCount) * 10m);
+                        if (missingSize < 5)
+                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                                "Geen height en/of width attributen aanwezig.");
+                    }
                 }
                 else
                 {
                     if (!IsImageSize(imageUrl, imageNode))
                     {
-                        imgResized++;
-                        rating = rating - ((1m / (decimal)imagelistCount) * 5m);
-                        if (imgResized < 5)
-                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                                "In HTML gedeclareerde grootte komt niet overeen met originele grootte van afbeelding.");
+                        if (!imgStretchedList.Contains(imageUrl))
+                        {
+                            imgStretchedList.Add(imageUrl);
+
+                            imgResized++;
+                            imgFaultyDeclare = true;
+                            rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                            if (imgResized < 5)
+                                AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                                    "In HTML gedeclareerde grootte komt niet overeen met originele grootte van de afbeelding.");
+                        }
                     }
                 }
 
                 if (!HasImgDescAttributes(imageNode))
                 {
-                    missingDesc++;
-                    imgFaultyDeclare = true;
-                    rating = rating - ((1m / (decimal)imagelistCount) * 5m);
-                    if (missingDesc < 5)
-                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                            "Geen alt en/of title attributen aanwezig.");
+                    if (!imgMissingDescList.Contains(imageUrl))
+                    {
+                        imgMissingDescList.Add(imageUrl);
+
+                        missingDesc++;
+                        imgFaultyDeclare = true;
+                        if (missingDesc < 5)
+                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                                "Geen alt en/of title attributen aanwezig.");
+                        rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                    }
                 }
 
                 if (imgFaultyDeclare)
@@ -195,20 +271,23 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                rating = rating - ((1m / (decimal)imagelistCount) * 10m);
-                if (!imgNotFound.Contains(imageUrl))
+                if (!imgNotFoundList.Contains(imageUrl))
                 {
+                    imgNotFoundList.Add(imageUrl);
+
                     img404Count++;
-                    imgNotFound.Add(imageUrl);
-                    if (img404Count < 5)
+                    if (imgNotFoundList.Count < 5)
                         AddToTable(page, imageUrl, "Afbeelding niet gevonden.");
+                    rating = rating - ((1m / (decimal)imagelistCount) * 10m);
+
+                    Debug.WriteLine("Added " + imageUrl + " to imgNotFound list which has " + imgNotFoundList.Count + " entries.");
                 }
             }
         }
 
         private bool IsImageFound(string imageUrl)
         {
-            if (imgNotFound.Contains(imageUrl))
+            if (imgNotFoundList.Contains(imageUrl))
                 return false;
 
             try
@@ -267,7 +346,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (item.Attributes["alt"] != null && item.Attributes["title"] != null)
                 if (item.Attributes["alt"].Value != "" && item.Attributes["title"].Value != "")
                     return true;
-            
+
             return false;
         }
 
@@ -301,7 +380,6 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void AddToTable(string page, string imgUrl, string msg)
         {
-
             Debug.WriteLine("Added to table");
 
             var tRow = new TableRow();
@@ -312,6 +390,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var tCellImg = new TableCell();
             //tCellImg.Text = imgUrl;
+            tCellImg.Style.Add("text-align", "center");
             tCellImg.Text = imgUrl;
             tRow.Cells.Add(tCellImg);
 

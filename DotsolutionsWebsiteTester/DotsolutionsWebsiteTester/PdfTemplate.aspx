@@ -159,8 +159,8 @@
         }
 
         .tableImg {
-            width: 50px;
-            height: 50px;
+            max-width: 150px;
+            max-height: 150px;
         }
 
         .messageIcon {
