@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,6 +14,14 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class Images : System.Web.UI.Page
     {
+        private decimal rating = 10.0m;
+        private int missingSize = 0;
+        private int missingDesc = 0;
+        private int imgDeclare = 0;
+        private int imgResized = 0;
+        private int img404Count = 0;
+        private string message;
+        private List<string> imgNotFound = new List<string>();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -27,49 +36,69 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             GetImages();
 
-            var sb = new System.Text.StringBuilder();
-            ImagesSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
-            string htmlstring = sb.ToString();
+            try
+            {
+                var sb = new System.Text.StringBuilder();
+                ImagesSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+                var htmlstring = sb.ToString();
 
-            Session["Images"] = htmlstring;
+                Session["Images"] = htmlstring;
+            }
+            catch (NullReferenceException nex)
+            {
+                Debug.WriteLine("NullReferenceException --> " + nex.Message);
+            }
         }
 
         private void GetImages()
         {
-            var rating = 10.0m;
-
             var sitemap = (List<string>)Session["selectedSites"];
 
+            var totalimages = 0;
             foreach (var page in sitemap)
             {
+                missingDesc = 0;
+                missingSize = 0;
+                imgResized = 0;
+                img404Count = 0;
+                imgNotFound.Clear();
+
                 Debug.WriteLine(" ---------- Testen op: " + page + " ---------- ");
                 var imagelist = GetAllImages(page);
-                foreach (var item in imagelist)
-                {
-                    Debug.WriteLine(" --------------- " + item.Attributes["src"].Value + " testen --------------- ");
-                    if (HasImgAttributes(item))
-                    {
-                        Debug.WriteLine("Heeft height EN width attributen");
 
-                        if (IsImageSize(item))
-                        {
-                            Debug.WriteLine("Alles is goed, niks aan de hand");
-                        }
-                        else
-                        {
-                            Debug.WriteLine("In HTML gedeclareerde grootte komt niet overeen met originele grootte van afbeelding");
-                            rating = rating - ((1m / (decimal)imagelist.Count) * 5m);
-                            AddToTable(page, item.Attributes["src"].Value, "In HTML gedeclareerde grootte komt niet overeen met originele grootte van afbeelding.");
-                        }
-                    }
-                    else
-                    {
-                        Debug.WriteLine("Heel slecht, geen height en/of width attributen aanwezig");
-                        rating = rating - ((1m / (decimal)imagelist.Count) * 10m);
-                        AddToTable(page, item.Attributes["src"].Value, "Geen height en/of width attributen aanwezig.");
-                    }
+                var threadpool = new List<Thread>();
+                foreach (var imageNode in imagelist)
+                {
+                    var ths = new ThreadStart(() => TestImage(imageNode, page, imagelist.Count));
+                    var th = new Thread(ths);
+                    threadpool.Add(th);
+                    th.Start();
+                }
+
+                foreach (var thread in threadpool)
+                    thread.Join();
+
+                Debug.WriteLine("imagelist.Count " + imagelist.Count);
+                totalimages += imagelist.Count;
+
+                if (missingDesc > 5)
+                {
+                    AddToTable(page, "<span class='text-center'>--</span>", "<strong>" + (missingDesc - 4) + " overige afbeeldingen gevonden zonder alt en/of title attributen.</strong>");
+                }
+                if (missingSize > 5)
+                {
+                    AddToTable(page, "<span class='text-center'>--</span>", "<strong>" + (missingSize - 4) + " overige afbeeldingen gevonden zonder height en/of width  attributen.</strong>");
+                }
+                if (imgResized > 5)
+                {
+                    AddToTable(page, "<span class='text-center'>--</span>", "<strong>" + (imgResized - 4) + " overige afbeeldingen gevonden waarvan de in HTML gedeclareerde grootte niet overeen komt met de originele grootte van de afbeelding.</strong>");
+                }
+                if (img404Count > 5)
+                {
+                    AddToTable(page, "<span class='text-center'>--</span>", "<strong>" + (img404Count - 4) + " overige afbeeldingen niet gevonden.</strong>");
                 }
             }
+            Debug.WriteLine("totalimages: " + totalimages);
 
             if (rating == 10.0m)
                 rating = 10m;
@@ -78,16 +107,124 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             ImagesTableHidden.Attributes.Remove("class");
 
+            var percentageDeclared = (decimal)imgDeclare / (decimal)totalimages * 100m;
+            var percentageStretched = (decimal)imgResized / (decimal)totalimages * 100m;
+
+            message = "<div class='well well-lg resultWell text-center'>"
+                + "<span class='largetext'>" + percentageDeclared.ToString("#,0") + "%</span><br/>"
+                + "<span>van de afbeelding zijn incorrect gedefinieerd</span></div>"
+                + "<div class='resultDivider'></div>"
+                + "<div class='well well-lg resultWell text-center'>"
+                + "<i class='fa fa-picture-o fa-3x'></i><br/>"
+                + "<span>" + percentageStretched.ToString("#,0") + "% van de afbeelding worden vervormd door de browser</span></div>"
+                + message;
+
+            ImagesMessages.InnerHtml = message;
+
             var rounded = decimal.Round(rating, 1);
             Session["ImagesRating"] = rounded;
             ImagesRating.InnerHtml = rounded.ToString();
-
+            SetRatingDisplay(rounded);
+            // Set sessions
             var temp = (decimal)Session["RatingUx"];
             Session["RatingUx"] = temp + rounded;
 
             temp = (decimal)Session["RatingTech"];
             Session["RatingTech"] = temp + rounded;
+        }
 
+        private void TestImage(HtmlNode imageNode, string page, int imagelistCount)
+        {
+            Debug.WriteLine(" --------------- " + imageNode.Attributes["src"].Value + " testen op " + page + " --------------- ");
+
+            var baseUrl = Session["MainUrl"].ToString();
+            var imageUrl = imageNode.Attributes["src"].Value;
+
+            if (imageUrl.StartsWith(" "))
+                imageUrl = imageUrl.Remove(0, 1);
+            // Untestable image format, will always work correctly
+            if (imageUrl.StartsWith("data:image"))
+                return;
+            if (imageUrl.StartsWith("//"))
+                imageUrl = "http:" + imageUrl;
+            else
+            {
+                if (baseUrl.EndsWith("/") && imageUrl.StartsWith("/"))
+                    baseUrl = baseUrl.Remove(baseUrl.Length - 1);
+                if (!baseUrl.EndsWith("/") && !imageUrl.StartsWith("/"))
+                    baseUrl = baseUrl + "/";
+                if (!imageUrl.Contains("http"))
+                    imageUrl = baseUrl + imageUrl;
+            }
+            if (IsImageFound(imageUrl))
+            {
+                var imgFaultyDeclare = false;
+                if (!HasImgSizeAttributes(imageNode))
+                {
+                    missingSize++;
+                    imgFaultyDeclare = true;
+                    rating = rating - ((1m / (decimal)imagelistCount) * 10m);
+                    if (missingSize < 5)
+                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                            "Geen height en/of width attributen aanwezig.");
+                }
+                else
+                {
+                    if (!IsImageSize(imageUrl, imageNode))
+                    {
+                        imgResized++;
+                        rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                        if (imgResized < 5)
+                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                                "In HTML gedeclareerde grootte komt niet overeen met originele grootte van afbeelding.");
+                    }
+                }
+
+                if (!HasImgDescAttributes(imageNode))
+                {
+                    missingDesc++;
+                    imgFaultyDeclare = true;
+                    rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                    if (missingDesc < 5)
+                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                            "Geen alt en/of title attributen aanwezig.");
+                }
+
+                if (imgFaultyDeclare)
+                    imgDeclare++;
+            }
+            else
+            {
+                rating = rating - ((1m / (decimal)imagelistCount) * 10m);
+                if (!imgNotFound.Contains(imageUrl))
+                {
+                    img404Count++;
+                    imgNotFound.Add(imageUrl);
+                    if (img404Count < 5)
+                        AddToTable(page, imageUrl, "Afbeelding niet gevonden.");
+                }
+            }
+        }
+
+        private bool IsImageFound(string imageUrl)
+        {
+            if (imgNotFound.Contains(imageUrl))
+                return false;
+
+            try
+            {
+                //Creating the HttpWebRequest
+                HttpWebRequest request = WebRequest.Create(imageUrl) as HttpWebRequest;
+                request.UserAgent = Session["userAgent"].ToString();
+                request.Timeout = 5000; // Set timout of 5 seconds so to not waste time
+                request.Method = "GET";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                return true;
+            }
+            catch (WebException)
+            {
+                return false;
+            }
         }
 
         private List<HtmlNode> GetAllImages(string page)
@@ -106,35 +243,42 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             return list;
         }
-        private bool HasImgAttributes(HtmlNode item)
+        /// <summary>
+        /// Check if item has width and height attributes
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool HasImgSizeAttributes(HtmlNode item)
         {
-            // Check if item has width and height attributes
-
             if (item.Attributes["width"] != null && item.Attributes["height"] != null)
-            {
-                return true;
-            }
+                if (item.Attributes["width"].Value != "" && item.Attributes["height"].Value != "")
+                    return true;
 
             return false;
         }
 
-        private bool IsImageSize(HtmlNode ImageFileName)
+        /// <summary>
+        /// Check if item has alt and title attributes
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool HasImgDescAttributes(HtmlNode item)
         {
-            var imageUrl = ImageFileName.Attributes["src"].Value;
-            // Check if ImageFileName has the same size declared as original dimensions
-            var baseUrl = Session["MainUrl"].ToString();
-            if (baseUrl.EndsWith("/"))
-            {
-                baseUrl = baseUrl.Remove(baseUrl.Length - 1);
-            }
+            if (item.Attributes["alt"] != null && item.Attributes["title"] != null)
+                if (item.Attributes["alt"].Value != "" && item.Attributes["title"].Value != "")
+                    return true;
+            
+            return false;
+        }
 
-            if (!imageUrl.Contains("http"))
-            {
-                imageUrl = baseUrl + imageUrl;
-            }
-
-            Debug.WriteLine("imageUrl " + imageUrl);
-
+        /// <summary>
+        /// Check if ImageFileName has the same size declared as original dimensions
+        /// </summary>
+        /// <param name="imageUrl"></param>
+        /// <param name="imageNode"></param>
+        /// <returns></returns>
+        private bool IsImageSize(string imageUrl, HtmlNode imageNode)
+        {
             try
             {
                 HttpWebRequest req = (HttpWebRequest)(System.Net.HttpWebRequest.Create(imageUrl));
@@ -144,16 +288,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 resp.Close();
 
                 var width = img.PhysicalDimension.Width;
-                var height = img.PhysicalDimension.Height; 
-                if (width == float.Parse(ImageFileName.Attributes["width"].Value) && height == float.Parse(ImageFileName.Attributes["height"].Value))
-                {
+                var height = img.PhysicalDimension.Height;
+                if (width == float.Parse(imageNode.Attributes["width"].Value) && height == float.Parse(imageNode.Attributes["height"].Value))
                     return true;
-                }
-
-                Debug.WriteLine("width: " + width);
-                Debug.WriteLine("node width: " + ImageFileName.Attributes["width"].Value);
-                Debug.WriteLine("height: " + height);
-                Debug.WriteLine("node height: " + ImageFileName.Attributes["height"].Value);
             }
             catch (ArgumentException)
             {
@@ -164,6 +301,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void AddToTable(string page, string imgUrl, string msg)
         {
+
+            Debug.WriteLine("Added to table");
+
             var tRow = new TableRow();
 
             var tCellPage = new TableCell();
@@ -171,6 +311,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             tRow.Cells.Add(tCellPage);
 
             var tCellImg = new TableCell();
+            //tCellImg.Text = imgUrl;
             tCellImg.Text = imgUrl;
             tRow.Cells.Add(tCellImg);
 
@@ -179,6 +320,20 @@ namespace DotsolutionsWebsiteTester.TestTools
             tRow.Cells.Add(tCellmsg);
 
             table.Rows.Add(tRow);
+        }
+
+        /// <summary>
+        /// Set the colour that indicates the rating accordingly
+        /// </summary>
+        /// <param name="rating">decimal rating</param>
+        private void SetRatingDisplay(decimal rating)
+        {
+            if (rating < 6m)
+                ImagesRating.Attributes.Add("class", "lowScore ratingCircle");
+            else if (rating < 8.5m)
+                ImagesRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            else
+                ImagesRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
     }
 }

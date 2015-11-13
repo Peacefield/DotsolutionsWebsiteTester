@@ -43,7 +43,7 @@
                 color: white;
                 background-color: #20856E;
                 background-repeat: repeat-x;
-                border-color: #32A389  ;
+                border-color: #32A389;
             }
 
         #automatedRatingList {
@@ -156,6 +156,11 @@
 
         .largetext {
             font-size: 2em;
+        }
+
+        .tableImg {
+            width: 50px;
+            height: 50px;
         }
 
         .messageIcon {
