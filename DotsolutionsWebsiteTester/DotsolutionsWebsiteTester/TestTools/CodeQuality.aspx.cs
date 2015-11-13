@@ -204,7 +204,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 usingSemantics = "Geen gebruik van HTML5";
             }
 
-            if (notW3cCompliant.Count > 0)
+            if (notW3cCompliant.Count == 0)
             {
                 w3cValidatedIcon = "fa-check-circle";
                 w3cValidated = "W3C gevalideerd";
