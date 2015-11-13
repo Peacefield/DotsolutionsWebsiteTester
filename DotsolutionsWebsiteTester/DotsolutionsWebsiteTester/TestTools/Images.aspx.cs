@@ -15,12 +15,13 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class Images : System.Web.UI.Page
     {
         private decimal rating = 10.0m;
+
         private int missingSize = 0;
         private int missingDesc = 0;
         private int imgDeclare = 0;
         private int imgResized = 0;
         private int img404Count = 0;
-        private string message;
+
         private List<string> imgNotFoundList = new List<string>();
         private List<string> imgMissingSizeList = new List<string>();
         private List<string> imgMissingDescList = new List<string>();
@@ -58,6 +59,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             var sitemap = (List<string>)Session["selectedSites"];
             var isDetailed = (bool)Session["IsDetailedTest"];
+            var message = "";
 
             var totalimages = 0;
             foreach (var page in sitemap)
@@ -278,7 +280,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     imgNotFoundList.Add(imageUrl);
 
                     img404Count++;
-                    if (imgNotFoundList.Count < 5)
+                    if (img404Count < 5)
                         AddToTable(page, imageUrl, "Afbeelding niet gevonden.");
                     rating = rating - ((1m / (decimal)imagelistCount) * 10m);
 

@@ -169,18 +169,20 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (errorCnt == 1)
                     errorString = errorCnt.ToString("#,##0") + " error";
                 else
-                    errorString = errorCnt.ToString("#,##0") +" errors";
+                    errorString = errorCnt.ToString("#,##0") + " errors";
                 if (warningCnt == 1)
                     warningString = warningCnt.ToString("#,##0") + " waarschuwing";
                 else
                     warningString = warningCnt.ToString("#,##0") + " waarschuwingen";
 
                 if (isDetailed)
+                {
                     W3ResultsTableHidden.Attributes.Remove("class");
 
-                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
-                + "<span class='messageText'> " + errorString + " en " + warningString + " gevonden.</span></div>";
+                    message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> " + errorString + " en " + warningString + " gevonden.</span></div>";
+                }
             }
 
             var usingSemanticsIcon = "";

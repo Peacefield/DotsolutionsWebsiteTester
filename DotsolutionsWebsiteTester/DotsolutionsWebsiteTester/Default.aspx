@@ -59,35 +59,36 @@
                     <asp:CheckBoxList ID="TestsCheckBoxList1"
                         runat="server"
                         TextAlign="right">
+                        <asp:ListItem Text="Actueelheid" Value="Freshness" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Afbeeldingen" Value="Images" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Analytics" Value="Analytics" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Binnenkomende links" Value="IncomingLinks" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Code kwaliteit" Value="CodeQuality" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Pagina titels" Value="PageTitles" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Mobiele compatibiliteit" Value="MobileCompatibility" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Headers" Value="Headings" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Interne links" Value="InternalLinks" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="URL Formaat" Value="UrlFormat" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Facebook Pagina" Value="Facebook" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>
                 </div>
                 <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
                     <asp:CheckBoxList ID="TestsCheckBoxList2"
                         runat="server">
                         <asp:ListItem Text="Google+ Pagina" Value="GooglePlus" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Facebook Pagina" Value="Facebook" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Twitter Pagina" Value="Twitter" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Sociale interesse" Value="SocialInterest" Selected="false" Enabled="false"></asp:ListItem>
-                        <asp:ListItem Text="Populariteit" Value="Popularity" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Headers" Value="Headings" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Hoeveelheid content" Value="AmountOfContent" Selected="false" Enabled="false"></asp:ListItem>
-                        <asp:ListItem Text="Afbeeldingen" Value="Images" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Interne links" Value="InternalLinks" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Meta tags" Value="MetaTags" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Mobiele compatibiliteit" Value="MobileCompatibility" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Pagina titels" Value="PageTitles" Selected="false"></asp:ListItem>
+
                     </asp:CheckBoxList>
                 </div>
                 <div class="col-md-4 col-xs-12 col-sm-4 col-lg-4">
                     <asp:CheckBoxList ID="TestsCheckBoxList3"
                         runat="server">
-                        <asp:ListItem Text="Server gedrag" Value="ServerBehaviour" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Populariteit" Value="Popularity" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Printbaarheid" Value="Printability" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Actueelheid" Value="Freshness" Selected="false" Enabled="false"></asp:ListItem>
-                        <asp:ListItem Text="Binnenkomende links" Value="IncomingLinks" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Analytics" Value="Analytics" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Meta tags" Value="MetaTags" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="Server gedrag" Value="ServerBehaviour" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Sociale interesse" Value="SocialInterest" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Twitter Pagina" Value="Twitter" Selected="false"></asp:ListItem>
+                        <asp:ListItem Text="URL Formaat" Value="UrlFormat" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>
                 </div>
             </div>
