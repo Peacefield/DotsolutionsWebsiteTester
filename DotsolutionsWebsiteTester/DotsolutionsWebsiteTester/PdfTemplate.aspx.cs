@@ -41,20 +41,43 @@ namespace DotsolutionsWebsiteTester
                 manualresults.InnerHtml += Session["ManualTestResults"].ToString();
             }
 
+            var orderedList = OrderByRating(selectedTests);
             // Append HTML to the results div
-            foreach (var test in selectedTests)
+            foreach (var test in orderedList)
             {
                 try
                 {
-                    results.InnerHtml += "<div id='" + test + "'>" + Session[test].ToString() + "</div>";
+                    results.InnerHtml += "<div id='" + test.Key + "'>" + Session[test.Key].ToString() + "</div>";
                 }
                 catch (NullReferenceException)
                 {
-                    results.InnerHtml += "<div class = 'panel panel-danger' id='" + test + "'>"
-                        + "<div class = 'panel-heading'>" + test + "</div>"
+                    results.InnerHtml += "<div class = 'panel panel-danger' id='" + test.Key + "'>"
+                        + "<div class = 'panel-heading'>" + test.Key + "</div>"
                         + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>";
                 }
             }
+        }
+
+        /// <summary>
+        /// Sort the ratings of a list in ascending order
+        /// </summary>
+        /// <param name="ratingList">Unordered list of a criterium</param>
+        /// <returns>Ordered dictionary<string, decimal></returns>
+        private Dictionary<string, decimal> OrderByRating(List<string> ratingList)
+        {
+            var ratings = new Dictionary<string, decimal>();
+            foreach (var item in ratingList)
+            {
+                //ratings.Add(new KeyValuePair<string, int>(item, (int)Session[item + "Rating"]));
+                ratings.Add(item, (decimal)HttpContext.Current.Session[item + "Rating"]);
+            }
+
+            var sortedDict = from entry in ratings orderby entry.Value ascending select entry;
+            var orderedList = new Dictionary<string, decimal>();
+            foreach (var pair in sortedDict)
+                orderedList.Add(pair.Key, pair.Value);
+
+            return orderedList;
         }
 
         private void SetTotalRating()

@@ -57,6 +57,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void GetImages()
         {
             var sitemap = (List<string>)Session["selectedSites"];
+            var isDetailed = (bool)Session["IsDetailedTest"];
 
             var totalimages = 0;
             foreach (var page in sitemap)
@@ -111,7 +112,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (rating < 0m)
                 rating = 0.0m;
 
-            ImagesTableHidden.Attributes.Remove("class");
+            if (isDetailed)
+                ImagesTableHidden.Attributes.Remove("class");
 
             var percentageDeclared = (decimal)imgDeclare / (decimal)totalimages * 100m;
             var percentageStretched = (decimal)imgResized / (decimal)totalimages * 100m;
