@@ -26,7 +26,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private List<string> imgMissingSizeList = new List<string>();
         private List<string> imgMissingDescList = new List<string>();
         private List<string> imgStretchedList = new List<string>();
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -107,7 +107,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     AddToTable(page, "---", "<strong>" + (img404Count - 4) + " overige afbeeldingen niet gevonden.</strong>");
                 }
             }
-            Debug.WriteLine("totalimages: " + totalimages);
 
             if (rating == 10.0m)
                 rating = 10m;
@@ -117,8 +116,15 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (isDetailed)
                 ImagesTableHidden.Attributes.Remove("class");
 
-            var percentageDeclared = (decimal)imgDeclare / (decimal)totalimages * 100m;
-            var percentageStretched = (decimal)imgResized / (decimal)totalimages * 100m;
+            var percentageDeclared = 0m;
+            var percentageStretched = 0m;
+
+            if (totalimages > 0)
+            {
+                Debug.WriteLine("totalimages: " + totalimages);
+                percentageDeclared = (decimal)imgDeclare / (decimal)totalimages * 100m;
+                percentageStretched = (decimal)imgResized / (decimal)totalimages * 100m;
+            }
 
             message = "<div class='well well-lg resultWell text-center'>"
                 + "<span class='largetext'>" + percentageDeclared.ToString("#,0") + "%</span><br/>"

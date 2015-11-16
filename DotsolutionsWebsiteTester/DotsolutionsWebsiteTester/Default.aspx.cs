@@ -56,10 +56,10 @@ namespace DotsolutionsWebsiteTester
         /// <returns>True when url is a valid Url</returns>
         private bool IsValidUrl(string url)
         {
-            if (url == "" || url == "http://" || url == "https://")
+            if (url == "" || url == "http://www." || url == "https://www.")
             {
                 invalidUrlHidden.Attributes.Remove("class");
-                invalidUrl.InnerText = "Geen url ingevoerd";
+                invalidUrl.InnerText = " Geen geldige url ingevoerd";
                 return false;
             }
             else
