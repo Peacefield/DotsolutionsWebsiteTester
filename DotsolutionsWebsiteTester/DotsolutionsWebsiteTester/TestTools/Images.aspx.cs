@@ -347,7 +347,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (doc.DocumentNode.SelectNodes("//img") != null)
             {
                 foreach (var item in doc.DocumentNode.SelectNodes("//img"))
-                    list.Add(item);
+                {
+                    if (item.Attributes["src"] != null)
+                        list.Add(item);
+                }
             }
 
             return list;
