@@ -172,6 +172,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             temp = (decimal)Session["RatingMarketing"];
             Session["RatingMarketing"] = rounded + temp;
             Session["TwitterRating"] = rounded;
+
+            Debug.WriteLine("Rounded = " + rounded);
             SetRatingDisplay(rating);
         }
 
@@ -232,7 +234,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private decimal GetTwitterRating(string screenName)
         {
-            var rating = 1m;
+            var rating = 1.0m;
             var users = from user in twitterContext.User
                         where user.Type == UserType.Show &&
                         user.ScreenName == screenName
@@ -269,14 +271,17 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else if (percentage > 10m)
             {
-                rating = 4m;
+                rating = 4.0m;
             }
             else
             {
-                rating = 1m;
+                rating = 1.0m;
             }
 
-            message += "<div class='well well-lg coverpicture' style='background-image: url(" + CoverImage + ")'></div>";
+            if (CoverImage != null)
+            {
+                message += "<div class='well well-lg coverpicture' style='background-image: url(" + CoverImage + ")'></div>";
+            }
 
             message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "

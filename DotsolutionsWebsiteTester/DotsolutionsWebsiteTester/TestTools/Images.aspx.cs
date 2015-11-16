@@ -55,6 +55,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Initiate tests to get image results and rating
+        /// </summary>
         private void GetImages()
         {
             var sitemap = (List<string>)Session["selectedSites"];
@@ -150,10 +153,13 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["RatingTech"] = temp + rounded;
         }
 
+        /// <summary>
+        /// Set messages that will be shown to explain found errors
+        /// </summary>
+        /// <returns>string temp</returns>
         private string GetMessage()
         {
             var temp = "";
-
 
             if (imgDeclare > 0)
             {
@@ -198,11 +204,15 @@ namespace DotsolutionsWebsiteTester.TestTools
                    + "Dit kan worden veroorzaakt door een typefout of doordat de afbeelding verwijderd is van de server.</span></div>";
             }
 
-
-
             return temp;
         }
 
+        /// <summary>
+        /// Test an image found as HtmlNode on responsecode, size-declaration and alt/title-declaration
+        /// </summary>
+        /// <param name="imageNode">HtmlNode image</param>
+        /// <param name="page">string page of origin</param>
+        /// <param name="imagelistCount">Total amount of images on the page, used to calculate rating</param>
         private void TestImage(HtmlNode imageNode, string page, int imagelistCount)
         {
             Debug.WriteLine(" --------------- " + imageNode.Attributes["src"].Value + " testen op " + page + " --------------- ");
@@ -295,6 +305,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Test if image works correctly
+        /// </summary>
+        /// <param name="imageUrl">URL of image</param>
+        /// <returns></returns>
         private bool IsImageFound(string imageUrl)
         {
             if (imgNotFoundList.Contains(imageUrl))
@@ -316,6 +331,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Get a HtmlNode list of all images on a page
+        /// </summary>
+        /// <param name="page">string page</param>
+        /// <returns>HtmlNode list</returns>
         private List<HtmlNode> GetAllImages(string page)
         {
             var list = new List<HtmlNode>();
@@ -332,6 +352,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             return list;
         }
+
         /// <summary>
         /// Check if item has width and height attributes
         /// </summary>
@@ -388,6 +409,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             return false;
         }
 
+        /// <summary>
+        /// Add found faulty image to table
+        /// </summary>
+        /// <param name="page">page of origin</param>
+        /// <param name="imgUrl">image URL</param>
+        /// <param name="msg">Explanation of error</param>
         private void AddToTable(string page, string imgUrl, string msg)
         {
             Debug.WriteLine("Added to table");
