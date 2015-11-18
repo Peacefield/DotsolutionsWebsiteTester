@@ -55,15 +55,16 @@ namespace DotsolutionsWebsiteTester.TestTools
             var sitemap = (List<string>)Session["selectedSites"];
             var message = "";
             var isDetailed = (bool)Session["IsDetailedTest"];
+            var totalLinkCnt = 0;
             foreach (var url in sitemap)
             {
                 Debug.WriteLine("Link check op -> " + url);
 
                 // Reset counters per page
-                lengthCnt = 0;
-                imageCnt = 0;
-                brokenCnt = 0;
-                threadCnt = 0;
+                this.lengthCnt = 0;
+                this.imageCnt = 0;
+                this.brokenCnt = 0;
+                this.threadCnt = 0;
 
                 var threadList = new List<Thread>();
                 var Webget = new HtmlWeb();
@@ -72,6 +73,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Test every internal link on current page from sitmap
                 if (doc.DocumentNode.SelectNodes("//a[@href]") != null)
                 {
+                    totalLinkCnt += doc.DocumentNode.SelectNodes("//a[@href]").Count;
+                    Debug.WriteLine("totalLinkCnt: " + totalLinkCnt);
                     foreach (var link in doc.DocumentNode.SelectNodes("//a[@href]"))
                     {
                         var ths = new ThreadStart(() => TestLink(link, url));
@@ -111,12 +114,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (errorCnt > 0)
             {
                 // Show table when errors are found and is a detailed test
-                if(isDetailed)
+                if (isDetailed)
                     IntLinksHiddenTable.Attributes.Remove("class");
 
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
                     + "<i class='fa fa-chain-broken fa-3x'></i><br/>"
-                    + "<span>Er zijn " + errorCnt.ToString("#,##0") +" meldingen gevonden van linken die niet goed gedeclareerd zijn en/of niet werken.</span></div>";
+                    + "<span>Er zijn " + errorCnt.ToString("#,##0") + " meldingen gevonden van linken die niet goed gedeclareerd zijn en/of niet werken.</span></div>";
             }
             else
             {
@@ -127,7 +130,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             internalLinksErrorsFound.InnerHtml = message;
 
-            var rating = 10.0m - ((decimal)errorCnt / 5m);
+            //var rating = 10.0m - ((decimal)errorCnt / 5m);
+            var rating = 10.0m - (((decimal)errorCnt / (decimal)totalLinkCnt) * 10m);
 
             if (rating < 0)
                 rating = 0.0m;
@@ -172,13 +176,14 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 // Check if the description is not too long
                 //string[] words = link.InnerText.Split(new char[] { ' ', ',', '.', '&', ':', '©', '\'', '+' }, StringSplitOptions.RemoveEmptyEntries);
+                //string[] splitLink = link.InnerText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                string[] splitLink = link.InnerText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] splitLink = link.InnerText.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
                 var words = new List<string>();
 
                 foreach (var item in splitLink)
                 {
-                    if (item is string && item.Length > 1)
+                    if (item is string && item.Length > 0)
                     {
                         words.Add(item);
                     }

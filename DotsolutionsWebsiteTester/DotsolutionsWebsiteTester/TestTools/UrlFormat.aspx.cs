@@ -50,7 +50,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var totalCount = 0;
             var message = "";
             var isDetailed = (bool)Session["IsDetailedTest"];
-
+            var totalLinkCnt = 0;
             foreach (var page in sitemap)
             {
                 var threadList = new List<Thread>();
@@ -58,9 +58,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var doc = Webget.Load(page);
                 if (doc.DocumentNode.SelectNodes("//a[@href]") != null)
                 {
+                    var pageLinkCount = doc.DocumentNode.SelectNodes("//a[@href]").Count;
+                    totalLinkCnt += pageLinkCount;
+                    Debug.WriteLine("pageLinkCount: " + pageLinkCount);
+                    Debug.WriteLine("totalLinkCnt: " + totalLinkCnt);
                     foreach (var link in doc.DocumentNode.SelectNodes("//a[@href]"))
                     {
-                        var ths = new ThreadStart(() => TestFormat(link.Attributes["href"].Value, page));
+                        var ths = new ThreadStart(() => TestFormat(link.Attributes["href"].Value, page, pageLinkCount));
                         var th = new Thread(ths);
                         threadList.Add(th);
                         th.Start();
@@ -110,7 +114,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     }
                     totalCount += count;
 
-                    if(isDetailed)
+                    if (isDetailed)
                         UrlFormatHiddenTable.Attributes.Remove("class");
                 }
 
@@ -118,18 +122,25 @@ namespace DotsolutionsWebsiteTester.TestTools
                 dirtyUrl.Clear();
             }
 
+            var resultMessage = "";
             if (totalCount == 0)
             {
-                message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
+                resultMessage = "<div class='alert alert-success well-lg resultWell text-center'>"
                     + "<i class='fa fa-link fa-3x'></i><br/>"
                     + "<span class='messageText'> Alle URLs zijn schoon en gebruiksvriendelijk.</span></div>";
             }
             else
             {
-                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
+                resultMessage = "<div class='alert alert-danger well-lg resultWell text-center'>"
                     + "<i class='fa fa-chain-broken fa-3x'></i><br/>"
-                    + "<span class='messageText'> " + totalCount.ToString("#,##0") +" foutieve URLs gevonden.</span></div>";
+                    + "<span class='messageText'> " + totalCount.ToString("#,##0") + " foutieve URLs gevonden.</span></div>";
             }
+
+            message = resultMessage
+                + "<div class='resultDivider'></div>"
+                + "<div class='well well-lg resultWell text-center'>"
+                + "<span class='largetext'>" + totalLinkCnt.ToString("#,##0") + "</span><br/>"
+                + "<span>URL's getest</span></div>";
 
             UrlFormatNotifications.InnerHtml = message;
 
@@ -160,7 +171,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         /// <param name="link">Found URL that gets tested</param>
         /// <param name="page">Page of origin where the URL was found</param>
-        private void TestFormat(string link, string page)
+        /// <param name="linkCount">Amount of links on the page of origin</param>
+        private void TestFormat(string link, string page, int linkCount)
         {
             var uri = new Uri(page);
             if (link.Contains("/"))
@@ -176,13 +188,13 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 if (IsLong(path))
                 {
-                    rating = rating - (5m / sitemap.Count);
+                    rating = rating - (1m / (decimal)linkCount * 10m);
                     longUrl.Add(path);
                 }
 
                 if (IsDirty(path))
                 {
-                    rating = rating - (5m / sitemap.Count);
+                    rating = rating - (1m / (decimal)linkCount * 10m);
                     dirtyUrl.Add(path);
                 }
             }

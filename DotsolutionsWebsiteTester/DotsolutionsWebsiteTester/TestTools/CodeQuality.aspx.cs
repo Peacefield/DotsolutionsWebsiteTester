@@ -83,12 +83,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
                         + "<span class='messageText'> Er wordt op alle geteste pagina's waarschijnlijk geen tabel gebruikt voor lay-out. Dit is uitstekend doordat de lay-out geregeld moet door middel van div-elementen met styling via de CSS.</span></div>";
-
-
             }
             else
             {
-                rating = rating - 2;
+                rating = rating - ((1m/(decimal)sitemap.Count) * 5);
                 var unorderedlist = "<ul>";
                 foreach (var url in tableLayOutList)
                     unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
@@ -109,7 +107,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                rating = rating - 2;
+                rating = rating - ((1m / (decimal)sitemap.Count) * 5);
                 var unorderedlist = "<ul>";
 
                 foreach (var item in noSemanticList)
@@ -155,7 +153,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (errorCnt > 0 || warningCnt > 0)
             {
-                // Maximum reduction of 6 because of previous tests. Margin dependent of amount of sites found
+                // Maximum reduction of 8 because of importance. Margin dependent of amount of sites found
                 var margin = 8m / (decimal)sitemap.Count;
                 rating = rating - ((decimal)notW3cCompliant.Count * margin);
                 if (rating < 0)

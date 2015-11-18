@@ -107,7 +107,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var url = Session["MainUrl"].ToString();
             var screennameList = new List<string>();
-            var rating = 1.0m;
+            var rating = 0.0m;
 
             var apiKey = GetFromApiKeys("GoogleAPI");
 
@@ -342,19 +342,19 @@ namespace DotsolutionsWebsiteTester.TestTools
             var fbCover = result.cover["source"];
 
             var percentage = ((decimal)result.talking_about_count / (decimal)result.likes) * 100;
-            if (percentage > 10m)
+            if (percentage >= 10m)
             {
                 rating = 10m;
             }
-            else if (percentage > 1m)
+            else if (percentage >= 1m)
             {
                 rating = 7.5m;
             }
-            else if (percentage > 0.5m)
+            else if (percentage >= 0.5m)
             {
                 rating = 5.5m;
             }
-            else if (percentage > 0.25m)
+            else if (percentage >= 0.25m)
             {
                 rating = 4m;
             }

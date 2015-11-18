@@ -332,7 +332,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (isEmpty)
             {
-                rating = rating - 2m;
+                rating = rating - (10m / (decimal)sitemap.Count);
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                     + "<span class='messageText'> Er wordt geen titel gebruikt op de ingevoerde pagina. "
@@ -340,7 +340,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             if (isLong)
             {
-                rating = rating - 1m;
+                rating = rating - (5m / (decimal)sitemap.Count);
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                     + "<span class='messageText'> Er wordt een te lange titel gebruikt op de ingevoerde pagina. Dit is slecht doordat de zoekmachine deze titel zal afkappen waardoor er niet het maximale uit een titel wordt gehaald.</span></div>";

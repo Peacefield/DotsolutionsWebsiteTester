@@ -187,7 +187,7 @@
             width: 144px;
             height: 260px;
             background-image: url("http://i.imgur.com/BDKytvF.png");
-            padding: 40px 20px 47px 10px;
+            padding: 40px 19px 47px 10px;
             background-size: contain;
             background-repeat: no-repeat;
         }

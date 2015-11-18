@@ -72,7 +72,7 @@
                         runat="server">
                         <asp:ListItem Text="Google+ Pagina" Value="GooglePlus" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Headers" Value="Headings" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Hoeveelheid content" Value="AmountOfContent" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Hoeveelheid content" Value="AmountOfContent" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Interne links" Value="InternalLinks" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Meta tags" Value="MetaTags" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Mobiele compatibiliteit" Value="MobileCompatibility" Selected="false"></asp:ListItem>

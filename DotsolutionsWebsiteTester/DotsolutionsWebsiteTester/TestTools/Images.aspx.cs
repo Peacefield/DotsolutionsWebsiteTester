@@ -23,9 +23,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         private int img404Count = 0;
 
         private List<string> imgNotFoundList = new List<string>();
-        private List<string> imgMissingSizeList = new List<string>();
-        private List<string> imgMissingDescList = new List<string>();
-        private List<string> imgStretchedList = new List<string>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -71,9 +68,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 missingSize = 0;
                 imgResized = 0;
                 imgNotFoundList.Clear();
-                imgMissingSizeList.Clear();
-                imgMissingDescList.Clear();
-                imgStretchedList.Clear();
 
                 Debug.WriteLine(" ---------- Testen op: " + page + " ---------- ");
                 var imagelist = GetAllImages(page);
@@ -241,41 +235,28 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var imgFaultyDeclare = false;
                 if (!HasImgSizeAttributes(imageNode))
                 {
-                    if (!imgMissingSizeList.Contains(imageUrl))
-                    {
-                        imgMissingSizeList.Add(imageUrl);
-
                         missingSize++;
                         imgFaultyDeclare = true;
                         rating = rating - ((1m / (decimal)imagelistCount) * 10m);
                         if (missingSize < 5)
                             AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
                                 "Geen height en/of width attributen aanwezig.");
-                    }
                 }
                 else
                 {
                     if (!IsImageSize(imageUrl, imageNode))
                     {
-                        if (!imgStretchedList.Contains(imageUrl))
-                        {
-                            imgStretchedList.Add(imageUrl);
-
                             imgResized++;
                             imgFaultyDeclare = true;
                             rating = rating - ((1m / (decimal)imagelistCount) * 5m);
                             if (imgResized < 5)
                                 AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
                                     "In HTML gedeclareerde grootte komt niet overeen met originele grootte van de afbeelding.");
-                        }
                     }
                 }
 
                 if (!HasImgDescAttributes(imageNode))
                 {
-                    if (!imgMissingDescList.Contains(imageUrl))
-                    {
-                        imgMissingDescList.Add(imageUrl);
 
                         missingDesc++;
                         imgFaultyDeclare = true;
@@ -283,7 +264,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                             AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
                                 "Geen alt en/of title attributen aanwezig.");
                         rating = rating - ((1m / (decimal)imagelistCount) * 5m);
-                    }
                 }
 
                 if (imgFaultyDeclare)

@@ -237,23 +237,23 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 rating = 10m;
             }
-            else if (percentage > 75m)
+            else if (percentage >= 75m)
             {
                 rating = 10m;
             }
-            else if (percentage > 60m)
+            else if (percentage >= 60m)
             {
                 rating = 8.0m;
             }
-            else if (percentage > 50m)
+            else if (percentage >= 50m)
             {
                 rating = 7.5m;
             }
-            else if (percentage > 33m)
+            else if (percentage >= 33m)
             {
                 rating = 5.5m;
             }
-            else if (percentage > 10m)
+            else if (percentage >= 10m)
             {
                 rating = 4.0m;
             }
