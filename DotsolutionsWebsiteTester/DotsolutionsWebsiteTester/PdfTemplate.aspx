@@ -195,6 +195,14 @@
         #MainContent_tabletImg, #MainContent_mobileImg {
             margin-left: 25%;
         }
+
+        .fa-check-green {
+            color: green;
+        }
+
+        .fa-times-red {
+            color: red;
+        }
     </style>
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
