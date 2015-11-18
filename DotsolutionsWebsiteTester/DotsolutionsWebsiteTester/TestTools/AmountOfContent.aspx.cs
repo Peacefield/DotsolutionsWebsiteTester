@@ -84,7 +84,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span class='messageText'> Op alle pagina's is genoeg content gevonden. "
                     + "Doordat er bij meer inhoudelijk content meer kans is dat de website verschijnt in gerelateerde zoekopdrachten is dit uitstekend.</span></div>";
             }
-
+            
             // Show table when detailed test is selected and something was added to table
             if (isDetailed && lowContentPageCnt > 0)
                 AmountOfContentTableHidden.Attributes.Remove("class");
