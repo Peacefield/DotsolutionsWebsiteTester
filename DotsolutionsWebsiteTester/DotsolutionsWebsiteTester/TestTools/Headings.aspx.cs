@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester.TestTools
 {
+    // TODO: Tonen via resultwell. Detail en standaard gelijktrekken.
     public partial class Headings : System.Web.UI.Page
     {
         private List<string> noHeadings = new List<string>();
@@ -60,7 +61,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // Point reduction equal to percentage of the total amount of tested sites
                     // E.g. when 1/5 has no heading it gets 1/5th of 10 reduction from remaining rating
                     rating = rating - ((1m / (decimal)sitemap.Count) * 10m);
-                    unorderedlist += "<li><a href='"+item+"' target='_blank'>" + item + "</a></li>";
+                    unorderedlist += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
                 }
                 unorderedlist += "</ul>";
 
@@ -96,12 +97,23 @@ namespace DotsolutionsWebsiteTester.TestTools
                         + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
                         + "<span class='messageText'> Alle headers zijn correct ingedeeld. Dit is uitstekend aangezien dit de indeling van een pagina direct duidelijk kan maken voor bezoekers en zoekmachines kunnen de website zo beter indelen op inhoud.</span></div>";
                 }
+
+                var errorPercentage = decimal.Round((((decimal)errorCnt / (decimal)totalHeadingCnt) * 100m), 1);
+
+                message = "<div class='well well-lg resultWell text-center'>"
+                    + "<span class='largetext'>" + errorPercentage + "%</span><br/>"
+                    + "<span>van de headers's zijn incorrect ingedeeld</span></div>"
+                    + "<div class='resultDivider'></div>"
+                    + "<div class='well well-lg resultWell text-center'>"
+                    + "<i class='fa fa-header fa-3x'></i><i class='fa fa-header fa-2x'></i><i class='fa fa-header fa-1x'></i><br/>"
+                    + "<span>" + totalHeadingCnt + " headers gevonden</span></div>"
+                    + message;
             }
             else
             {
-                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Geen enkele geteste pagina bevat headers. Dit is zeer slecht doordat de gebruiker niet snel een idee krijgt van de indeling van een pagina, maar dit is ook slecht voor de SEO. "
+                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
+                    + "<i class='fa fa-header fa-3x'></i><i class='fa fa-header fa-2x'></i><i class='fa fa-header fa-1x'></i><br/>"
+                    + "<span class='messageText'>Geen enkele geteste pagina bevat headers. Dit is zeer slecht doordat de gebruiker niet snel een idee krijgt van de indeling van een pagina, maar dit is ook slecht voor de SEO. "
                     + "Zoekmachines gebruiken headers namelijk om o.a. in te schatten waar de pagina over gaat.</span></div>";
             }
 
