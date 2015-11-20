@@ -87,19 +87,19 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Debug.WriteLine("imagelist.Count " + imagelist.Count);
                 totalimages += imagelist.Count;
 
-                if (missingDesc > 5)
+                if (missingDesc > 4)
                 {
                     AddToTable(page, "---", "<strong>" + (missingDesc - 4) + " overige afbeeldingen gevonden zonder alt en/of title attributen.</strong>");
                 }
-                if (missingSize > 5)
+                if (missingSize > 4)
                 {
                     AddToTable(page, "---", "<strong>" + (missingSize - 4) + " overige afbeeldingen gevonden zonder height en/of width  attributen.</strong>");
                 }
-                if (imgResized > 5)
+                if (imgResized > 4)
                 {
                     AddToTable(page, "---", "<strong>" + (imgResized - 4) + " overige afbeeldingen gevonden waarvan de in HTML gedeclareerde grootte niet overeen komt met de originele grootte van de afbeelding.</strong>");
                 }
-                if (img404Count > 5)
+                if (img404Count > 4)
                 {
                     AddToTable(page, "---", "<strong>" + (img404Count - 4) + " overige afbeeldingen niet gevonden.</strong>");
                 }
@@ -235,35 +235,34 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var imgFaultyDeclare = false;
                 if (!HasImgSizeAttributes(imageNode))
                 {
-                        missingSize++;
-                        imgFaultyDeclare = true;
-                        rating = rating - ((1m / (decimal)imagelistCount) * 10m);
-                        if (missingSize < 5)
-                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                                "Geen height en/of width attributen aanwezig.");
+                    imgFaultyDeclare = true;
+                    rating = rating - ((1m / (decimal)imagelistCount) * 10m);
+                    if (missingSize < 5)
+                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                            "Geen height en/of width attributen aanwezig.");
+                    missingSize++;
                 }
                 else
                 {
                     if (!IsImageSize(imageUrl, imageNode))
                     {
-                            imgResized++;
-                            imgFaultyDeclare = true;
-                            rating = rating - ((1m / (decimal)imagelistCount) * 5m);
-                            if (imgResized < 5)
-                                AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                                    "In HTML gedeclareerde grootte komt niet overeen met originele grootte van de afbeelding.");
+                        imgFaultyDeclare = true;
+                        rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                        if (imgResized < 5)
+                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                                "In HTML gedeclareerde grootte komt niet overeen met originele grootte van de afbeelding.");
+                        imgResized++;
                     }
                 }
 
                 if (!HasImgDescAttributes(imageNode))
                 {
-
-                        missingDesc++;
-                        imgFaultyDeclare = true;
-                        if (missingDesc < 5)
-                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                                "Geen alt en/of title attributen aanwezig.");
-                        rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                    imgFaultyDeclare = true;
+                    rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                    if (missingDesc < 5)
+                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                            "Geen alt en/of title attributen aanwezig.");
+                    missingDesc++;
                 }
 
                 if (imgFaultyDeclare)
