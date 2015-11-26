@@ -48,6 +48,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine("MetaTags >>>>>");
             var hasLongDescription = new List<string>();
             var hasNoDescription = new List<string>();
+            var hasNoKeywords = new List<string>();
             var hasNoRobots = new List<string>();
             var rating = 10.0m;
             isDetailed = (bool)Session["IsDetailedTest"];
@@ -60,15 +61,16 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (doc.DocumentNode.SelectSingleNode("//head") != null)
                 {
                     var normalMetas = GetNormalMetaTags(doc);
-                    var openGraphMeta = GetOpenGraphMetaTags(doc);
-                    var httpEquivMeta = GetHttpEquivMetaTags(doc);
+                    //var openGraphMeta = GetOpenGraphMetaTags(doc);
+                    //var httpEquivMeta = GetHttpEquivMetaTags(doc);
                     var hasDescription = false;
+                    var hasKeywords = false;
                     var hasRobots = false;
 
                     var metaListContainer = new List<KeyValuePair<string, Dictionary<string, string>>>();
                     metaListContainer.Add(new KeyValuePair<string, Dictionary<string, string>>("name", normalMetas));
-                    metaListContainer.Add(new KeyValuePair<string, Dictionary<string, string>>("property", openGraphMeta));
-                    metaListContainer.Add(new KeyValuePair<string, Dictionary<string, string>>("http-equiv", httpEquivMeta));
+                    //metaListContainer.Add(new KeyValuePair<string, Dictionary<string, string>>("property", openGraphMeta));
+                    //metaListContainer.Add(new KeyValuePair<string, Dictionary<string, string>>("http-equiv", httpEquivMeta));
 
                     foreach (var list in metaListContainer)
                     {
@@ -88,19 +90,26 @@ namespace DotsolutionsWebsiteTester.TestTools
                                 }
                             }
 
+                            if (item.Key == "keywords")
+                            {
+                                AddToTable(url, list.Key, item.Key, item.Value);
+                                if (item.Value.Length > 0)
+                                    hasKeywords = true;
+                            }
+
                             if (item.Key == "robots" && item.Value.Length > 0)
                             {
                                 AddToTable(url, list.Key, item.Key, item.Value);
                                 hasRobots = true;
                             }
                         }
-                        if (count > 0)
-                        {
-                            if (count > 1)
-                                AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + count + " meta tags van dit type gevonden</strong>");
-                            else
-                                AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + count + " meta tag van dit type gevonden</strong>");
-                        }
+                        //if (count > 0)
+                        //{
+                        //    if (count > 1)
+                        //        AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + count + " meta tags van dit type gevonden</strong>");
+                        //    else
+                        //        AddToTable(url, "<strong>" + list.Key + "</strong>", "<strong>...</strong>", "<strong>" + count + " meta tag van dit type gevonden</strong>");
+                        //}
 
                         if (isDetailed)
                             MetaResultsTableHidden.Attributes.Remove("class");
@@ -108,6 +117,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                     if (!hasDescription)
                         hasNoDescription.Add(url);
+                    if (!hasKeywords)
+                        hasNoKeywords.Add(url);
                     if (!hasRobots)
                         hasNoRobots.Add(url);
                 }
@@ -115,6 +126,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             GetSERPDisplay();
             rating = GetDescriptionRating(rating, hasNoDescription, hasLongDescription);
             rating = GetRobotRating(rating, hasNoRobots);
+            rating = GetKeywordsRating(rating, hasNoKeywords);
             rating = GetTitleRating(rating);
             SetRating(rating);
             MetaErrorsFound.InnerHtml = message;
@@ -299,6 +311,32 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                     + "<span class='messageText'> De volgende pagina's gebruiken geen robots meta-tag:"
                     + "<ul>" + ul + "</ul>Het gebruik van de robots meta-tag heeft veel invloed op de beoordeling en positionering vanuit een zoekmachine en is daarom zeer belangrijk.</span></div>";
+            }
+            return rating;
+        }
+        
+        private decimal GetKeywordsRating(decimal rating, List<string> hasNoKeywords)
+        {
+            if (hasNoKeywords.Count == 0)
+            {
+                // Good job, using robots!
+                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er wordt op alle pagina's gebruik gemaakt van de keywords meta-tag. Dit is uitstekend aangezien een zoekmachine de website kan indelen aan de hand hiervan.</span></div>";
+            }
+            else
+            {
+                // Booo
+                var ul = "";
+                foreach (var item in hasNoKeywords)
+                {
+                    rating = rating - (5m / (decimal)sitemap.Count);
+                    ul += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
+                }
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> De volgende pagina's gebruiken geen keywords meta-tag:"
+                    + "<ul>" + ul + "</ul>Het gebruik van de keywords meta-tag heeft niet veel invloed op de beoordeling en positionering vanuit een zoekmachine, maar het is beter wanneer het wel wordt toegevoegd.</span></div>";
             }
             return rating;
         }
