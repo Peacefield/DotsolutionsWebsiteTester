@@ -35,7 +35,14 @@ namespace DotsolutionsWebsiteTester
                 Session["ApiKeys"] = GetApiKeys();
 
                 UrlTesting.InnerText = Session["MainUrl"].ToString();
+                laptopcontainer.Attributes["src"] = "http://i.imgur.com/PtcoFun.png";
                 SetLaptopImage(Session["MainUrl"].ToString());
+                
+                var sb = new System.Text.StringBuilder();
+                sizeref.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
+                string htmlstring = sb.ToString();
+
+                Session["sizeref"] = htmlstring;
 
                 var ths = new ThreadStart(GetTestList);
                 var th = new Thread(ths);
@@ -72,11 +79,11 @@ namespace DotsolutionsWebsiteTester
             //var url = HttpUtility.UrlEncode(mainurl);
             //var size = "N";
             //var imgUrlLaptop = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            var imgUrlLaptop = "http://i.imgur.com/PtcoFun.png";
 
-            //laptopcontainer.Attributes["src"] = imgUrlLaptop;
-            laptopcontainer.Attributes["src"] = "http://i.imgur.com/PtcoFun.png";
             laptopcontainer.Attributes["alt"] = mainurl;
             laptopcontainer.Attributes["title"] = mainurl + " op computer";
+            laptopcontainer.Attributes["src"] = imgUrlLaptop;
         }
 
         /// <summary>

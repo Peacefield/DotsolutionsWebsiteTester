@@ -173,6 +173,23 @@
             width: 95%;
         }
 
+        #MainContent_sizeref {
+            height: 200px;
+        }
+
+        .laptopcontainer {
+            width: 330px;
+            height: 250px;
+            background-image: url("http://i.imgur.com/AzbZXWr.png");
+            padding: 15px 47px 100px 47px;
+            display: block;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: auto;
+            margin-left: auto;
+            float: right;
+        }
+
         .tabletcontainer {
             width: 450px;
             height: 260px;
@@ -212,10 +229,7 @@
 <body>
     <form runat="server">
         <div class="container body-content">
-            <div class="well well-sm" id="sizeref">
-                <img src="http://i.imgur.com/PtcoFun.png" alt="" title="" width="" height="" class="laptopcontainer" />
-                <h5>Rapport voor</h5>
-                <h4 id="UrlTesting" runat="server"></h4>
+            <div class="well well-sm" id="sizeref" runat="server">
             </div>
 
             <div id="manualresults" runat="server"></div>

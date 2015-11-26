@@ -22,13 +22,22 @@ namespace DotsolutionsWebsiteTester {
         protected global::System.Web.UI.WebControls.Button CreatePdfBtn;
         
         /// <summary>
+        /// sizeref control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl sizeref;
+        
+        /// <summary>
         /// laptopcontainer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage laptopcontainer;
+        protected global::System.Web.UI.WebControls.Image laptopcontainer;
         
         /// <summary>
         /// UrlTesting control.

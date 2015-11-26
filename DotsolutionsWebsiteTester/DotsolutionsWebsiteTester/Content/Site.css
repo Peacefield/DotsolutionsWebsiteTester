@@ -30,14 +30,14 @@
         font-size: 1em;
     }
 
-    #sizeref {
+    #MainContent_sizeref {
         height: 230px;
     }
 
     .laptopcontainer {
         width: 200px;
         height: 150px;
-        background-image: url("images/laptop_template.png");
+        background-image: url("http://i.imgur.com/AzbZXWr.png");
         padding: 8px 28px 59px 28px;
         display: block;
         background-size: contain;
@@ -50,7 +50,7 @@
     .tabletcontainer {
         width: 310px;
         height: 250px;
-        background-image: url("/Content/images/tablet_template.png");
+        background-image: url("http://i.imgur.com/BTpnDci.png");
         padding: 24px 25px 35px 28px;
         display: inline-block;
         background-size: contain;
@@ -60,7 +60,7 @@
     .mobilecontainer {
         width: 150px;
         height: 250px;
-        background-image: url("/Content/images/phone_template.png");
+        background-image: url("http://i.imgur.com/BDKytvF.png");
         padding: 39px 30px 45px 9px;
         background-size: contain;
         background-repeat: no-repeat;
@@ -94,14 +94,14 @@
         font-size: 2em;
     }
 
-    #sizeref {
+    #MainContent_sizeref {
         height: 200px;
     }
 
     .laptopcontainer {
         width: 330px;
         height: 250px;
-        background-image: url("images/laptop_template.png");
+        background-image: url("http://i.imgur.com/AzbZXWr.png");
         padding: 15px 47px 100px 47px;
         display: block;
         background-size: contain;
@@ -114,7 +114,7 @@
     .tabletcontainer {
         width: 450px;
         height: 260px;
-        background-image: url("/Content/images/tablet_template.png");
+        background-image: url("http://i.imgur.com/BTpnDci.png");
         padding: 26px 141px 26px 31px;
         display: inline-block;
         background-size: contain;
@@ -124,7 +124,7 @@
     .mobilecontainer {
         width: 144px;
         height: 260px;
-        background-image: url("/Content/images/phone_template.png");
+        background-image: url("http://i.imgur.com/BDKytvF.png");
         padding: 40px 19px 47px 10px;
         background-size: contain;
         background-repeat: no-repeat;

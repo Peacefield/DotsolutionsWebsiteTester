@@ -18,13 +18,15 @@ namespace DotsolutionsWebsiteTester
         {
             try
             {
-                UrlTesting.InnerText = Session["MainUrl"].ToString();
+                Session["MainUrl"].ToString();
             }
             catch (NullReferenceException)
             {
                 Response.Redirect("~/");
                 return;
             }
+
+            sizeref.InnerHtml = Session["sizeref"].ToString();
 
             this.selectedSites = (List<string>)Session["selectedSites"];
             this.selectedTests = (List<string>)Session["selectedTests"];
