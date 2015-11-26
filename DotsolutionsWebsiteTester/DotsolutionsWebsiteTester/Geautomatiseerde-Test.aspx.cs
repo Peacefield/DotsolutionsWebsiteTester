@@ -27,14 +27,15 @@ namespace DotsolutionsWebsiteTester
                     return;
                 }
 
-                UrlTesting.InnerText = Session["MainUrl"].ToString();
-
                 // Set user agent
                 string userAgent = "Mozilla/5.0 (DotTestBot, http://www.example.net)";
                 //string userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
                 Session["userAgent"] = userAgent;
-                Session["robotsTxt"] = GetRobotsTxt(UrlTesting.InnerText);
+                Session["robotsTxt"] = GetRobotsTxt(Session["MainUrl"].ToString());
                 Session["ApiKeys"] = GetApiKeys();
+
+                UrlTesting.InnerText = Session["MainUrl"].ToString();
+                SetLaptopImage(Session["MainUrl"].ToString());
 
                 var ths = new ThreadStart(GetTestList);
                 var th = new Thread(ths);
@@ -60,6 +61,22 @@ namespace DotsolutionsWebsiteTester
                 Session["RatingMarketing"] = 0m;
                 Session["RatingTech"] = 0m;
             }
+        }
+
+        private void SetLaptopImage(string mainurl)
+        {
+            // Payed services with 100 free unique requests per month, but WITH mobile resolution ability
+            // https://www.screenshotmachine.com/
+            //var ApiKey = GetFromApiKeys("ScreenshotMachine");
+            //var format = "PNG";
+            //var url = HttpUtility.UrlEncode(mainurl);
+            //var size = "N";
+            //var imgUrlLaptop = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+
+            //laptopcontainer.Attributes["src"] = imgUrlLaptop;
+            laptopcontainer.Attributes["src"] = "http://i.imgur.com/PtcoFun.png";
+            laptopcontainer.Attributes["alt"] = mainurl;
+            laptopcontainer.Attributes["title"] = mainurl + " op computer";
         }
 
         /// <summary>

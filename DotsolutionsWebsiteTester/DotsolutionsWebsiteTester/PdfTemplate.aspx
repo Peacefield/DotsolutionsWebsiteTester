@@ -159,8 +159,8 @@
         }
 
         .tableImg {
-            max-width: 150px;
-            max-height: 150px;
+            max-width: 50px;
+            max-height: 50px;
         }
 
         .messageIcon {
@@ -213,6 +213,7 @@
     <form runat="server">
         <div class="container body-content">
             <div class="well well-sm" id="sizeref">
+                <img src="http://i.imgur.com/PtcoFun.png" alt="" title="" width="" height="" class="laptopcontainer" />
                 <h5>Rapport voor</h5>
                 <h4 id="UrlTesting" runat="server"></h4>
             </div>

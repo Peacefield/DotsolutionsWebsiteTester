@@ -335,7 +335,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private decimal GetFacebookRating(string screenName)
         {
             var rating = 1m;
-            dynamic result = fbc.Get(screenName, new { fields = "likes, picture, talking_about_count, cover" });
+            dynamic result = fbc.Get(screenName, new { fields = "likes, picture, talking_about_count, cover, posts" });
             var fbLikes = result.likes.ToString("#,##0");
             var fbPicture = result.picture.data["url"];
             var fbTalking = result.talking_about_count.ToString("#,##0");

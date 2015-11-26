@@ -110,7 +110,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (rating < 0m)
                 rating = 0.0m;
 
-            if (isDetailed)
+            if (isDetailed && (missingDesc > 0 || missingSize > 0 || imgResized > 0 || img404Count > 0))
                 ImagesTableHidden.Attributes.Remove("class");
 
             var percentageDeclared = 0m;

@@ -22,6 +22,15 @@ namespace DotsolutionsWebsiteTester {
         protected global::System.Web.UI.WebControls.TextBox UrlTextBox;
         
         /// <summary>
+        /// TestCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox TestCheckBox;
+        
+        /// <summary>
         /// invalidUrlHidden control.
         /// </summary>
         /// <remarks>
@@ -47,15 +56,6 @@ namespace DotsolutionsWebsiteTester {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button StartScanBtn;
-        
-        /// <summary>
-        /// TestMethodList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList TestMethodList;
         
         /// <summary>
         /// TestsCheckBoxList1 control.

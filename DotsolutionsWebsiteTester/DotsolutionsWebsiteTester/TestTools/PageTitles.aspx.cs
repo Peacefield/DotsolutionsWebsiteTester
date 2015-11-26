@@ -58,7 +58,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // Has title in <head>
                     if (IsLongTitle(title))
                     {
-                        // Has long title ( title > 55 chars)
+                        // Has long title ( title > 59 chars)
                         longTitles.Add(page);
                         AddToTable(title, page);
                         rating = rating - ((1m / (decimal)sitemap.Count) * 10m);
@@ -178,10 +178,10 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// Get if title is long
         /// </summary>
         /// <param name="title">title</param>
-        /// <returns>true if title > 55 chars</returns>
+        /// <returns>true if title > 59 chars</returns>
         private bool IsLongTitle(string title)
         {
-            if (title.Length <= 55)
+            if (title.Length <= 59)
             {
                 return false;
             }

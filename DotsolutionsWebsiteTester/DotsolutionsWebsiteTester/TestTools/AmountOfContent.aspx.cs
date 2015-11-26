@@ -86,7 +86,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             
             // Show table when detailed test is selected and something was added to table
-            if (isDetailed && lowContentPageCnt > 0)
+            if (isDetailed /*&& lowContentPageCnt > 0*/)
                 AmountOfContentTableHidden.Attributes.Remove("class");
 
             AmountOfContentResults.InnerHtml = message;
@@ -120,9 +120,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             foreach (var item in bodycontent)
             {
-                innertext += item.InnerText;
+                innertext += item.InnerText + " ";
             }
-
+            Debug.WriteLine(innertext);
             string[] content = innertext.Split(null);
 
             foreach (var item in content)

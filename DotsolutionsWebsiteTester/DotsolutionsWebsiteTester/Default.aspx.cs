@@ -35,7 +35,7 @@ namespace DotsolutionsWebsiteTester
             // This session is also checked throughout the application to check if all the needed sessions are set.
             Session["MainUrl"] = url;
 
-            if (TestMethodList.SelectedValue == "DetailedTest")
+            if (TestCheckBox.Checked)
             {
                 Session["IsDetailedTest"] = true;
                 Response.Redirect("Handmatige-Test");

@@ -32,6 +32,7 @@
     </div>
 
     <div class="well well-sm" id="sizeref">
+        <img width="400" height="300" class="laptopcontainer" id="laptopcontainer" runat="server"/>
         <h5>Rapport voor</h5>
         <h4 id="UrlTesting" runat="server"></h4>
     </div>
