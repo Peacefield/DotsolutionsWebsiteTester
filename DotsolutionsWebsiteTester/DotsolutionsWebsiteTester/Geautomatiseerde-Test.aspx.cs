@@ -70,22 +70,6 @@ namespace DotsolutionsWebsiteTester
             }
         }
 
-        private void SetLaptopImage(string mainurl)
-        {
-            // Payed services with 100 free unique requests per month, but WITH mobile resolution ability
-            // https://www.screenshotmachine.com/
-            //var ApiKey = GetFromApiKeys("ScreenshotMachine");
-            //var format = "PNG";
-            //var url = HttpUtility.UrlEncode(mainurl);
-            //var size = "N";
-            //var imgUrlLaptop = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
-            var imgUrlLaptop = "http://i.imgur.com/PtcoFun.png";
-
-            laptopcontainer.Attributes["alt"] = mainurl;
-            laptopcontainer.Attributes["title"] = mainurl + " op computer";
-            laptopcontainer.Attributes["src"] = imgUrlLaptop;
-        }
-
         /// <summary>
         /// Click event handler to initiate Pdf creation
         /// </summary>
@@ -199,7 +183,7 @@ namespace DotsolutionsWebsiteTester
             Debug.WriteLine(">>>> GetSiteList >>> ");
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&q=%22" + url + "%22&rsz=5");
-            // Additional parameters
+            // Additional (optional) parameters
             // &rsz=[1-8] resultSize can be 1 through 8. Currently using 5.
             // &start=[x] Indicate where to start searching
             request.UserAgent = userAgent;
@@ -289,6 +273,7 @@ namespace DotsolutionsWebsiteTester
                 IPAddress[] addresslistMain = Dns.GetHostAddresses(uri.Host);
                 IPAddress[] addresslist = Dns.GetHostAddresses(response.ResponseUri.Host.ToString());
 
+                //IP check
                 foreach (IPAddress theaddress in addresslist)
                 {
                     if (addresslistMain.Contains(theaddress))
@@ -300,7 +285,6 @@ namespace DotsolutionsWebsiteTester
                 Debug.WriteLine("IsOfDomain Catch" + we.Message);
             }
 
-            //IP check
             return false;
         }
 
@@ -353,6 +337,26 @@ namespace DotsolutionsWebsiteTester
                     control.InnerHtml += "<i class='fa fa-star-o'></i>";
                 }
             }
+        }
+
+        /// <summary>
+        /// Set the image properties of laptopcontainer to display a screenshot of mainurl
+        /// </summary>
+        /// <param name="mainurl">string URL</param>
+        private void SetLaptopImage(string mainurl)
+        {
+            // Payed services with 100 free unique requests per month, but WITH mobile resolution ability
+            // https://www.screenshotmachine.com/
+            //var ApiKey = GetFromApiKeys("ScreenshotMachine");
+            //var format = "PNG";
+            //var url = HttpUtility.UrlEncode(mainurl);
+            //var size = "N";
+            //var imgUrlLaptop = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            var imgUrlLaptop = "http://i.imgur.com/PtcoFun.png";
+
+            laptopcontainer.Attributes["alt"] = mainurl;
+            laptopcontainer.Attributes["title"] = mainurl + " op computer";
+            laptopcontainer.Attributes["src"] = imgUrlLaptop;
         }
 
         /// <summary>

@@ -35,6 +35,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         // http://seocopywriting.com/whats-the-best-word-count-for-seo-copywriting/ Kwaliteit over kwantiteit
         // http://www.socialmediatoday.com/content/longer-better-blog-content-truth-or-myth 1500 tot 2000 leidde tot positieve resultaten
 
+        /// <summary>
+        /// Start tests to get a rating for the Amount of Content available on found pages
+        /// </summary>
         private void GetAmountResults()
         {
             var rating = 10.0m;
@@ -108,6 +111,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["RatingMarketing"] = temp + rounded;
         }
 
+        /// <summary>
+        /// Get amount of content of a page within p and/or a elements
+        /// </summary>
+        /// <param name="page">Page to be tested</param>
+        /// <returns>int amount of words</returns>
         private int GetContentCount(string page)
         {
             Debug.WriteLine(" ----- Testing " + page + " ----- ");

@@ -14,6 +14,7 @@ namespace DotsolutionsWebsiteTester.TestTools
     // Title is geen meta tag maar wordt wel gebruikt in SERP
     // Robots is belangrijk; content all is alles laten indexeren
 
+    //TODO: Functiebeschrijvingen toevoegen
 
     public partial class MetaTags : System.Web.UI.Page
     {
@@ -225,25 +226,27 @@ namespace DotsolutionsWebsiteTester.TestTools
             return dictionary;
         }
 
-        private Dictionary<string, string> GetOpenGraphMetaTags(HtmlDocument doc)
-        {
-            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+        #region REDACTED
+        //private Dictionary<string, string> GetOpenGraphMetaTags(HtmlDocument doc)
+        //{
+        //    Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            if (doc.DocumentNode.SelectNodes("//meta[@property and @content][parent::head]") != null)
-                foreach (var node in doc.DocumentNode.SelectNodes("//meta[@property and @content][parent::head]"))
-                    dictionary.Add(node.Attributes["property"].Value, node.Attributes["content"].Value);
-            return dictionary;
-        }
+        //    if (doc.DocumentNode.SelectNodes("//meta[@property and @content][parent::head]") != null)
+        //        foreach (var node in doc.DocumentNode.SelectNodes("//meta[@property and @content][parent::head]"))
+        //            dictionary.Add(node.Attributes["property"].Value, node.Attributes["content"].Value);
+        //    return dictionary;
+        //}
 
-        private Dictionary<string, string> GetHttpEquivMetaTags(HtmlDocument doc)
-        {
-            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+        //private Dictionary<string, string> GetHttpEquivMetaTags(HtmlDocument doc)
+        //{
+        //    Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            if (doc.DocumentNode.SelectNodes("//meta[@http-equiv and @content][parent::head]") != null)
-                foreach (var node in doc.DocumentNode.SelectNodes("//meta[@http-equiv and @content][parent::head]"))
-                    dictionary.Add(node.Attributes["http-equiv"].Value, node.Attributes["content"].Value);
-            return dictionary;
-        }
+        //    if (doc.DocumentNode.SelectNodes("//meta[@http-equiv and @content][parent::head]") != null)
+        //        foreach (var node in doc.DocumentNode.SelectNodes("//meta[@http-equiv and @content][parent::head]"))
+        //            dictionary.Add(node.Attributes["http-equiv"].Value, node.Attributes["content"].Value);
+        //    return dictionary;
+        //}
+        #endregion
 
         private decimal GetDescriptionRating(decimal rating, List<string> hasNoDescription, List<string> hasLongDescription)
         {

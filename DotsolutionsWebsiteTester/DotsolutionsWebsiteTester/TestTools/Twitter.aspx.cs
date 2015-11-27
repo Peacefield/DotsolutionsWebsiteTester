@@ -242,10 +242,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             var returnedUser = users.ToList();
 
             var TweetCount = GetTweetCount(returnedUser);
+            var FollowingCount = GetFollowingCount(returnedUser);
             var FollowersCount = GetFollowerCount(returnedUser);
 
             var TweetCountString = TweetCount.ToString("#,##0");
             var FollowersCountString = FollowersCount.ToString("#,##0");
+            var FollowingCountString = FollowingCount.ToString("#,##0");
             var ProfileImage = GetProfileImage(returnedUser);
             var CoverImage = GetCoverImage(returnedUser);
 
@@ -254,34 +256,26 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine("percentage = " + percentage);
 
             if (FollowersCount >= TweetCount)
-            {
                 rating = 10m;
-            }
             else if (percentage >= 75m)
-            {
                 rating = 10m;
-            }
             else if (percentage >= 50m)
-            {
                 rating = 7.5m;
-            }
             else if (percentage >= 33m)
-            {
                 rating = 5.5m;
-            }
             else if (percentage >= 10m)
-            {
                 rating = 4.0m;
-            }
             else
-            {
                 rating = 1.0m;
-            }
+
+            if (FollowingCount > FollowersCount)
+                rating = rating - 2m;
+
+            if (rating < 0)
+                rating = 0.0m;
 
             if (CoverImage != null)
-            {
                 message += "<div class='well well-lg coverpicture' style='background-image: url(" + CoverImage + ")'></div>";
-            }
 
             message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
@@ -294,7 +288,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
                 + "<i class='fa fa-users fa-3x'></i><br/>"
-                + "<span> Dit account heeft " + FollowersCountString + " volgers</span></div>";
+                + "<span> Dit account heeft " + FollowersCountString + " volgers en volgt " + FollowingCountString + " gebruikers</span></div>";
 
             return rating;
         }
@@ -339,7 +333,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                             request.Method = WebRequestMethods.Http.Get;
                             response = request.GetResponse();
                             var destinationOriginal = response.ResponseUri.ToString();
-                            
+
                             if (destination == destinationOriginal)
                                 return true;
 
@@ -388,6 +382,22 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return false;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Get amount of accounts following this user
+        /// </summary>
+        /// <param name="returnedUser">string screen name</param>
+        /// <returns>Returns int amount of following</returns>
+        private int GetFollowingCount(List<User> returnedUser)
+        {
+            var amount = 0;
+
+            foreach (var item in returnedUser)
+            {
+                amount = item.FriendsCount;
+            }
+            return amount;
         }
 
         /// <summary>
