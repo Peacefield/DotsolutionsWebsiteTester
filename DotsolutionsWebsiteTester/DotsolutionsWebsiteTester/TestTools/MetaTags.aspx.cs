@@ -9,13 +9,9 @@ using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester.TestTools
 {
-    // Meta keywords zijn helemaal niet belangrijk!
     // Meta beschrijving is belangrijk, 115-150 karakters // http://blog.hubspot.com/marketing/seo-tactics-2015 // https://support.google.com/webmasters/answer/79812?hl=en
-    // Title is geen meta tag maar wordt wel gebruikt in SERP
     // Robots is belangrijk; content all is alles laten indexeren
-
-    //TODO: Functiebeschrijvingen toevoegen
-
+    
     public partial class MetaTags : System.Web.UI.Page
     {
         List<string> sitemap;
@@ -44,6 +40,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["MetaTags"] = htmlstring;
         }
 
+        /// <summary>
+        /// Main function.
+        /// Get/show meta-tags and set rating
+        /// </summary>
         private void GetMetaTags()
         {
             Debug.WriteLine("MetaTags >>>>>");
@@ -124,7 +124,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         hasNoRobots.Add(url);
                 }
             }
-            GetSERPDisplay();
+            SetSERPDisplay();
             rating = GetDescriptionRating(rating, hasNoDescription, hasLongDescription);
             rating = GetRobotRating(rating, hasNoRobots);
             rating = GetKeywordsRating(rating, hasNoKeywords);
@@ -133,7 +133,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             MetaErrorsFound.InnerHtml = message;
         }
 
-        private void GetSERPDisplay()
+        /// <summary>
+        /// Add example of result in Search Engine Result Page to string message
+        /// </summary>
+        private void SetSERPDisplay()
         {
             var url = Session["MainUrl"].ToString();
             var Webget = new HtmlWeb();
@@ -216,6 +219,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Get Dictionary containing meta tags with name and content attributes
+        /// </summary>
+        /// <param name="doc">HtmlDocument</param>
+        /// <returns>Dictionary as name:content</returns>
         private Dictionary<string, string> GetNormalMetaTags(HtmlDocument doc)
         {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -227,6 +235,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         #region REDACTED
+        /// <summary>
+        /// Get Dictionary containing meta tags with property and content attributes
+        /// </summary>
+        /// <param name="doc">HtmlDocument</param>
+        /// <returns>Dictionary as property:content</returns>
         //private Dictionary<string, string> GetOpenGraphMetaTags(HtmlDocument doc)
         //{
         //    Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -237,6 +250,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         //    return dictionary;
         //}
 
+        /// <summary>
+        /// Get Dictionary containing meta tags with http-equiv and content attributes
+        /// </summary>
+        /// <param name="doc">HtmlDocument</param>
+        /// <returns>Dictionary as http-equiv:content</returns>
         //private Dictionary<string, string> GetHttpEquivMetaTags(HtmlDocument doc)
         //{
         //    Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -248,6 +266,13 @@ namespace DotsolutionsWebsiteTester.TestTools
         //}
         #endregion
 
+        /// <summary>
+        /// Get rating in reaction to description-testresults
+        /// </summary>
+        /// <param name="rating">current rating</param>
+        /// <param name="hasNoDescription">list string hasNoDescription</param>
+        /// <param name="hasLongDescription">list string hasLongDescription</param>
+        /// <returns>rating after reduction</returns>
         private decimal GetDescriptionRating(decimal rating, List<string> hasNoDescription, List<string> hasLongDescription)
         {
             if (hasNoDescription.Count == 0 && hasLongDescription.Count == 0)
@@ -292,6 +317,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             return rating;
         }
 
+        /// <summary>
+        /// Get rating in reaction to robot-testresults
+        /// </summary>
+        /// <param name="rating">current rating</param>
+        /// <param name="hasNoRobots">list string hasNoRobots</param>
+        /// <returns>rating after reduction</returns>
         private decimal GetRobotRating(decimal rating, List<string> hasNoRobots)
         {
             if (hasNoRobots.Count == 0)
@@ -317,7 +348,13 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             return rating;
         }
-        
+
+        /// <summary>
+        /// Get rating in reaction to keywords-testresults
+        /// </summary>
+        /// <param name="rating">current rating</param>
+        /// <param name="hasNoKeywords">list string hasNoKeywords</param>
+        /// <returns>rating after reduction</returns>
         private decimal GetKeywordsRating(decimal rating, List<string> hasNoKeywords)
         {
             if (hasNoKeywords.Count == 0)
@@ -343,6 +380,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             return rating;
         }
+
+        /// <summary>
+        /// Get rating in reaction to title-testresults
+        /// </summary>
+        /// <param name="rating">current rating</param>
+        /// <returns>rating after reduction</returns>
         private decimal GetTitleRating(decimal rating)
         {
             var url = Session["MainUrl"].ToString();

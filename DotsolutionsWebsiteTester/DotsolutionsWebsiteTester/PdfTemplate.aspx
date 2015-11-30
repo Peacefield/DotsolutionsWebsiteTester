@@ -229,7 +229,7 @@
 <body>
     <form runat="server">
         <div class="container body-content">
-            <div class="well well-sm" id="sizeref" runat="server">
+            <div id="sizeref" runat="server">
             </div>
 
             <div id="manualresults" runat="server"></div>
