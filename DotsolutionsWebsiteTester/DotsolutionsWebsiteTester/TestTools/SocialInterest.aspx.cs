@@ -37,10 +37,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["SocialInterest"] = htmlstring;
         }
 
-        // Alles behalve twitter
-        // https://api.facebook.com/method/fql.query?query=select%20%20like_count%20from%20link_stat%20where%20url=%22url%22&format=json
-        // https://gist.github.com/jonathanmoore/2640302
-
         private void GetSocialInterest()
         {
             var sitemap = (List<string>)Session["selectedSites"];
