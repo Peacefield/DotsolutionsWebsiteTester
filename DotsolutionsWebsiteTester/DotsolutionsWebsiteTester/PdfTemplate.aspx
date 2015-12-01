@@ -59,11 +59,28 @@
             float: left;
         }
 
+        .thirdResultWell {
+            width: 30%;
+            float: left;
+        }
+
         .resultDivider {
             width: 4%;
             float: left;
             min-height: 1px;
             position: relative;
+        }
+
+        .fa-twitter-square {
+            color: #55acee;
+        }
+
+        .fa-facebook-official {
+            color: #4862a3;
+        }
+
+        .fa-google-plus-square {
+            color: #db4437;
         }
 
         .coverpicture {

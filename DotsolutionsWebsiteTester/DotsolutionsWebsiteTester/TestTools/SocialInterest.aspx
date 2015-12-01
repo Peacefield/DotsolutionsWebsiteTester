@@ -9,6 +9,7 @@
                     <span id="SocialInterestRating" runat="server">?</span> Sociale interesse
                 </div>
                 <div class="panel-body">
+                <div id="SocialInterestResults" runat="server"></div>
                 </div>
             </div>
         </div>
