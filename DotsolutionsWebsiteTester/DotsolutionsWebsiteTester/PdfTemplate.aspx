@@ -60,7 +60,7 @@
         }
 
         .thirdResultWell {
-            width: 30%;
+            width: 30.6%;
             float: left;
         }
 
@@ -73,6 +73,10 @@
 
         .fa-twitter-square {
             color: #55acee;
+        }
+
+        .fa-linkedin-square {
+            color: #1884bc;
         }
 
         .fa-facebook-official {

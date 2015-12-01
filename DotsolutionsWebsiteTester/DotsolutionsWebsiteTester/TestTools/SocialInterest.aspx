@@ -6,10 +6,10 @@
         <div id="SocialInterest">
             <div class="panel panel-custom" id="SocialInterestSession" runat="server">
                 <div class="panel-heading">
-                    <span id="SocialInterestRating" runat="server">?</span> Sociale interesse
+                    <span id="SocialInterestRating" runat="server" class="ratingCircle" style="background-color: #289BFE">?</span> Sociale interesse
                 </div>
                 <div class="panel-body">
-                <div id="SocialInterestResults" runat="server"></div>
+                    <div id="SocialInterestResults" runat="server"></div>
                 </div>
             </div>
         </div>
