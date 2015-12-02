@@ -98,7 +98,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             // https://twittercommunity.com/t/clarification-about-share-counts-for-the-new-tweet-button/52868/
             // https://twittercommunity.com/t/clarification-about-share-counts-for-the-new-tweet-button/52868/30
             // https://blog.twitter.com/2015/hard-decisions-for-a-sustainable-platform
-            
+
+            // https://api.twitter.com/1.1/search/tweets.json?q=[url]&count=100 haalt max 100 resultaten op van 7 dagen met url in tweet
+            // https://linqtotwitter.codeplex.com/wikipage?title=Searching%20Twitter LINQ2Twitter documentatie voor /search/tweets.json
+
             var count = 0;
             var requestString = "http://cdn.api.twitter.com/1/urls/count.json?url=" + site; // Endpoint no longer supported
 
