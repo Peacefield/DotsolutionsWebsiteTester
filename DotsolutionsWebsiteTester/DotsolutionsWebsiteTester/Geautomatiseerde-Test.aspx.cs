@@ -440,7 +440,7 @@ namespace DotsolutionsWebsiteTester
             string[] userxRatingList = { "GooglePlus", 
                                                "Facebook", 
                                                "Twitter", 
-                                               "SocialInterest", 
+                                               //"SocialInterest", 
                                                "Popularity", 
                                                "AmountOfContent", 
                                                "Images", 
@@ -485,7 +485,7 @@ namespace DotsolutionsWebsiteTester
             string[] marketingRatingList = { "GooglePlus", 
                                                "Facebook", 
                                                "Twitter", 
-                                               "SocialInterest", 
+                                               //"SocialInterest", 
                                                "Popularity", 
                                                "AmountOfContent", 
                                                "PageTitles", 
@@ -677,10 +677,20 @@ namespace DotsolutionsWebsiteTester
             var list = "";
             foreach (var item in orderedList)
             {
-                var ratingClass = item.Key + "Rating " + GetRatingClass(item.Value);
+                var ratingClass = "";
+                if (item.Value == -1m)
+                {
+                    ratingClass = item.Key + "Rating infoScore ratingSquare";
+                    list += "<li><span class='" + ratingClass + "' >i</span>"
+                            + "<a onclick=animateTo('" + item.Key + "') href='#" + item.Key + "'>" + GetTestName(item.Key) + "</a></li>";
+                }
+                else
+                {
+                    ratingClass = item.Key + "Rating " + GetRatingClass(item.Value);
+                    list += "<li><span class='" + ratingClass + "' >" + item.Value + "</span>"
+                            + "<a onclick=animateTo('" + item.Key + "') href='#" + item.Key + "'>" + GetTestName(item.Key) + "</a></li>";
+                }                
 
-                list += "<li><span class='" + ratingClass + "' >" + item.Value + "</span>"
-                        + "<a onclick=animateTo('" + item.Key + "') href='#" + item.Key + "'>" + GetTestName(item.Key) + "</a></li>";
             }
             return list;
         }

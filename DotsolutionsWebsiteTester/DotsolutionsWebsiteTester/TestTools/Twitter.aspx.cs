@@ -80,7 +80,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     return element.Value;
             return "";
         }
-
+        
         private void GetTwitter()
         {
             var url = Session["MainUrl"].ToString();
@@ -267,8 +267,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 4.0m;
             else
                 rating = 1.0m;
-
-            if (FollowingCount > FollowersCount)
+            
+            if (FollowingCount > (0.75 * FollowersCount))
                 rating = rating - 2m;
 
             if (rating < 0)

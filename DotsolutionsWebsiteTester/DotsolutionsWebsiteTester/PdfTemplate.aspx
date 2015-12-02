@@ -128,6 +128,10 @@
             background-color: green;
         }
 
+        .infoScore {
+            background-color: #892978;
+        }
+
         .ratingCircle {
             display: inline-block;
             font-size: 2em;

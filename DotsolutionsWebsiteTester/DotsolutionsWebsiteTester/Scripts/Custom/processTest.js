@@ -100,6 +100,9 @@ function GetOverallRating() {
 
     var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / testedcriteria);
 
+    if (isNaN(total))
+        total = 0.0;
+
     if (total !== 10) {
         total = total.toFixed(1);
         $("#RatingOverall").text(total.replace(".", ","));
