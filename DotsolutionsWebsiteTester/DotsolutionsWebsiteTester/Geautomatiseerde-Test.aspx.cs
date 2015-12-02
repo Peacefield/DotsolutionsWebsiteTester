@@ -77,6 +77,12 @@ namespace DotsolutionsWebsiteTester
         /// <param name="e"></param>
         protected void CreatePdfBtn_Click(object sender, EventArgs e)
         {
+
+            //Session["RatingAccessHtml"] = RatingAccessTxt.InnerHtml;
+            //Session["RatingUxHtml"] = RatingUxTxt.InnerHtml;
+            //Session["RatingMarketingHtml"] = RatingMarketingTxt.InnerHtml;
+            //Session["RatingTechHtml"] = RatingTechTxt.InnerHtml;
+
             Response.Redirect("~/PdfTemplate");
 
             return;

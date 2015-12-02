@@ -89,7 +89,7 @@
         </div>
         <hr />
         <ul runat="server">
-            <li id="RatingAccessTxt"><span id="RatingAccess" class="ratingSquare emptyScore">-</span>Toegankelijkheid 
+            <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare emptyScore">-</span>Toegankelijkheid 
                 <span id="ShowRatingAccess" class="displayRating">
                     <i id="RatingAccesBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 

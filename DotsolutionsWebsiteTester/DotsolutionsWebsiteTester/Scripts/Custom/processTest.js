@@ -42,7 +42,7 @@ function animateTo(identifier) {
 }
 
 function SetRatingClass(identifier, rating, overall) {
-    if (rating === "-")
+    if (rating === "-1")
         $(identifier).attr("class", "emptyScore ratingCircle");
     else {
         var rating = rating.replace(",", ".");
@@ -114,7 +114,9 @@ function GetOverallRating() {
     var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / testedcriteria);
 
     if (isNaN(total))
-        total = "-";
+    {
+        total = "-1";
+    }
     else {
         if (total !== 10) {
             total = total.toFixed(1);

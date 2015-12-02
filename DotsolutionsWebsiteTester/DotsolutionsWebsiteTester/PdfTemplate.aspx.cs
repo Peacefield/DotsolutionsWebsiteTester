@@ -84,8 +84,25 @@ namespace DotsolutionsWebsiteTester
 
         private void SetTotalRating()
         {
-            RatingOverall.InnerHtml = Session["RatingOverall"].ToString();
+            if (Session["RatingOverall"].ToString() == "-1")
+                RatingOverall.InnerHtml = "-";
+            else
+                RatingOverall.InnerHtml = Session["RatingOverall"].ToString();
+
             SetRatingDisplay("RatingOverall", RatingOverall);
+
+
+            // TODO: Geef emptyScore klasse wanneer er geen testen voor zijn uitgevoerd.
+            // Makkelijkste manier om dit te doen is om klassen op te slaan van geautomatiseerde-test, per onderdeel
+            // GetRoundedRating wordt zo overbodig
+
+
+            //RatingAccess.InnerHtml = Session["RatingAccessHtml"].ToString();
+            //RatingUx.InnerHtml = Session["RatingUxHtml"].ToString();
+            //RatingMarketing.InnerHtml = Session["RatingMarketingHtml"].ToString();
+            //RatingTech.InnerHtml = Session["RatingTechHtml"].ToString();
+
+
 
             RatingAccess.InnerHtml = GetRoundedRating((decimal)Session["RatingAccess"]);
             RatingUx.InnerHtml = GetRoundedRating((decimal)Session["RatingUx"]);
@@ -118,7 +135,9 @@ namespace DotsolutionsWebsiteTester
 
             if (criteria == "RatingOverall")
             {
-                if (rating < 6m)
+                if (rating == -1m)
+                    control.Attributes.Add("class", "emptyScore ratingCircle");
+                else if (rating < 6m)
                     control.Attributes.Add("class", "lowScore ratingCircle");
                 else if (rating < 8.5m)
                     control.Attributes.Add("class", "mediocreScore ratingCircle");
