@@ -262,6 +262,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (isDetailed)
                     PrintabilityTableHidden.Attributes.Remove("class");
 
+                if (!isDetailed)
+                    PrintabilityTable.Rows.Clear();
+
                 var notprintable = sitemap.Count - printable.Count;
 
                 var percentage = ((decimal)notprintable / (decimal)sitemap.Count) * 100m;

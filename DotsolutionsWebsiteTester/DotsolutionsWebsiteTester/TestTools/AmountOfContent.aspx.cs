@@ -92,6 +92,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (isDetailed /*&& lowContentPageCnt > 0*/)
                 AmountOfContentTableHidden.Attributes.Remove("class");
 
+            if (!isDetailed)
+                AmountOfContentTable.Rows.Clear();
+
             AmountOfContentResults.InnerHtml = message;
 
             // Set rating

@@ -74,6 +74,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (isDetailed)
                 IncomingLinksTableHidden.Attributes.Remove("class");
 
+            if (!isDetailed)
+                IncomingLinksTable.Rows.Clear();
+
             totalRating = decimal.Round(totalRating / sitemap.Count, 1);
 
             message += "<div class='well well-lg resultWell text-center'>"

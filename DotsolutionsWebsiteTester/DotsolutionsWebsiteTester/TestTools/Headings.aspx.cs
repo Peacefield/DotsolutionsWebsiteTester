@@ -82,10 +82,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                             + "<span class='messageText'> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
                     }
                     else
+                    {
+                        headingTable.Rows.Clear();
                         message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
                             + "<span class='messageText'> Niet alle geteste pagina's gebruiken headers in een aflopende volgorde. Dit kan de gebruikerservaring negatief beïnvloeden doordat de indeling minder duidelijk kan zijn.</span></div>";
-
+                    }
                     // Every misplaced heading causes a reduction in relation the the total amount of headers used
                     // E.g. 3 misplaced headings while there was a total of 20 headings used cause a reduction of 3/20th * 10
                     rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 10m);
@@ -266,7 +268,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             tCellUrl.Text = "<a href='" + url + "' target='_blank'>" + url + "</a>";
             tRow.Cells.Add(tCellUrl);
 
-            table.Rows.Add(tRow);
+            headingTable.Rows.Add(tRow);
         }
 
         /// <summary>

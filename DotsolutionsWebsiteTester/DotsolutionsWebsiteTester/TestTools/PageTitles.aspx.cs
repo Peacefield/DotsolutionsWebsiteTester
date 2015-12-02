@@ -103,9 +103,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                     siteMapGrammer = "pagina";
 
                 if (isDetailed)
-                {
                     PageTitlesTableHidden.Attributes.Remove("class");
-                }
+
+                if (!isDetailed)
+                    PageTitlesTable.Rows.Clear();
+
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                     + "<span class='messageText'> " + longTitles.Count + " van de " + sitemap.Count + " geteste " + siteMapGrammer + " " + longTitlesGrammar + " een te lange titel.<br/>"

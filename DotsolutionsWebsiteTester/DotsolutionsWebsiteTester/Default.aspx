@@ -89,7 +89,7 @@
                         <asp:ListItem Text="Populariteit" Value="Popularity" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Printbaarheid" Value="Printability" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Server gedrag" Value="ServerBehaviour" Selected="false" Enabled="false"></asp:ListItem>
-                        <asp:ListItem Text="Sociale interesse" Value="SocialInterest" Selected="true"></asp:ListItem>
+                        <asp:ListItem Text="Sociale interesse" Value="SocialInterest" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Twitter Pagina" Value="Twitter" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="URL Formaat" Value="UrlFormat" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>

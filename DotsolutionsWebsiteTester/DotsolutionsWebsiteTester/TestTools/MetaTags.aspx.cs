@@ -114,6 +114,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                         if (isDetailed)
                             MetaResultsTableHidden.Attributes.Remove("class");
+                        if (!isDetailed)
+                            MetaResultsTable.Rows.Clear();
                     }
 
                     if (!hasDescription)
@@ -458,7 +460,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             tCellContent.Text = content;
             tRow.Cells.Add(tCellContent);
 
-            table.Rows.Add(tRow);
+            MetaResultsTable.Rows.Add(tRow);
         }
 
         /// <summary>

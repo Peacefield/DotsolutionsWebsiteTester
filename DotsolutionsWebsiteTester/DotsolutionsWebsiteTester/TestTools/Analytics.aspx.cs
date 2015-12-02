@@ -169,6 +169,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (isDetailed)
                 AnalyticsTableHidden.Attributes.Remove("class");
 
+            if (!isDetailed)
+                AnalyticsTable.Rows.Clear();
+
             if (analyticslist.Count > 0)
             {
                 if (noAnalytics.Count > 0)

@@ -678,7 +678,7 @@ namespace DotsolutionsWebsiteTester
             foreach (var item in orderedList)
             {
                 var ratingClass = "";
-                if (item.Value == -1m)
+                if (item.Value == 11m)
                 {
                     ratingClass = item.Key + "Rating infoScore ratingSquare";
                     list += "<li><span class='" + ratingClass + "' >i</span>"

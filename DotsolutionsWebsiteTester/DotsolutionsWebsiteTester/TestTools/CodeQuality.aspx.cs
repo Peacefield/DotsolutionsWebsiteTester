@@ -181,6 +181,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                     + "<span class='messageText'> " + errorString + " en " + warningString + " gevonden.</span></div>";
                 }
+                if (!isDetailed)
+                    w3Table.Rows.Clear();
             }
 
             var usingSemanticsIcon = "";
@@ -396,7 +398,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             tCellMsg.Text = msg;
             tRow.Cells.Add(tCellMsg);
 
-            table.Rows.Add(tRow);
+            w3Table.Rows.Add(tRow);
         }
 
         /// <summary>

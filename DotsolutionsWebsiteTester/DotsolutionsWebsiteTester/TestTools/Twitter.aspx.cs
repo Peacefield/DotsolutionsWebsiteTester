@@ -256,9 +256,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine("percentage = " + percentage);
 
             if (FollowersCount >= TweetCount)
-                rating = 10m;
+                rating = 10.0m;
             else if (percentage >= 75m)
-                rating = 10m;
+                rating = 10.0m;
             else if (percentage >= 50m)
                 rating = 7.5m;
             else if (percentage >= 33m)
@@ -271,6 +271,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (FollowingCount > (0.75 * FollowersCount))
                 rating = rating - 2m;
 
+            if (rating == 10.0m)
+                rating = 10m; 
             if (rating < 0)
                 rating = 0.0m;
 

@@ -48,7 +48,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void GetSocialInterest()
         {
             var sitemap = (List<string>)Session["selectedSites"];
-            var rating = -1m;
+            var rating = 11m;
             
             var twitterShare = 0;
             //var linkedinShare = 0;

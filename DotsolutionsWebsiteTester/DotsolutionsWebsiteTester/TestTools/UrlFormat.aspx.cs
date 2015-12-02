@@ -95,6 +95,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                     if (isDetailed)
                         UrlFormatHiddenTable.Attributes.Remove("class");
+                    if (!isDetailed)
+                        UrlFormatTable.Rows.Clear();
                 }
 
                 if (dirtyUrl.Count > 0)
@@ -116,6 +118,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                     if (isDetailed)
                         UrlFormatHiddenTable.Attributes.Remove("class");
+                    if (!isDetailed)
+                        UrlFormatTable.Rows.Clear();
                 }
 
                 longUrl.Clear();

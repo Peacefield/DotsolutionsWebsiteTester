@@ -113,6 +113,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (isDetailed && (missingDesc > 0 || missingSize > 0 || imgResized > 0 || img404Count > 0))
                 ImagesTableHidden.Attributes.Remove("class");
 
+            if (!isDetailed)
+                ImagesTable.Rows.Clear();
+
             var percentageDeclared = 0m;
             var percentageStretched = 0m;
 
@@ -417,7 +420,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             tCellmsg.Text = msg;
             tRow.Cells.Add(tCellmsg);
 
-            table.Rows.Add(tRow);
+            ImagesTable.Rows.Add(tRow);
         }
 
         /// <summary>
