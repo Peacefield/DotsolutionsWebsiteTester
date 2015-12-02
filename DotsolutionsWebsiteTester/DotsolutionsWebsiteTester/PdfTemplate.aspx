@@ -132,6 +132,10 @@
             background-color: #892978;
         }
 
+        .emptyScore {
+            background-color: #0185AA;
+        }
+
         .ratingCircle {
             display: inline-block;
             font-size: 2em;

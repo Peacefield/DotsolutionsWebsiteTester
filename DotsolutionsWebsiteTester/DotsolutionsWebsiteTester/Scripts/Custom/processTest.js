@@ -42,22 +42,26 @@ function animateTo(identifier) {
 }
 
 function SetRatingClass(identifier, rating, overall) {
-    var rating = rating.replace(",", ".");
-    if (overall) {
-        if (rating < 6)
-            $(identifier).attr("class", "lowScore ratingCircle");
-        else if (rating < 8.5)
-            $(identifier).attr("class", "mediocreScore ratingCircle");
-        else
-            $(identifier).attr("class", "excellentScore ratingCircle");
-    }
+    if (rating === "-")
+        $(identifier).attr("class", "emptyScore ratingCircle");
     else {
-        if (rating < 6)
-            $(identifier).attr("class", "lowScore ratingSquare");
-        else if (rating < 8.5)
-            $(identifier).attr("class", "mediocreScore ratingSquare");
-        else
-            $(identifier).attr("class", "excellentScore ratingSquare");
+        var rating = rating.replace(",", ".");
+        if (overall) {
+            if (rating < 6)
+                $(identifier).attr("class", "lowScore ratingCircle");
+            else if (rating < 8.5)
+                $(identifier).attr("class", "mediocreScore ratingCircle");
+            else
+                $(identifier).attr("class", "excellentScore ratingCircle");
+        }
+        else {
+            if (rating < 6)
+                $(identifier).attr("class", "lowScore ratingSquare");
+            else if (rating < 8.5)
+                $(identifier).attr("class", "mediocreScore ratingSquare");
+            else
+                $(identifier).attr("class", "excellentScore ratingSquare");
+        }
     }
 }
 
@@ -93,23 +97,33 @@ function OnTechSuccess(response) {
 }
 
 function GetOverallRating() {
-    var access = $("#RatingAccess").text().replace(",", ".");
-    var userx = $("#RatingUx").text().replace(",", ".");
-    var market = $("#RatingMarketing").text().replace(",", ".");
-    var tech = $("#RatingTech").text().replace(",", ".");
+    var access = "0.0";
+    var userx = "0.0";
+    var market = "0.0";
+    var tech = "0.0";
 
+    if ($("#RatingAccess").text().indexOf(",") > 0)
+        access = $("#RatingAccess").text().replace(",", ".");
+    if ($("#RatingUx").text().indexOf(",") > 0)
+        userx = $("#RatingUx").text().replace(",", ".");
+    if ($("#RatingMarketing").text().indexOf(",") > 0)
+        market = $("#RatingMarketing").text().replace(",", ".");
+    if ($("#RatingTech").text().indexOf(",") > 0)
+        tech = $("#RatingTech").text().replace(",", ".");
+    
     var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / testedcriteria);
 
     if (isNaN(total))
-        total = 0.0;
-
-    if (total !== 10) {
-        total = total.toFixed(1);
-        $("#RatingOverall").text(total.replace(".", ","));
-    }
+        total = "-";
     else {
-        total = total.toFixed(0);
-        $("#RatingOverall").text(total);
+        if (total !== 10) {
+            total = total.toFixed(1);
+            $("#RatingOverall").text(total.replace(".", ","));
+        }
+        else {
+            total = total.toFixed(0);
+            $("#RatingOverall").text(total);
+        }
     }
 
     PageMethods.AddOverallRatingSession(total, OnSuccess, OnError);
