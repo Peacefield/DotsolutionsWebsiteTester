@@ -63,12 +63,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 googleShare += GetGoogleShare(page);
             }
 
-            //var site = Session["MainUrl"].ToString();
-            //var twitterShare = GetTwitterShare(site);
-            ////var linkedinShare = GetLinkedinShare(site);
-            //var facebookShare = GetFacebookShare(site);
-            //var googleShare = GetGoogleShare(site);
-
             var twitterString = twitterShare.ToString("#,##0") + " tweets";
             //var linkedinString = linkedinShare.ToString("#,##0") + " shares";
             var facebookString = facebookShare.ToString("#,##0") + " shares";
@@ -99,18 +93,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + message;
 
             SocialInterestResults.InnerHtml = message;
-            //decimal rounded = decimal.Round(rating, 1);
-            //SocialInterestRating.InnerHtml = rounded.ToString();
             SocialInterestRating.InnerHtml = "i";
 
-            //var temp = (decimal)Session["RatingUx"];
-            //Session["RatingUx"] = rounded + temp;
-            //temp = (decimal)Session["RatingMarketing"];
-            //Session["RatingMarketing"] = rounded + temp;
             Session["SocialInterestRating"] = rating;
-
-            //Debug.WriteLine("Rounded = " + rounded);
-            //SetRatingDisplay(rating);
         }
 
         private int GetTwitterShare(string site)
