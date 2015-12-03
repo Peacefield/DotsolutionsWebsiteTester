@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -84,40 +85,41 @@ namespace DotsolutionsWebsiteTester
 
         private void SetTotalRating()
         {
-            if (Session["RatingOverall"].ToString() == "-1")
-                RatingOverall.InnerHtml = "-";
-            else
-                RatingOverall.InnerHtml = Session["RatingOverall"].ToString();
-
-            SetRatingDisplay("RatingOverall", RatingOverall);
-
-
-            // TODO: Geef emptyScore klasse wanneer er geen testen voor zijn uitgevoerd.
-            // Makkelijkste manier om dit te doen is om klassen op te slaan van geautomatiseerde-test, per onderdeel
-            // GetRoundedRating wordt zo overbodig
-
-
-            //RatingAccess.InnerHtml = Session["RatingAccessHtml"].ToString();
-            //RatingUx.InnerHtml = Session["RatingUxHtml"].ToString();
-            //RatingMarketing.InnerHtml = Session["RatingMarketingHtml"].ToString();
-            //RatingTech.InnerHtml = Session["RatingTechHtml"].ToString();
-
-
-
-            RatingAccess.InnerHtml = GetRoundedRating((decimal)Session["RatingAccess"]);
-            RatingUx.InnerHtml = GetRoundedRating((decimal)Session["RatingUx"]);
-            RatingMarketing.InnerHtml = GetRoundedRating((decimal)Session["RatingMarketing"]);
-            RatingTech.InnerHtml = GetRoundedRating((decimal)Session["RatingTech"]);
-
             RatingAccessList.InnerHtml = Session["RatingAccessList"].ToString();
             RatingUxList.InnerHtml = Session["RatingUxList"].ToString();
             RatingMarketingList.InnerHtml = Session["RatingMarketingList"].ToString();
             RatingTechList.InnerHtml = Session["RatingTechList"].ToString();
 
-            SetRatingDisplay("RatingAccess", RatingAccess);
-            SetRatingDisplay("RatingUx", RatingUx);
-            SetRatingDisplay("RatingMarketing", RatingMarketing);
-            SetRatingDisplay("RatingTech", RatingTech);
+            RatingOverall.Attributes.Add("class", Session["RatingOverallClasses"].ToString());
+            RatingAccess.Attributes.Add("class", Session["RatingAccessClasses"].ToString());
+            RatingUx.Attributes.Add("class", Session["RatingUxClasses"].ToString());
+            RatingMarketing.Attributes.Add("class", Session["RatingMarketingClasses"].ToString());
+            RatingTech.Attributes.Add("class", Session["RatingTechClasses"].ToString());
+
+            if (Session["RatingOverall"].ToString() == "-1")
+                RatingOverall.InnerHtml = "-";
+            else
+                RatingOverall.InnerHtml = Session["RatingOverall"].ToString();
+
+            if (RatingAccess.Attributes["class"].Contains("emptyScore"))
+                RatingAccess.InnerHtml = "-";
+            else
+                RatingAccess.InnerHtml = GetRoundedRating((decimal)Session["RatingAccess"]);
+
+            if (RatingUx.Attributes["class"].Contains("emptyScore"))
+                RatingUx.InnerHtml = "-";
+            else
+                RatingUx.InnerHtml = GetRoundedRating((decimal)Session["RatingUx"]);
+
+            if (RatingMarketing.Attributes["class"].Contains("emptyScore"))
+                RatingMarketing.InnerHtml = "-";
+            else
+                RatingMarketing.InnerHtml = GetRoundedRating((decimal)Session["RatingMarketing"]);
+
+            if (RatingTech.Attributes["class"].Contains("emptyScore"))
+                RatingTech.InnerHtml = "-";
+            else
+                RatingTech.InnerHtml = GetRoundedRating((decimal)Session["RatingTech"]);
         }
 
         private string GetRoundedRating(decimal rating)
@@ -127,32 +129,6 @@ namespace DotsolutionsWebsiteTester
                 roundedRating = "10";
 
             return roundedRating;
-        }
-        
-        private void SetRatingDisplay(string criteria, System.Web.UI.HtmlControls.HtmlGenericControl control)
-        {
-            var rating = (decimal)Session[criteria];
-
-            if (criteria == "RatingOverall")
-            {
-                if (rating == -1m)
-                    control.Attributes.Add("class", "emptyScore ratingCircle");
-                else if (rating < 6m)
-                    control.Attributes.Add("class", "lowScore ratingCircle");
-                else if (rating < 8.5m)
-                    control.Attributes.Add("class", "mediocreScore ratingCircle");
-                else
-                    control.Attributes.Add("class", "excellentScore ratingCircle");
-            }
-            else
-            {
-                if (rating < 6m)
-                    control.Attributes.Add("class", "lowScore ratingSquare");
-                else if (rating < 8.5m)
-                    control.Attributes.Add("class", "mediocreScore ratingSquare");
-                else
-                    control.Attributes.Add("class", "excellentScore ratingSquare");
-            }
         }
 
         /// <summary>

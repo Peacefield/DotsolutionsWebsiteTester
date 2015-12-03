@@ -37,7 +37,7 @@ namespace DotsolutionsWebsiteTester
                 UrlTesting.InnerText = Session["MainUrl"].ToString();
                 laptopcontainer.Attributes["src"] = "http://i.imgur.com/PtcoFun.png";
                 SetLaptopImage(Session["MainUrl"].ToString());
-                
+
                 var sb = new System.Text.StringBuilder();
                 sizeref.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
                 string htmlstring = sb.ToString();
@@ -77,12 +77,6 @@ namespace DotsolutionsWebsiteTester
         /// <param name="e"></param>
         protected void CreatePdfBtn_Click(object sender, EventArgs e)
         {
-
-            //Session["RatingAccessHtml"] = RatingAccessTxt.InnerHtml;
-            //Session["RatingUxHtml"] = RatingUxTxt.InnerHtml;
-            //Session["RatingMarketingHtml"] = RatingMarketingTxt.InnerHtml;
-            //Session["RatingTechHtml"] = RatingTechTxt.InnerHtml;
-
             Response.Redirect("~/PdfTemplate");
 
             return;
@@ -374,6 +368,18 @@ namespace DotsolutionsWebsiteTester
         public static void AddCriteriaListSession(string session, string innerhtml)
         {
             HttpContext.Current.Session[session] = innerhtml;
+        }
+
+        /// <summary>
+        /// Add classes of criteria to Session so it is accessible from PdfTemplate
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="innerhtml"></param>
+        [System.Web.Services.WebMethod]
+        public static void AddCriteriaClassSession(string session, string classes)
+        {
+            Debug.WriteLine("AddCriteriaClassSession: " + session + " met klassen: " + classes);
+            HttpContext.Current.Session[session] = classes;
         }
 
         /// <summary>
@@ -695,7 +701,7 @@ namespace DotsolutionsWebsiteTester
                     ratingClass = item.Key + "Rating " + GetRatingClass(item.Value);
                     list += "<li><span class='" + ratingClass + "' >" + item.Value + "</span>"
                             + "<a onclick=animateTo('" + item.Key + "') href='#" + item.Key + "'>" + GetTestName(item.Key) + "</a></li>";
-                }                
+                }
 
             }
             return list;

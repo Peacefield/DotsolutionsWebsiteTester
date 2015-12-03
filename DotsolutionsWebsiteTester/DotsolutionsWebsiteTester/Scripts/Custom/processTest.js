@@ -97,24 +97,46 @@ function OnTechSuccess(response) {
 }
 
 function GetOverallRating() {
-    var access = "0.0";
-    var userx = "0.0";
-    var market = "0.0";
-    var tech = "0.0";
+    var access = $("#RatingAccess").text();
+    var userx = $("#RatingUx").text();
+    var market = $("#RatingMarketing").text();
+    var tech = $("#RatingTech").text();
 
-    if ($("#RatingAccess").text().indexOf(",") > 0)
-        access = $("#RatingAccess").text().replace(",", ".");
-    if ($("#RatingUx").text().indexOf(",") > 0)
-        userx = $("#RatingUx").text().replace(",", ".");
-    if ($("#RatingMarketing").text().indexOf(",") > 0)
-        market = $("#RatingMarketing").text().replace(",", ".");
-    if ($("#RatingTech").text().indexOf(",") > 0)
-        tech = $("#RatingTech").text().replace(",", ".");
-    
+    // Get acces rating
+    if (access !== "-") {
+        if ($("#RatingAccess").text().indexOf(",") > 0)
+            access = $("#RatingAccess").text().replace(",", ".");
+    }
+    else
+        access = 0.0;
+
+    // Get user experience rating
+    if (userx !== "-") {
+        if ($("#RatingUx").text().indexOf(",") > 0)
+            userx = $("#RatingUx").text().replace(",", ".");
+    }
+    else
+        userx = 0.0;
+
+    // Get marketing rating
+    if (market !== "-") {
+        if ($("#RatingMarketing").text().indexOf(",") > 0)
+            market = $("#RatingMarketing").text().replace(",", ".");
+    }
+    else
+        market = 0.0;
+
+    // Get technology rating
+    if (tech !== "-") {
+        if ($("#RatingTech").text().indexOf(",") > 0)
+            tech = $("#RatingTech").text().replace(",", ".");
+    }
+    else
+        tech = 0.0;
+
     var total = ((parseFloat(access) + parseFloat(userx) + parseFloat(market) + parseFloat(tech)) / testedcriteria);
 
-    if (isNaN(total))
-    {
+    if (isNaN(total)) {
         total = "-1";
     }
     else {
@@ -225,18 +247,32 @@ window.onload = function () {
                             // Timeout because it has to be executed after WebMethods
                             setTimeout(function () {
                                 GetOverallRating();
+                                setTimeout(function () {
+                                    // Set InnerHTML of Rating Lists in Session for PDF
+                                    var accessInner = document.getElementById("RatingAccessList").innerHTML;
+                                    var uxInner = document.getElementById("RatingUxList").innerHTML;
+                                    var marketInner = document.getElementById("RatingMarketingList").innerHTML;
+                                    var techInner = document.getElementById("RatingTechList").innerHTML;
 
-                                // Set InnerHTML of Rating Lists in Session for PDF
-                                var accessInner = document.getElementById("RatingAccessList").innerHTML;
-                                var uxInner = document.getElementById("RatingUxList").innerHTML;
-                                var marketInner = document.getElementById("RatingMarketingList").innerHTML;
-                                var techInner = document.getElementById("RatingTechList").innerHTML;
+                                    PageMethods.AddCriteriaListSession("RatingAccessList", accessInner, OnSuccess, OnError);
+                                    PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
+                                    PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
+                                    PageMethods.AddCriteriaListSession("RatingTechList", techInner, OnSuccess, OnError);
 
-                                PageMethods.AddCriteriaListSession("RatingAccessList", accessInner, OnSuccess, OnError);
-                                PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
-                                PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
-                                PageMethods.AddCriteriaListSession("RatingTechList", techInner, OnSuccess, OnError);
-                            }, 5000);
+                                    var accessClasses = document.getElementById("RatingAccess").className;
+                                    var uXClasses = document.getElementById("RatingUx").className;
+                                    var marketClasses = document.getElementById("RatingMarketing").className;
+                                    var techClasses = document.getElementById("RatingTech").className;
+                                    var overallClasses = document.getElementById("RatingOverall").className;
+
+                                    PageMethods.AddCriteriaClassSession("RatingAccessClasses", accessClasses, OnSuccess, OnError);
+                                    PageMethods.AddCriteriaClassSession("RatingUxClasses", uXClasses, OnSuccess, OnError);
+                                    PageMethods.AddCriteriaClassSession("RatingMarketingClasses", marketClasses, OnSuccess, OnError);
+                                    PageMethods.AddCriteriaClassSession("RatingTechClasses", techClasses, OnSuccess, OnError);
+                                    PageMethods.AddCriteriaClassSession("RatingOverallClasses", overallClasses, OnSuccess, OnError);
+
+                                }, 1000);
+                            }, 1000);
 
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
