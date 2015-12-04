@@ -100,6 +100,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["SocialInterestRating"] = rating;
         }
 
+        /// <summary>
+        /// Get amount of tweets containing site
+        /// </summary>
+        /// <param name="site">string site</param>
+        /// <returns>int count</returns>
         private int GetTwitterShare(string site)
         {
             var ConsumerSecret = GetFromApiKeys("TwitterConsumerSecret");
@@ -124,6 +129,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             return GetTweetCount(site, twitterContext);
         }
 
+        /// <summary>
+        /// Get amount of tweets containg site using Twitter API
+        /// </summary>
+        /// <param name="site">string site</param>
+        /// <param name="twitterContext">TwitterContext twitterContext</param>
+        /// <returns>int count</returns>
         private int GetTweetCount(string site, TwitterContext twitterContext)
         {
             var count = 0;
@@ -172,6 +183,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return count;
         }
 
+        /// <summary>
+        /// Get amount of Facebookshares from JObject
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
         private int GetFacebookShare(string site)
         {
             var count = 0;
@@ -184,6 +200,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             return count;
         }
 
+        /// <summary>
+        /// Get JObject containing response from requestString
+        /// </summary>
+        /// <param name="requestString">string requestString</param>
+        /// <param name="platform">string platform</param>
+        /// <returns>JObject</returns>
         private JObject GetResponseFromUrl(string requestString, string platform)
         {
             JObject responseObject = null;
@@ -210,6 +232,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return responseObject;
         }
 
+        /// <summary>
+        /// Get amount of +1's site has received from JObject
+        /// </summary>
+        /// <param name="site">string site</param>
+        /// <returns>int count</returns>
         private int GetGoogleShare(string site)
         {
             var count = 0;
@@ -220,6 +247,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return count;
         }
 
+        /// <summary>
+        /// Get JObject containing Google +1's
+        /// </summary>
+        /// <param name="url">string url</param>
+        /// <returns>JObject</returns>
         private JObject GetGoogleResponseFromUrl(string url)
         {
             JObject responseObject = null;
