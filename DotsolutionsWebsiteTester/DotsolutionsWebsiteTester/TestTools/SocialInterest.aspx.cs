@@ -29,14 +29,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-
             var ths = new ThreadStart(GetSocialInterest);
             var th = new Thread(ths);
             th.Start();
 
             th.Join();
-
-            //GetSocialInterest();
 
             var sb = new System.Text.StringBuilder();
             SocialInterestSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -82,14 +79,19 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + "<span> " + twitterString + "</span></div>"
                 //+ "<i class='fa fa-linkedin-square fa-3x'></i><br/>"
                 //+ "<span> " + linkedinString + "</span></div>"
+
                 + "<div class='resultDivider'></div>"
+
                 + "<div class='well well-lg thirdResultWell text-center'>"
                 + "<i class='fa fa-facebook-official fa-3x'></i><br/>"
                 + "<span> " + facebookString + "</span></div>"
+
                 + "<div class='resultDivider'></div>"
+
                 + "<div class='well well-lg thirdResultWell text-center'>"
                 + "<i class='fa fa-google-plus-square fa-3x'></i><br/>"
                 + "<span> " + googleString + "</span></div>"
+
                 + message;
 
             SocialInterestResults.InnerHtml = message;
@@ -128,7 +130,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var searchResponse = from search in twitterContext.Search
                                  where search.Type == SearchType.Search &&
-                                 search.Query == site
+                                 search.Query == site &&
+                                 search.Count == 100
                                  select search;
             try
             {
@@ -269,20 +272,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (element.Key == key)
                     return element.Value;
             return "";
-        }
-
-        /// <summary>
-        /// Set the colour that indicates the rating accordingly
-        /// </summary>
-        /// <param name="rating">decimal rating</param>
-        private void SetRatingDisplay(decimal rating)
-        {
-            if (rating < 6m)
-                SocialInterestRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                SocialInterestRating.Attributes.Add("class", "mediocreScore ratingCircle");
-            else
-                SocialInterestRating.Attributes.Add("class", "excellentScore ratingCircle");
         }
     }
 }

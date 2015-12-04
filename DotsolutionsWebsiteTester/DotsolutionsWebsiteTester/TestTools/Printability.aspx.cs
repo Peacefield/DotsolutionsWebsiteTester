@@ -174,6 +174,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 request.UserAgent = Session["userAgent"].ToString();
                 request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
                 request.Credentials = CredentialCache.DefaultCredentials;
+                
+
+                //// Create new stopwatch.
+                //Stopwatch stopwatch = new Stopwatch();
+                //// Begin timing.
+                //stopwatch.Start();
+                
+
                 // Get the response.
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 // Get the stream containing content returned by the server.
@@ -182,6 +190,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var reader = new StreamReader(dataStream);
                 // Read the content. 
                 string responseFromServer = reader.ReadToEnd();
+
+
+                //// Stop timing.
+                //stopwatch.Stop();
+                //// Write result.
+                //Debug.WriteLine("Time elapsed: {0}", stopwatch.Elapsed);
+
+
 
                 if (!responseFromServer.Contains("@media print"))
                 {
