@@ -272,10 +272,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
                 else
                 {
-                    if (mainUrl.EndsWith("/"))
+                    if (mainUrl.EndsWith("/") && internalLink.StartsWith("/"))
                         testLink = mainUrl.Remove(mainUrl.Length - 1) + internalLink;
-                    else
+                    else if ((mainUrl.EndsWith("/") && !internalLink.StartsWith("/")) || (!mainUrl.EndsWith("/") && internalLink.StartsWith("/")))
                         testLink = mainUrl + internalLink;
+                    else if (!mainUrl.EndsWith("/") && !internalLink.StartsWith("/"))
+                        testLink = mainUrl + "/" + internalLink;
                 }
 
                 var nofollow = false;
