@@ -61,9 +61,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Debug.WriteLine("Link check op -> " + url);
 
                 // Reset counters per page
-                this.lengthCnt = 0;
-                this.imageCnt = 0;
-                this.brokenCnt = 0;
+                ////this.lengthCnt = 0;
+                ////this.imageCnt = 0;
+                ////this.brokenCnt = 0;
                 this.threadCnt = 0;
 
                 var threadList = new List<Thread>();
@@ -96,18 +96,18 @@ namespace DotsolutionsWebsiteTester.TestTools
                     thread.Join();
                 }
 
-                if (lengthCnt >= 5)
-                {
-                    AddToTable("<strong>" + (lengthCnt - 4) + " overige links gevonden met een te lange beschrijvende tekst</strong>", "...", url);
-                }
-                if (imageCnt >= 5)
-                {
-                    AddToTable("<strong>" + (imageCnt - 4) + " overige afbeeldinglinks gevonden zonder title/alt attribuut</strong>", "...", url);
-                }
-                if (brokenCnt >= 5)
-                {
-                    AddToTable("<strong>" + (brokenCnt - 4) + " overige links gevonden die niet werken</strong>", "...", url);
-                }
+                //if (lengthCnt >= 5)
+                //{
+                //    AddToTable("<strong>" + (lengthCnt - 4) + " overige links gevonden met een te lange beschrijvende tekst</strong>", "...", url);
+                //}
+                //if (imageCnt >= 5)
+                //{
+                //    AddToTable("<strong>" + (imageCnt - 4) + " overige afbeeldinglinks gevonden zonder title/alt attribuut</strong>", "...", url);
+                //}
+                //if (brokenCnt >= 5)
+                //{
+                //    AddToTable("<strong>" + (brokenCnt - 4) + " overige links gevonden die niet werken</strong>", "...", url);
+                //}
             }
 
             // Show message with findings
@@ -202,10 +202,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                     Debug.WriteLine("Zin > 25 woorden = " + placeholder);
 
-                    if (lengthCnt < 5)
-                    {
-                        AddToTable(internalLink, "Beschrijvende tekst is te lang (" + words.Count + " woorden)", url);
-                    }
+                    //if (lengthCnt < 5)
+                    //{
+                    //    AddToTable(internalLink, "Beschrijvende tekst is te lang (" + words.Count + " woorden)", url);
+                    //}
+                    AddToTable(internalLink, "Beschrijvende tekst is te lang (" + words.Count + " woorden)", url);
 
                     lengthCnt++;
                     errorCnt++;
@@ -227,10 +228,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (!link.InnerHtml.Contains("alt="))
                     {
-                        if (imageCnt < 5)
-                        {
-                            AddToTable(internalLink, "Afbeelding bevat geen 'alt' attribuut", url);
-                        }
+                        //if (imageCnt < 5)
+                        //{
+                        //    AddToTable(internalLink, "Afbeelding bevat geen 'alt' attribuut", url);
+                        //}
+                        AddToTable(internalLink, "Afbeelding bevat geen 'alt' attribuut", url);
                         imageCnt++;
                         errorCnt++;
                     }
@@ -241,10 +243,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (link.InnerHtml.Contains("title") == false)
                     {
-                        if (imageCnt < 5)
-                        {
-                            AddToTable(internalLink, "i of span element bevat geen 'title' attribuut", url);
-                        }
+                        //if (imageCnt < 5)
+                        //{
+                        //    AddToTable(internalLink, "i of span element bevat geen 'title' attribuut", url);
+                        //}
+                        AddToTable(internalLink, "i of span element bevat geen 'title' attribuut", url);
                         imageCnt++;
                         errorCnt++;
                     }
@@ -325,18 +328,29 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // 405 means request method: HEAD is not allowed, but the URL probably works if this gets returned
                     if (httpcode != 200 && httpcode != 405)
                     {
-                        if (brokenCnt < 5)
-                        {
-                            string tablelink = "<a href='" + testLink + "' target='_blank'>" + testLink + "</a>";
+                        //if (brokenCnt < 5)
+                        //{
+                        //    string tablelink = "<a href='" + testLink + "' target='_blank'>" + testLink + "</a>";
 
-                            // add message to table
-                            if (httpcode > 0)
-                                AddToTable(tablelink, "Link werkt niet (HTTP Status Code: " + httpcode + ")", url);
-                            else if (httpcode == -1)
-                                AddToTable(tablelink, "Link werkt niet (Timeout)", url);
-                            else if (httpcode == 0)
-                                AddToTable(tablelink, "Link werkt niet", url);
-                        }
+                        //    // add message to table
+                        //    if (httpcode > 0)
+                        //        AddToTable(tablelink, "Link werkt niet (HTTP Status Code: " + httpcode + ")", url);
+                        //    else if (httpcode == -1)
+                        //        AddToTable(tablelink, "Link werkt niet (Timeout)", url);
+                        //    else if (httpcode == 0)
+                        //        AddToTable(tablelink, "Link werkt niet", url);
+                        //}
+
+                        string tablelink = "<a href='" + testLink + "' target='_blank'>" + testLink + "</a>";
+
+                        // add message to table
+                        if (httpcode > 0)
+                            AddToTable(tablelink, "Link werkt niet (HTTP Status Code: " + httpcode + ")", url);
+                        else if (httpcode == -1)
+                            AddToTable(tablelink, "Link werkt niet (Timeout)", url);
+                        else if (httpcode == 0)
+                            AddToTable(tablelink, "Link werkt niet", url);
+
                         brokenCnt++;
                         errorCnt++;
                         // Emergency break

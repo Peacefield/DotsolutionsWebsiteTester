@@ -166,7 +166,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             AnalyticsResults.InnerHtml = message;
 
-            if (isDetailed)
+            if (isDetailed && analyticslist.Count > 0)
                 AnalyticsTableHidden.Attributes.Remove("class");
 
             if (!isDetailed)
