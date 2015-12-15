@@ -345,9 +345,16 @@ footer {
     float: left;
 }
 
-.thirdResultWell {
+.resultBox {
+    width: 48%;
+    float: left;
+    padding: 15px;
+}
+
+.thirdResultBox {
     width: 30.6%;
     float: left;
+    padding: 20px 10px;
 }
 
 .resultDivider {
@@ -361,11 +368,11 @@ footer {
     color: #55acee;
 }
 
-.fa-linkedin-square{
+.fa-linkedin-square {
     color: #1884bc;
 }
 
-.fa-facebook-official, fa-thumbs-o-up {
+.fa-facebook-official, .fa-thumbs-o-up {
     color: #4862a3;
 }
 
@@ -463,11 +470,11 @@ footer {
     background-color: green;
 }
 
-.infoScore{
+.infoScore {
     background-color: #892978;
 }
 
-.emptyScore{
+.emptyScore {
     background-color: #0185AA;
 }
 

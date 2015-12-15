@@ -59,9 +59,16 @@
             float: left;
         }
 
-        .thirdResultWell {
+        .resultBox {
+            width: 48%;
+            float: left;
+            padding: 15px;
+        }
+
+        .thirdResultBox {
             width: 30.6%;
             float: left;
+            padding: 20px 10px;
         }
 
         .resultDivider {
@@ -79,7 +86,7 @@
             color: #1884bc;
         }
 
-        .fa-facebook-official, fa-thumbs-o-up {
+        .fa-facebook-official, .fa-thumbs-o-up {
             color: #4862a3;
         }
 

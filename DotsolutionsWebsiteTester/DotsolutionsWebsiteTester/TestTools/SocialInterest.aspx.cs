@@ -74,7 +74,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (googleShare == 1)
                 googleString = googleShare + " +1";
 
-            message = "<div class='well well-lg thirdResultWell text-center'>"
+            message = "<div class='well well-lg thirdResultBox text-center'>"
                 + "<i class='fa fa-twitter-square fa-3x'></i><br/>"
                 + "<span> " + twitterString + "</span></div>"
                 //+ "<i class='fa fa-linkedin-square fa-3x'></i><br/>"
@@ -82,13 +82,13 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 + "<div class='resultDivider'></div>"
 
-                + "<div class='well well-lg thirdResultWell text-center'>"
+                + "<div class='well well-lg thirdResultBox text-center'>"
                 + "<i class='fa fa-facebook-official fa-3x'></i><br/>"
                 + "<span> " + facebookString + "</span></div>"
 
                 + "<div class='resultDivider'></div>"
 
-                + "<div class='well well-lg thirdResultWell text-center'>"
+                + "<div class='well well-lg thirdResultBox text-center'>"
                 + "<i class='fa fa-google-plus-square fa-3x'></i><br/>"
                 + "<span> " + googleString + "</span></div>"
 

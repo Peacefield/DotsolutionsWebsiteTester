@@ -374,15 +374,74 @@ namespace DotsolutionsWebsiteTester.TestTools
             var talkingGrammar = " mensen praten";
             if (fbTalking == "1") talkingGrammar = " persoon praat";
 
-            message += "<div class='well well-lg resultWell text-center'>"
+            var sitemap = (List<string>)Session["selectedSites"];
+            var shares = 0;
+
+            foreach (var page in sitemap)
+            {
+                shares += GetFacebookShare(page);
+            }
+            message += "<div class='thirdResultBox text-center'>"
                 + "<i class='fa fa-thumbs-o-up fa-3x'></i><br/>"
                 + "<span> Deze pagina heeft " + fbLikes + likesGrammar + "</span></div>"
                 + "<div class='resultDivider'></div>"
-                + "<div class='well well-lg resultWell text-center'>"
+                + "<div class='thirdResultBox text-center'>"
+                + "<i class='fa fa-share fa-3x'></i><br/>"
+                + "<span> De geteste pagina's zijn " + shares + " keer gedeeld</span></div>"
+                + "<div class='resultDivider'></div>"
+                + "<div class='thirdResultBox text-center'>"
                 + "<i class='fa fa-commenting-o fa-3x'></i><br/>"
                 + "<span> " + fbTalking + talkingGrammar + " hier over</span></div>";
 
             return rating;
+        }
+
+        /// <summary>
+        /// Get amount of Facebookshares from JObject
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        private int GetFacebookShare(string site)
+        {
+            var count = 0;
+            var requestString = "http://graph.facebook.com/?id=" + site;
+
+            var responseObject = GetResponseFromUrl(requestString, "Facebook");
+            if (responseObject["shares"] != null)
+                count = Int32.Parse(responseObject["shares"].ToString());
+
+            return count;
+        }
+        /// <summary>
+        /// Get JObject containing response from requestString
+        /// </summary>
+        /// <param name="requestString">string requestString</param>
+        /// <param name="platform">string platform</param>
+        /// <returns>JObject</returns>
+        private JObject GetResponseFromUrl(string requestString, string platform)
+        {
+            JObject responseObject = null;
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(requestString);
+                request.UserAgent = Session["userAgent"].ToString();
+                request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
+
+                var response = (HttpWebResponse)request.GetResponse();
+                var dataStream = response.GetResponseStream();
+                var reader = new StreamReader(dataStream);
+                var responseFromServer = reader.ReadToEnd();
+                responseObject = JObject.Parse(responseFromServer);
+            }
+            catch (WebException wex)
+            {
+                message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er ging iets mis bij het ophalen van gegevens van " + platform + ".</span></div>";
+                Debug.WriteLine(wex.Message);
+            }
+
+            return responseObject;
         }
 
         /// <summary>
