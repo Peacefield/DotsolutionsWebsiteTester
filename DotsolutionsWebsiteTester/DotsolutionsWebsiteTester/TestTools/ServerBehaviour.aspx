@@ -9,6 +9,7 @@
                     <span id="ServerBehaviourRating" runat="server">?</span> Server gedrag
                 </div>
                 <div class="panel-body">
+                    <div id="ServerBehaviourResults" runat="server"></div>
                 </div>
             </div>
         </div>

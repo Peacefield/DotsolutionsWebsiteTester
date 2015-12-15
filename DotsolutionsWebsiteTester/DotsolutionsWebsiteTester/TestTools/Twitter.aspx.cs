@@ -80,7 +80,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     return element.Value;
             return "";
         }
-        
+
         private void GetTwitter()
         {
             var url = Session["MainUrl"].ToString();
@@ -232,9 +232,23 @@ namespace DotsolutionsWebsiteTester.TestTools
             return "";
         }
 
+        /// <summary>
+        /// Get variables to decide rating
+        /// </summary>
+        /// <param name="screenName">string screenName</param>
+        /// <returns>decimal rating</returns>
         private decimal GetTwitterRating(string screenName)
         {
-            var rating = 1.0m;
+            // Beoordeling a.d.h.v aantal tweets tegenover aantal volgers
+            // Gebaseerd op percentage
+
+            // Beoordeling a.d.h.v. aantal volgers tegenover aantal volgend
+            // Aantal volgers meer dan 75% van aantal volgend = 2 punten aftrek
+
+            // Beoordeling a.d.h.v. aantal tweets over afgelopen 7 dagen
+            // 3x getweet = 10, 2x = 8, 1x = 6, daarna onvoldoende
+
+            var rating = 10.0m;
             var users = from user in twitterContext.User
                         where user.Type == UserType.Show &&
                         user.ScreenName == screenName
@@ -251,28 +265,44 @@ namespace DotsolutionsWebsiteTester.TestTools
             var ProfileImage = GetProfileImage(returnedUser);
             var CoverImage = GetCoverImage(returnedUser);
 
-            var percentage = ((decimal)FollowersCount / (decimal)TweetCount) * 100m;
+            var TweetAmountString = "";
+            var TweetAmountLastDays = GetTweetAmountLastDays(screenName);
+            
+            if (TweetAmountLastDays == 20)
+                TweetAmountString = "Dit account heeft in de afgelopen 7 dagen minimaal 20 tweets verzonden";
+            else
+                TweetAmountString = "Dit account heeft in de afgelopen 7 dagen " + TweetAmountLastDays + " tweets verzonden";
 
+            if (TweetAmountLastDays < 3)
+            {
+                if (TweetAmountLastDays == 2)
+                    rating = 8.0m;
+                else if (TweetAmountLastDays == 1)
+                    rating = 6.0m;
+                else
+                    rating = 4.0m;
+            }
+            
+            var percentage = ((decimal)FollowersCount / (decimal)TweetCount) * 100m;
             Debug.WriteLine("percentage = " + percentage);
 
-            if (FollowersCount >= TweetCount)
-                rating = 10.0m;
-            else if (percentage >= 75m)
-                rating = 10.0m;
-            else if (percentage >= 50m)
-                rating = 7.5m;
-            else if (percentage >= 33m)
-                rating = 5.5m;
-            else if (percentage >= 10m)
-                rating = 4.0m;
-            else
-                rating = 1.0m;
-            
+            if (percentage < 75)
+            {
+                if (percentage >= 50m)
+                    rating = rating - 2m;
+                else if (percentage >= 33m)
+                    rating = rating - 3m;
+                else if (percentage >= 10m)
+                    rating = rating - 4m;
+                else
+                    rating = rating - 5m;
+            }
+
             if (FollowingCount > (0.75 * FollowersCount))
                 rating = rating - 2m;
 
             if (rating == 10.0m)
-                rating = 10m; 
+                rating = 10m;
             if (rating < 0)
                 rating = 0.0m;
 
@@ -284,15 +314,48 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
                 + "</div>";
 
-            message += "<div class='well well-lg resultWell text-center'>"
+            message += "<div class='well well-lg thirdResultWell  text-center'>"
+                + "<i class='fa fa-twitter-square fa-3x'></i><br/>"
+                + "<span> " + TweetAmountString + "</span></div>"
+                + "<div class='resultDivider'></div>"
+                + "<div class='well well-lg thirdResultWell  text-center'>"
                 + "<i class='fa fa-retweet fa-3x'></i><br/>"
                 + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
                 + "<div class='resultDivider'></div>"
-                + "<div class='well well-lg resultWell text-center'>"
+                + "<div class='well well-lg thirdResultWell  text-center'>"
                 + "<i class='fa fa-users fa-3x'></i><br/>"
                 + "<span> Dit account heeft " + FollowersCountString + " volgers en volgt " + FollowingCountString + " gebruikers</span></div>";
 
             return rating;
+        }
+
+        private int GetTweetAmountLastDays(string screenName)
+        {
+            var tweetAmount = 0;
+            var tweets = from tweet in twitterContext.Status
+                         where tweet.Type == StatusType.User &&
+                        tweet.ScreenName == screenName
+                         select tweet;
+            var returnedUser = tweets.ToList();
+
+            foreach (var item in tweets)
+            {
+                if (IsInLastSevenDays(item.CreatedAt))
+                    tweetAmount++;
+                else
+                    break;
+            }
+
+            return tweetAmount;
+        }
+
+        private bool IsInLastSevenDays(DateTime dateTime)
+        {
+            var now = DateTime.Today.AddDays(-7);
+            if (dateTime > now)
+                return true;
+            else
+                return false;
         }
 
         /// <summary>

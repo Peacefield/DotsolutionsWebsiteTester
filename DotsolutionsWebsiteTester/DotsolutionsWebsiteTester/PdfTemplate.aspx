@@ -79,7 +79,7 @@
             color: #1884bc;
         }
 
-        .fa-facebook-official {
+        .fa-facebook-official, fa-thumbs-o-up {
             color: #4862a3;
         }
 
