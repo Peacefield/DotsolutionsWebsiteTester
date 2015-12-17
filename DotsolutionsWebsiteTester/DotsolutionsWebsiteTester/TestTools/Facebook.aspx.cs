@@ -387,7 +387,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 + "<div class='resultDivider'></div>"
                 + "<div class='thirdResultBox text-center'>"
                 + "<i class='fa fa-share fa-3x'></i><br/>"
-                + "<span> De geteste pagina's zijn " + shares + " keer gedeeld</span></div>"
+                + "<span> De geteste pagina's zijn " + shares.ToString("#,##0") + " keer gedeeld</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='thirdResultBox text-center'>"
                 + "<i class='fa fa-commenting-o fa-3x'></i><br/>"
@@ -406,19 +406,20 @@ namespace DotsolutionsWebsiteTester.TestTools
             var count = 0;
             var requestString = "http://graph.facebook.com/?id=" + site;
 
-            var responseObject = GetResponseFromUrl(requestString, "Facebook");
+            var responseObject = GetResponseFromUrl(requestString);
             if (responseObject["shares"] != null)
                 count = Int32.Parse(responseObject["shares"].ToString());
 
             return count;
         }
+
         /// <summary>
         /// Get JObject containing response from requestString
         /// </summary>
         /// <param name="requestString">string requestString</param>
         /// <param name="platform">string platform</param>
         /// <returns>JObject</returns>
-        private JObject GetResponseFromUrl(string requestString, string platform)
+        private JObject GetResponseFromUrl(string requestString)
         {
             JObject responseObject = null;
             try
@@ -437,7 +438,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Er ging iets mis bij het ophalen van gegevens van " + platform + ".</span></div>";
+                    + "<span class='messageText'> Er ging iets mis bij het ophalen van gegevens.</span></div>";
                 Debug.WriteLine(wex.Message);
             }
 

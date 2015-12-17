@@ -611,7 +611,7 @@ namespace DotsolutionsWebsiteTester
                 if (item == "GooglePlus" ||
                     item == "Facebook" ||
                     item == "Twitter" ||
-                    item == "SocialInterest" ||
+                    //item == "SocialInterest" ||
                     item == "Popularity" ||
                     item == "AmountOfContent" ||
                     item == "Images" ||
@@ -640,7 +640,7 @@ namespace DotsolutionsWebsiteTester
                 if (item == "GooglePlus" ||
                     item == "Facebook" ||
                     item == "Twitter" ||
-                    item == "SocialInterest" ||
+                    //item == "SocialInterest" ||
                     item == "Popularity" ||
                     item == "AmountOfContent" ||
                     item == "PageTitles" ||
@@ -767,8 +767,8 @@ namespace DotsolutionsWebsiteTester
                     return "Facebook Pagina";
                 case "Twitter":
                     return "Twitter Pagina";
-                case "SocialInterest":
-                    return "Sociale interesse";
+                //case "SocialInterest":
+                //    return "Sociale interesse";
                 case "Popularity":
                     return "Populariteit";
                 case "AmountOfContent":

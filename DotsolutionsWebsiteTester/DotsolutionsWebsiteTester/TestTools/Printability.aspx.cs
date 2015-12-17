@@ -257,6 +257,10 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void ShowPrintability()
         {
+            // De beoordeling voor dit onderdeel wordt berekend door per pagina die niet printbaar is
+            // een aftrek te hanteren van 1/{aantal pagina's} * 10.
+            // 1 niet-printbare pagina van 5 geteste pagina's resulteert in een aftrek van 1/5*10 = 2 punten.
+
             var rating = 10.0m;
             var message = "";
             var isDetailed = (bool)Session["IsDetailedTest"];

@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 namespace DotsolutionsWebsiteTester.TestTools
 {
     // TODO: Tonen via resultwell. Detail en standaard gelijktrekken.
+    // TODO: Commentaar toevoegen
     public partial class Headings : System.Web.UI.Page
     {
         private List<string> noHeadings = new List<string>();
@@ -43,6 +44,12 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetHeadings()
         {
+            // Wanneer een pagina geen headers gebruikt wordt dit beoordeeld met 1/{aantal pagina's} * 10
+
+            // Wanneer een pagina wel headers gebruikt, maar in de verkeerde volgorde wordt per pagina opgehaald hoeveel headers er gebruikt zijn
+            // De beoordeling is afhankelijk van {het aantal verkeerd gebruikte headers}/{totaal aantal gebruikte headers} * 10
+
+
             Debug.WriteLine("Headings >>>>>");
             var sitemap = (List<string>)Session["selectedSites"];
             var rating = 10.0m;
@@ -91,7 +98,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // Every misplaced heading causes a reduction in relation the the total amount of headers used
                     // E.g. 3 misplaced headings while there was a total of 20 headings used cause a reduction of 3/20th * 10
                     rating = rating - (((decimal)errorCnt / (decimal)totalHeadingCnt) * 10m);
-
                 }
                 else
                 {

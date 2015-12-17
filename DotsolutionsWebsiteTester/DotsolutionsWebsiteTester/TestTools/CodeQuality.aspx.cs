@@ -54,6 +54,15 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void TestCodeQuality()
         {
+            // Het gebruik van een tabel voor lay-out zorgt voor aftrek van 1/{aantal geteste pagina's} van 5.
+            // 1 pagina met 5 geteste pagina's levert dus 1/5*5 op, oftewel 1 punt aftrek.
+
+            // Het niet gebruiken van semantische elementen hanteert dezelfde beoordeling als hierboven.
+
+            // Het niet kunnen W3C valideren van een pagina levert maximaal een aftrek op van 8 punten.
+            // Per pagina is er een aftrek mogelijk van 1/{aantal pagina's} van 8.
+            // 1 pagina met 5 geteste pagina's levert dus 1/5*8 op, oftewel 1.6 punt aftrek.
+
             var tableLayOutList = new List<string>();
             var noSemanticList = new List<string>();
             decimal rating = 10.0m;

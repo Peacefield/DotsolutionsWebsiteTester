@@ -257,7 +257,6 @@
     <Content Include="TestTools\Popularity.aspx" />
     <Content Include="TestTools\Printability.aspx" />
     <Content Include="TestTools\ServerBehaviour.aspx" />
-    <Content Include="TestTools\SocialInterest.aspx" />
     <Content Include="TestTools\Twitter.aspx" />
     <Content Include="TestTools\UrlFormat.aspx" />
     <Content Include="Web.config" />
@@ -441,13 +440,6 @@
     </Compile>
     <Compile Include="TestTools\ServerBehaviour.aspx.designer.cs">
       <DependentUpon>ServerBehaviour.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="TestTools\SocialInterest.aspx.cs">
-      <DependentUpon>SocialInterest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TestTools\SocialInterest.aspx.designer.cs">
-      <DependentUpon>SocialInterest.aspx</DependentUpon>
     </Compile>
     <Compile Include="TestTools\Twitter.aspx.cs">
       <DependentUpon>Twitter.aspx</DependentUpon>

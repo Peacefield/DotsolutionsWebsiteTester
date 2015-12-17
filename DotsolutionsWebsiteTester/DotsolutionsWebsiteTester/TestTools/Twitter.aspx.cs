@@ -83,6 +83,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetTwitter()
         {
+            // De beoordeling van dit onderdeel is afhankelijk van
+            // - Het aantal tweets in de afgelopen 7 dagen, 3+ keer is maximaal 10, 2 keer is maximaal 8, 1 keer is maximaal 6, 0 keer is maximaal 4.
+            // - Het aantal volgers van het account tegenover het aantal tweets. 50-75% is 2 punten aftrek, 33-50% is 3 punten aftrek, 10-33% is 4 punten aftrek, 0-10% is 5 punten aftrek.
+            // - Het aantal gebruikers dat het account volgt tegenover het aantal volgers. Wanneer het aantal volgend 75+% is van aantal volgers: 2 punten aftrek.
+
             var url = Session["MainUrl"].ToString();
             Debug.WriteLine("GetTwitter <<< ");
 
@@ -270,6 +275,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             
             if (TweetAmountLastDays == 20)
                 TweetAmountString = "Dit account heeft in de afgelopen 7 dagen minimaal 20 tweets verzonden";
+            else if (TweetAmountLastDays == 1)
+                TweetAmountString = "Dit account heeft in de afgelopen 7 dagen 1 tweet verzonden";
             else
                 TweetAmountString = "Dit account heeft in de afgelopen 7 dagen " + TweetAmountLastDays + " tweets verzonden";
 
@@ -328,36 +335,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             return rating;
         }
-
-        private int GetTweetAmountLastDays(string screenName)
-        {
-            var tweetAmount = 0;
-            var tweets = from tweet in twitterContext.Status
-                         where tweet.Type == StatusType.User &&
-                        tweet.ScreenName == screenName
-                         select tweet;
-            var returnedUser = tweets.ToList();
-
-            foreach (var item in tweets)
-            {
-                if (IsInLastSevenDays(item.CreatedAt))
-                    tweetAmount++;
-                else
-                    break;
-            }
-
-            return tweetAmount;
-        }
-
-        private bool IsInLastSevenDays(DateTime dateTime)
-        {
-            var now = DateTime.Today.AddDays(-7);
-            if (dateTime > now)
-                return true;
-            else
-                return false;
-        }
-
+        
         /// <summary>
         /// Find if the found name is a Twitteraccount with the URL in the description
         /// </summary>
@@ -527,6 +505,45 @@ namespace DotsolutionsWebsiteTester.TestTools
                 coverImage = item.ProfileBannerUrl;
             }
             return coverImage;
+        }
+
+        /// <summary>
+        /// Gets the amount of tweets sent over the past 7 days
+        /// </summary>
+        /// <param name="screenName">string screen name</param>
+        /// <returns>int amount of tweets sent</returns>
+        private int GetTweetAmountLastDays(string screenName)
+        {
+            var tweetAmount = 0;
+            var tweets = from tweet in twitterContext.Status
+                         where tweet.Type == StatusType.User &&
+                        tweet.ScreenName == screenName
+                         select tweet;
+            var returnedUser = tweets.ToList();
+
+            foreach (var item in tweets)
+            {
+                if (IsInLastSevenDays(item.CreatedAt))
+                    tweetAmount++;
+                else
+                    break;
+            }
+
+            return tweetAmount;
+        }
+
+        /// <summary>
+        /// Check if tweet was sent more or less than 7 days ago
+        /// </summary>
+        /// <param name="dateTime">DateTime dateTime</param>
+        /// <returns>bool</returns>
+        private bool IsInLastSevenDays(DateTime dateTime)
+        {
+            var sevenDaysAgo = DateTime.Today.AddDays(-7);
+            if (dateTime > sevenDaysAgo)
+                return true;
+            else
+                return false;
         }
 
         /// <summary>
