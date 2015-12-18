@@ -52,6 +52,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void TestAnalytics()
         {
+            // Voor de beoordeling wordt de volgende formule gebruikt: 10 - ({aantal pagina's zonder analytics}/{aantal geteste pagina's} * 10)
+
             Debug.WriteLine(">>>> Analytics");
             var sitemap = (List<string>)Session["selectedSites"];
             var analyticslist = new List<KeyValuePair<string, string>>();
@@ -63,9 +65,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             analyticTypes.Add(new KeyValuePair<string, string>("yandex.ru/metrika", "Yandex Metrika"));
             //analyticTypes.Add(new KeyValuePair<string, string>("googleadservices.com", "Google Ad Services"));
             //analyticTypes.Add(new KeyValuePair<string, string>("placeholder-type", "placeholder-name"));
-
-            //var temp = Server.HtmlEncode("<div>");
-            //analyticTypes.Add(new KeyValuePair<string, string>("</div>", "placeholder > " + temp));
 
             // List for gathering
             var analytics = new List<string>();

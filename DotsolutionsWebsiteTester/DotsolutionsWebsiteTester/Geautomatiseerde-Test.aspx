@@ -41,7 +41,8 @@
     
     <div id="manualResultHidden" class="hidden" runat="server">
         <div class="well well-sm">
-            <h3>Beoordeling Handmatige Test</h3>
+            <h3>Beoordeling handmatige test</h3>
+            <hr />
             <h4>Vormgeving</h4>
             <div id="prof" class="manualTest">
                 <h4>Professionaliteit</h4>
@@ -49,11 +50,15 @@
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Opmaak</label>
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfOpma" runat="server">
                     </label>
-
+                </div>
+                
+                <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Huisstijl</label>
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfHuis" runat="server">
                     </label>
-
+                </div>
+                
+                <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Kleurgebruik</label>
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfKleur" runat="server">
                     </label>
@@ -65,7 +70,9 @@
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Menu</label>
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormUxMen" runat="server">
                     </label>
-
+                </div>
+                
+                <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Structuur</label>
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormUxStruc" runat="server">
                     </label>
@@ -83,7 +90,7 @@
     </div>
 
     <div class="well well-sm" id="automatedRatingList">
-        <h3>Beoordeling Geautomatiseerde Test</h3>
+        <h3>Beoordeling geautomatiseerde test</h3>
         <div>
             <span id="RatingOverall" class="mediocreScore ratingCircle">-</span>Totaal
         </div>

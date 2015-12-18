@@ -43,6 +43,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetMC()
         {
+            // Per pagina die niet compatibel is met mobiel wordt 1/{aantal geteste pagina's} * 10 afgetrokken van het huidige totaal
+
             Debug.WriteLine("MobileCompatibility >>>>>");
             var compatible = new List<string>();
             var notCompatiblePage = new List<string>();

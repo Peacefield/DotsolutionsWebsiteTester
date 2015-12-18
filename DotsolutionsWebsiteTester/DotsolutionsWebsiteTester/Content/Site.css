@@ -1,4 +1,12 @@
-﻿/*Overriding container width since it disagrees with my layout*/
+﻿/*
+    dotsolutions kleuren
+    groen   - #54b721 - donker  - #489b1d
+    blauw   - #3fb2ab
+    paars   - #a278d1
+    geel    - #f6cd29
+    oranje  - #f9841b
+*/
+
 @media (max-width: 767px) {
     .container {
         width: 100% !important;
@@ -87,7 +95,7 @@
     #MainContent_TestsCheckBoxList1,
     #MainContent_TestsCheckBoxList2,
     #MainContent_TestsCheckBoxList3 {
-        margin-left: 30%;
+        margin-left: 10%;
     }
 
     .rating-input {
@@ -159,10 +167,10 @@
     }
 }
 
-html {
+html, body {
     /*height: 100%;*/
     font-size: 62.5%;
-    font-family: 'Courier New' !important;
+    font-family: 'Open Sans', sans-serif !important;
 }
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
@@ -171,11 +179,8 @@ body {
 }
 
 body {
-    background-color: #2F4F4F !important;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    /*background: url(http://v8.dotcontent.nl/media/img/bg.jpg) center center no-repeat fixed;*/
+    background-color: #489b1d !important;
     height: 100%;
     font-size: 1em;
 }
@@ -208,11 +213,45 @@ footer {
 
 .jumbotron {
     margin-top: 20px;
+    background-color: #fff !important;
 }
+
+    .jumbotron h1 {
+        font-weight: bold;
+    }
 
 .btn {
     margin-bottom: 5px !important;
+    font-weight: bold !important;
 }
+
+#testsjumbotron .btn-custom {
+    width: 100%;
+}
+
+.btn-custom {
+    background-color: #54b721;
+    color: white;
+}
+
+    .btn-custom.focus, .btn-custom:focus, .btn-custom:hover {
+        background-color: #479b1d;
+        color: white !important;
+        transition: all .2s linear;
+    }
+
+.btn-white {
+    background-color: #fff;
+    color: #000;
+    border-color: #3fb2ab !important;
+    width: 100%;
+}
+
+    .btn-white.focus, .btn-white:focus, .btn-white:hover {
+        background-color: #3fb2ab;
+        color: #000;
+        transition: all .2s linear;
+    }
 
 .largetext {
     font-size: 2em;
@@ -260,8 +299,14 @@ footer {
     padding-bottom: 10px;
 }
 
+    .urlTextBoxRow .input-group {
+        background-color: #f9841b;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
 #testsjumbotron {
-    margin-top: 10%;
+    margin-top: 6%;
 }
 
 #MainContent_StartScanBtn,
@@ -270,7 +315,15 @@ footer {
     width: 100%;
 }
 
+.detailedTestCheckBox label {
+    font-weight: normal;
+}
+
 #checkboxHolder {
+    /*
+        TODO: Weghalen in productie
+        display: none;
+    */
     display: block;
 }
 
@@ -279,6 +332,18 @@ footer {
         cursor: pointer;
     }
 
+    #checkboxHolder label {
+        font-weight: normal;
+    }
+
+    #checkboxHolder table tr {
+        margin-top: 15px;
+        display: block;
+    }
+
+        #checkboxHolder table tr td label {
+            margin-left: 5px;
+        }
 /* End Default Page CSS */
 
 /* Start Geautomatiseerde-Test CSS*/
@@ -386,10 +451,23 @@ footer {
     background-position: center;
 }
 
+#MainContent_manualResultHidden h4 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#MainContent_manualResultHidden .row {
+    margin-top: 10px;
+}
+
 .manualTest {
     left: 2%;
     position: relative;
 }
+
+    .manualTest i {
+        color: #f6cd29;
+    }
 
 .ratingList {
     display: none;
@@ -448,10 +526,19 @@ footer {
 .rating-input i {
     cursor: pointer;
     padding-right: 2px;
+    color: #f6cd29;
 }
 
 #MainContent_websiteImg {
     text-align: center;
+}
+
+#opmerkingen span {
+    padding-left: 0;
+}
+
+#verplicht {
+    padding-left: 15px;
 }
 /* End Handmatige-Test CSS*/
 

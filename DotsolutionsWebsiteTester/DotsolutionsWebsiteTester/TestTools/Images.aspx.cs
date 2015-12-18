@@ -57,6 +57,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetImages()
         {
+            // Beoordeling is afhankelijk van correcte declaratie en werking
+            // De formule hiervoor per pagina is {huidige beoordeling} - ({aantal foutieve afbeeldingen}/{totaal aantal afbeeldingen op pagina} * 10)
+
             var sitemap = (List<string>)Session["selectedSites"];
             var isDetailed = (bool)Session["IsDetailedTest"];
             var message = "";

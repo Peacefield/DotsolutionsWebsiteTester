@@ -103,7 +103,14 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetFacebook()
         {
-            // 
+            // Geen Facebook account zorgt voor een 0.0 beoordeling
+
+            // Beoordeling gebaseerd op aantal likes en aantal mensen die praten over de pagina
+            // 10+% van aantal likes praat over pagina: 10
+            // 1%-10%: 7,5
+            // 0.5% - 1%: 5.5
+            // 0.25%-0.5%: 4.0
+            // 0%-0.25%: 1.0
 
             Debug.WriteLine("GetFacebook <<< ");
 
@@ -358,7 +365,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else if (percentage >= 0.25m)
             {
-                rating = 4m;
+                rating = 4.0m;
             }
             else
             {

@@ -42,6 +42,10 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetPageTitles()
         {
+            // Voor de beoordeling geldt per pagina zonder titel de formule 1/{aantal geteste pagina's} * 15
+            // Per pagina met een te lange titel geldt de formule 1/{aantal geteste pagina's} * 10
+            // Het resultaat hiervan wordt afgetrokken van de huidige beoordeling
+
             Debug.WriteLine("PageTitles >>>>>");
             var rating = 10.0m;
             var sitemap = (List<string>)Session["selectedSites"];

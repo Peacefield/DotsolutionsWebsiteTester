@@ -12,11 +12,12 @@
             </div>
         </div>
 
-        <article style="width: 100%">
+        <section style="width: 100%">
             <h2>Vormgeving</h2>
             Hoe is de vormgeving van de site? Is de site duidelijk en overzichtelijk en kan een bezoeker eenvoudig zijn weg vinden binnen de site?
             <article>
                 <h3>Professionaliteit*</h3>
+                <hr />
                 <label class="control-label col-md-2">Opmaak</label>
                 <div class="col-md-10">
                     <asp:TextBox ID="VormProfOpma"
@@ -48,8 +49,9 @@
             </article>
 
             <article>
+                <br />
                 <h3>Gebruiksvriendelijkheid*</h3>
-
+                <hr />
                 <label class="control-label col-md-2">Menu</label>
                 <div class="col-md-10">
                     <asp:TextBox ID="VormUxMen"
@@ -71,7 +73,7 @@
                 </div>
             </article>
 
-            <article class="col-md-12">
+            <article class="col-md-12" id="opmerkingen">
                 <h3>Opmerkingen</h3>
                 <span class="help-block col-md-12">Eventuele opmerkingen over de vormgeving.</span>
                 <asp:TextBox ID="VormgevingOpmerking"
@@ -80,12 +82,12 @@
                     CssClass="fullTextArea"
                     runat="server" />
             </article>
-        </article>
+        </section>
 
         <article id="buttons" class="col-md-12">
             <asp:LinkButton ID="StartTestBtn"
                 OnClick="StartTest_Click"
-                CssClass="btn btn-success btn-md"
+                CssClass="btn btn-custom btn-md"
                 runat="server">
             <span aria-hidden="true" class="glyphicon glyphicon-ok"></span>
             Ga verder
@@ -98,7 +100,7 @@
             Overslaan
             </asp:LinkButton>
         </article>
-        <span class="help-block">* Verplichte velden</span>
+        <span class="help-block" id="verplicht">* Verplichte velden</span>
     </div>
     <script src="Scripts/Custom/bootstrap-rating-input.js"></script>
 </asp:Content>

@@ -46,6 +46,13 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetMetaTags()
         {
+            // De beoordeling is afhankelijk van het gebruik van meta-description, robot meta-tag en het gebruik van de titel op de ingevoerde pagina.
+            // Per niet gebruikte meta-description of robots tag wordt 1/{aantal pagina's} * 10 afgetrokken van het huidge totaal
+            // Per te lange meta-description wordt 1/{aantal pagina's} * 5 afgetrokken van het huidge totaal
+
+            // Voor het niet gebruiken van een titel op de ingevoerde pagina geldt ook dat 1/{aantal pagina's} * 10 wordt afgetrokken van het huidge totaal
+            // Voor een te lange titel op de ingevoerde pagina geldt ook dat 1/{aantal pagina's} * 5 wordt afgetrokken van het huidge totaal
+
             Debug.WriteLine("MetaTags >>>>>");
             var hasLongDescription = new List<string>();
             var hasNoDescription = new List<string>();

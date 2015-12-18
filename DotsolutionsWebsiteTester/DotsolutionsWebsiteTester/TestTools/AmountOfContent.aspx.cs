@@ -31,15 +31,21 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             Session["AmountOfContent"] = htmlstring;
         }
-        // http://www.wordstream.com/blog/ws/2010/05/05/word-count-for-seo raadt 500 woorden aan, minimaal.
-        // http://seocopywriting.com/whats-the-best-word-count-for-seo-copywriting/ Kwaliteit over kwantiteit
-        // http://www.socialmediatoday.com/content/longer-better-blog-content-truth-or-myth 1500 tot 2000 leidde tot positieve resultaten
 
         /// <summary>
         /// Start tests to get a rating for the Amount of Content available on found pages
         /// </summary>
         private void GetAmountResults()
         {
+            // http://www.wordstream.com/blog/ws/2010/05/05/word-count-for-seo raadt 500 woorden aan, minimaal.
+            // http://seocopywriting.com/whats-the-best-word-count-for-seo-copywriting/ Kwaliteit over kwantiteit
+            // http://www.socialmediatoday.com/content/longer-better-blog-content-truth-or-myth 1500 tot 2000 leidde tot positieve resultaten
+
+            // Beoordeling is afhankelijk van aantal woorden per pagina.
+            // Uit bovenstaande artikelen is te halen dat 500 woorden een goed uitgangspunt is voor een minimum aantal woorden.
+            // Per pagina met minder dan 500 woorden geldt de volgende formule om de aftrek te berekenen van de huidige beoordeling
+            // 1/{aantal pagina's} * 10
+
             var rating = 10.0m;
             var sitemap = (List<string>)Session["selectedSites"];
             var isDetailed = (bool)Session["IsDetailedTest"];

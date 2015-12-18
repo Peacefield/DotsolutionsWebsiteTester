@@ -38,6 +38,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetIncomingLinks()
         {
+            // De beoordeling voor dit onderdeel is gelijk aan de score die de website krijgt van Moz, de Mozrank.
+
             var rating = 10m;
             var sitemap = (List<string>)Session["selectedSites"];
             var message = "";

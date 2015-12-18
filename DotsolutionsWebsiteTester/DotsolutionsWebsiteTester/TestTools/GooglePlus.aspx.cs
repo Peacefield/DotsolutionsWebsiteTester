@@ -55,6 +55,15 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetGooglePlus()
         {
+            // De beoordeling is afhankelijk van het aantal volgers en aantal +1's van een pagina
+            // Geen Google+ pagina zorgt voor een 0.0
+            // 75+% van het aantal +1's volgt de pagina: 10
+            // 60-75%: 8.0
+            // 50-60%: 7.5
+            // 33-50%: 5.5
+            // 10-33%: 4.0
+            //  0-10%: 1.0
+
             Debug.WriteLine("GetGooglePlus >>>> ");
             var googleList = GetPossibleGPlus();
             var isGoogleFound = false;

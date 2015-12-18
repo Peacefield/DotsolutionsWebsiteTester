@@ -6,15 +6,15 @@
 <head runat="server">
     <title>Testresultaten PDF</title>
     <style>
-        /* Move down content because we have a fixed navbar that is 50px tall */
+        html, body {
+            /*height: 100%;*/
+            font-size: 62.5%;
+            font-family: 'Open Sans', sans-serif !important;
+        }
+
         body {
             padding-bottom: 20px;
-            background-color: #2F4F4F !important;
-            /*background: url("/Content/images/dotlogo.png") fixed no-repeat 100% 100%;*/
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
+            background-color: #489b1d !important;
             height: 100%;
             font-size: 1em;
         }
@@ -44,14 +44,6 @@
                 background-color: #20856E;
                 background-repeat: repeat-x;
                 border-color: #32A389;
-            }
-
-        #automatedRatingList {
-            display: block;
-        }
-
-            #automatedRatingList li {
-                list-style: none;
             }
 
         .resultWell {
@@ -105,9 +97,28 @@
             position: relative;
         }
 
+            .manualTest i {
+                color: #f6cd29;
+            }
+
+        #automatedRatingList {
+            display: block;
+        }
+
+            #automatedRatingList ul {
+                display: inline-block;
+                width: 100%;
+            }
+
+            #automatedRatingList > ul > li {
+                list-style: none;
+                width: 50%;
+                float: left;
+            }
+
         .ratingList {
             display: block;
-            width: 30%;
+            width: 70%;
             margin-left: 50px;
         }
 
@@ -260,6 +271,7 @@
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <meta charset="UTF-8" />
 </head>
 <body>

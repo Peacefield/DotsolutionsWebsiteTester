@@ -47,6 +47,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void GetUrlFormat()
         {
+            // De beoordeling is afhankelijk van de lengte en opbouw van de URL’s
+            // Per pagina wordt de beoordeling berekend in verhouding tot het totaal aantal gebruikte URL's op die pagina
+            // De formule hiervoor is {aantal foutieve URL's}/{totaal aantal URL's}*10. 
+            // De uitkomst hiervan wordt van de huidige beoordeling afgetrokken.
+
             var totalCount = 0;
             var message = "";
             var isDetailed = (bool)Session["IsDetailedTest"];
