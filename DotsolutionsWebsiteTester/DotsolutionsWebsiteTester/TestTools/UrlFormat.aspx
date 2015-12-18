@@ -6,7 +6,8 @@
         <div id="UrlFormat">
             <div class="panel panel-custom" id="UrlFormatSession" runat="server">
                 <div class="panel-heading">
-                    <span id="UrlFormatRating" runat="server">?</span>URL Formaat</div>
+                    <span id="UrlFormatRating" runat="server">?</span><span class="title">URL Formaat</span>
+                </div>
                 <div class="panel-body">
                     <div id="UrlFormatNotifications" runat="server"></div>
                     <div class="hidden" id="UrlFormatHiddenTable" runat="server">

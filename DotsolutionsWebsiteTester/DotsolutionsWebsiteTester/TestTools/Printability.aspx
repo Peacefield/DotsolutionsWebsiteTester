@@ -6,7 +6,7 @@
         <div id="Printability">
             <div class="panel panel-custom" id="PrintabilitySession" runat="server">
                 <div class="panel-heading">
-                    <span id="PrintabilityRating" runat="server">?</span> Printbaarheid
+                    <span id="PrintabilityRating" runat="server">?</span><span class="title">Printbaarheid</span>
                 </div>
                 <div class="panel-body">
                     <div id="PrintResults" class="results" runat="server"></div>

@@ -106,14 +106,20 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (!isDetailed)
                     IntLinksTable.Rows.Clear();
 
+                var errorCntString = "zijn " + errorCnt.ToString("#,##0") + " meldingen";
+                if (errorCnt == 1)
+                {
+                    errorCntString = "is 1 melding";
+                }
+
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
-                    + "<i class='fa fa-chain-broken fa-3x'></i><br/>"
-                    + "<span>Er zijn " + errorCnt.ToString("#,##0") + " meldingen gevonden van linken die niet goed gedeclareerd zijn en/of niet werken.</span></div>";
+                    + "<i class='fa fa-globe fa-3x'></i><br/>"
+                    + "<span>Er " + errorCntString + " gevonden van linken die niet goed gedeclareerd zijn en/of niet werken.</span></div>";
             }
             else
             {
                 message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
-                    + "<i class='fa fa-link fa-3x'></i><br/>"
+                    + "<i class='fa fa-globe fa-3x'></i><br/>"
                     + "<span class='messageText'> Alle gevonden linken zijn goed gedeclareerd en zijn werkend.</span></div>";
             }
 

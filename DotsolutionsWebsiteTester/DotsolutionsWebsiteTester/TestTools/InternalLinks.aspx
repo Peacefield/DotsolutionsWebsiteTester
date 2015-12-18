@@ -6,7 +6,7 @@
         <div id="InternalLinks">
             <div class="panel panel-custom" id="InternalLinksSession" runat="server">
                 <div class="panel-heading">
-                    <span id="InternalLinksRating" runat="server" class="ratingCircle mediocreScore">?</span> Interne links
+                    <span id="InternalLinksRating" runat="server" class="ratingCircle mediocreScore">?</span><span class="title">Interne links</span>
                 </div>
 
                 <div class="panel-body">

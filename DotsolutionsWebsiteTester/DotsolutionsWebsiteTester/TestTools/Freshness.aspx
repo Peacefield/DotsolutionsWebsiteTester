@@ -6,7 +6,7 @@
         <div id="Freshness">
             <div class="panel panel-custom" id="FreshnessSession" runat="server">
                 <div class="panel-heading">
-                    <span id="FreshnessRating" runat="server">?</span> Actueelheid
+                    <span id="FreshnessRating" runat="server">?</span><span class="title">Actueelheid</span>
                 </div>
                 <div class="panel-body">
                 </div>

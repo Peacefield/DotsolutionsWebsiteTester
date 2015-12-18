@@ -7,7 +7,7 @@
         <div id="Facebook">
             <div class="panel panel-custom" id="FacebookSession" runat="server">
                 <div class="panel-heading">
-                    <span id="FacebookRating" runat="server">?</span> Facebook
+                    <span id="FacebookRating" runat="server">?</span><span class="title">Facebook</span>
                 </div>
                 <div class="panel-body">
                 <div id="FacebookResults" runat="server"></div>

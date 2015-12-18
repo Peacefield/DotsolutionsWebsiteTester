@@ -6,7 +6,7 @@
         <div id="Images">
             <div class="panel panel-custom" id="ImagesSession" runat="server">
                 <div class="panel-heading">
-                    <span id="ImagesRating" runat="server">?</span> Afbeeldingen
+                    <span id="ImagesRating" runat="server">?</span><span class="title">Afbeeldingen</span>
                 </div>
                 <div class="panel-body">
                     <div id="ImagesMessages" class="results" runat="server"></div>

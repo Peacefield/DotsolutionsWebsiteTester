@@ -43,7 +43,7 @@
         <div class="well well-sm">
             <h3>Beoordeling handmatige test</h3>
             <hr />
-            <h4>Vormgeving</h4>
+            <h3>Vormgeving</h3>
             <div id="prof" class="manualTest">
                 <h4>Professionaliteit</h4>
                 <div class="row">
@@ -140,7 +140,7 @@
     </div>
 
     <div class="well well-sm">
-        <h3>Geteste pagina's</h3>
+        <h3>Deze pagina's van uw website hebben wij voor u getest</h3>
         <ul id="TestedSitesList" runat="server"></ul>
     </div>
 

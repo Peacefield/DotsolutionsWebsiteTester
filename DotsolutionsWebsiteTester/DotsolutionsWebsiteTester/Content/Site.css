@@ -42,6 +42,15 @@
         height: 230px;
     }
 
+        #MainContent_sizeref h5 {
+            font-size: 1.5em;
+        }
+
+        #MainContent_sizeref h4 {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
     .laptopcontainer {
         width: 200px;
         height: 150px;
@@ -451,6 +460,10 @@ footer {
     background-position: center;
 }
 
+#MainContent_manualResultHidden h3 {
+    font-weight: bold;
+}
+
 #MainContent_manualResultHidden h4 {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -618,4 +631,10 @@ footer {
 
 .fa-times-red {
     color: red;
+}
+.title{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 2.3em;
+    margin-left: 10px;
 }

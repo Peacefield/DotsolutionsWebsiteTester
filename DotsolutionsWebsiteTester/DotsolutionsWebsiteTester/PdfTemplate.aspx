@@ -101,6 +101,10 @@
                 color: #f6cd29;
             }
 
+        #MainContent_manualResultHidden h3 {
+            font-weight: bold;
+        }
+
         #automatedRatingList {
             display: block;
         }
@@ -118,7 +122,7 @@
 
         .ratingList {
             display: block;
-            width: 70%;
+            width: 80%;
             margin-left: 50px;
         }
 
@@ -224,6 +228,16 @@
             height: 200px;
         }
 
+
+            #MainContent_sizeref h5 {
+                font-size: 1.5em;
+            }
+
+            #MainContent_sizeref h4 {
+                font-size: 2em;
+                font-weight: bold;
+            }
+
         .laptopcontainer {
             width: 330px;
             height: 250px;
@@ -267,6 +281,13 @@
         .fa-times-red {
             color: red;
         }
+
+        .title {
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 2.3em;
+            margin-left: 10px;
+        }
     </style>
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
@@ -282,7 +303,7 @@
 
             <div id="manualresults" runat="server"></div>
             <div class="well well-sm" id="automatedRatingList">
-                <h3>Beoordeling Geautomatiseerde Test</h3>
+                <h3>Beoordeling geautomatiseerde test</h3>
                 <div>
                     <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span>Totaal
                 </div>
@@ -315,7 +336,7 @@
                 </ul>
             </div>
             <div class="well well-sm">
-                <h3>Geteste pagina's</h3>
+                <h3>Deze pagina's van uw website hebben wij voor u getest</h3>
                 <ul id="testedsiteslist" runat="server"></ul>
             </div>
             <div id="results" runat="server">

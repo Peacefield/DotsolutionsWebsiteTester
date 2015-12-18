@@ -6,7 +6,7 @@
         <div id="IncomingLinks">
             <div class="panel panel-custom" id="IncomingLinksSession" runat="server">
                 <div class="panel-heading">
-                    <span id="IncomingLinksRating" runat="server">?</span> Binnenkomende links
+                    <span id="IncomingLinksRating" runat="server">?</span><span class="title">Binnenkomende links</span>
                 </div>
                 <div class="panel-body">
                     <div id="IncomingLinksResults" class="results" runat="server"></div>

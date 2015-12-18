@@ -6,7 +6,7 @@
         <div id="MetaTags">
             <div class="panel panel-custom" id="MetaTagsSession" runat="server">
                 <div class="panel-heading">
-                    <span id="MetaTagsRating" runat="server">?</span> Meta tags
+                    <span id="MetaTagsRating" runat="server">?</span><span class="title">Meta tags</span>
                 </div>
                 <div class="panel-body">
                     <div id="MetaErrorsFound" class="results" runat="server"></div>
