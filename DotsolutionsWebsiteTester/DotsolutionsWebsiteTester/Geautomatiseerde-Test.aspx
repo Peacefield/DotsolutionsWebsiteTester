@@ -26,7 +26,7 @@
     <div class="pull-right">
         <asp:Button ID="CreatePdfBtn"
             Text="Opslaan als PDF"
-            CssClass="btn btn-success btn-md"
+            CssClass="btn btn-custom btn-md"
             OnClick="CreatePdfBtn_Click"
             runat="server" />
     </div>
@@ -92,42 +92,42 @@
     <div class="well well-sm" id="automatedRatingList">
         <h3>Beoordeling geautomatiseerde test</h3>
         <div>
-            <span id="RatingOverall" class="mediocreScore ratingCircle">-</span>Totaal
+            <span id="RatingOverall" class="mediocreScore ratingCircle">-</span><span class="subTitle">Totaal</span>
         </div>
         <hr />
         <ul runat="server">
-            <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare emptyScore">-</span>Toegankelijkheid 
+            <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare emptyScore">-</span><span class="subTitle">Toegankelijkheid</span>
                 <span id="ShowRatingAccess" class="displayRating">
                     <i id="RatingAccesBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
-                <div id="RatingAccessListHidden" class="well-sm well ratingList">
+                <div id="RatingAccessListHidden" class="ratingList">
                     <ul id="RatingAccessList">
                     </ul>
                 </div>
             </li>
-            <li id="RatingUxTxt"><span id="RatingUx" class="ratingSquare emptyScore">-</span>Gebruikerservaring
+            <li id="RatingUxTxt"><span id="RatingUx" class="ratingSquare emptyScore">-</span><span class="subTitle">Gebruikerservaring</span>
                 <span id="ShowRatingUx" class="displayRating">
                     <i id="RatingUxBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
-                <div id="RatingUxListHidden" class="well-sm well ratingList">
+                <div id="RatingUxListHidden" class="ratingList">
                     <ul id="RatingUxList">
                     </ul>
                 </div>
             </li>
-            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="ratingSquare emptyScore">-</span>Marketing
+            <li id="RatingMarketingTxt"><span id="RatingMarketing" class="ratingSquare emptyScore">-</span><span class="subTitle">Marketing</span>
                 <span id="ShowRatingMarketing" class="displayRating">
                     <i id="RatingMarketingBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
-                <div id="RatingMarketingListHidden" class="well-sm well ratingList">
+                <div id="RatingMarketingListHidden" class="ratingList">
                     <ul id="RatingMarketingList">
                     </ul>
                 </div>
             </li>
-            <li id="RatingTechTxt"><span id="RatingTech" class="ratingSquare emptyScore">-</span>Technologie
+            <li id="RatingTechTxt"><span id="RatingTech" class="ratingSquare emptyScore">-</span><span class="subTitle">Technologie</span>
                 <span id="ShowRatingTech" class="displayRating">
                     <i id="RatingTechBtn" class="glyphicon glyphicon-chevron-down"></i>
                 </span> 
-                <div id="RatingTechListHidden" class="well-sm well ratingList">
+                <div id="RatingTechListHidden" class="ratingList">
                     <ul id="RatingTechList">
                     </ul>
                 </div>
@@ -147,7 +147,7 @@
     <div id="result"></div>
 
     <div id="back-to-top">
-        <div class="btn btn-success btn-md" id="ToTopBtn">
+        <div class="btn btn-custom btn-md" id="ToTopBtn">
             <span aria-hidden="true" class="glyphicon glyphicon-arrow-up"></span>
             Terug naar boven
         </div>

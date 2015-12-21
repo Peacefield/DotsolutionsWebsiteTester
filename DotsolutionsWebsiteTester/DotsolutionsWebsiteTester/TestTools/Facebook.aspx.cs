@@ -372,11 +372,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 1m;
             }
 
-            message += "<div class='well well-lg coverpicture' style='background-image: url(" + fbCover + ")'></div>";
+            message += "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><span class='well well-lg coverpicture' style='background-image: url(" + fbCover + ")'></span></a>";
 
-            message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "
-                + "<span> Facebook pagina <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
 
             var likesGrammar = " likes";
             if (fbLikes == "1") likesGrammar = " like";
@@ -390,17 +387,21 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 shares += GetFacebookShare(page);
             }
-            message += "<div class='thirdResultBox text-center'>"
-                + "<i class='fa fa-thumbs-o-up fa-3x'></i><br/>"
+            message += "<div class='socialResults'>"
+                + "<div class='socialResultBox-3 row'>"
+                + "<i class='fa fa-thumbs-o-up fa-3x'></i>"
                 + "<span> Deze pagina heeft " + fbLikes + likesGrammar + "</span></div>"
-                + "<div class='resultDivider'></div>"
-                + "<div class='thirdResultBox text-center'>"
-                + "<i class='fa fa-share fa-3x'></i><br/>"
+                + "<div class='socialResultBox-3 row'>"
+                + "<i class='fa fa-share fa-3x'></i>"
                 + "<span> De geteste pagina's zijn " + shares.ToString("#,##0") + " keer gedeeld</span></div>"
-                + "<div class='resultDivider'></div>"
-                + "<div class='thirdResultBox text-center'>"
-                + "<i class='fa fa-commenting-o fa-3x'></i><br/>"
-                + "<span> " + fbTalking + talkingGrammar + " hier over</span></div>";
+                + "<div class='socialResultBox-3 row'>"
+                + "<i class='fa fa-commenting-o fa-3x'></i>"
+                + "<span> " + fbTalking + talkingGrammar + " hier over</span></div>"
+                + "</div>";
+
+            message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                + "<a href='https://www.facebook.com/" + screenName + "' target='_blank'><img src='" + fbPicture + "' alt='profileimage'/></a> "
+                + "<span> Facebook pagina <a href='https://www.facebook.com/" + screenName + "' target='_blank' font-size='larger'>" + screenName + "</a> gevonden</span></div>";
 
             return rating;
         }

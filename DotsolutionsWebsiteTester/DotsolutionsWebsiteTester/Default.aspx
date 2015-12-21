@@ -6,7 +6,8 @@
 
         <h1>Website tester</h1>
         <div class="row urlTextBoxRow">
-            <div class="col-md-8 col-xs-10 col-sm-8 col-lg-8 col-md-offset-2 col-xs-offset-1 col-sm-offset-2 col-lg-offset-2">
+            <%--<div class="col-md-8 col-xs-10 col-sm-8 col-lg-8 col-md-offset-2 col-xs-offset-1 col-sm-offset-2 col-lg-offset-2">--%>
+            <div class="col-md-10 col-xs-10 col-sm-10 col-lg-10 col-md-offset-1 col-xs-offset-1 col-sm-offset-1 col-lg-offset-1">
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="glyphicon glyphicon-search"></i>
@@ -86,7 +87,7 @@
                         <asp:ListItem Text="Pagina titels" Value="PageTitles" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Populariteit" Value="Popularity" Selected="false" Enabled="false"></asp:ListItem>
                         <asp:ListItem Text="Printbaarheid" Value="Printability" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Server gedrag" Value="ServerBehaviour" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Server gedrag" Value="ServerBehaviour" Selected="false"></asp:ListItem>
                         <%--<asp:ListItem Text="Sociale interesse" Value="SocialInterest" Selected="false"></asp:ListItem>--%>
                         <asp:ListItem Text="Twitter Pagina" Value="Twitter" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="URL Formaat" Value="UrlFormat" Selected="false"></asp:ListItem>

@@ -86,7 +86,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                         headingTableHidden.Attributes.Remove("class");
                         message += "<div class='alert alert-info col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                             + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
-                            + "<span class='messageText'> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element:</span></div>";
+                            + "<span class='messageText'> De volgende headers zijn niet voorafgegaan door een groter, overkoepelend header-element. Dit kan de gebruikerservaring negatief beïnvloeden doordat de indeling minder duidelijk kan zijn.</span></div>";
                     }
                     else
                     {

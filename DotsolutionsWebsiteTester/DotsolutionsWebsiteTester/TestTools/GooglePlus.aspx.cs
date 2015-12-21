@@ -271,20 +271,21 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 1.0m;
             }
 
-            message += "<div class='well well-lg coverpicture' style='background-image: url(" + coverImage + ")'></div>";
+            message += "<a href='https://plus.google.com/" + screenName + "' target='_blank'><span class='well well-lg coverpicture' style='background-image: url(" + coverImage + ")'></span></a>";
+
+            message += "<div class='socialResults'>"
+                + "<div class='socialResultBox-2 row'>"
+                + "<i class='fa fa-google-plus-square fa-3x'></i>"
+                + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") + " Google +1's </span></div>"
+                + "<div class='socialResultBox-2 row'>"
+                + "<i class='fa fa-users fa-3x'></i>"
+                + "<span> Dit account heeft " + followersCount.ToString("#,##0") + " volgers</span></div>"
+                + "</div>";
 
             message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://plus.google.com/" + screenName + "' target='_blank'><img src='" + profileImage + "' alt='profileimage'/></a> "
                 + "<span> Google+ account <a href='https://plus.google.com/" + screenName + "' target='_blank' font-size='large'>" + displayName + "</a> gevonden</span>"
                 + "</div>";
-
-            message += "<div class='resultBox text-center'>"
-                + "<i class='fa fa-google-plus-square fa-3x'></i><br/>"
-                + "<span> Dit account heeft " + googlePlusOnes.ToString("#,##0") + " Google +1's </span></div>"
-                + "<div class='resultDivider'></div>"
-                + "<div class='resultBox text-center'>"
-                + "<i class='fa fa-users fa-3x'></i><br/>"
-                + "<span> Dit account heeft " + followersCount.ToString("#,##0") + " volgers</span></div>";
 
             return rating;
         }

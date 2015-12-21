@@ -14,7 +14,8 @@
 
         body {
             padding-bottom: 20px;
-            background-color: #489b1d !important;
+            /*background-color: #54b721 !important;*/
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAR0lEQVQYV2MM2a74n4EA+PLkDwMjIYUgRTwyLPgVwhSBLMRpIrIinArRFWFViE0RhkJcilAU4lMEV0hIEVihx2zZ/6BwIgQAQjIwjcA3DQgAAAAASUVORK5CYII=) repeat;
             height: 100%;
             font-size: 1em;
         }
@@ -57,10 +58,18 @@
             padding: 15px;
         }
 
-        .thirdResultBox {
-            width: 30.6%;
+        .socialResults {
+            width: 50%;
             float: left;
-            padding: 20px 10px;
+        }
+
+
+        .socialResultBox-3 {
+            padding: 20px 30px;
+        }
+
+        .socialResultBox-2 {
+            padding: 40px 30px;
         }
 
         .resultDivider {
@@ -88,8 +97,11 @@
 
         .coverpicture {
             background-size: cover;
-            height: 125px;
             background-position: center;
+            /*height: 125px;;*/
+            height: 250px;
+            width: 50%;
+            float: left;
         }
 
         .manualTest {
@@ -118,7 +130,13 @@
                 list-style: none;
                 width: 50%;
                 float: left;
+                min-height: 120px;
+                margin-bottom: 25px;
             }
+
+                #automatedRatingList > ul > li > .ratingList > ul > li {
+                    margin-top: 5px;
+                }
 
         .ratingList {
             display: block;
@@ -132,7 +150,12 @@
 
             .ratingList li a {
                 cursor: pointer;
+                font-size: 1.3em;
             }
+
+                .ratingList li a:hover, .ratingList li a.focus, .ratingList li a:focus {
+                    text-decoration: none;
+                }
 
 
         .lowScore {
@@ -234,7 +257,7 @@
             }
 
             #MainContent_sizeref h4 {
-                font-size: 2em;
+                font-size: 1.5em;
                 font-weight: bold;
             }
 
@@ -270,8 +293,20 @@
             background-repeat: no-repeat;
         }
 
-        #MainContent_tabletImg, #MainContent_mobileImg {
-            margin-left: 25%;
+
+        #MainContent_tabletImg {
+            margin-left: 15%;
+            margin-bottom: 10px;
+        }
+
+        #MainContent_mobileImg {
+            margin-left: 0;
+        }
+
+        @media (min-width: 1024px) {
+            #MainContent_tabletImg, #MainContent_mobileImg {
+                margin-left: 25%;
+            }
         }
 
         .fa-check-green {
@@ -286,6 +321,12 @@
             text-transform: uppercase;
             font-weight: bold;
             font-size: 2.3em;
+            margin-left: 10px;
+        }
+
+        .subTitle {
+            text-transform: uppercase;
+            font-size: 1.5em;
             margin-left: 10px;
         }
     </style>
@@ -305,33 +346,33 @@
             <div class="well well-sm" id="automatedRatingList">
                 <h3>Beoordeling geautomatiseerde test</h3>
                 <div>
-                    <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span>Totaal
+                    <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span><span class="subTitle">Totaal</span>
                 </div>
                 <hr />
                 <ul runat="server">
-                    <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">...</span>Toegankelijkheid
-                <div class="well-sm well ratingList">
-                    <ul id="RatingAccessList" runat="server">
-                    </ul>
-                </div>
+                    <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">...</span><span class="subTitle">Toegankelijkheid</span>
+                        <div class="ratingList">
+                            <ul id="RatingAccessList" runat="server">
+                            </ul>
+                        </div>
                     </li>
-                    <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="ratingSquare" runat="server">...</span>Gebruikerservaring
-                <div class="well-sm well ratingList">
-                    <ul id="RatingUxList" runat="server">
-                    </ul>
-                </div>
+                    <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="ratingSquare" runat="server">...</span><span class="subTitle">Gebruikerservaring</span>
+                        <div class="ratingList">
+                            <ul id="RatingUxList" runat="server">
+                            </ul>
+                        </div>
                     </li>
-                    <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="ratingSquare" runat="server">...</span>Marketing
-                <div class="well-sm well ratingList">
-                    <ul id="RatingMarketingList" runat="server">
-                    </ul>
-                </div>
+                    <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="ratingSquare" runat="server">...</span><span class="subTitle">Marketing</span>
+                        <div class="ratingList">
+                            <ul id="RatingMarketingList" runat="server">
+                            </ul>
+                        </div>
                     </li>
-                    <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="ratingSquare" runat="server">...</span>Technologie
-                <div class="well-sm well ratingList">
-                    <ul id="RatingTechList" runat="server">
-                    </ul>
-                </div>
+                    <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="ratingSquare" runat="server">...</span><span class="subTitle">Technologie</span>
+                        <div class="ratingList">
+                            <ul id="RatingTechList" runat="server">
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>

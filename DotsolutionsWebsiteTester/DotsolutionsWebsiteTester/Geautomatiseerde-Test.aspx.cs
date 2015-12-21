@@ -282,7 +282,8 @@ namespace DotsolutionsWebsiteTester
             }
             catch (WebException we)
             {
-                Debug.WriteLine("IsOfDomain Catch" + we.Message);
+                Debug.WriteLine(addition + " heeft een fout veroorzaakt.");
+                Debug.WriteLine("IsOfDomain Catch: " + we.Message);
             }
 
             return false;
@@ -378,7 +379,6 @@ namespace DotsolutionsWebsiteTester
         [System.Web.Services.WebMethod]
         public static void AddCriteriaClassSession(string session, string classes)
         {
-            Debug.WriteLine("AddCriteriaClassSession: " + session + " met klassen: " + classes);
             HttpContext.Current.Session[session] = classes;
         }
 

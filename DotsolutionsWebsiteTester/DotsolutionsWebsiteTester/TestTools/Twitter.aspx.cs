@@ -314,24 +314,24 @@ namespace DotsolutionsWebsiteTester.TestTools
                 rating = 0.0m;
 
             if (CoverImage != null)
-                message += "<div class='well well-lg coverpicture' style='background-image: url(" + CoverImage + ")'></div>";
+                message += "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><span class='well well-lg coverpicture' style='background-image: url(" + CoverImage + ")'></span></a>";
+
+            message += "<div class='socialResults'>"
+                + "<div class='socialResultBox-3 row'>"
+                + "<i class='fa fa-twitter-square fa-3x'></i>"
+                + "<span> " + TweetAmountString + "</span></div>"
+                + "<div class='socialResultBox-3 row'>"
+                + "<i class='fa fa-retweet fa-3x'></i>"
+                + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
+                + "<div class='socialResultBox-3 row'>"
+                + "<i class='fa fa-users fa-3x'></i>"
+                + "<span> Dit account heeft " + FollowersCountString + " volgers en volgt " + FollowingCountString + " gebruikers</span></div>"
+                + "</div>";
 
             message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                 + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
                 + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
                 + "</div>";
-
-            message += "<div class='thirdResultBox text-center'>"
-                + "<i class='fa fa-twitter-square fa-3x'></i><br/>"
-                + "<span> " + TweetAmountString + "</span></div>"
-                + "<div class='resultDivider'></div>"
-                + "<div class='thirdResultBox text-center'>"
-                + "<i class='fa fa-retweet fa-3x'></i><br/>"
-                + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
-                + "<div class='resultDivider'></div>"
-                + "<div class='thirdResultBox text-center'>"
-                + "<i class='fa fa-users fa-3x'></i><br/>"
-                + "<span> Dit account heeft " + FollowersCountString + " volgers en volgt " + FollowingCountString + " gebruikers</span></div>";
 
             return rating;
         }
