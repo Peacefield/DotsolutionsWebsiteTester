@@ -58,6 +58,12 @@
             padding: 15px;
         }
 
+        .resultBox-12 {
+            width: 100%;
+            float: left;
+            padding: 15px;
+        }
+
         .socialResults {
             width: 50%;
             float: left;
@@ -77,6 +83,18 @@
             float: left;
             min-height: 1px;
             position: relative;
+        }
+
+        .fa-html5 {
+            color: #e54d26;
+        }
+
+        .fa-times, .fa-times-circle {
+            color: red;
+        }
+
+        .fa-check {
+            color: green;
         }
 
         .fa-twitter-square {
@@ -307,14 +325,6 @@
             #MainContent_tabletImg, #MainContent_mobileImg {
                 margin-left: 25%;
             }
-        }
-
-        .fa-check-green {
-            color: green;
-        }
-
-        .fa-times-red {
-            color: red;
         }
 
         .title {

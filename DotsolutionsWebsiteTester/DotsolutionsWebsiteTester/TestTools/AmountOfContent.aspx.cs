@@ -55,7 +55,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 var wordCount = GetContentCount(page);
 
-                var icon = "<i class='fa fa-check fa-check-green'></i>";
+                var icon = "<i class='fa fa-check'></i>";
                 if (wordCount < 500)
                 {
                     // te weinig

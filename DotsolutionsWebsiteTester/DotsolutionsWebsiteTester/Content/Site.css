@@ -458,11 +458,29 @@ footer {
     padding: 15px;
 }
 
+.resultBox-12 {
+    width: 100%;
+    float: left;
+    padding: 15px;
+}
+
 .resultDivider {
     width: 4%;
     float: left;
     min-height: 1px;
     position: relative;
+}
+
+.fa-html5 {
+    color: #e54d26;
+}
+
+.fa-times, .fa-times-circle {
+    color: red;
+}
+
+.fa-check {
+    color: green;
 }
 
 .fa-twitter-square {
@@ -694,14 +712,6 @@ footer {
 .googleResult_desc {
     color: #545454;
     font-size: 1em;
-}
-
-.fa-check-green {
-    color: green;
-}
-
-.fa-times-red {
-    color: red;
 }
 
 .title {
