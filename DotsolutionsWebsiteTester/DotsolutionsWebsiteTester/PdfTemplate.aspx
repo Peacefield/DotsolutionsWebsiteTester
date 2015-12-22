@@ -93,6 +93,10 @@
             color: red;
         }
 
+        .fa-info-circle {
+            color: lightblue;
+        }
+
         .fa-check {
             color: green;
         }

@@ -120,10 +120,14 @@ namespace DotsolutionsWebsiteTester.TestTools
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(site);
+                request.UserAgent = Session["userAgent"].ToString();
+                request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             }
             catch (WebException wex)
             {
+                System.Diagnostics.Debug.WriteLine("wex.Message: " + wex.Message);
+                System.Diagnostics.Debug.WriteLine("wex.InnerException: " + wex.InnerException);
                 if (wex.Status == WebExceptionStatus.ProtocolError)
                 {
                     var response = wex.Response as HttpWebResponse;
@@ -271,20 +275,26 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns>string message</returns>
         private string GetServerTypeMessage(string site)
         {
-            var message = "<div class='resultBox-12 row'><i class='fa fa-server fa-3x col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'></i>";
+            var result = "";
             var serverType = GetServerType(site);
-
-            message += "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>";
+            
             if (serverType.Length > 0)
-                message += "Server is van type: " + serverType;
+            {
+                result = "Server is van type: " + serverType + ".";
+            }
             else
             {
-                message += "Servertype niet gevonden";
+                result = "Servertype niet gevonden.";
             }
 
-            message += "</span></div>";
-
-            return message;
+            return "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>"
+                    + "<span class='fa-stack fa-3x'>"
+                    + "<i class='fa fa-info-circle fa-stack-2x'></i>"
+                    + "<i class='fa fa-server fa-stack-1x'></i>"
+                    + "</span></div>"
+                    + "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>"
+                    + result
+                    + "</span></div>";
         }
 
         /// <summary>
