@@ -72,30 +72,33 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             // TODO: Invullen Uitleg waarom dit niet goed is
             // http://netvantagemarketing.com/?page_id=7/whateverwhatever geeft geen 404
+            var result = "";
+            var icon = "";
 
-            var message = "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>";
             if (Handles404(site))
-                message += "<span class='fa-stack fa-2x'>"
-                    + "<i class='fa fa-check fa-stack-2x'></i>"
-                    + "<span class='fa-stack-1x noselect'>404</span>"
-                    + "</span></div>"
-                    + "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>De server geeft een 404 HTTP code wanneer een pagina niet gevonden kan worden. Dit is goed om meerdere redenen.<br/>"
+            {
+                icon = "fa-check";
+                result = "De server geeft een 404 HTTP code wanneer een pagina niet gevonden kan worden. Dit is goed om meerdere redenen.<br/>"
                     + "Één van deze redenen is dat een website op deze manier duidelijk kan maken aan de gebruiker dat de website niet bestaat.<br/>"
-                    + "Verder wordt een pagina die 404 als antwoord geeft niet geïndexeerd door zoekmachine's waardoor er geen ongewenste resultaten verschijnen bij een zoekopdracht.</span>";
+                    + "Verder wordt een pagina die 404 als antwoord geeft niet geïndexeerd door zoekmachine's waardoor er geen ongewenste resultaten verschijnen bij een zoekopdracht.";
+            }
             else
             {
                 rating = rating - 3.3m;
-                message += "<span class='fa-stack fa-2x'>"
-                    + "<i class='fa fa-times fa-stack-2x'></i>"
-                    + "<span class='fa-stack-1x'>404</span>"
-                    + "</span></div>"
-                    + "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>De server geeft geen 404 terug wanneer een pagina niet kan worden gevonden. Dit is niet goed om meerdere redenen.<br/>"
+                icon = "fa-times";
+                result = "De server geeft geen 404 terug wanneer een pagina niet kan worden gevonden. Dit is niet goed om meerdere redenen.<br/>"
                     + "Één van deze redenen is dat een website op deze manier niet duidelijk kan maken dat een website niet bestaat.<br/>"
-                    + "Verder wordt een pagina die 404 als antwoord geeft niet geïndexeerd door zoekmachine's waardoor er geen ongewenste resultaten verschijnen bij een zoekopdracht.</span>";
+                    + "Verder wordt een pagina die 404 als antwoord geeft niet geïndexeerd door zoekmachine's waardoor er geen ongewenste resultaten verschijnen bij een zoekopdracht.";
             }
-            message += "</div>";
 
-            return message;
+            return "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>"
+                    + "<span class='fa-stack fa-3x'>"
+                    + "<i class='fa " + icon + " fa-stack-2x'></i>"
+                    + "<span class='fa-stack-1x noselect'>404</span>"
+                    + "</span></div>"
+                    + "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>"
+                    + result
+                    + "</span></div>";
         }
 
         /// <summary>
@@ -142,19 +145,30 @@ namespace DotsolutionsWebsiteTester.TestTools
         private string GetGzipMessage(string site)
         {
             // http://www.platformhoogeveen.nl gebruikt geen GZIP
-            var message = "<div class='resultBox-12 row'><i class='fa fa-file-archive-o fa-3x col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'></i>";
-            message += "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>";
+
+            var result = "";
+            var icon = "";
+
             if (IsGzip(site))
-                message += "De server ondersteund GZIP compressie. Dit is goed doordat dit de snelheid van de website verbeterd.";
+            {
+                icon = "fa-check";
+                result = "De server ondersteund GZIP compressie. Dit is goed doordat dit de snelheid van de website verbeterd.";
+            }
             else
             {
                 rating = rating - 3.3m;
-                message += "De server ondersteund geen GZIP compressie. Dit is niet goed doordat GZIP compressie de snelheid van een website kan verbeteren.";
+                icon = "fa-times";
+                result = "De server ondersteund geen GZIP compressie. Dit is niet goed doordat GZIP compressie de snelheid van een website kan verbeteren.";
             }
 
-            message += "</span></div>";
-
-            return message;
+            return "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>"
+                    + "<span class='fa-stack fa-3x'>"
+                    + "<i class='fa " + icon + " fa-stack-2x'></i>"
+                    + "<i class='fa fa-file-archive-o fa-stack-1x'></i>"
+                    + "</span></div>"
+                    + "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>"
+                    + result
+                    + "</span></div>";
         }
 
         /// <summary>
@@ -184,21 +198,41 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns></returns>
         private string GetRedirectMessage(string site)
         {
-            var message = "<div class='resultBox-12 row'><i class='fa fa-reply fa-3x col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'></i>";
-            message += "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>";
+            var after = site;
+            var before = site;
+
+            if (site.Contains("/www."))
+                before = site.Replace("/www.", "/");
+            else if (site.Contains("http://"))
+                after = site.Replace("http://", "http://www.");
+            else if (site.Contains("https://"))
+                after = site.Replace("https://", "https://www.");
+
+            var result = "";
+            var icon = "";
+
             if (RedirectsWww(site))
-                message += "Er is een 301 verwijzing ingesteld voor het invoeren van het adres zonder www. "
-                    +"Dit is goed doordat dit beter wordt gewaardeerd door zoekmachines. De versies met- en zonder www. worden namelijk beschouwd als verschillende websites.";
+            {
+                icon = "fa-check";
+                result = "Er is een permanente (HTTP 301) doorverwijzing ingesteld van " + before + " naar " + after + "."
+                    + "Dit is goed doordat dit beter wordt gewaardeerd door zoekmachines. Beide versies worden namelijk beschouwd als verschillende websites wanneer dit niet wordt gedaan.";
+            }
             else
             {
                 rating = rating - 3.3m;
-                message += "Er is geen 301 verwijzing ingesteld voor het invoeren van het adres zonder www. "
-                    + "Dit is slecht doordat de versies met- en zonder www. beschouwd worden als verschillende websites en zoekmachines dit minder goed waarderen..";
+                icon = "fa-times";
+                result = "Er is geen permanente (HTTP 301) doorverwijzing ingesteld van " + before + " naar " + after + "."
+                    + "Dit is slecht doordat beide versies beschouwd worden als verschillende websites en zoekmachines dit minder goed waarderen.";
             }
 
-            message += "</span></div>";
-
-            return message;
+            return "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>"
+                    + "<span class='fa-stack fa-3x'>"
+                    + "<i class='fa " + icon + " fa-stack-2x'></i>"
+                    + "<i class='fa fa-reply fa-stack-1x'></i>"
+                    + "</span></div>"
+                    + "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>"
+                    + result
+                    + "</span></div>";
         }
 
         /// <summary>
