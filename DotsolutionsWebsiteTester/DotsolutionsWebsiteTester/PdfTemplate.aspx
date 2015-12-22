@@ -14,8 +14,9 @@
 
         body {
             padding-bottom: 20px;
-            /*background-color: #54b721 !important;*/
+            background-color: #54b721 !important;
             background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAR0lEQVQYV2MM2a74n4EA+PLkDwMjIYUgRTwyLPgVwhSBLMRpIrIinArRFWFViE0RhkJcilAU4lMEV0hIEVihx2zZ/6BwIgQAQjIwjcA3DQgAAAAASUVORK5CYII=) repeat;
+            /*background: url(http://v8.dotcontent.nl/media/img/bg.jpg) center center no-repeat fixed;*/
             height: 100%;
             font-size: 1em;
         }
@@ -35,16 +36,27 @@
             word-break: break-word;
         }
 
+        .well.well-sm {
+            box-shadow: 0px 0px 100px 1px #000;
+        }
         /* Custom panel colouring */
+
+        .panel.panel-custom {
+            box-shadow: 0px 0px 50px 10px #000;
+        }
+
         .panel-custom {
-            border-color: #32A389 !important;
+            /*border-color: #32A389 !important;*/
+            border-color: #489b1d !important;
         }
 
             .panel-custom .panel-heading {
                 color: white;
-                background-color: #20856E;
+                /*background-color: #20856E;*/
+                /*border-color: #32A389;*/
+                background-color: #54b721;
+                border-color: #489b1d;
                 background-repeat: repeat-x;
-                border-color: #32A389;
             }
 
         .resultWell {
@@ -98,6 +110,10 @@
         }
 
         .fa-check {
+            color: green;
+        }
+
+        .fa-check-circle {
             color: green;
         }
 

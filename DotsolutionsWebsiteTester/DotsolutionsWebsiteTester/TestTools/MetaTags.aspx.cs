@@ -220,7 +220,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     desc = "Geen description meta-tag gevonden.";
 
                 message += "<span class='help-block'>Zo ziet de website er uit op de resultatenpagina van Google:</span>";
-                message += "<div class='well well-sm col-md-6 col-sm-7'>"
+                message += "<div class='well well-lg col-md-6 col-sm-7'>"
                             + "<h3 class='googleResult_title noselect'>" + title + "</h3>"
                             + "<p class='googleResult_url noselect'>" + url + "</p>"
                             + "<p class='googleResult_desc noselect'>" + desc + "</p>"

@@ -71,7 +71,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - dotsolutions Website Tester</p>
+                <p>&copy; <%: DateTime.Now.Year %> - dotsolutions website tester</p>
             </footer>
         </div>
 

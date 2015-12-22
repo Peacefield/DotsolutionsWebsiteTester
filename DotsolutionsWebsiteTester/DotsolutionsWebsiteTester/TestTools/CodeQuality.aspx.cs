@@ -111,7 +111,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-ok glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> Er wordt op alle pagina's gebruik gemaakt van semantic HTML5 elementen. Dit is uitstekend aangezien zoekmachines en browsers weten wat ze kunnen verwachten binnen deze elementen.</span></div>";
+                    + "<span class='messageText'> Er wordt op alle pagina's gebruik gemaakt van semantische HTML5 elementen. Dit is uitstekend aangezien zoekmachines en browsers weten wat ze kunnen verwachten binnen deze elementen.</span></div>";
 
             }
             else
@@ -128,7 +128,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                         + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
-                        + "<span class='messageText'> De volgende pagina's gebruiken geen semantic HTML5 elementen. Dit is slecht doordat zoekmachines en browsers niet kunnen voorspellen wat er op een pagina kan staan." + unorderedlist + "</span></div>";
+                        + "<span class='messageText'> De volgende pagina's gebruiken geen semantische HTML5 elementen. Dit is slecht doordat zoekmachines en browsers niet kunnen voorspellen wat er op een pagina kan staan." + unorderedlist + "</span></div>";
 
             }
 
