@@ -61,7 +61,7 @@
                     <asp:CheckBoxList ID="TestsCheckBoxList1"
                         runat="server"
                         TextAlign="right">
-                        <asp:ListItem Text="Actueelheid" Value="Freshness" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Actueelheid" Value="Freshness" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Afbeeldingen" Value="Images" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Analytics" Value="Analytics" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Binnenkomende links" Value="IncomingLinks" Selected="false"></asp:ListItem>

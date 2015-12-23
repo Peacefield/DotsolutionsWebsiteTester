@@ -9,6 +9,7 @@
                     <span id="FreshnessRating" runat="server">?</span><span class="title">Actueelheid</span>
                 </div>
                 <div class="panel-body">
+                    <div id="FreshnessResults" class="results" runat="server"></div>
                 </div>
             </div>
         </div>
