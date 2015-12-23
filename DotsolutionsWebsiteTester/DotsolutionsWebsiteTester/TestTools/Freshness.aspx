@@ -13,9 +13,9 @@
                     <div class="hidden" id="FreshnessTableHidden" runat="server">
                         <asp:Table ID="FreshnessTable" CssClass="table table-hover word-break" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">
-                                <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-2" />
-                                <asp:TableHeaderCell Scope="Column" Text="Type" CssClass="col-md-5" />
-                                <asp:TableHeaderCell Scope="Column" Text="Regel" CssClass="col-md-5" />
+                                <asp:TableHeaderCell Scope="Column" Text="Datum" CssClass="col-md-2" />
+                                <asp:TableHeaderCell Scope="Column" Text="Bestand" CssClass="col-md-5" />
+                                <asp:TableHeaderCell Scope="Column" Text="Gevonden op" CssClass="col-md-5" />
                             </asp:TableHeaderRow>
                         </asp:Table>
                     </div>
