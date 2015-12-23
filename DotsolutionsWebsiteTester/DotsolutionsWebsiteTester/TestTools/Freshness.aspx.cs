@@ -16,6 +16,7 @@ namespace DotsolutionsWebsiteTester.TestTools
     {
         //List<DateTime> dateList = new List<DateTime>();
         ConcurrentBag<DateTime> threadSafe = new ConcurrentBag<DateTime>();
+        List<KeyValuePair<string, List<KeyValuePair<string, DateTime>>>> DateListContainer = new List<KeyValuePair<string, List<KeyValuePair<string, DateTime>>>>();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -28,7 +29,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            Debug.WriteLine("Page_Load");
+            //Debug.WriteLine("Page_Load");
 
             GetFreshness();
 
@@ -49,7 +50,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetFreshness()
         {
-            Debug.WriteLine("GetFreshness");
+            //Debug.WriteLine("GetFreshness");
 
             var message = "";
             var sitemap = (List<string>)Session["selectedSites"];
@@ -80,13 +81,15 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var culture = new System.Globalization.CultureInfo("nl-NL"); // Displays (D)D-(M)M-YYYY
 
+            message += "<div><span class='text-center'><i class='fa fa-clock-o fa-3x'></i></span><span class='fa-2x'> " + latestDate.ToString("d", culture) + "</span></div>";
+
             if (FreshnessTable.Rows.Count > 0)
             {
-                message += "Na het doorlopen van " + FreshnessTable.Rows.Count 
-                    + " bestanden is er gedetecteerd dat de content van de website voor het laatst is bijgewerkt op " + latestDate.ToString("d", culture) + ".<br/>";
+                message += "<span>Na het doorlopen van " + FreshnessTable.Rows.Count 
+                    + " bestanden is er gedetecteerd dat de content van de website voor het laatst is bijgewerkt op " + latestDate.ToString("d", culture) + ".</span>";
             }
             else 
-                message += "De content van de website is voor het laatst bijgewerkt op " + latestDate.ToString("d", culture) + ".<br/>";
+                message += "<span>De content van de website is voor het laatst bijgewerkt op " + latestDate.ToString("d", culture) + ".</span><br/>";
 
             var todayDate = DateTime.Today;
             var oneMonthAgo = todayDate.AddMonths(-1);
@@ -94,6 +97,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var threeMonthsAgo = todayDate.AddMonths(-3);
             var fourMonthsAgo = todayDate.AddMonths(-4);
 
+            message += "<span>";
             if (latestDate < oneMonthAgo)
             {
                 if (latestDate > twoMonthsAgo)
@@ -121,6 +125,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 message += "Dit is uitstekend. Het is goed om de website maandelijks bij te werken.";
             }
+            message += "</span>";
 
             FreshnessResults.InnerHtml = message;
             if (isDetailed && FreshnessTable.Rows.Count > 0)
@@ -149,7 +154,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetLatestDate(string page)
         {
-            Debug.WriteLine("GetLatestDate");
+            //Debug.WriteLine("GetLatestDate");
             var latestDate = new DateTime();
             var date = GetDateByLastModified(page);
             if (date != new DateTime())
@@ -165,6 +170,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
             }
             threadSafe.Add(latestDate);
+
+            foreach (var overheadlist in DateListContainer)
+            {
+                foreach (var list in overheadlist.Value)
+                {
+                    AddToTable(list.Value.ToShortDateString(), list.Key, page);
+                }
+            }
         }
 
         /// <summary>
@@ -174,9 +187,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns></returns>
         private DateTime GetDateFromAdditionalContent(string site)
         {
-            Debug.WriteLine("GetDateFromAdditionalContent");
+            //Debug.WriteLine("GetDateFromAdditionalContent");
             var dateList = new List<DateTime>();
             var contentList = GetContentList(site);
+
+            var list = new List<KeyValuePair<string, DateTime>>();
             foreach (var item in contentList)
             {
                 var lastModifiedDate = GetDateByLastModified(item);
@@ -186,14 +201,31 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // Tabel vullen voor weergeven gevonden data
                     //Debug.WriteLine("AddToDateListFromThread__pageOfOrigin: " + pageOfOrigin + " -- lastModifiedDate: " + lastModifiedDate.ToShortDateString() + " -- contentUrl: " + contentUrl);
 
-                    AddToTable(lastModifiedDate.ToShortDateString(), item, site);
+                    ////// AddToTable(lastModifiedDate.ToShortDateString(), item, site);
+
+                    // Add to key value pair; key: contentUrl - value: date
+
+                    list.Add(new KeyValuePair<string, DateTime>(item, lastModifiedDate));
+
                 }
             }
+            // sort key value pair on value(date)
+            // http://www.dotnetperls.com/sort-keyvaluepair
 
+            list.Sort(Compare);
+
+            Debug.WriteLine(" --- list.Sort --- ");
+            foreach (var item in list)
+            {
+                Debug.WriteLine(item.Value.Date);
+            }
+            // add sorted key value pair as value to key value pair with key: page name
+            DateListContainer.Add(new KeyValuePair<string, List<KeyValuePair<string, DateTime>>>(site, list));
+            
             DateTime latestDate = new DateTime();
             foreach (var item in dateList)
             {
-                Debug.WriteLine("item in dateList: " + item);
+                //Debug.WriteLine("item in dateList: " + item);
                 // Vergelijk om meest recente datum te vinden
                 if (latestDate < item)
                     latestDate = item;
@@ -201,10 +233,13 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             return latestDate;
         }
-
+        static int Compare(KeyValuePair<string, DateTime> a, KeyValuePair<string, DateTime> b)
+        {
+            return a.Value.CompareTo(b.Value);
+        }
         private List<string> GetContentList(string site)
         {
-            Debug.WriteLine("GetContentList");
+            //Debug.WriteLine("GetContentList");
             var contentList = new List<string>();
             var webget = new HtmlWeb();
             var doc = webget.Load(site);
@@ -252,7 +287,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private string CreateUrl(string foundUrl)
         {
-            Debug.WriteLine("CreateUrl");
+            //Debug.WriteLine("CreateUrl");
             var testLink = "";
             var mainUrl = Session["MainUrl"].ToString();
 
@@ -295,7 +330,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns>Date of new DateTime when Last-Modified header is not specified. Otherwise it return the date specified.</returns>
         private DateTime GetDateByLastModified(string url)
         {
-            Debug.WriteLine("GetDateByLastModified");
+            //Debug.WriteLine("GetDateByLastModified");
             DateTime date = new DateTime();
             var dateString = "";
             try
