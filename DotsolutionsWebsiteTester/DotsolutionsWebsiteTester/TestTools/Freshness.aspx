@@ -10,6 +10,15 @@
                 </div>
                 <div class="panel-body">
                     <div id="FreshnessResults" class="results" runat="server"></div>
+                    <div class="hidden" id="FreshnessTableHidden" runat="server">
+                        <asp:Table ID="FreshnessTable" CssClass="table table-hover word-break" runat="server">
+                            <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">
+                                <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-2" />
+                                <asp:TableHeaderCell Scope="Column" Text="Type" CssClass="col-md-5" />
+                                <asp:TableHeaderCell Scope="Column" Text="Regel" CssClass="col-md-5" />
+                            </asp:TableHeaderRow>
+                        </asp:Table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class Freshness : System.Web.UI.Page
     {
-        private List<DateTime> dateList = new List<DateTime>();
+        //List<DateTime> dateList = new List<DateTime>();
+        ConcurrentBag<DateTime> threadSafe = new ConcurrentBag<DateTime>();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -26,29 +28,44 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            Debug.WriteLine("Page_Load");
+
             GetFreshness();
+
+            //var ths = new ThreadStart(GetFreshness);
+            //var th = new Thread(ths);
+            //th.Start();
+            //Debug.WriteLine("Na starten mainthread");
+            //Thread.Sleep(10);
+            //th.Join();
+            //Debug.WriteLine("Na joinen mainthread");
 
             var sb = new System.Text.StringBuilder();
             FreshnessSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
             string htmlstring = sb.ToString();
 
             Session["Freshness"] = htmlstring;
-
         }
 
         private void GetFreshness()
         {
+            Debug.WriteLine("GetFreshness");
+
             var message = "";
             var sitemap = (List<string>)Session["selectedSites"];
             var latestDate = new DateTime();
             var rating = 10.0m;
-
+            var isDetailed = (bool)Session["IsDetailedTest"];
             foreach (var page in sitemap)
             {
+                Debug.WriteLine(" -------------------------------------------------------------- Werken aan ------------------------------- " + page + " -------------------------------------------------------------- ");
                 var newDate = GetLatestDate(page);
                 if (newDate > latestDate)
                     latestDate = newDate;
             }
+
+            var culture = new System.Globalization.CultureInfo("nl-NL"); // Displays (D)D-(M)M-YYYY
+            message += "De content van de website is voor het laatst bijgewerkt op " + latestDate.ToString("d", culture) + ".<br/>";
 
             var todayDate = DateTime.Today;
             var oneMonthAgo = todayDate.AddMonths(-1);
@@ -61,25 +78,35 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (latestDate > twoMonthsAgo)
                 {
                     rating = 7.5m;
+                    message += "Dit is redelijk goed. Het is beter om de website maandelijks bij te werken.";
                 }
                 else if (latestDate > threeMonthsAgo)
                 {
                     rating = 5.5m;
+                    message += "Dit is redelijk slecht. Het is beter om de website maandelijks bij te werken.";
                 }
                 else if (latestDate > fourMonthsAgo)
                 {
                     rating = 3.0m;
+                    message += "Dit is slecht. Het is beter om de website maandelijks bij te werken.";
                 }
                 else
                 {
                     rating = 0.0m;
+                    message += "Dit is zeer slecht. Het is beter om de website maandelijks bij te werken.";
                 }
             }
-
-            var culture = new System.Globalization.CultureInfo("nl-NL"); // Displays (D)D-(M)M-YYYY
-            message += latestDate.ToString("d", culture);
+            else
+            {
+                message += "Dit is uitstekend. Het is goed om de website maandelijks bij te werken.";
+            }
 
             FreshnessResults.InnerHtml = message;
+
+            //if (isDetailed && FreshnessTable.Rows.Count > 0)
+            FreshnessTableHidden.Attributes.Remove("class");
+            //else
+            //    FreshnessTable.Rows.Clear();
 
             if (rating == 10.0m)
                 rating = 10m;
@@ -102,6 +129,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private DateTime GetLatestDate(string page)
         {
+            Debug.WriteLine("GetLatestDate");
             var latestDate = new DateTime();
             var date = GetDateByLastModified(page);
             if (date != new DateTime())
@@ -126,47 +154,68 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns></returns>
         private DateTime GetDateFromAdditionalContent(string site)
         {
+            Debug.WriteLine("GetDateFromAdditionalContent");
+            var dateList = new List<DateTime>();
             var contentList = GetContentList(site);
-            var threadpool = new List<Thread>();
+            //var threadpool = new List<Thread>();
+            //dateList.Clear();
             foreach (var item in contentList)
             {
                 // Start thread voor controleren datum per item
 
-                var ths = new ThreadStart(() => AddToDateListFromThread(item));
-                var th = new Thread(ths);
-                th.Start();
-                threadpool.Add(th);                
+                //var ths = new ThreadStart(() => AddToDateListFromThread(item, site));
+                //var th = new Thread(ths);
+                //th.Start();
+                ////Thread.Sleep(1);
+                //threadpool.Add(th);
+
+                //Thread.Sleep(5);
+
+                var lastModifiedDate = GetDateByLastModified(item);
+                if (lastModifiedDate != new DateTime())
+                {
+                    dateList.Add(lastModifiedDate);
+                    // Tabel vullen voor weergeven gevonden data
+                    //message += lastModifiedDate.ToShortDateString() + " -- <a href='" + item + "' target='_blank'>" + item + "</a><br/>";
+                    //Debug.WriteLine("AddToDateListFromThread__pageOfOrigin: " + pageOfOrigin + " -- lastModifiedDate: " + lastModifiedDate.ToShortDateString() + " -- contentUrl: " + contentUrl);
+
+                    AddToTable(lastModifiedDate.ToShortDateString(), item, site);
+                }
             }
 
-            foreach (var thread in threadpool)
-                thread.Join();
+            //foreach (var thread in threadpool)
+            //    thread.Join();
 
             DateTime latestDate = new DateTime();
             foreach (var item in dateList)
             {
-                Debug.WriteLine("Testing: " + item + " tegenover huidige: " + latestDate);
+                Debug.WriteLine("item in dateList: " + item);
                 // Vergelijk om meest recente datum te vinden
                 if (latestDate < item)
                     latestDate = item;
-                Debug.WriteLine("Nieuwe meest recente datum: " + latestDate);
             }
 
             return latestDate;
         }
 
-        private void AddToDateListFromThread(string contentUrl)
-        {
-            var lastModifiedDate = GetDateByLastModified(contentUrl);
-            if (lastModifiedDate != new DateTime())
-            {
-                dateList.Add(lastModifiedDate);
-                // Tabel vullen voor weergeven gevonden data
-                //message += lastModifiedDate.ToShortDateString() + " -- <a href='" + item + "' target='_blank'>" + item + "</a><br/>";
-            }
-        }
+        //private void AddToDateListFromThread(string contentUrl, string pageOfOrigin)
+        //{
+        //    Debug.WriteLine("AddToDateListFromThread");
+        //    var lastModifiedDate = GetDateByLastModified(contentUrl);
+        //    if (lastModifiedDate != new DateTime())
+        //    {
+        //        dateList.Add(lastModifiedDate);
+        //        // Tabel vullen voor weergeven gevonden data
+        //        //message += lastModifiedDate.ToShortDateString() + " -- <a href='" + item + "' target='_blank'>" + item + "</a><br/>";
+        //        //Debug.WriteLine("AddToDateListFromThread__pageOfOrigin: " + pageOfOrigin + " -- lastModifiedDate: " + lastModifiedDate.ToShortDateString() + " -- contentUrl: " + contentUrl);
+
+        //        AddToTable(lastModifiedDate.ToShortDateString(), contentUrl, pageOfOrigin);
+        //    }
+        //}
 
         private List<string> GetContentList(string site)
         {
+            Debug.WriteLine("GetContentList");
             var contentList = new List<string>();
             var webget = new HtmlWeb();
             var doc = webget.Load(site);
@@ -214,6 +263,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private string CreateUrl(string foundUrl)
         {
+            Debug.WriteLine("CreateUrl");
             var testLink = "";
             var mainUrl = Session["MainUrl"].ToString();
 
@@ -256,6 +306,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns>Date of new DateTime when Last-Modified header is not specified. Otherwise it return the date specified.</returns>
         private DateTime GetDateByLastModified(string url)
         {
+            Debug.WriteLine("GetDateByLastModified");
             DateTime date = new DateTime();
             var dateString = "";
             try
@@ -276,7 +327,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             catch (WebException we)
             {
-                Debug.WriteLine(url + " veroorzaakt een fout: " + we.Message);
+                Debug.WriteLine(url + " veroorzaakt een WebException: " + we.Message);
+            }
+            catch (UriFormatException ufe)
+            {
+                Debug.WriteLine(url + " veroorzaakt een UriFormatException: " + ufe.Message);
             }
 
             return date;
@@ -327,6 +382,31 @@ namespace DotsolutionsWebsiteTester.TestTools
                 FreshnessRating.Attributes.Add("class", "mediocreScore ratingCircle");
             else
                 FreshnessRating.Attributes.Add("class", "excellentScore ratingCircle");
+        }
+
+        /// <summary>
+        /// Add the found dates to table
+        /// </summary>
+        /// <param name="date">date found</param>
+        /// <param name="contentUrl">URL of tested content (img, js, css)</param>
+        /// <param name="pageOfOrigin">URL of page where content was found</param>
+        private void AddToTable(string date, string contentUrl, string pageOfOrigin)
+        {
+            var tRow = new TableRow();
+
+            var tCellDate = new TableCell();
+            tCellDate.Text = date;
+            tRow.Cells.Add(tCellDate);
+
+            var tCellContentUrl = new TableCell();
+            tCellContentUrl.Text = "<a href='" + contentUrl + "' target='_blank'>" + contentUrl + "</a>";
+            tRow.Cells.Add(tCellContentUrl);
+
+            var tCellUrlOrigin = new TableCell();
+            tCellUrlOrigin.Text = "<a href='" + pageOfOrigin + "' target='_blank'>" + pageOfOrigin + "</a>";
+            tRow.Cells.Add(tCellUrlOrigin);
+
+            FreshnessTable.Rows.Add(tRow);
         }
     }
 }
