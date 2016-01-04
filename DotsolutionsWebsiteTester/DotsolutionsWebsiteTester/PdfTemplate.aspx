@@ -164,7 +164,7 @@
                 width: 100%;
             }
 
-            #automatedRatingList > ul > li {
+            #automatedRatingList > #critlistcontainer > li {
                 list-style: none;
                 width: 50%;
                 float: left;
@@ -172,7 +172,7 @@
                 margin-bottom: 25px;
             }
 
-                #automatedRatingList > ul > li > .ratingList > ul > li {
+                #automatedRatingList > #critlistcontainer > li > .ratingList > ul > li {
                     margin-top: 5px;
                 }
 
@@ -369,9 +369,7 @@
 <body>
     <form runat="server">
         <div class="container body-content">
-            <div id="sizeref" runat="server">
-            </div>
-
+            <div id="sizeref" runat="server"></div>
             <div id="manualresults" runat="server"></div>
             <div class="well well-sm" id="automatedRatingList">
                 <h3>Beoordeling geautomatiseerde test</h3>
@@ -379,7 +377,7 @@
                     <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span><span class="subTitle">Totaal</span>
                 </div>
                 <hr />
-                <ul runat="server">
+                <ul id="critlistcontainer" runat="server">
                     <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">...</span><span class="subTitle">Toegankelijkheid</span>
                         <div class="ratingList">
                             <ul id="RatingAccessList" runat="server">

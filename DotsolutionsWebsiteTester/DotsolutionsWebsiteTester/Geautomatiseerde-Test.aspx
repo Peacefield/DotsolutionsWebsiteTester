@@ -32,13 +32,13 @@
     </div>
 
     <div class="well well-sm" id="sizeref" runat="server">
-        <asp:Image  runat="server" 
-            ID="laptopcontainer" 
+        <asp:Image runat="server"
+            ID="laptopcontainer"
             CssClass="laptopcontainer" />
         <h5>Rapport voor</h5>
         <h4 id="UrlTesting" runat="server"></h4>
     </div>
-    
+
     <div id="manualResultHidden" class="hidden" runat="server">
         <div class="well well-sm">
             <h3>Beoordeling handmatige test</h3>
@@ -51,13 +51,13 @@
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfOpma" runat="server">
                     </label>
                 </div>
-                
+
                 <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Huisstijl</label>
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfHuis" runat="server">
                     </label>
                 </div>
-                
+
                 <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Kleurgebruik</label>
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfKleur" runat="server">
@@ -71,7 +71,7 @@
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormUxMen" runat="server">
                     </label>
                 </div>
-                
+
                 <div class="row">
                     <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Structuur</label>
                     <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormUxStruc" runat="server">
@@ -95,11 +95,11 @@
             <span id="RatingOverall" class="mediocreScore ratingCircle">-</span><span class="subTitle">Totaal</span>
         </div>
         <hr />
-        <ul runat="server">
+        <ul id="critlistcontainer">
             <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare emptyScore">-</span><span class="subTitle">Toegankelijkheid</span>
                 <span id="ShowRatingAccess" class="displayRating">
                     <i id="RatingAccesBtn" class="glyphicon glyphicon-chevron-down"></i>
-                </span> 
+                </span>
                 <div id="RatingAccessListHidden" class="ratingList">
                     <ul id="RatingAccessList">
                     </ul>
@@ -108,7 +108,7 @@
             <li id="RatingUxTxt"><span id="RatingUx" class="ratingSquare emptyScore">-</span><span class="subTitle">Gebruikerservaring</span>
                 <span id="ShowRatingUx" class="displayRating">
                     <i id="RatingUxBtn" class="glyphicon glyphicon-chevron-down"></i>
-                </span> 
+                </span>
                 <div id="RatingUxListHidden" class="ratingList">
                     <ul id="RatingUxList">
                     </ul>
@@ -117,7 +117,7 @@
             <li id="RatingMarketingTxt"><span id="RatingMarketing" class="ratingSquare emptyScore">-</span><span class="subTitle">Marketing</span>
                 <span id="ShowRatingMarketing" class="displayRating">
                     <i id="RatingMarketingBtn" class="glyphicon glyphicon-chevron-down"></i>
-                </span> 
+                </span>
                 <div id="RatingMarketingListHidden" class="ratingList">
                     <ul id="RatingMarketingList">
                     </ul>
@@ -126,7 +126,7 @@
             <li id="RatingTechTxt"><span id="RatingTech" class="ratingSquare emptyScore">-</span><span class="subTitle">Technologie</span>
                 <span id="ShowRatingTech" class="displayRating">
                     <i id="RatingTechBtn" class="glyphicon glyphicon-chevron-down"></i>
-                </span> 
+                </span>
                 <div id="RatingTechListHidden" class="ratingList">
                     <ul id="RatingTechList">
                     </ul>
