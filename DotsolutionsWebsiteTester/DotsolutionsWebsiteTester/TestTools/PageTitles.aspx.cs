@@ -127,15 +127,15 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             var longTitlePerc = ((decimal)longTitles.Count / (decimal)sitemap.Count) * 100m;
-            var noTitlePerc = ((decimal)noTitles.Count / (decimal)sitemap.Count) * 100m;
+            var titleUsedPerc = (((decimal)sitemap.Count - (decimal)noTitles.Count) / (decimal)sitemap.Count) * 100m;
 
             message = "<div class='well well-lg resultWell text-center'>"
                 + "<i class='fa fa-text-width fa-3x'></i><br/>"
                 + "<span>" + longTitlePerc.ToString("#,0") + "% van de pagina's bevat een te lange titel</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
-                + "<span class='largetext'>" + noTitlePerc.ToString("#,0") + "%</span><br/>"
-                + "<span>van de pagina's bevat geen titel</span></div>"
+                + "<span class='largetext'>" + titleUsedPerc.ToString("#,0") + "%</span><br/>"
+                + "<span>van de pagina's bevat een titel</span></div>"
                 + message;
 
             PageTitleResults.InnerHtml = message;

@@ -7,6 +7,12 @@
     oranje  - #f9841b
 */
 
+/* 
+    graph css 
+    http://codepen.io/anon/pen/qbRJjd 75%
+    http://codepen.io/anon/pen/BjpGKG 25%
+*/
+
 @media (max-width: 767px) {
     .container {
         width: 100% !important;
@@ -587,6 +593,8 @@ footer {
     display: none;
     width: 30%;
     margin-left: 50px;
+    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
     .ratingList li span {
@@ -615,6 +623,16 @@ footer {
         list-style: none;
     }
 
+    #automatedRatingList > #critlistcontainer > li {
+        margin-bottom: 10px;
+    }
+
+#MainContent_TestedSitesList li {
+    margin-bottom: 5px;
+    list-style: none;
+    margin-left: -25px;
+    font-size: 1.1em;
+}
 
 #back-to-top {
     position: fixed;

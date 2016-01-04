@@ -195,6 +195,12 @@
                     text-decoration: none;
                 }
 
+        #testedsiteslist li {
+            margin-bottom: 5px;
+            list-style: none;
+            margin-left: -25px;
+            font-size: 1.1em;
+        }
 
         .lowScore {
             /*background-image: linear-gradient(to bottom,red 0,black 175%);*/

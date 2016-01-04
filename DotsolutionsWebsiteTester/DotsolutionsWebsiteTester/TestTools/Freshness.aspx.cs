@@ -62,8 +62,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             foreach (var page in sitemap)
             {
-                Debug.WriteLine(" --------------------------------------------------------- Werken aan ------------------------------- " + page + " --------------------------------------------------------- ");
-                
+                Debug.WriteLine(" --------------------------------------------------------- Start werken aan ------------------------------- " + page + " --------------------------------------------------------- ");
+
                 var ths = new ThreadStart(() => GetLatestDate(page));
                 var th = new Thread(ths);
                 th.Start();
@@ -83,12 +83,12 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             message += "<div><span class='text-center'><i class='fa fa-clock-o fa-3x'></i></span><span class='fa-2x'> " + latestDate.ToString("d", culture) + "</span></div>";
 
-            if (FreshnessTable.Rows.Count > 0)
+            if (FreshnessTable.Rows.Count > 1)
             {
-                message += "<span>Na het doorlopen van " + FreshnessTable.Rows.Count 
+                message += "<span>Na het doorlopen van " + FreshnessTable.Rows.Count
                     + " bestanden is er gedetecteerd dat de content van de website voor het laatst is bijgewerkt op " + latestDate.ToString("d", culture) + ".</span>";
             }
-            else 
+            else
                 message += "<span>De content van de website is voor het laatst bijgewerkt op " + latestDate.ToString("d", culture) + ".</span><br/>";
 
             var todayDate = DateTime.Today;
@@ -128,7 +128,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             message += "</span>";
 
             FreshnessResults.InnerHtml = message;
-            if (isDetailed && FreshnessTable.Rows.Count > 0)
+            if (isDetailed && FreshnessTable.Rows.Count > 1)
                 FreshnessTableHidden.Attributes.Remove("class");
             else
                 FreshnessTable.Rows.Clear();
@@ -157,6 +157,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             //Debug.WriteLine("GetLatestDate");
             var latestDate = new DateTime();
             var date = GetDateByLastModified(page);
+            var isDetailed = (bool)Session["IsDetailedTest"];
+
             if (date != new DateTime())
             {
                 latestDate = date;
@@ -168,14 +170,18 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     latestDate = date;
                 }
+
             }
             threadSafe.Add(latestDate);
 
-            foreach (var overheadlist in DateListContainer)
+            if (isDetailed)
             {
-                foreach (var list in overheadlist.Value)
+                foreach (var overheadlist in DateListContainer)
                 {
-                    AddToTable(list.Value.ToShortDateString(), list.Key, page);
+                    foreach (var list in overheadlist.Value)
+                    {
+                        AddToTable(list.Value.ToShortDateString(), list.Key, page);
+                    }
                 }
             }
         }
@@ -190,7 +196,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             //Debug.WriteLine("GetDateFromAdditionalContent");
             var dateList = new List<DateTime>();
             var contentList = GetContentList(site);
-
+            var isDetailed = (bool)Session["IsDetailedTest"];
             var list = new List<KeyValuePair<string, DateTime>>();
             foreach (var item in contentList)
             {
@@ -198,35 +204,36 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (lastModifiedDate != new DateTime())
                 {
                     dateList.Add(lastModifiedDate);
-                    // Tabel vullen voor weergeven gevonden data
-                    //Debug.WriteLine("AddToDateListFromThread__pageOfOrigin: " + pageOfOrigin + " -- lastModifiedDate: " + lastModifiedDate.ToShortDateString() + " -- contentUrl: " + contentUrl);
-
-                    ////// AddToTable(lastModifiedDate.ToShortDateString(), item, site);
 
                     // Add to key value pair; key: contentUrl - value: date
 
-                    list.Add(new KeyValuePair<string, DateTime>(item, lastModifiedDate));
-
+                    if (isDetailed)
+                        list.Add(new KeyValuePair<string, DateTime>(item, lastModifiedDate));
                 }
             }
-            // sort key value pair on value(date)
-            // http://www.dotnetperls.com/sort-keyvaluepair
 
-            list.Sort(Compare);
-
-            Debug.WriteLine(" --- list.Sort --- ");
-            foreach (var item in list)
-            {
-                Debug.WriteLine(item.Value.Date);
-            }
             // add sorted key value pair as value to key value pair with key: page name
-            DateListContainer.Add(new KeyValuePair<string, List<KeyValuePair<string, DateTime>>>(site, list));
-            
+            // used to fill table
+            if (isDetailed)
+            {
+                // sort key value pair on value(date)
+                // http://www.dotnetperls.com/sort-keyvaluepair
+                list.Sort(Compare);
+
+                Debug.WriteLine(" --- list.Sort --- ");
+                //foreach (var item in list)
+                //{
+                //    Debug.WriteLine(item.Value.Date);
+                //}
+
+                DateListContainer.Add(new KeyValuePair<string, List<KeyValuePair<string, DateTime>>>(site, list));
+            }
+
             DateTime latestDate = new DateTime();
             foreach (var item in dateList)
             {
                 //Debug.WriteLine("item in dateList: " + item);
-                // Vergelijk om meest recente datum te vinden
+                // Compare to find most recent date
                 if (latestDate < item)
                     latestDate = item;
             }
@@ -337,6 +344,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "HEAD";
+                request.Timeout = 1000;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
                 if (response.Headers["Last-Modified"] != null)
