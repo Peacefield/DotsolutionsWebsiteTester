@@ -9,8 +9,10 @@
 
 /* 
     graph css 
+    http://codepen.io/anon/pen/zrNydj 100%
     http://codepen.io/anon/pen/qbRJjd 75%
     http://codepen.io/anon/pen/BjpGKG 25%
+    http://codepen.io/anon/pen/qbRLPL 5%
 */
 
 @media (max-width: 767px) {
@@ -738,7 +740,7 @@ footer {
 .googleResult_title {
     color: #1a0dab;
     text-decoration: underline;
-    font-size: 1.3em;
+    font-size: 1.2em;
 }
 
 .googleResult_url {

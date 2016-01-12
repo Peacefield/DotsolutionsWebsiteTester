@@ -71,8 +71,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             var averageCount = totalContentCount / sitemap.Count;
 
             var message = "<div class='well well-lg resultWell text-center'>"
+                + "<div class='pieContainer'>"
+                // TODO: Insert pie graph here; inline to secure graph styling in PDF report
+                + "</div>"
                 + "<span class='largetext'>" + lowContentPageCntPercentage + "%</span><br/>"
-                + "<span>pagina's met te weinig content</span></div>"
+                + "<span>van de pagina's bevat te weinig content</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
                 + "<i class='fa fa-font fa-3x'></i><br/>"
@@ -82,7 +85,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> " + lowContentPageCnt + " pagina's met te weinig content gevonden. "
+                    + "<span class='messageText'> " + lowContentPageCnt + " pagina's met te weinig content gevonden."
                     + "Doordat er bij minder inhoudelijk content minder kans is dat de website verschijnt in gerelateerde zoekopdrachten is dit slecht. "
                     + "Er wordt dan ook een minimum van 500 woorden per pagina aangeraden.</span></div>";
             }
@@ -93,7 +96,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span class='messageText'> Op alle pagina's is genoeg content gevonden. "
                     + "Doordat er bij meer inhoudelijk content meer kans is dat de website verschijnt in gerelateerde zoekopdrachten is dit uitstekend.</span></div>";
             }
-            
+
             // Show table when detailed test is selected and something was added to table
             if (isDetailed /*&& lowContentPageCnt > 0*/)
                 AmountOfContentTableHidden.Attributes.Remove("class");

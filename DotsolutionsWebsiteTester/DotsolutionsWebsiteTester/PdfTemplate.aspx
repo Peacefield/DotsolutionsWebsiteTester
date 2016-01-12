@@ -259,7 +259,7 @@
         .googleResult_title {
             color: #1a0dab;
             text-decoration: underline;
-            font-size: 1.3em;
+            font-size: 1.2em;
         }
 
         .googleResult_url {
