@@ -14,8 +14,8 @@
 
         body {
             padding-bottom: 20px;
-            background-color: #54b721 !important;
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAR0lEQVQYV2MM2a74n4EA+PLkDwMjIYUgRTwyLPgVwhSBLMRpIrIinArRFWFViE0RhkJcilAU4lMEV0hIEVihx2zZ/6BwIgQAQjIwjcA3DQgAAAAASUVORK5CYII=) repeat;
+            /*background-color: #54b721 !important;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAR0lEQVQYV2MM2a74n4EA+PLkDwMjIYUgRTwyLPgVwhSBLMRpIrIinArRFWFViE0RhkJcilAU4lMEV0hIEVihx2zZ/6BwIgQAQjIwjcA3DQgAAAAASUVORK5CYII=) repeat;*/
             /*background: url(http://v8.dotcontent.nl/media/img/bg.jpg) center center no-repeat fixed;*/
             height: 100%;
             font-size: 1em;
@@ -36,14 +36,16 @@
             word-break: break-word;
         }
 
-        .well.well-sm {
+        /*.well.well-sm {
             box-shadow: 0px 0px 100px 1px #000;
-        }
+        }*/
+
         /* Custom panel colouring */
 
+        /*
         .panel.panel-custom {
             box-shadow: 0px 0px 50px 10px #000;
-        }
+        }*/
 
         .panel-custom {
             /*border-color: #32A389 !important;*/
@@ -164,17 +166,17 @@
                 width: 100%;
             }
 
-            #automatedRatingList > #critlistcontainer > li {
-                list-style: none;
-                width: 50%;
-                float: left;
-                min-height: 120px;
-                margin-bottom: 25px;
-            }
+        #critlistcontainer > li {
+            list-style: none;
+            width: 50%;
+            float: left;
+            min-height: 120px;
+            margin-bottom: 25px;
+        }
 
-                #automatedRatingList > #critlistcontainer > li > .ratingList > ul > li {
-                    margin-top: 5px;
-                }
+            #critlistcontainer > li > .ratingList > ul > li {
+                margin-top: 5px;
+            }
 
         .ratingList {
             display: block;
@@ -292,7 +294,7 @@
         }
 
         #MainContent_sizeref {
-            height: 200px;
+            height: 250px;
         }
 
 
@@ -377,43 +379,53 @@
         <div class="container body-content">
             <div id="sizeref" runat="server"></div>
             <div id="manualresults" runat="server"></div>
-            <div class="well well-sm" id="automatedRatingList">
-                <h3>Beoordeling geautomatiseerde test</h3>
-                <div>
-                    <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span><span class="subTitle">Totaal</span>
+            <div class="panel panel-custom" id="automatedRatingList">
+                <div class="panel-heading">
+                    <span>Beoordeling geautomatiseerde test</span>
                 </div>
-                <hr />
-                <ul id="critlistcontainer" runat="server">
-                    <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">...</span><span class="subTitle">Toegankelijkheid</span>
-                        <div class="ratingList">
-                            <ul id="RatingAccessList" runat="server">
-                            </ul>
-                        </div>
-                    </li>
-                    <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="ratingSquare" runat="server">...</span><span class="subTitle">Gebruikerservaring</span>
-                        <div class="ratingList">
-                            <ul id="RatingUxList" runat="server">
-                            </ul>
-                        </div>
-                    </li>
-                    <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="ratingSquare" runat="server">...</span><span class="subTitle">Marketing</span>
-                        <div class="ratingList">
-                            <ul id="RatingMarketingList" runat="server">
-                            </ul>
-                        </div>
-                    </li>
-                    <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="ratingSquare" runat="server">...</span><span class="subTitle">Technologie</span>
-                        <div class="ratingList">
-                            <ul id="RatingTechList" runat="server">
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
+                <div class="panel-body">
+                    <div>
+                        <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span><span class="subTitle">Totaal</span>
+                    </div>
+                    <hr />
+                    <ul id="critlistcontainer" runat="server">
+                        <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">...</span><span class="subTitle">Toegankelijkheid</span>
+                            <div class="ratingList">
+                                <ul id="RatingAccessList" runat="server">
+                                </ul>
+                            </div>
+                        </li>
+                        <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="ratingSquare" runat="server">...</span><span class="subTitle">Gebruikerservaring</span>
+                            <div class="ratingList">
+                                <ul id="RatingUxList" runat="server">
+                                </ul>
+                            </div>
+                        </li>
+                        <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="ratingSquare" runat="server">...</span><span class="subTitle">Marketing</span>
+                            <div class="ratingList">
+                                <ul id="RatingMarketingList" runat="server">
+                                </ul>
+                            </div>
+                        </li>
+                        <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="ratingSquare" runat="server">...</span><span class="subTitle">Technologie</span>
+                            <div class="ratingList">
+                                <ul id="RatingTechList" runat="server">
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="well well-sm">
-                <h3>Deze pagina's van uw website hebben wij voor u getest</h3>
-                <ul id="testedsiteslist" runat="server"></ul>
+
+            <div class="panel panel-custom">
+                <div class="panel-heading">
+                    <span>Deze pagina's van uw website hebben wij voor u getest</span>
+                </div>
+                <div class="panel-body">
+                    <ul id="testedsiteslist" runat="server"></ul>
+                </div>
             </div>
+
             <div id="results" runat="server">
             </div>
 

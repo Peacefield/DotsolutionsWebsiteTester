@@ -47,7 +47,7 @@
     }
 
     #MainContent_sizeref {
-        height: 230px;
+        height: 280px;
     }
 
         #MainContent_sizeref h5 {
@@ -120,7 +120,7 @@
     }
 
     #MainContent_sizeref {
-        height: 200px;
+        height: 250px;
     }
 
     .laptopcontainer {
@@ -321,12 +321,8 @@ footer {
     user-select: none;
 }
 
-.well.well-sm {
-    box-shadow: 0px 0px 100px 1px #000;
-}
-
 .panel.panel-custom {
-    box-shadow: 0px 0px 50px 10px #000;
+    /*box-shadow: 0px 0px 50px 10px #000;*/
 }
 
 .panel-custom {
@@ -650,8 +646,20 @@ footer {
 #MainContent_CreatePdfBtn {
     display: none;
     margin-right: 5px;
-    margin-top: 5px;
+    margin-top: 2px;
 }
+
+    #MainContent_CreatePdfBtn.btn-custom {
+        border: solid 1px #f9841b;
+        background-color: #f9841b;
+    }
+
+        #MainContent_CreatePdfBtn.btn-custom.focus, #MainContent_CreatePdfBtn.btn-custom:focus, #MainContent_CreatePdfBtn.btn-custom:hover {
+            border: solid 1px #ecf0f1;
+            background-color: #f9841b;
+            color: white !important;
+            transition: all .2s linear;
+        }
 
 
 /* End Geautomatiseerde-Test CSS*/
