@@ -67,6 +67,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 AddToTable(icon, page, wordCount.ToString("#,##0"));
                 totalContentCount += wordCount;
             }
+
             var lowContentPageCntPercentage = ((decimal)lowContentPageCnt / (decimal)sitemap.Count) * 100m;
             var averageCount = totalContentCount / sitemap.Count;
 
@@ -74,7 +75,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 //+ "<div class='pieContainer'>"
                 // TODO: Insert pie graph here; inline to secure graph styling in PDF report
                 //+ "</div>"
-                + "<span class='largetext'>" + lowContentPageCntPercentage + "%</span><br/>"
+                + "<span class='largetext'>" + lowContentPageCntPercentage.ToString("#,##0.0") + "%</span><br/>"
                 + "<span>van de pagina's bevat te weinig content</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
@@ -85,7 +86,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> " + lowContentPageCnt + " pagina's met te weinig content gevonden."
+                    + "<span class='messageText'> " + lowContentPageCnt.ToString("#,##0") + " pagina's met te weinig content gevonden."
                     + "Doordat er bij minder inhoudelijk content minder kans is dat de website verschijnt in gerelateerde zoekopdrachten is dit slecht. "
                     + "Er wordt dan ook een minimum van 500 woorden per pagina aangeraden.</span></div>";
             }

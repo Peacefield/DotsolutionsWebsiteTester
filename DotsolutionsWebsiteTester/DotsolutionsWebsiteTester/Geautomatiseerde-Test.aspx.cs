@@ -171,15 +171,45 @@ namespace DotsolutionsWebsiteTester
         private void GetSiteList()
         {
             var sitemap = new List<string>();
-            string url = Session["MainUrl"].ToString();
-            string userAgent = Session["userAgent"].ToString();
-            bool isPresent = false;
 
-            var apiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleAPI"];
-            
+
             Debug.WriteLine(">>>> GetSiteList >>> ");
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&q=%22" + url + "%22&rsz=8");
+            bool isPresent = false;
+            sitemap = FillSiteMap(0, 8);
+            Debug.WriteLine("sitemap.Count() voor = " + sitemap.Count());
+            sitemap = sitemap.Union(FillSiteMap(8, 2)).ToList();
+            Debug.WriteLine("sitemap.Count() na = " + sitemap.Count());
+
+            var url = Session["MainUrl"].ToString();
+            System.Uri uri = new Uri(url);
+            string uriWithoutScheme = uri.Host;
+            foreach (var item in sitemap)
+            {
+                TestedSitesList.InnerHtml += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
+
+                System.Uri uriFound = new Uri(item);
+                string uriFoundWithoutScheme = uriFound.Host;
+                // If entered URL is not in found URL's it will be added
+                // This if-statement detects if it IS among the found URL's by comparing it to several possible URL formats
+                if (uriFoundWithoutScheme == uriWithoutScheme || "www." + uriFoundWithoutScheme == uriWithoutScheme)
+                    isPresent = true;
+            }
+            if (!isPresent)
+                sitemap.Add(url);
+
+
+            // Add tested sites to session
+            Session["selectedSites"] = sitemap;
+        }
+
+        private List<string> FillSiteMap(int start, int resultSize)
+        {
+            var sitemap = new List<string>();
+            string url = Session["MainUrl"].ToString();
+            string userAgent = Session["userAgent"].ToString();
+            var apiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleAPI"];
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&q=%22" + url + "%22&rsz=" + resultSize + "&start=" + start);
             // Additional (optional) parameters
             // &rsz=[1-8] resultSize can be 1 through 8. Currently using 8.
             // &start=[x] Indicate where to start searching
@@ -200,39 +230,16 @@ namespace DotsolutionsWebsiteTester
             System.Uri uri = new Uri(url);
             string uriWithoutScheme = uri.Host;
 
-            if (results.Count != 0)
-            {
-                foreach (JToken item in results)
-                {
-                    if (IsOfDomain(url, item["unescapedUrl"].ToString()))
-                    {
-                        sitemap.Add(item["unescapedUrl"].ToString());
-
-                        System.Uri uriFound = new Uri(item["unescapedUrl"].ToString());
-                        string uriFoundWithoutScheme = uriFound.Host;
-                        // If entered URL is not in found URL's it will be added
-                        // This if-statement detects if it IS among the found URL's by comparing it to several possible URL formats
-                        if (uriFoundWithoutScheme == uriWithoutScheme || "www." + uriFoundWithoutScheme == uriWithoutScheme)
-                            isPresent = true;
-
-                    }
-                }
-                if (!isPresent)
-                    sitemap.Add(url);
-            }
-            else
-                sitemap.Add(url);
+            foreach (JToken item in results)
+                if (IsOfDomain(url, item["unescapedUrl"].ToString()))
+                    sitemap.Add(item["unescapedUrl"].ToString());
 
             // Cleanup the streams and the response.
             reader.Close();
             dataStream.Close();
             response.Close();
 
-            foreach (string item in sitemap)
-                TestedSitesList.InnerHtml += "<li><a href='" + item + "' target='_blank'>" + item + "</a></li>";
-
-            // Add tested sites to session
-            Session["selectedSites"] = sitemap;
+            return sitemap;
         }
 
         private bool IsOfDomain(string url, string addition)

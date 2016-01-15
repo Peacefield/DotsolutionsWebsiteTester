@@ -242,7 +242,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (!HasImgSizeAttributes(imageNode))
                 {
                     imgFaultyDeclare = true;
-                    rating = rating - ((1m / (decimal)imagelistCount) * 10m);
+                    //rating = rating - ((1m / (decimal)imagelistCount) * 10m);
+                    rating = rating - ((1m / (decimal)imagelistCount) * 5m);
                     //if (missingSize < 5)
                         AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
                             "Geen height en/of width attributen aanwezig.");
@@ -266,8 +267,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                     imgFaultyDeclare = true;
                     rating = rating - ((1m / (decimal)imagelistCount) * 5m);
                     //if (missingDesc < 5)
+                        //AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                        //    "Geen alt en/of title attributen aanwezig.");
                         AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                            "Geen alt en/of title attributen aanwezig.");
+                            "Geen alt attribuut aanwezig.");
                     missingDesc++;
                 }
 
@@ -362,8 +365,11 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns></returns>
         private bool HasImgDescAttributes(HtmlNode item)
         {
-            if (item.Attributes["alt"] != null && item.Attributes["title"] != null)
-                if (item.Attributes["alt"].Value != "" && item.Attributes["title"].Value != "")
+            //if (item.Attributes["alt"] != null && item.Attributes["title"] != null)
+            //    if (item.Attributes["alt"].Value != "" && item.Attributes["title"].Value != "")
+            //        return true;
+
+            if (item.Attributes["alt"] != null && item.Attributes["alt"].Value != "")
                     return true;
 
             return false;
