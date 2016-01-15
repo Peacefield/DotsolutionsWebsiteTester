@@ -32,7 +32,6 @@ namespace DotsolutionsWebsiteTester
                 //string userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
                 Session["userAgent"] = userAgent;
                 Session["robotsTxt"] = GetRobotsTxt(Session["MainUrl"].ToString());
-                Session["ApiKeys"] = GetApiKeys();
 
                 UrlTesting.InnerText = Session["MainUrl"].ToString();
                 laptopcontainer.Attributes["src"] = "http://i.imgur.com/PtcoFun.png";
@@ -94,25 +93,6 @@ namespace DotsolutionsWebsiteTester
             Response.Redirect("~/PdfTemplate");
 
             return;
-        }
-
-
-
-        /// <summary>
-        /// Get the API Keys needed for the used API's from local file and set them in Session
-        /// </summary>
-        /// <returns></returns>
-        private List<KeyValuePair<string, string>> GetApiKeys()
-        {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Michael\Documents\Visual Studio 2013\Projects\DotsolutionsWebsiteTester\DotsolutionsWebsiteTester\DotsolutionsWebsiteTester\App_Data\keys.txt");
-            var list = new List<KeyValuePair<string, string>>();
-            foreach (string line in lines)
-            {
-                // Use a tab to indent each line of the file.
-                var item = line.Split(':');
-                list.Add(new KeyValuePair<string, string>(item[0], item[1]));
-            }
-            return list;
         }
 
         /// <summary>

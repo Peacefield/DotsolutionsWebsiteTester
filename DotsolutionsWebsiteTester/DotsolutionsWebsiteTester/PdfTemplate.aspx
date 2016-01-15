@@ -175,17 +175,17 @@
                 width: 100%;
             }
 
-        #critlistcontainer > li {
-            list-style: none;
+        #critlistcontainer > div {
+            /*list-style: none;*/
             width: 50%;
             float: left;
             min-height: 120px;
-            margin-bottom: 25px;
+            /*margin-bottom: 25px;*/
         }
 
-            #critlistcontainer > li > .ratingList > ul > li {
+            /*#critlistcontainer > li > .ratingList > ul > li {
                 margin-top: 5px;
-            }
+            }*/
 
         .ratingList {
             display: block;
@@ -446,32 +446,32 @@
                         <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span><span class="subTitle">Totaal</span>
                     </div>
                     <hr />
-                    <ul id="critlistcontainer" runat="server">
-                        <li id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">...</span><span class="subTitle">Toegankelijkheid</span>
+                    <div id="critlistcontainer" runat="server">
+                        <div id="RatingAccessTxt" runat="server"><span id="RatingAccess" class="ratingSquare" runat="server">...</span><span class="subTitle">Toegankelijkheid</span>
                             <div class="ratingList">
                                 <ul id="RatingAccessList" runat="server">
                                 </ul>
                             </div>
-                        </li>
-                        <li id="RatingUxTxt" runat="server"><span id="RatingUx" class="ratingSquare" runat="server">...</span><span class="subTitle">Gebruikerservaring</span>
+                        </div>
+                        <div id="RatingUxTxt" runat="server"><span id="RatingUx" class="ratingSquare" runat="server">...</span><span class="subTitle">Gebruikerservaring</span>
                             <div class="ratingList">
                                 <ul id="RatingUxList" runat="server">
                                 </ul>
                             </div>
-                        </li>
-                        <li id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="ratingSquare" runat="server">...</span><span class="subTitle">Marketing</span>
+                        </div>
+                        <div id="RatingMarketingTxt" runat="server"><span id="RatingMarketing" class="ratingSquare" runat="server">...</span><span class="subTitle">Marketing</span>
                             <div class="ratingList">
                                 <ul id="RatingMarketingList" runat="server">
                                 </ul>
                             </div>
-                        </li>
-                        <li id="RatingTechTxt" runat="server"><span id="RatingTech" class="ratingSquare" runat="server">...</span><span class="subTitle">Technologie</span>
+                        </div>
+                        <div id="RatingTechTxt" runat="server"><span id="RatingTech" class="ratingSquare" runat="server">...</span><span class="subTitle">Technologie</span>
                             <div class="ratingList">
                                 <ul id="RatingTechList" runat="server">
                                 </ul>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
