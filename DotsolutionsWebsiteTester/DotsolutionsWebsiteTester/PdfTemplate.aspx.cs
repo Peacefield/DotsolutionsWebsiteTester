@@ -156,6 +156,7 @@ namespace DotsolutionsWebsiteTester
             base.Render(htwOut);
             string sOut = sbOut.ToString();
             var isDetailed = (bool)Session["IsDetailedTest"];
+            var isPdfPrint = (bool)Session["IsPdfPrint"];
 
             string year = System.DateTime.Today.Year.ToString();
             int month = System.DateTime.Today.Month;
@@ -174,63 +175,85 @@ namespace DotsolutionsWebsiteTester
             if (!isDetailed)
                 filename = filename + "_basis";
 
-            //try
-            //{
-            //    // create an API client instance
-            //    //Currently using my personal free license account
-            //    var ApiKey = GetFromApiKeys("PdfCrowd");
-            //    pdfcrowd.Client client = new pdfcrowd.Client("Peacefield", ApiKey);
-            //    client.setHtmlZoom(100);
+            if (isPdfPrint)
+            {
 
-            //    // convert a web page and write the generated PDF to a memory stream
-            //    MemoryStream Stream = new MemoryStream();
-            //    client.convertHtml(sOut, Stream);
+                try
+                {
+                    // create an API client instance
+                    //Currently using my personal free license account
+                    var ApiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["PdfCrowd"];
+                    pdfcrowd.Client client = new pdfcrowd.Client("Peacefield", ApiKey);
+                    client.setHtmlZoom(100);
 
-            //    // set HTTP response headers
-            //    Response.Clear();
-            //    Response.AddHeader("Content-Type", "application/pdf");
-            //    Response.AddHeader("Cache-Control", "max-age=0");
-            //    Response.AddHeader("Accept-Ranges", "none");
-            //    Response.AddHeader("Content-Disposition", "attachment; filename=" + filename + ".pdf");
+                    // convert a web page and write the generated PDF to a memory stream
+                    MemoryStream Stream = new MemoryStream();
+                    client.convertHtml(sOut, Stream);
 
-            //    // send the generated PDF
-            //    Stream.WriteTo(Response.OutputStream);
-            //    Stream.Close();
-            //    Response.Flush();
-            //    Response.End();
-            //}
-            //catch (pdfcrowd.Error why)
-            //{
-            //    Response.Write(why.ToString());
-            //}
+                    // set HTTP response headers
+                    Response.Clear();
+                    Response.AddHeader("Content-Type", "application/pdf");
+                    Response.AddHeader("Cache-Control", "max-age=0");
+                    Response.AddHeader("Accept-Ranges", "none");
+                    Response.AddHeader("Content-Disposition", "attachment; filename=" + filename + ".pdf");
 
-            // Saving pdfcrowd tokens by using streamwriter for now
+                    // send the generated PDF
+                    Stream.WriteTo(Response.OutputStream);
+                    Stream.Close();
+                    Response.Flush();
+                    Response.End();
+                }
+                catch (pdfcrowd.Error why)
+                {
+                    Response.Write(why.ToString());
+                }
 
-            // Write the string to a file with format -> Rapportage_http.example.com_YY-MM-DD--hh.mm.ss
+            }
+            else
+            {
+                // Write the string to a file with format -> Rapportage_http.example.com_YY-MM-DD--hh.mm.ss
 
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"c:\users\michael\dropbox\hw\Stageopdracht_Dotsolutions\_TestUitrollingen\"
-                + filename + ".html");
-            file.WriteLine(sOut);
-            file.Close();
+                //System.IO.StreamWriter file = new System.IO.StreamWriter(@"c:\users\michael\dropbox\hw\Stageopdracht_Dotsolutions\_TestUitrollingen\"
+                //    + filename + ".html");
+                //file.WriteLine(sOut);
+                //file.Close(); 
+                System.IO.StreamWriter file = new System.IO.StreamWriter(Server.MapPath("~/Temp/"
+                     + filename + ".html"));
+                file.WriteLine(sOut);
+                file.Close();
 
+                try
+                {
+                    Response.ContentType = "application/octet-stream";
+                    Response.AppendHeader("content-disposition", "attachment;filename=" + filename + ".html");
+                    Response.TransmitFile(Server.MapPath("~/Temp/" + filename + ".html"));
+                    Response.Flush();
+                }
+                finally
+                {
+                    string fullpath = Server.MapPath("~/Temp/" + filename + ".html");
+
+                    if (System.IO.File.Exists(fullpath))
+                    {
+                        Debug.WriteLine("File exists");
+                        Debug.WriteLine("fullpath" + fullpath);
+                        System.IO.File.Delete(fullpath);
+                        Debug.WriteLine("File deleted");
+                    }
+                    else
+                    {
+                        Debug.WriteLine("File does not exist");
+                    }
+                }
+
+                Response.End();
+
+
+            }
 
             writer.Write(sOut);
         }
-
-        /// <summary>
-        /// Get ApiKey from Session["ApiKeys"]
-        /// </summary>
-        /// <param name="key">ApiKey</param>
-        /// <returns>ApiKey Value</returns>
-        private string GetFromApiKeys(string key)
-        {
-            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
-            foreach (var element in list)
-                if (element.Key == key)
-                    return element.Value;
-            return "";
-        }
-
+        
         protected override void SavePageStateToPersistenceMedium(object state)
         {
             //base.SavePageStateToPersistenceMedium(state);

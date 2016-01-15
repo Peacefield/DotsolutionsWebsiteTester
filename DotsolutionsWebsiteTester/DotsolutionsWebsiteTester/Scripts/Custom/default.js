@@ -54,9 +54,9 @@ window.onload = function () {
     ShowCheckboxes.onclick = function () {
         setTimeout(function () {
             $("#checkboxHolder").toggle("slide", { direction: 'up' }, 1000, null);
-        }, 100); // How long do you want the delay to be (in milliseconds)? 
+        }, 100); // Delay (in milliseconds)
         $(this).text(function (i, text) {
-            // return text === "Verberg tests" ? "Selecteer tests" : "Verberg tests";
+            //return text === "Verberg tests" ? "Selecteer tests" : "Verberg tests";
             return text === "Selecteer tests" ? "Verberg tests" : "Selecteer tests";
         })
     }
@@ -66,11 +66,11 @@ window.onload = function () {
     CheckAllCheckboxes.onclick = function () {
         if ($(this).text() === "Alles selecteren")
             CheckAll();
-        else if ($(this).text() === "Niks selecteren")
+        else if ($(this).text() === "Alles deselecteren")
             CheckNone();
 
         $(this).text(function (i, text) {
-            return text === "Niks selecteren" ? "Alles selecteren" : "Niks selecteren";
+            return text === "Alles deselecteren" ? "Alles selecteren" : "Alles deselecteren";
         })
     }
 

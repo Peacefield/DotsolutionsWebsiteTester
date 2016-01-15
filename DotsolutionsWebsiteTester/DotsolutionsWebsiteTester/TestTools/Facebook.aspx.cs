@@ -30,7 +30,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            var AccesTokenSecret = GetFromApiKeys("FacebookAppSecret");
+            var AccesTokenSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["FacebookAppSecret"];
 
             fbc = new FacebookClient();
             try
@@ -85,20 +85,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         /// <summary>
-        /// Get ApiKey from Session["ApiKeys"]
-        /// </summary>
-        /// <param name="key">ApiKey</param>
-        /// <returns>ApiKey Value</returns>
-        private string GetFromApiKeys(string key)
-        {
-            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
-            foreach (var element in list)
-                if (element.Key == key)
-                    return element.Value;
-            return "";
-        }
-
-        /// <summary>
         /// Find Facebook Page using Google and user-entered page-content
         /// </summary>
         private void GetFacebook()
@@ -118,7 +104,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var screennameList = new List<string>();
             var rating = 0.0m;
 
-            var apiKey = GetFromApiKeys("GoogleAPI");
+            var apiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleAPI"];
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&rsz=8&q=facebook%20" + url);
             request.UserAgent = Session["userAgent"].ToString();
@@ -461,12 +447,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                FacebookRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                FacebookRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                FacebookRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                FacebookRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                FacebookRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                FacebookRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                FacebookRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                FacebookRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                FacebookRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                FacebookRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                FacebookRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                FacebookRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                FacebookRating.Attributes.Add("class", "excellentScore ratingCircle");
+                FacebookRating.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

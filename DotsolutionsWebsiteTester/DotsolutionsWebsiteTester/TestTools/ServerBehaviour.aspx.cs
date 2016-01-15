@@ -70,7 +70,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns></returns>
         private string Get404Message(string site)
         {
-            // TODO: Invullen Uitleg waarom dit niet goed is
             // http://netvantagemarketing.com/?page_id=7/whateverwhatever geeft geen 404
             var result = "";
             var icon = "";
@@ -323,12 +322,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                ServerBehaviourRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                ServerBehaviourRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                ServerBehaviourRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                ServerBehaviourRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                ServerBehaviourRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                ServerBehaviourRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                ServerBehaviourRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                ServerBehaviourRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                ServerBehaviourRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                ServerBehaviourRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                ServerBehaviourRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                ServerBehaviourRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                ServerBehaviourRating.Attributes.Add("class", "excellentScore ratingCircle");
+                ServerBehaviourRating.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

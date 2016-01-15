@@ -75,12 +75,28 @@ namespace DotsolutionsWebsiteTester
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void CreatePdfBtn_Click(object sender, EventArgs e)
+        protected void CreateHtmlBtn_Click(object sender, EventArgs e)
         {
+            Session["IsPdfPrint"] = false;
             Response.Redirect("~/PdfTemplate");
 
             return;
         }
+
+        /// <summary>
+        /// Click event handler to initiate Pdf creation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void CreatePdfBtn_Click(object sender, EventArgs e)
+        {
+            Session["IsPdfPrint"] = true;
+            Response.Redirect("~/PdfTemplate");
+
+            return;
+        }
+
+
 
         /// <summary>
         /// Get the API Keys needed for the used API's from local file and set them in Session
@@ -179,12 +195,13 @@ namespace DotsolutionsWebsiteTester
             string userAgent = Session["userAgent"].ToString();
             bool isPresent = false;
 
-            var apiKey = GetFromApiKeys("GoogleAPI");
+            var apiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleAPI"];
+            
             Debug.WriteLine(">>>> GetSiteList >>> ");
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&q=%22" + url + "%22&rsz=5");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&q=%22" + url + "%22&rsz=8");
             // Additional (optional) parameters
-            // &rsz=[1-8] resultSize can be 1 through 8. Currently using 5.
+            // &rsz=[1-8] resultSize can be 1 through 8. Currently using 8.
             // &start=[x] Indicate where to start searching
             request.UserAgent = userAgent;
             request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
@@ -236,20 +253,6 @@ namespace DotsolutionsWebsiteTester
 
             // Add tested sites to session
             Session["selectedSites"] = sitemap;
-        }
-
-        /// <summary>
-        /// Get ApiKey from Session["ApiKeys"]
-        /// </summary>
-        /// <param name="key">ApiKey</param>
-        /// <returns>ApiKey Value</returns>
-        private string GetFromApiKeys(string key)
-        {
-            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
-            foreach (var element in list)
-                if (element.Key == key)
-                    return element.Value;
-            return "";
         }
 
         private bool IsOfDomain(string url, string addition)
@@ -348,13 +351,15 @@ namespace DotsolutionsWebsiteTester
         {
             // Payed services with 100 free unique requests per month, but WITH mobile resolution ability
             // https://www.screenshotmachine.com/
-            //var ApiKey = GetFromApiKeys("ScreenshotMachine");
-            //var format = "PNG";
-            //var url = HttpUtility.UrlEncode(mainurl);
-            //var size = "N";
-            //var imgUrlLaptop = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
-            var imgUrlLaptop = "http://i.imgur.com/PtcoFun.png";
+            var ApiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["ScreenshotMachine"];
+            var format = "PNG";
+            var url = HttpUtility.UrlEncode(mainurl);
+            var size = "N";
+            var imgUrlLaptop = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            //var imgUrlLaptop = "http://i.imgur.com/PtcoFun.png";
 
+            laptopcontainer.Attributes["width"] = "400";
+            laptopcontainer.Attributes["height"] = "300";
             laptopcontainer.Attributes["alt"] = mainurl;
             laptopcontainer.Attributes["title"] = mainurl + " op computer";
             laptopcontainer.Attributes["src"] = imgUrlLaptop;
@@ -709,12 +714,35 @@ namespace DotsolutionsWebsiteTester
 
         public static string GetRatingClass(decimal rating)
         {
-            if (rating < 6m)
-                return "lowScore ratingSquare";
-            else if (rating < 8.5m)
-                return "mediocreScore ratingSquare";
+            //if (rating < 6m)
+            //    return "lowScore ratingSquare";
+            //else if (rating < 8.5m)
+            //    return "mediocreScore ratingSquare";
+            //else
+            //    return "excellentScore ratingSquare";
+
+            if (rating == 10m)
+                return "score-10 ratingSquare";
+            else if (rating > 9m)
+                return "score-9 ratingSquare";
+            else if (rating > 8m)
+                return "score-8 ratingSquare";
+            else if (rating > 7m)
+                return "score-7 ratingSquare";
+            else if (rating > 6m)
+                return "score-6 ratingSquare";
+            else if (rating > 5m)
+                return "score-5 ratingSquare";
+            else if (rating > 4m)
+                return "score-4 ratingSquare";
+            else if (rating > 3m)
+                return "score-3 ratingSquare";
+            else if (rating > 2m)
+                return "score-2 ratingSquare";
+            else if (rating > 1m)
+                return "score-1 ratingSquare";
             else
-                return "excellentScore ratingSquare";
+                return "score-0 ratingSquare";
         }
 
         /// <summary>

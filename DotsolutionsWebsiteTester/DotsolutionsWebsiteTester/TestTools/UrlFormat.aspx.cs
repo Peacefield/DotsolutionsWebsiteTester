@@ -255,12 +255,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                UrlFormatRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                UrlFormatRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                UrlFormatRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                UrlFormatRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                UrlFormatRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                UrlFormatRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                UrlFormatRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                UrlFormatRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                UrlFormatRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                UrlFormatRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                UrlFormatRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                UrlFormatRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                UrlFormatRating.Attributes.Add("class", "excellentScore ratingCircle");
+                UrlFormatRating.Attributes.Add("class", "score-0 ratingCircle");
         }
 
         /// <summary>

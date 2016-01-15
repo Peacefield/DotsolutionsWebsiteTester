@@ -44,8 +44,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             var sitemap = (List<string>)Session["selectedSites"];
             var message = "";
             // Start setting up MozscapeAPI
-            var strAccessID = GetFromApiKeys("MozscapeAccessId");
-            var strPrivateKey = GetFromApiKeys("MozscapeSecretKey");
+            var strAccessID = System.Web.Configuration.WebConfigurationManager.AppSettings["MozscapeAccessId"];
+            var strPrivateKey = System.Web.Configuration.WebConfigurationManager.AppSettings["MozscapeSecretKey"];
             var mozAPI = new MozscapeAPI();
             // End setting up MozscapeAPI
             var totalLinks = 0;
@@ -111,21 +111,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         // http://uk.queryclick.com/seo-news/using-mozscape-api-c-net/
         // https://github.com/QueryClick/MozscapeAPI/blob/master/MozscapeAPI.cs#L93
-
-        /// <summary>
-        /// Get ApiKey from Session["ApiKeys"]
-        /// </summary>
-        /// <param name="key">ApiKey</param>
-        /// <returns>ApiKey Value</returns>
-        private string GetFromApiKeys(string key)
-        {
-            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
-            foreach (var element in list)
-                if (element.Key == key)
-                    return element.Value;
-            return "";
-        }
-
+        
         /// <summary>
         /// Add a 0 to the start of an integer if it's less than 10 to improve readability
         /// </summary>
@@ -191,12 +177,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                IncomingLinksRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                IncomingLinksRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                IncomingLinksRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                IncomingLinksRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                IncomingLinksRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                IncomingLinksRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                IncomingLinksRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                IncomingLinksRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                IncomingLinksRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                IncomingLinksRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                IncomingLinksRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                IncomingLinksRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                IncomingLinksRating.Attributes.Add("class", "excellentScore ratingCircle");
+                IncomingLinksRating.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

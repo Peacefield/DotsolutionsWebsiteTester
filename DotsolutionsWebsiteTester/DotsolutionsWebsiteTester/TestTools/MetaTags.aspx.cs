@@ -220,7 +220,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     desc = "Geen description meta-tag gevonden.";
 
                 message += "<span class='help-block'>Zo ziet de website er uit op de resultatenpagina van Google:</span>";
-                message += "<div class='well well-lg col-md-6 col-sm-7'>"
+                message += "<div class='well well-sm col-md-6 col-sm-7'>"
                             + "<h3 class='googleResult_title noselect'>" + title + "</h3>"
                             + "<p class='googleResult_url noselect'>" + url + "</p>"
                             + "<p class='googleResult_desc noselect'>" + desc + "</p>"
@@ -502,12 +502,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                MetaTagsRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                MetaTagsRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                MetaTagsRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                MetaTagsRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                MetaTagsRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                MetaTagsRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                MetaTagsRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                MetaTagsRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                MetaTagsRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                MetaTagsRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                MetaTagsRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                MetaTagsRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                MetaTagsRating.Attributes.Add("class", "excellentScore ratingCircle");
+                MetaTagsRating.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

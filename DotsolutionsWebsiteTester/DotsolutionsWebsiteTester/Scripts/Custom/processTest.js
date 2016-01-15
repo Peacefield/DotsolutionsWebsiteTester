@@ -47,20 +47,68 @@ function SetRatingClass(identifier, rating, overall) {
     else {
         var rating = rating.replace(",", ".");
         if (overall) {
-            if (rating < 6)
-                $(identifier).attr("class", "lowScore ratingCircle");
-            else if (rating < 8.5)
-                $(identifier).attr("class", "mediocreScore ratingCircle");
+            //if (rating < 6)
+            //    $(identifier).attr("class", "lowScore ratingCircle");
+            //else if (rating < 8.5)
+            //    $(identifier).attr("class", "mediocreScore ratingCircle");
+            //else
+            //    $(identifier).attr("class", "excellentScore ratingCircle");
+            
+            if (rating == 10)
+                $(identifier).attr("class", "score-10 ratingCircle");
+            else if (rating > 9)
+                $(identifier).attr("class", "score-9 ratingCircle");
+            else if (rating > 8)
+                $(identifier).attr("class", "score-8 ratingCircle");
+            else if (rating > 7)
+                $(identifier).attr("class", "score-7 ratingCircle");
+            else if (rating > 6)
+                $(identifier).attr("class", "score-6 ratingCircle");
+            else if (rating > 5)
+                $(identifier).attr("class", "score-5 ratingCircle");
+            else if (rating > 4)
+                $(identifier).attr("class", "score-4 ratingCircle");
+            else if (rating > 3)
+                $(identifier).attr("class", "score-3 ratingCircle");
+            else if (rating > 2)
+                $(identifier).attr("class", "score-2 ratingCircle");
+            else if (rating > 1)
+                $(identifier).attr("class", "score-1 ratingCircle");
             else
-                $(identifier).attr("class", "excellentScore ratingCircle");
+                $(identifier).attr("class", "score-0 ratingCircle");
+
+
         }
         else {
-            if (rating < 6)
-                $(identifier).attr("class", "lowScore ratingSquare");
-            else if (rating < 8.5)
-                $(identifier).attr("class", "mediocreScore ratingSquare");
+            //if (rating < 6)
+            //    $(identifier).attr("class", "lowScore ratingSquare");
+            //else if (rating < 8.5)
+            //    $(identifier).attr("class", "mediocreScore ratingSquare");
+            //else
+            //    $(identifier).attr("class", "excellentScore ratingSquare");
+
+            if (rating == 10)
+                $(identifier).attr("class", "score-10 ratingSquare");
+            else if (rating > 9)
+                $(identifier).attr("class", "score-9 ratingSquare");
+            else if (rating > 8)
+                $(identifier).attr("class", "score-8 ratingSquare");
+            else if (rating > 7)
+                $(identifier).attr("class", "score-7 ratingSquare");
+            else if (rating > 6)
+                $(identifier).attr("class", "score-6 ratingSquare");
+            else if (rating > 5)
+                $(identifier).attr("class", "score-5 ratingSquare");
+            else if (rating > 4)
+                $(identifier).attr("class", "score-4 ratingSquare");
+            else if (rating > 3)
+                $(identifier).attr("class", "score-3 ratingSquare");
+            else if (rating > 2)
+                $(identifier).attr("class", "score-2 ratingSquare");
+            else if (rating > 1)
+                $(identifier).attr("class", "score-1 ratingSquare");
             else
-                $(identifier).attr("class", "excellentScore ratingSquare");
+                $(identifier).attr("class", "score-0 ratingSquare");
         }
     }
 }

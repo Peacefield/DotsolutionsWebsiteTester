@@ -33,8 +33,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            var ConsumerSecret = GetFromApiKeys("TwitterConsumerSecret");
-            var AccesTokenSecret = GetFromApiKeys("TwitterAccesTokenSecret");
+            var ConsumerSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["TwitterConsumerSecret"];
+            var AccesTokenSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["TwitterAccesTokenSecret"];
 
             this.authorizer = new SingleUserAuthorizer
                 {
@@ -67,20 +67,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["Twitter"] = htmlstring;
         }
 
-        /// <summary>
-        /// Get ApiKey from Session["ApiKeys"]
-        /// </summary>
-        /// <param name="key">ApiKey</param>
-        /// <returns>ApiKey Value</returns>
-        private string GetFromApiKeys(string key)
-        {
-            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
-            foreach (var element in list)
-                if (element.Key == key)
-                    return element.Value;
-            return "";
-        }
-
         private void GetTwitter()
         {
             // De beoordeling van dit onderdeel is afhankelijk van
@@ -93,7 +79,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var screennameList = new List<string>();
             var rating = 1.0m;
-            var apiKey = GetFromApiKeys("GoogleAPI");
+            var apiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleAPI"];
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&rsz=8&q=twitter%20" + url);
             // Additional parameters
@@ -552,12 +538,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                TwitterRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                TwitterRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                TwitterRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                TwitterRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                TwitterRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                TwitterRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                TwitterRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                TwitterRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                TwitterRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                TwitterRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                TwitterRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                TwitterRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                TwitterRating.Attributes.Add("class", "excellentScore ratingCircle");
+                TwitterRating.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

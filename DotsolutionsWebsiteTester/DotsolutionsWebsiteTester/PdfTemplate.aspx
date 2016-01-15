@@ -83,7 +83,6 @@
             float: left;
         }
 
-
         .socialResultBox-3 {
             padding: 20px 30px;
         }
@@ -91,6 +90,16 @@
         .socialResultBox-2 {
             padding: 40px 30px;
         }
+
+            .socialResultBox-3 i, .socialResultBox-2 i {
+                width: 15%;
+                float: left;
+            }
+
+            .socialResultBox-3 span, .socialResultBox-2 span {
+                width: 85%;
+                float: left;
+            }
 
         .resultDivider {
             width: 4%;
@@ -219,6 +228,50 @@
             background-color: green;
         }
 
+        .score-0 {
+            background-color: #FF0000;
+        }
+
+        .score-1 {
+            background-color: #FF3200;
+        }
+
+        .score-2 {
+            background-color: #FF6400;
+        }
+
+        .score-3 {
+            background-color: #FF9600;
+        }
+
+        .score-4 {
+            background-color: #FFC800;
+        }
+
+        .score-5 {
+            background-color: #FFFF00;
+        }
+
+        .score-6 {
+            background-color: #D4FF00;
+        }
+
+        .score-7 {
+            background-color: #AAFF00;
+        }
+
+        .score-8 {
+            background-color: #80FF00;
+        }
+
+        .score-9 {
+            background-color: #55FF00;
+        }
+
+        .score-10 {
+            background-color: #00FF00;
+        }
+
         .infoScore {
             background-color: #892978;
         }
@@ -276,6 +329,11 @@
 
         .largetext {
             font-size: 2em;
+        }
+
+        .emphasis {
+            font-weight: 700;
+            font-size: 1.5em;
         }
 
         .tableImg {

@@ -126,29 +126,18 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// </summary>
         private void SetPreviewImages()
         {
-            // Free service without mobile resolutionn ability
-            // http://www.shrinktheweb.com/
-            // http://www.shrinktheweb.com/auth/stw-lobby
-            //var accesskeyid = GetFromApiKeys("ShrinkTheWeb");
-            //var imgUrl = "http://images.shrinktheweb.com/xino.php?"
-            //    + "stwembed=1"
-            //    + "&stwaccesskeyid= " + accesskeyid
-            //    + "&stwinside=1"
-            //    + "&stwsize=xlg"
-            //    + "&stwurl=" + Session["MainUrl"].ToString();
-
             // Payed services with 100 free unique requests per month, but WITH mobile resolution ability
             // https://www.screenshotmachine.com/
-            //var ApiKey = GetFromApiKeys("ScreenshotMachine");
-            //var format = "PNG";
-            //var url = HttpUtility.UrlEncode(Session["mainUrl"].ToString());
-            //var size = "Nmob";
-            //var imgUrlMobile = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
-            //size = "N";
-            //var imgUrlTablet = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            var ApiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["ScreenshotMachine"];
+            var format = "PNG";
+            var url = HttpUtility.UrlEncode(Session["mainUrl"].ToString());
+            var size = "Nmob";
+            var imgUrlMobile = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
+            size = "N";
+            var imgUrlTablet = "http://api.screenshotmachine.com/?key=" + ApiKey + "&size=" + size + "&format=" + format + "&url=" + url;
 
-            var imgUrlTablet = "http://i.imgur.com/PtcoFun.png";
-            var imgUrlMobile = "http://i.imgur.com/8UIGhLL.png";
+            //var imgUrlTablet = "http://i.imgur.com/PtcoFun.png";
+            //var imgUrlMobile = "http://i.imgur.com/8UIGhLL.png";
 
             tabletImg.InnerHtml = "<img width='400' height='300' class='tabletcontainer center-block' src='" + imgUrlTablet + "' title='Tablet preview " + Session["MainUrl"].ToString() + "' alt='Tablet preview " + Session["MainUrl"].ToString() + "'/>";
             mobileImg.InnerHtml = "<img width='480' height='800' class='mobilecontainer center-block' src='" + imgUrlMobile + "' title='Smartphone preview " + Session["MainUrl"].ToString() + "' alt='Smartphone preview " + Session["MainUrl"].ToString() + "'/>";
@@ -369,26 +358,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                MobileCompatibilityRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                MobileCompatibilityRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                MobileCompatibilityRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                MobileCompatibilityRating.Attributes.Add("class", "excellentScore ratingCircle");
-        }
-
-        /// <summary>
-        /// Get ApiKey from Session["ApiKeys"]
-        /// </summary>
-        /// <param name="key">ApiKey</param>
-        /// <returns>ApiKey Value</returns>
-        private string GetFromApiKeys(string key)
-        {
-            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
-            foreach (var element in list)
-                if (element.Key == key)
-                    return element.Value;
-            return "";
+                MobileCompatibilityRating.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

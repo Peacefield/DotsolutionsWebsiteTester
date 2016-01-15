@@ -37,20 +37,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         /// <summary>
-        /// Get ApiKey from Session["ApiKeys"]
-        /// </summary>
-        /// <param name="key">ApiKey</param>
-        /// <returns>ApiKey Value</returns>
-        private string GetFromApiKeys(string key)
-        {
-            var list = (List<KeyValuePair<string, string>>)Session["ApiKeys"];
-            foreach (var element in list)
-                if (element.Key == key)
-                    return element.Value;
-            return "";
-        }
-
-        /// <summary>
         /// Find a Google Plus page via either Google Search or URL entered by user
         /// </summary>
         private void GetGooglePlus()
@@ -134,7 +120,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine("GetPossibleGPlus <<<< ");
             var url = Session["MainUrl"].ToString();
             var googleList = new List<string>();
-            var apiKey = GetFromApiKeys("GoogleAPI");
+            var apiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleAPI"];
             var requestString = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=" + apiKey + "&rsz=8&q=Google%2B+profile+" + url;
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestString);
@@ -197,7 +183,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <returns>JSON Object responseFromServer</returns>
         private JObject GetFromApi(string screenName)
         {
-            var apiKey = GetFromApiKeys("GoogleAPI");
+            var apiKey = System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleAPI"];
             var requestString = "https://www.googleapis.com/plus/v1/people/" + screenName + "?key=" + apiKey;
             var googleSearch = new JObject();
 
@@ -296,12 +282,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                GooglePlusRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                GooglePlusRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                GooglePlusRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                GooglePlusRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                GooglePlusRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                GooglePlusRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                GooglePlusRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                GooglePlusRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                GooglePlusRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                GooglePlusRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                GooglePlusRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                GooglePlusRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                GooglePlusRating.Attributes.Add("class", "excellentScore ratingCircle");
+                GooglePlusRating.Attributes.Add("class", "score-0 ratingCircle");
         }
 
         /// <summary>

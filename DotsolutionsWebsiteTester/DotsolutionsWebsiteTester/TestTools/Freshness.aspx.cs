@@ -81,15 +81,15 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var culture = new System.Globalization.CultureInfo("nl-NL"); // Displays (D)D-(M)M-YYYY
 
-            message += "<div><span class='text-center'><i class='fa fa-clock-o fa-3x'></i></span><span class='fa-2x'> " + latestDate.ToString("d", culture) + "</span></div>";
+            //message += "<div class='text-center'><span><i class='fa fa-clock-o fa-3x'></i></span><span class='fa-2x'> " + latestDate.ToString("d", culture) + "</span></div>";
 
             if (FreshnessTable.Rows.Count > 1)
             {
                 message += "<span>Na het doorlopen van " + FreshnessTable.Rows.Count
-                    + " bestanden is er gedetecteerd dat de content van de website voor het laatst is bijgewerkt op " + latestDate.ToString("d", culture) + ".</span>";
+                    + " bestanden is er gedetecteerd dat de content van de website voor het laatst is bijgewerkt op <time class='emphasis'>" + latestDate.ToString("d", culture) + "</time>.</span><br/>";
             }
             else
-                message += "<span>De content van de website is voor het laatst bijgewerkt op " + latestDate.ToString("d", culture) + ".</span><br/>";
+                message += "<span>De content van de website is voor het laatst bijgewerkt op <time class='emphasis'>" + latestDate.ToString("d", culture) + "</time>.</span><br/>";
 
             var todayDate = DateTime.Today;
             var oneMonthAgo = todayDate.AddMonths(-1);
@@ -408,12 +408,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                FreshnessRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                FreshnessRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                FreshnessRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                FreshnessRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                FreshnessRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                FreshnessRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                FreshnessRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                FreshnessRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                FreshnessRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                FreshnessRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                FreshnessRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                FreshnessRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                FreshnessRating.Attributes.Add("class", "excellentScore ratingCircle");
+                FreshnessRating.Attributes.Add("class", "score-0 ratingCircle");
         }
 
         /// <summary>

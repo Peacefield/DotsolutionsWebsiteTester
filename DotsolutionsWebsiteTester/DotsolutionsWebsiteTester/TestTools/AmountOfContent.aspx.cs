@@ -56,7 +56,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 var wordCount = GetContentCount(page);
 
                 var icon = "<i class='fa fa-check'></i>";
-                if (wordCount < 500)
+                if (wordCount < 400)
                 {
                     // te weinig
                     rating = rating - ((1m / (decimal)sitemap.Count) * 10m);
@@ -71,9 +71,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             var averageCount = totalContentCount / sitemap.Count;
 
             var message = "<div class='well well-lg resultWell text-center'>"
-                + "<div class='pieContainer'>"
+                //+ "<div class='pieContainer'>"
                 // TODO: Insert pie graph here; inline to secure graph styling in PDF report
-                + "</div>"
+                //+ "</div>"
                 + "<span class='largetext'>" + lowContentPageCntPercentage + "%</span><br/>"
                 + "<span>van de pagina's bevat te weinig content</span></div>"
                 + "<div class='resultDivider'></div>"
@@ -185,12 +185,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                AmountOfContentRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                AmountOfContentRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                AmountOfContentRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                AmountOfContentRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                AmountOfContentRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                AmountOfContentRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                AmountOfContentRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                AmountOfContentRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                AmountOfContentRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                AmountOfContentRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                AmountOfContentRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                AmountOfContentRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                AmountOfContentRating.Attributes.Add("class", "excellentScore ratingCircle");
+                AmountOfContentRating.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

@@ -417,12 +417,28 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
-            if (rating < 6m)
-                InternalLinksRating.Attributes.Add("class", "lowScore ratingCircle");
-            else if (rating < 8.5m)
-                InternalLinksRating.Attributes.Add("class", "mediocreScore ratingCircle");
+            if (rating == 10m)
+                InternalLinksRating.Attributes.Add("class", "score-10 ratingCircle");
+            else if (rating > 9m)
+                InternalLinksRating.Attributes.Add("class", "score-9 ratingCircle");
+            else if (rating > 8m)
+                InternalLinksRating.Attributes.Add("class", "score-8 ratingCircle");
+            else if (rating > 7m)
+                InternalLinksRating.Attributes.Add("class", "score-7 ratingCircle");
+            else if (rating > 6m)
+                InternalLinksRating.Attributes.Add("class", "score-6 ratingCircle");
+            else if (rating > 5m)
+                InternalLinksRating.Attributes.Add("class", "score-5 ratingCircle");
+            else if (rating > 4m)
+                InternalLinksRating.Attributes.Add("class", "score-4 ratingCircle");
+            else if (rating > 3m)
+                InternalLinksRating.Attributes.Add("class", "score-3 ratingCircle");
+            else if (rating > 2m)
+                InternalLinksRating.Attributes.Add("class", "score-2 ratingCircle");
+            else if (rating > 1m)
+                InternalLinksRating.Attributes.Add("class", "score-1 ratingCircle");
             else
-                InternalLinksRating.Attributes.Add("class", "excellentScore ratingCircle");
+                InternalLinksRating.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

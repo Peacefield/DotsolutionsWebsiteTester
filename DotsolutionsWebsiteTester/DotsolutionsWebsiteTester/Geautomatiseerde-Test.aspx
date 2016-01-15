@@ -24,6 +24,11 @@
     </div>
 
     <div class="pull-right">
+        <asp:Button ID="CreateHtmlBtn"
+            Text="Opslaan als HTML"
+            CssClass="btn btn-custom btn-md"
+            OnClick="CreateHtmlBtn_Click"
+            runat="server" />
         <asp:Button ID="CreatePdfBtn"
             Text="Opslaan als PDF"
             CssClass="btn btn-custom btn-md"
