@@ -173,7 +173,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 temp += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                    + "<span class='messageText'> Er " + grammar[0] + " gevonden die niet goed gedeclareerd " + grammar[1] + ". "
-                   + "Dit betekent dat een afbeelding geen height, width, title en/of alt attribuut bevat.</span></div>";
+                   + "Dit betekent dat een afbeelding geen height, width en/of alt attribuut bevat.</span></div>";
             }
 
             if (imgResized > 0)
@@ -208,7 +208,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         /// <summary>
-        /// Test an image found as HtmlNode on responsecode, size-declaration and alt/title-declaration
+        /// Test an image found as HtmlNode on responsecode, size-declaration and alt-declaration
         /// </summary>
         /// <param name="imageNode">HtmlNode image</param>
         /// <param name="page">string page of origin</param>
@@ -217,6 +217,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             Debug.WriteLine(" --------------- " + imageNode.Attributes["src"].Value + " testen op " + page + " --------------- ");
 
+            var sitemap = (List<string>)Session["selectedSites"];
             var baseUrl = Session["MainUrl"].ToString();
             var imageUrl = imageNode.Attributes["src"].Value;
 
@@ -243,9 +244,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     imgFaultyDeclare = true;
                     //rating = rating - ((1m / (decimal)imagelistCount) * 10m);
-                    rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                    rating = rating - ((1m / (decimal)imagelistCount) * (3.3m / (decimal)sitemap.Count));
                     //if (missingSize < 5)
-                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + " zonder height en/of width attribuut' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
                             "Geen height en/of width attributen aanwezig.");
                     missingSize++;
                 }
@@ -254,9 +255,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     if (!IsImageSize(imageUrl, imageNode))
                     {
                         imgFaultyDeclare = true;
-                        rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                        rating = rating - ((1m / (decimal)imagelistCount) * (3.3m / (decimal)sitemap.Count));
                         //if (imgResized < 5)
-                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + " gedeclareerde grootte is incorrect' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
                                 "In HTML gedeclareerde grootte komt niet overeen met originele grootte van de afbeelding.");
                         imgResized++;
                     }
@@ -265,11 +266,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (!HasImgDescAttributes(imageNode))
                 {
                     imgFaultyDeclare = true;
-                    rating = rating - ((1m / (decimal)imagelistCount) * 5m);
+                    rating = rating - ((1m / (decimal)imagelistCount) * (3.3m / (decimal)sitemap.Count));
                     //if (missingDesc < 5)
                         //AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
                         //    "Geen alt en/of title attributen aanwezig.");
-                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + " heeft geen alt attribuut' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
                             "Geen alt attribuut aanwezig.");
                     missingDesc++;
                 }
@@ -359,7 +360,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
 
         /// <summary>
-        /// Check if item has alt and title attributes
+        /// Check if item has an alt attribute
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
