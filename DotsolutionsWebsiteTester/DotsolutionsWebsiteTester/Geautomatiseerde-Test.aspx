@@ -58,19 +58,19 @@
                 <div id="prof" class="manualTest">
                     <h4>Professionaliteit</h4>
                     <div class="row">
-                        <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Opmaak</label>
+                        <label class="control-label col-md-3 col-lg-3 col-xs-5 col-sm-3">Opmaak</label>
                         <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfOpma" runat="server">
                         </label>
                     </div>
 
                     <div class="row">
-                        <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Huisstijl</label>
+                        <label class="control-label col-md-3 col-lg-3 col-xs-5 col-sm-3">Huisstijl</label>
                         <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfHuis" runat="server">
                         </label>
                     </div>
 
                     <div class="row">
-                        <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Kleurgebruik</label>
+                        <label class="control-label col-md-3 col-lg-3 col-xs-5 col-sm-3">Kleurgebruik</label>
                         <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormProfKleur" runat="server">
                         </label>
                     </div>
@@ -78,23 +78,22 @@
                 <div id="userX" class="manualTest">
                     <h4>Gebruiksvriendelijkheid</h4>
                     <div class="row">
-                        <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Menu</label>
+                        <label class="control-label col-md-3 col-lg-3 col-xs-5 col-sm-3">Menu</label>
                         <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormUxMen" runat="server">
                         </label>
                     </div>
 
                     <div class="row">
-                        <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Structuur</label>
+                        <label class="control-label col-md-3 col-lg-3 col-xs-5 col-sm-3">Structuur</label>
                         <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormUxStruc" runat="server">
                         </label>
                     </div>
                 </div>
                 <div id="vormComm" class="manualTest">
                     <div class="row">
-                        <label class="control-label col-md-2 col-lg-2 col-xs-4 col-sm-2">Opmerkingen</label>
-                        <label class="col-md-9 col-lg-9 col-xs-7 col-sm-9" id="VormComment" runat="server">
+                        <label class="control-label col-md-3 col-lg-3 col-sm-3 col-xs-5">Opmerkingen</label>
+                        <label class="col-md-9 col-lg-9 col-sm-9 col-xs-7 " id="VormComment" runat="server">
                         </label>
-                        <label class="col-md-1 col-lg-1 col-xs-1 col-sm-1"></label>
                     </div>
                 </div>
             </div>

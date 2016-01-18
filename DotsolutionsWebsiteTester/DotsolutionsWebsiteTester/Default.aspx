@@ -4,7 +4,7 @@
 
     <div class="jumbotron text-center center-block" id="testsjumbotron">
 
-        <h1>Website tester</h1>
+        <h1><span>Website</span> tester</h1>
         <div class="row urlTextBoxRow">
             <%--<div class="col-md-8 col-xs-10 col-sm-8 col-lg-8 col-md-offset-2 col-xs-offset-1 col-sm-offset-2 col-lg-offset-2">--%>
             <div class="col-md-10 col-xs-10 col-sm-10 col-lg-10 col-md-offset-1 col-xs-offset-1 col-sm-offset-1 col-lg-offset-1">

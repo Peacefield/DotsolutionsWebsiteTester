@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="jumbotron">
-        <h1>Handmatige Test</h1>
+        <h1><span>Handmatige</span> Test</h1>
 
         <span class="help-block" id="SiteUrl" runat="server">http://www.example.com</span>
         <div class="hidden" id="required" runat="server">
