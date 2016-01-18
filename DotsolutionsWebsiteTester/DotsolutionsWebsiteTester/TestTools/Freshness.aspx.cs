@@ -17,6 +17,8 @@ namespace DotsolutionsWebsiteTester.TestTools
         //List<DateTime> dateList = new List<DateTime>();
         ConcurrentBag<DateTime> threadSafe = new ConcurrentBag<DateTime>();
         List<KeyValuePair<string, List<KeyValuePair<string, DateTime>>>> DateListContainer = new List<KeyValuePair<string, List<KeyValuePair<string, DateTime>>>>();
+        ConcurrentBag<string> contentCheckedContainer = new ConcurrentBag<string>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -85,7 +87,8 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (FreshnessTable.Rows.Count > 1)
             {
-                message += "<span>Na het doorlopen van " + FreshnessTable.Rows.Count
+                var total = FreshnessTable.Rows.Count - 1;
+                message += "<span>Na het doorlopen van " + total
                     + " bestanden is er gedetecteerd dat de content van de website voor het laatst is bijgewerkt op <time class='emphasis'>" + latestDate.ToString("d", culture) + "</time>.</span><br/>";
             }
             else
@@ -257,9 +260,17 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (item.Attributes["src"] != null)
                     {
-                        var url = CreateUrl(item.Attributes["src"].Value);
-                        if (url.Length > 0)
-                            contentList.Add(url);
+                        if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
+                        {
+                            contentCheckedContainer.Add(item.Attributes["src"].Value);
+
+                            if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
+                            {
+                                var url = CreateUrl(item.Attributes["src"].Value);
+                                if (url.Length > 0)
+                                    contentList.Add(url);
+                            }
+                        }
                     }
                 }
             }
@@ -270,9 +281,17 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (item.Attributes["src"] != null)
                     {
-                        var url = CreateUrl(item.Attributes["src"].Value);
-                        if (url.Length > 0)
-                            contentList.Add(url);
+                        if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
+                        {
+                            contentCheckedContainer.Add(item.Attributes["src"].Value);
+
+                            if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
+                            {
+                                var url = CreateUrl(item.Attributes["src"].Value);
+                                if (url.Length > 0)
+                                    contentList.Add(url);
+                            }
+                        }
                     }
                 }
             }
@@ -283,13 +302,63 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (item.Attributes["href"] != null)
                     {
-                        var url = CreateUrl(item.Attributes["href"].Value);
-                        if (url.Length > 0)
-                            contentList.Add(url);
+                        if (!contentCheckedContainer.Contains(item.Attributes["href"].Value))
+                        {
+                            contentCheckedContainer.Add(item.Attributes["href"].Value);
+
+                            if ((!item.Attributes["href"].Value.StartsWith("http") && !item.Attributes["href"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["href"].Value))
+                            {
+                                var url = CreateUrl(item.Attributes["href"].Value);
+                                if (url.Length > 0)
+                                    contentList.Add(url);
+                            }
+                        }
                     }
                 }
             }
             return contentList;
+        }
+        private bool IsOfDomain(string url, string addition)
+        {
+            Debug.WriteLine("IsOfDomain: " + addition);
+            if (addition.Contains(url))
+            {
+                return true;
+            }
+            try
+            {
+                var foundUrl = CreateUrl(addition);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(foundUrl);
+                request.UserAgent = Session["userAgent"].ToString();
+                request.Timeout = 1000;
+                // Get the response.
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                var uri = new Uri(url);
+
+                //Debug.WriteLine("Session['MainUrl'].ToString() uri.host =======> " + uri.Host);
+
+                IPAddress[] addresslistMain = Dns.GetHostAddresses(uri.Host);
+                IPAddress[] addresslist = Dns.GetHostAddresses(response.ResponseUri.Host.ToString());
+
+                //IP check
+                foreach (IPAddress theaddress in addresslist)
+                {
+                    if (addresslistMain.Contains(theaddress))
+                    {
+                        Debug.WriteLine("IsOfDomain true");
+                        return true;
+                    }
+                }
+            }
+            catch (WebException we)
+            {
+                Debug.WriteLine(addition + " heeft een fout veroorzaakt.");
+                Debug.WriteLine("IsOfDomain Catch: " + we.Message);
+            }
+
+            Debug.WriteLine("IsOfDomain false");
+            return false;
         }
 
         private string CreateUrl(string foundUrl)

@@ -243,6 +243,12 @@ namespace DotsolutionsWebsiteTester
             return sitemap;
         }
 
+        /// <summary>
+        /// Check if found site is part of entered domain by comparing IP addresses
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="addition"></param>
+        /// <returns></returns>
         private bool IsOfDomain(string url, string addition)
         {
             if (addition.Contains(url))
