@@ -172,7 +172,6 @@ namespace DotsolutionsWebsiteTester
         {
             var sitemap = new List<string>();
 
-
             Debug.WriteLine(">>>> GetSiteList >>> ");
 
             bool isPresent = false;
@@ -196,8 +195,10 @@ namespace DotsolutionsWebsiteTester
                     isPresent = true;
             }
             if (!isPresent)
+            {
+                TestedSitesList.InnerHtml += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";
                 sitemap.Add(url);
-
+            }
 
             // Add tested sites to session
             Session["selectedSites"] = sitemap;

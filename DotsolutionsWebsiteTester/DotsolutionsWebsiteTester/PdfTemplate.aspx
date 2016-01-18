@@ -419,6 +419,19 @@
             font-size: 1.5em;
             margin-left: 10px;
         }
+
+        @media all {
+            .page-break {
+                display: none;
+            }
+        }
+
+        @media print {
+            .page-break {
+                display: block;
+                page-break-before: always;
+            }
+        }
     </style>
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />

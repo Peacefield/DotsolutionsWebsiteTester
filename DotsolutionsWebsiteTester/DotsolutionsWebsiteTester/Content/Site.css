@@ -344,7 +344,21 @@ footer {
         background-repeat: repeat-x;
     }
 
-#checkboxHolder #CheckAllCheckboxes {
+@media all {
+    .page-break {
+        display: none;
+    }
+}
+
+@media print {
+    .page-break {
+        display: block;
+        page-break-before: always;
+    }
+}
+/* Start Default Page CSS */
+.detailedTestCheckBox, .urlTextBoxRow .input-group, .urlTextBoxRow .help-block,
+#MainContent_StartScanBtn, #ShowCheckboxes, #CheckAllCheckboxes {
     margin-top: 10px;
 }
 
@@ -353,19 +367,17 @@ footer {
     border-radius: 15px;
 }
 
-/* Start Default Page CSS */
-.checkboxlistrow,
-.urlTextBoxRow {
+.checkboxlistrow {
     padding-bottom: 10px;
 }
 
-    .urlTextBoxRow .input-group {
-        /*background-color: #f9841b;*/
-        /*background-color: #34495e;*/
-        background-color: #3fb2ab;
-        padding: 20px;
-        border-radius: 5px;
-    }
+.urlTextBoxRow .input-group {
+    /*background-color: #f9841b;*/
+    /*background-color: #34495e;*/
+    background-color: #3fb2ab;
+    padding: 20px;
+    border-radius: 5px;
+}
 
 #testsjumbotron {
     margin-top: 6%;
