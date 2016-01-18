@@ -91,8 +91,8 @@
                 </div>
                 <div id="vormComm" class="manualTest">
                     <div class="row">
-                        <label class="control-label col-md-3 col-lg-3 col-sm-3 col-xs-5">Opmerkingen</label>
-                        <label class="col-md-9 col-lg-9 col-sm-9 col-xs-7 " id="VormComment" runat="server">
+                        <label class="control-label col-md-2 col-lg-2 col-sm-2 col-xs-12">Opmerkingen</label>
+                        <label class="col-md-10 col-lg-10 col-sm-10 col-xs-12" id="VormComment" runat="server">
                         </label>
                     </div>
                 </div>

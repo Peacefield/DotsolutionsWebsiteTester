@@ -14,10 +14,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class Freshness : System.Web.UI.Page
     {
-        //List<DateTime> dateList = new List<DateTime>();
-        ConcurrentBag<DateTime> threadSafe = new ConcurrentBag<DateTime>();
+        //ConcurrentBag<DateTime> threadSafe = new ConcurrentBag<DateTime>();
+        List<DateTime> threadSafe = new List<DateTime>();
         List<KeyValuePair<string, List<KeyValuePair<string, DateTime>>>> DateListContainer = new List<KeyValuePair<string, List<KeyValuePair<string, DateTime>>>>();
-        ConcurrentBag<string> contentCheckedContainer = new ConcurrentBag<string>();
+        //ConcurrentBag<string> contentCheckedContainer = new ConcurrentBag<string>();
+        List<string> contentCheckedContainer = new List<string>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,17 +32,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
-            //Debug.WriteLine("Page_Load");
-
             GetFreshness();
-
-            //var ths = new ThreadStart(GetFreshness);
-            //var th = new Thread(ths);
-            //th.Start();
-            //Debug.WriteLine("Na starten mainthread");
-            //Thread.Sleep(10);
-            //th.Join();
-            //Debug.WriteLine("Na joinen mainthread");
 
             var sb = new System.Text.StringBuilder();
             FreshnessSession.RenderControl(new System.Web.UI.HtmlTextWriter(new System.IO.StringWriter(sb)));
@@ -52,8 +43,6 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         private void GetFreshness()
         {
-            //Debug.WriteLine("GetFreshness");
-
             var message = "";
             var sitemap = (List<string>)Session["selectedSites"];
             var latestDate = new DateTime();
@@ -66,14 +55,16 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 Debug.WriteLine(" --------------------------------------------------------- Start werken aan ------------------------------- " + page + " --------------------------------------------------------- ");
 
-                var ths = new ThreadStart(() => GetLatestDate(page));
-                var th = new Thread(ths);
-                th.Start();
-                threadpool.Add(th);
+                //var ths = new ThreadStart(() => GetLatestDate(page));
+                //var th = new Thread(ths);
+                //th.Start();
+                //threadpool.Add(th);
+
+                GetLatestDate(page);
             }
 
-            foreach (var thread in threadpool)
-                thread.Join();
+            //foreach (var thread in threadpool)
+            //    thread.Join();
 
             foreach (var newDate in threadSafe)
             {
@@ -224,10 +215,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 list.Sort(Compare);
 
                 Debug.WriteLine(" --- list.Sort --- ");
-                //foreach (var item in list)
-                //{
-                //    Debug.WriteLine(item.Value.Date);
-                //}
 
                 DateListContainer.Add(new KeyValuePair<string, List<KeyValuePair<string, DateTime>>>(site, list));
             }
@@ -262,60 +249,72 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
                         {
+                            Debug.WriteLine("Nieuwe afbeelding toegevoegd aan contentCheckedContainer: " + item.Attributes["src"].Value);
+
                             contentCheckedContainer.Add(item.Attributes["src"].Value);
 
                             if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
                             {
                                 var url = CreateUrl(item.Attributes["src"].Value);
                                 if (url.Length > 0)
+                                {
                                     contentList.Add(url);
+                                    Debug.WriteLine("Nieuwe afbeelding toegevoegd aan contentList: " + item.Attributes["src"].Value);
+                                }
                             }
                         }
-                    }
-                }
-            }
-
-            if (doc.DocumentNode.SelectNodes("//script") != null)
-            {
-                foreach (var item in doc.DocumentNode.SelectNodes("//script"))
-                {
-                    if (item.Attributes["src"] != null)
-                    {
-                        if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
+                        else
                         {
-                            contentCheckedContainer.Add(item.Attributes["src"].Value);
-
-                            if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
-                            {
-                                var url = CreateUrl(item.Attributes["src"].Value);
-                                if (url.Length > 0)
-                                    contentList.Add(url);
-                            }
+                            Debug.WriteLine("Afbeelding aanwezig in contentCheckedContainer: " + item.Attributes["src"].Value);
                         }
                     }
                 }
             }
 
-            if (doc.DocumentNode.SelectNodes("//link") != null)
-            {
-                foreach (var item in doc.DocumentNode.SelectNodes("//link"))
-                {
-                    if (item.Attributes["href"] != null)
-                    {
-                        if (!contentCheckedContainer.Contains(item.Attributes["href"].Value))
-                        {
-                            contentCheckedContainer.Add(item.Attributes["href"].Value);
+            Debug.WriteLine("contentList.Count: " + contentList.Count);
+            Debug.WriteLine("contentCheckedContainer.Count: " + contentCheckedContainer.Count);
 
-                            if ((!item.Attributes["href"].Value.StartsWith("http") && !item.Attributes["href"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["href"].Value))
-                            {
-                                var url = CreateUrl(item.Attributes["href"].Value);
-                                if (url.Length > 0)
-                                    contentList.Add(url);
-                            }
-                        }
-                    }
-                }
-            }
+            //if (doc.DocumentNode.SelectNodes("//script") != null)
+            //{
+            //    foreach (var item in doc.DocumentNode.SelectNodes("//script"))
+            //    {
+            //        if (item.Attributes["src"] != null)
+            //        {
+            //            if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
+            //            {
+            //                contentCheckedContainer.Add(item.Attributes["src"].Value);
+
+            //                if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
+            //                {
+            //                    var url = CreateUrl(item.Attributes["src"].Value);
+            //                    if (url.Length > 0)
+            //                        contentList.Add(url);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+            //if (doc.DocumentNode.SelectNodes("//link") != null)
+            //{
+            //    foreach (var item in doc.DocumentNode.SelectNodes("//link"))
+            //    {
+            //        if (item.Attributes["href"] != null)
+            //        {
+            //            if (!contentCheckedContainer.Contains(item.Attributes["href"].Value))
+            //            {
+            //                contentCheckedContainer.Add(item.Attributes["href"].Value);
+
+            //                if ((!item.Attributes["href"].Value.StartsWith("http") && !item.Attributes["href"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["href"].Value))
+            //                {
+            //                    var url = CreateUrl(item.Attributes["href"].Value);
+            //                    if (url.Length > 0)
+            //                        contentList.Add(url);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
             return contentList;
         }
         private bool IsOfDomain(string url, string addition)

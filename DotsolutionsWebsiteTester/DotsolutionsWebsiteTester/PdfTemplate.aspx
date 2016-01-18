@@ -38,7 +38,6 @@
             padding: 25px;
         }
 
-
             .panel-custom .panel-heading span:not(.ratingCircle) {
                 font-size: 1.3em;
             }
@@ -142,6 +141,16 @@
 
             .manualTest i {
                 color: #f6cd29;
+            }
+
+            .manualTest#prof, .manualTest#userX {
+                width: 50%;
+                float: left;
+            }
+
+            .manualTest#vormComm {
+                width: 100%;
+                float: left;
             }
 
         #MainContent_manualResultHidden h3 {
@@ -339,16 +348,11 @@
         }
 
         #MainContent_sizeref {
-            height: 250px;
+            height: 380px;
         }
 
-
-            #MainContent_sizeref h5 {
-                font-size: 1.5em;
-            }
-
             #MainContent_sizeref h4 {
-                font-size: 1.5em;
+                font-size: 1.3em;
                 font-weight: bold;
             }
 
