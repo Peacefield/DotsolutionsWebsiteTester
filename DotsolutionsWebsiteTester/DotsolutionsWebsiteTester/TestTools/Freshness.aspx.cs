@@ -63,6 +63,21 @@ namespace DotsolutionsWebsiteTester.TestTools
                 GetLatestDate(page);
             }
 
+
+            if (isDetailed)
+            {
+                var i = 0;
+                foreach (var overheadlist in DateListContainer)
+                {
+                    Debug.WriteLine("i = " + i);
+                    foreach (var list in overheadlist.Value)
+                    {
+                        AddToTable(list.Value.ToShortDateString(), list.Key, sitemap[i]);
+                    }
+                    i++;
+                }
+            }
+
             //foreach (var thread in threadpool)
             //    thread.Join();
 
@@ -168,16 +183,22 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             threadSafe.Add(latestDate);
 
-            if (isDetailed)
-            {
-                foreach (var overheadlist in DateListContainer)
-                {
-                    foreach (var list in overheadlist.Value)
-                    {
-                        AddToTable(list.Value.ToShortDateString(), list.Key, page);
-                    }
-                }
-            }
+            //if (isDetailed)
+            //{
+            //    var i = 0;
+            //    var j = 0;
+            //    foreach (var overheadlist in DateListContainer)
+            //    {
+            //        i++;
+            //        Debug.WriteLine("i = " + i);
+            //        foreach (var list in overheadlist.Value)
+            //        {
+            //            j++;
+            //            Debug.WriteLine("j = " + j);
+            //            AddToTable(list.Value.ToShortDateString(), list.Key, page);
+            //        }
+            //    }
+            //}
         }
 
         /// <summary>
@@ -274,47 +295,47 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine("contentList.Count: " + contentList.Count);
             Debug.WriteLine("contentCheckedContainer.Count: " + contentCheckedContainer.Count);
 
-            //if (doc.DocumentNode.SelectNodes("//script") != null)
-            //{
-            //    foreach (var item in doc.DocumentNode.SelectNodes("//script"))
-            //    {
-            //        if (item.Attributes["src"] != null)
-            //        {
-            //            if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
-            //            {
-            //                contentCheckedContainer.Add(item.Attributes["src"].Value);
+            if (doc.DocumentNode.SelectNodes("//script") != null)
+            {
+                foreach (var item in doc.DocumentNode.SelectNodes("//script"))
+                {
+                    if (item.Attributes["src"] != null)
+                    {
+                        if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
+                        {
+                            contentCheckedContainer.Add(item.Attributes["src"].Value);
 
-            //                if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
-            //                {
-            //                    var url = CreateUrl(item.Attributes["src"].Value);
-            //                    if (url.Length > 0)
-            //                        contentList.Add(url);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+                            if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
+                            {
+                                var url = CreateUrl(item.Attributes["src"].Value);
+                                if (url.Length > 0)
+                                    contentList.Add(url);
+                            }
+                        }
+                    }
+                }
+            }
 
-            //if (doc.DocumentNode.SelectNodes("//link") != null)
-            //{
-            //    foreach (var item in doc.DocumentNode.SelectNodes("//link"))
-            //    {
-            //        if (item.Attributes["href"] != null)
-            //        {
-            //            if (!contentCheckedContainer.Contains(item.Attributes["href"].Value))
-            //            {
-            //                contentCheckedContainer.Add(item.Attributes["href"].Value);
+            if (doc.DocumentNode.SelectNodes("//link") != null)
+            {
+                foreach (var item in doc.DocumentNode.SelectNodes("//link"))
+                {
+                    if (item.Attributes["href"] != null)
+                    {
+                        if (!contentCheckedContainer.Contains(item.Attributes["href"].Value))
+                        {
+                            contentCheckedContainer.Add(item.Attributes["href"].Value);
 
-            //                if ((!item.Attributes["href"].Value.StartsWith("http") && !item.Attributes["href"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["href"].Value))
-            //                {
-            //                    var url = CreateUrl(item.Attributes["href"].Value);
-            //                    if (url.Length > 0)
-            //                        contentList.Add(url);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+                            if ((!item.Attributes["href"].Value.StartsWith("http") && !item.Attributes["href"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["href"].Value))
+                            {
+                                var url = CreateUrl(item.Attributes["href"].Value);
+                                if (url.Length > 0)
+                                    contentList.Add(url);
+                            }
+                        }
+                    }
+                }
+            }
             return contentList;
         }
         private bool IsOfDomain(string url, string addition)
