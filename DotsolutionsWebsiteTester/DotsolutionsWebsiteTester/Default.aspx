@@ -85,7 +85,7 @@
                     <asp:CheckBoxList ID="TestsCheckBoxList3"
                         runat="server">
                         <asp:ListItem Text="Pagina titels" Value="PageTitles" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Populariteit" Value="Popularity" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Populariteit" Value="Popularity" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Printbaarheid" Value="Printability" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Server gedrag" Value="ServerBehaviour" Selected="false"></asp:ListItem>
                         <%--<asp:ListItem Text="Sociale interesse" Value="SocialInterest" Selected="false"></asp:ListItem>--%>

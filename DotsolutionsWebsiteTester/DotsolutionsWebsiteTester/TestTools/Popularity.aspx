@@ -9,6 +9,7 @@
                     <span id="PopularityRating" runat="server">?</span><span class="title">Populariteit</span>
                 </div>
                 <div class="panel-body">
+                    <div id="PopularityResults" class="results" runat="server"></div>
                 </div>
             </div>
         </div>

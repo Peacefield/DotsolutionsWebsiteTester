@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -41,6 +42,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             message += Get404Message(site);
             message += GetGzipMessage(site);
             message += GetRedirectMessage(site);
+            message += GetPageSpeedInisghts(site);
             message += GetServerTypeMessage(site);
 
             ServerBehaviourResults.InnerHtml = message;
@@ -222,7 +224,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                rating = rating - 10m/3m;
+                rating = rating - 10m / 3m;
                 icon = "fa-times";
                 result = "Er is geen permanente (HTTP 301) doorverwijzing ingesteld van " + before + " naar " + after + "."
                     + "Dit is slecht doordat beide versies beschouwd worden als verschillende websites en zoekmachines dit minder goed waarderen.";
@@ -276,7 +278,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             var result = "";
             var serverType = GetServerType(site);
-            
+
             if (serverType.Length > 0)
             {
                 result = "Server is van type: " + serverType + ".";
@@ -314,6 +316,49 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             return type;
+        }
+
+        /// <summary>
+        /// Get a message displaying the speed-score via Google's pageSpeed Insights
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns>string message</returns>
+        private string GetPageSpeedInisghts(string site)
+        {
+            var result = "";
+            var apikey = System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleAPI"];
+
+            var requestString = "https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url=" + site + "&key=" + apikey;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestString);
+            request.UserAgent = Session["userAgent"].ToString();
+            request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream dataStream = response.GetResponseStream();
+            var reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+
+            JObject PageSpeedInsightJson = JObject.Parse(responseFromServer);
+
+            var score = PageSpeedInsightJson["ruleGroups"]["SPEED"]["score"].ToString();
+
+            result += "Google's PageSpeed Insights geeft deze website een score van <span class='emphasis'>" + score + "/100</span>.<br/><a href='https://developers.google.com/speed/pagespeed/insights/?url=" + site + "&tab=desktop' target='_blank'>Klik hier voor een volledig verslag</a>";
+
+            var icon = "fa-check";
+
+            if (Int32.Parse(score) < 55) 
+                icon = "fa-times";
+
+            rating = rating - (2.5m - decimal.Parse(score) / 100m * 2.5m);
+
+            return "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>"
+                    + "<span class='fa-stack fa-3x'>"
+                    + "<i class='fa " + icon + " fa-stack-2x'></i>"
+                    + "<i class='fa fa-google fa-stack-1x'></i>"
+                    + "</span></div>"
+                    + "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>"
+                    + result
+                    + "</span></div>";
         }
 
         /// <summary>
