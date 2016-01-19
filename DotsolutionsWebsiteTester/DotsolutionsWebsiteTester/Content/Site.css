@@ -294,6 +294,31 @@ h1 span {
         transition: all .2s linear;
     }
 
+.navbar-custom {
+    background-color: #F5F5F5;
+    border-color: #FFF;
+}
+
+    .navbar-custom a {
+        color: #000;
+        border-radius: 10px;
+    }
+
+        .navbar-custom a:hover, .navbar-custom a:active,
+        .navbar-custom a:visited, .navbar-custom a:link {
+            color: #000;
+        }
+
+        .navbar-custom a:hover {
+            /*opacity: 0.5;*/
+            background-color: #fff;
+            transition: all .1s linear;
+        }
+
+        .navbar-custom a span {
+            color: #54b721;
+        }
+
 .btn-white {
     background-color: #fff;
     color: #000;
