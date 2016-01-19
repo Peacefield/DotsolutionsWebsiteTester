@@ -64,7 +64,7 @@
                         <asp:ListItem Text="Actueelheid" Value="Freshness" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Afbeeldingen" Value="Images" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Analytics" Value="Analytics" Selected="false"></asp:ListItem>
-                        <asp:ListItem Text="Binnenkomende links" Value="IncomingLinks" Selected="false" Enabled="false"></asp:ListItem>
+                        <asp:ListItem Text="Binnenkomende links" Value="IncomingLinks" Selected="false" Enabled="true"></asp:ListItem>
                         <asp:ListItem Text="Code kwaliteit" Value="CodeQuality" Selected="false"></asp:ListItem>
                         <asp:ListItem Text="Facebook Pagina" Value="Facebook" Selected="false"></asp:ListItem>
                     </asp:CheckBoxList>

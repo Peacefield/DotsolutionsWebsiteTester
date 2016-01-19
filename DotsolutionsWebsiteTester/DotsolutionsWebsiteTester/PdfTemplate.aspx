@@ -209,21 +209,6 @@
             font-size: 1.1em;
         }
 
-        .lowScore {
-            /*background-image: linear-gradient(to bottom,red 0,black 175%);*/
-            background-color: red;
-        }
-
-        .mediocreScore {
-            /*background-image: linear-gradient(to bottom,orangered 0,black 175%);*/
-            background-color: orangered;
-        }
-
-        .excellentScore {
-            /*background-image: linear-gradient(to bottom,green 0,black 175%);*/
-            background-color: green;
-        }
-
         .score-0 {
             background-color: #FF0000;
         }
