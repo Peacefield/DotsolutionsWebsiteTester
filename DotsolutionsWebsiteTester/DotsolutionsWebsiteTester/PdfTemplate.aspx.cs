@@ -40,9 +40,11 @@ namespace DotsolutionsWebsiteTester
             SetTotalRating();
 
             if ((bool)Session["ManualTest"])
-            {
                 manualresults.InnerHtml += Session["ManualTestResults"].ToString();
-            }
+
+            if (selectedTests.Count < 10)
+                critlistpagebreak.Attributes.Remove("class");
+
 
             var orderedList = OrderByRating(selectedTests);
             // Append HTML to the results div

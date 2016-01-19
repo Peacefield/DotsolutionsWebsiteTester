@@ -175,13 +175,35 @@
             #automatedRatingList ul {
                 display: inline-block;
                 width: 100%;
+                list-style: none;
             }
 
-        #critlistcontainer > div {
-            width: 50%;
-            float: left;
-            min-height: 120px;
+            #automatedRatingList.panel-custom {
+                padding-top: 15px;
+            }
+
+            #automatedRatingList .panel-body {
+                padding-top: 0px;
+            }
+
+            #automatedRatingList .ratingCircle {
+                font-size: 1.5em;
+                width: 40px;
+                max-width: 50px;
+                height: 40px;
+            }
+
+        #critlistcontainer {
+            border-top: 1px solid #F5F5F5;
+            padding-top: 5px;
+            margin-top: 5px;
         }
+
+            #critlistcontainer > div:not(#critlistpagebreak) {
+                width: 50%;
+                float: left;
+                min-height: 120px;
+            }
 
         .ratingList {
             display: block;
@@ -428,6 +450,7 @@
         <div class="container body-content">
             <div id="sizeref" runat="server"></div>
             <div id="manualresults" runat="server"></div>
+            <div class="page-break"></div>
             <div class="panel panel-custom" id="automatedRatingList">
                 <div class="panel-heading">
                     <span>Beoordeling geautomatiseerde test</span>
@@ -436,7 +459,6 @@
                     <div>
                         <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span><span class="subTitle">Totaal</span>
                     </div>
-                    <hr />
                     <div id="critlistcontainer" runat="server">
                         <div id="RatingAccessTxt" runat="server">
                             <span id="RatingAccess" class="ratingSquare" runat="server">...</span><span class="subTitle">Toegankelijkheid</span>
@@ -452,6 +474,7 @@
                                 </ul>
                             </div>
                         </div>
+                        <div id="critlistpagebreak" class="page-break" runat="server"></div>
                         <div id="RatingMarketingTxt" runat="server">
                             <span id="RatingMarketing" class="ratingSquare" runat="server">...</span><span class="subTitle">Marketing</span>
                             <div class="ratingList">
@@ -469,6 +492,8 @@
                     </div>
                 </div>
             </div>
+
+            <div class="page-break"></div>
 
             <div class="panel panel-custom">
                 <div class="panel-heading">

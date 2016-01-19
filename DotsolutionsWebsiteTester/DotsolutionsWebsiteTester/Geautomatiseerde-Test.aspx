@@ -98,7 +98,6 @@
                 </div>
             </div>
         </div>
-        <div class="page-break"></div>
     </div>
 
     <div class="panel panel-custom" id="automatedRatingList">
