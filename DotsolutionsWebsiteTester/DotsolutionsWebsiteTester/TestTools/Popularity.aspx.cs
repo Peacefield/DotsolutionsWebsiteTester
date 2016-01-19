@@ -116,6 +116,17 @@ namespace DotsolutionsWebsiteTester.TestTools
                     else
                         rating = 0.0m;
                 }
+                else
+                {
+                    if (rank < 1000)
+                        rating = 10m;
+                    else if (rank < 50000)
+                        rating = 7.5m;
+                    else if (rank < 100000)
+                        rating = 5.5m;
+                    else
+                        rating = 0.0m;
+                }
             }
             else if (deltaStr.Contains("-"))
             {
