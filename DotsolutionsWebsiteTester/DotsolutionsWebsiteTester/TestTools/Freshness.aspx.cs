@@ -63,24 +63,20 @@ namespace DotsolutionsWebsiteTester.TestTools
                 GetLatestDate(page);
             }
 
+            //foreach (var thread in threadpool)
+            //    thread.Join();
 
             if (isDetailed)
             {
                 var i = 0;
                 foreach (var overheadlist in DateListContainer)
                 {
-                    Debug.WriteLine("i = " + i);
                     foreach (var list in overheadlist.Value)
-                    {
                         AddToTable(list.Value.ToShortDateString(), list.Key, sitemap[i]);
-                    }
                     i++;
                 }
             }
-
-            //foreach (var thread in threadpool)
-            //    thread.Join();
-
+            
             foreach (var newDate in threadSafe)
             {
                 if (newDate > latestDate)
@@ -91,7 +87,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             //message += "<div class='text-center'><span><i class='fa fa-clock-o fa-3x'></i></span><span class='fa-2x'> " + latestDate.ToString("d", culture) + "</span></div>";
 
-            if (FreshnessTable.Rows.Count > 1)
+            if (latestDate == new DateTime())
+                message += "<span>Er konden geen data worden gevonden op de geteste pagina's.</span><br/>";
+            else if (FreshnessTable.Rows.Count > 1)
             {
                 var total = FreshnessTable.Rows.Count - 1;
                 message += "<span>Na het doorlopen van " + total
@@ -182,23 +180,6 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             }
             threadSafe.Add(latestDate);
-
-            //if (isDetailed)
-            //{
-            //    var i = 0;
-            //    var j = 0;
-            //    foreach (var overheadlist in DateListContainer)
-            //    {
-            //        i++;
-            //        Debug.WriteLine("i = " + i);
-            //        foreach (var list in overheadlist.Value)
-            //        {
-            //            j++;
-            //            Debug.WriteLine("j = " + j);
-            //            AddToTable(list.Value.ToShortDateString(), list.Key, page);
-            //        }
-            //    }
-            //}
         }
 
         /// <summary>
@@ -251,13 +232,14 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             return latestDate;
         }
+
         static int Compare(KeyValuePair<string, DateTime> a, KeyValuePair<string, DateTime> b)
         {
             return a.Value.CompareTo(b.Value);
         }
+        
         private List<string> GetContentList(string site)
         {
-            //Debug.WriteLine("GetContentList");
             var contentList = new List<string>();
             var webget = new HtmlWeb();
             var doc = webget.Load(site);
@@ -270,8 +252,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     {
                         if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
                         {
-                            Debug.WriteLine("Nieuwe afbeelding toegevoegd aan contentCheckedContainer: " + item.Attributes["src"].Value);
-
                             contentCheckedContainer.Add(item.Attributes["src"].Value);
 
                             if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
@@ -280,20 +260,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                                 if (url.Length > 0)
                                 {
                                     contentList.Add(url);
-                                    Debug.WriteLine("Nieuwe afbeelding toegevoegd aan contentList: " + item.Attributes["src"].Value);
                                 }
                             }
-                        }
-                        else
-                        {
-                            Debug.WriteLine("Afbeelding aanwezig in contentCheckedContainer: " + item.Attributes["src"].Value);
                         }
                     }
                 }
             }
-
-            Debug.WriteLine("contentList.Count: " + contentList.Count);
-            Debug.WriteLine("contentCheckedContainer.Count: " + contentCheckedContainer.Count);
 
             if (doc.DocumentNode.SelectNodes("//script") != null)
             {
@@ -340,7 +312,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         }
         private bool IsOfDomain(string url, string addition)
         {
-            Debug.WriteLine("IsOfDomain: " + addition);
             if (addition.Contains(url))
             {
                 return true;
@@ -353,11 +324,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 request.Timeout = 1000;
                 // Get the response.
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
                 var uri = new Uri(url);
-
-                //Debug.WriteLine("Session['MainUrl'].ToString() uri.host =======> " + uri.Host);
-
                 IPAddress[] addresslistMain = Dns.GetHostAddresses(uri.Host);
                 IPAddress[] addresslist = Dns.GetHostAddresses(response.ResponseUri.Host.ToString());
 
@@ -366,7 +333,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (addresslistMain.Contains(theaddress))
                     {
-                        Debug.WriteLine("IsOfDomain true");
                         return true;
                     }
                 }
@@ -377,7 +343,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                 Debug.WriteLine("IsOfDomain Catch: " + we.Message);
             }
 
-            Debug.WriteLine("IsOfDomain false");
             return false;
         }
 
@@ -499,23 +464,23 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             if (rating == 10m)
                 FreshnessRating.Attributes.Add("class", "score-10 ratingCircle");
-            else if (rating > 9m)
+            else if (rating >= 9m)
                 FreshnessRating.Attributes.Add("class", "score-9 ratingCircle");
-            else if (rating > 8m)
+            else if (rating >= 8m)
                 FreshnessRating.Attributes.Add("class", "score-8 ratingCircle");
-            else if (rating > 7m)
+            else if (rating >= 7m)
                 FreshnessRating.Attributes.Add("class", "score-7 ratingCircle");
-            else if (rating > 6m)
+            else if (rating >= 6m)
                 FreshnessRating.Attributes.Add("class", "score-6 ratingCircle");
-            else if (rating > 5m)
+            else if (rating >= 5m)
                 FreshnessRating.Attributes.Add("class", "score-5 ratingCircle");
-            else if (rating > 4m)
+            else if (rating >= 4m)
                 FreshnessRating.Attributes.Add("class", "score-4 ratingCircle");
-            else if (rating > 3m)
+            else if (rating >= 3m)
                 FreshnessRating.Attributes.Add("class", "score-3 ratingCircle");
-            else if (rating > 2m)
+            else if (rating >= 2m)
                 FreshnessRating.Attributes.Add("class", "score-2 ratingCircle");
-            else if (rating > 1m)
+            else if (rating >= 1m)
                 FreshnessRating.Attributes.Add("class", "score-1 ratingCircle");
             else
                 FreshnessRating.Attributes.Add("class", "score-0 ratingCircle");

@@ -54,23 +54,30 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             foreach (var page in sitemap)
             {
-                var strAPIURL = mozAPI.CreateAPIURL(strAccessID, strPrivateKey, 1, "url metrics", page, "");
-                var strResults = mozAPI.FetchResults(strAPIURL);
-                var msURLMetrics = mozAPI.ParseURLMetrics(strResults);
-                var strBackLinks = msURLMetrics.uid;
-                var strMozRankUrl = msURLMetrics.umrp;
-                var strMozRankCrawled = msURLMetrics.ulc;
+                try
+                {
+                    var strAPIURL = mozAPI.CreateAPIURL(strAccessID, strPrivateKey, 1, "url metrics", page, "");
+                    var strResults = mozAPI.FetchResults(strAPIURL);
+                    var msURLMetrics = mozAPI.ParseURLMetrics(strResults);
+                    var strMozRankUrl = msURLMetrics.umrp;
+                    var strBackLinks = msURLMetrics.uid;
+                    var strMozRankCrawled = msURLMetrics.ulc;
 
-                var strMozRankCrawledDate = UnixTimeStampToDateTime(strMozRankCrawled);
+                    var strMozRankCrawledDate = UnixTimeStampToDateTime(strMozRankCrawled);
 
-                totalLinks += Int32.Parse(strBackLinks);
-                totalRating += decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
+                    totalLinks += Int32.Parse(strBackLinks);
+                    totalRating += decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
 
-                if (strMozRankCrawled == "0")
-                    strMozRankCrawledDate = "Niet bekend";
-                var strMozRankUrlRounded = decimal.Round(decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture), 1).ToString();
-                var intExternalLinks = Int32.Parse(strBackLinks);
-                AddToTable(page, intExternalLinks.ToString("#,##0"), strMozRankUrlRounded, strMozRankCrawledDate);
+                    if (strMozRankCrawled == "0")
+                        strMozRankCrawledDate = "Niet bekend";
+                    var strMozRankUrlRounded = decimal.Round(decimal.Parse(strMozRankUrl, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture), 1).ToString();
+                    var intExternalLinks = Int32.Parse(strBackLinks);
+                    AddToTable(page, intExternalLinks.ToString("#,##0"), strMozRankUrlRounded, strMozRankCrawledDate);
+                }
+                catch (NullReferenceException)
+                {
+                    Debug.WriteLine("API limiet overschreden: This request exceeds the limit allowed by your current plan. To increase your request limit, see: http://moz.com/products/api/pricing.");
+                }
             }
 
             if (isDetailed)
@@ -111,7 +118,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         // http://uk.queryclick.com/seo-news/using-mozscape-api-c-net/
         // https://github.com/QueryClick/MozscapeAPI/blob/master/MozscapeAPI.cs#L93
-        
+
         /// <summary>
         /// Add a 0 to the start of an integer if it's less than 10 to improve readability
         /// </summary>
@@ -179,23 +186,23 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             if (rating == 10m)
                 IncomingLinksRating.Attributes.Add("class", "score-10 ratingCircle");
-            else if (rating > 9m)
+            else if (rating >= 9m)
                 IncomingLinksRating.Attributes.Add("class", "score-9 ratingCircle");
-            else if (rating > 8m)
+            else if (rating >= 8m)
                 IncomingLinksRating.Attributes.Add("class", "score-8 ratingCircle");
-            else if (rating > 7m)
+            else if (rating >= 7m)
                 IncomingLinksRating.Attributes.Add("class", "score-7 ratingCircle");
-            else if (rating > 6m)
+            else if (rating >= 6m)
                 IncomingLinksRating.Attributes.Add("class", "score-6 ratingCircle");
-            else if (rating > 5m)
+            else if (rating >= 5m)
                 IncomingLinksRating.Attributes.Add("class", "score-5 ratingCircle");
-            else if (rating > 4m)
+            else if (rating >= 4m)
                 IncomingLinksRating.Attributes.Add("class", "score-4 ratingCircle");
-            else if (rating > 3m)
+            else if (rating >= 3m)
                 IncomingLinksRating.Attributes.Add("class", "score-3 ratingCircle");
-            else if (rating > 2m)
+            else if (rating >= 2m)
                 IncomingLinksRating.Attributes.Add("class", "score-2 ratingCircle");
-            else if (rating > 1m)
+            else if (rating >= 1m)
                 IncomingLinksRating.Attributes.Add("class", "score-1 ratingCircle");
             else
                 IncomingLinksRating.Attributes.Add("class", "score-0 ratingCircle");

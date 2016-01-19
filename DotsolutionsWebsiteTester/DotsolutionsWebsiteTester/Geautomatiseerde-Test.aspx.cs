@@ -708,32 +708,25 @@ namespace DotsolutionsWebsiteTester
 
         public static string GetRatingClass(decimal rating)
         {
-            //if (rating < 6m)
-            //    return "lowScore ratingSquare";
-            //else if (rating < 8.5m)
-            //    return "mediocreScore ratingSquare";
-            //else
-            //    return "excellentScore ratingSquare";
-
             if (rating == 10m)
                 return "score-10 ratingSquare";
-            else if (rating > 9m)
+            else if (rating >= 9m)
                 return "score-9 ratingSquare";
-            else if (rating > 8m)
+            else if (rating >= 8m)
                 return "score-8 ratingSquare";
-            else if (rating > 7m)
+            else if (rating >= 7m)
                 return "score-7 ratingSquare";
-            else if (rating > 6m)
+            else if (rating >= 6m)
                 return "score-6 ratingSquare";
-            else if (rating > 5m)
+            else if (rating >= 5m)
                 return "score-5 ratingSquare";
-            else if (rating > 4m)
+            else if (rating >= 4m)
                 return "score-4 ratingSquare";
-            else if (rating > 3m)
+            else if (rating >= 3m)
                 return "score-3 ratingSquare";
-            else if (rating > 2m)
+            else if (rating >= 2m)
                 return "score-2 ratingSquare";
-            else if (rating > 1m)
+            else if (rating >= 1m)
                 return "score-1 ratingSquare";
             else
                 return "score-0 ratingSquare";

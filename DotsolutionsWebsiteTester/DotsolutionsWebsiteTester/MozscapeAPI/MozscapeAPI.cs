@@ -92,6 +92,9 @@ namespace Scoop
             // Create hashed signature using the message string and private key
             string strSignature = CreateEncryptedSig(strMessage, strPrivateKey);
 
+            System.Diagnostics.Debug.WriteLine("strExpiry: " + strExpiry);
+            System.Diagnostics.Debug.WriteLine("strSignature: " + strSignature);
+
             switch (strType)
             {
                 case "url metrics":

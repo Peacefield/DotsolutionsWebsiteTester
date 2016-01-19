@@ -56,23 +56,23 @@ function SetRatingClass(identifier, rating, overall) {
             
             if (rating == 10)
                 $(identifier).attr("class", "score-10 ratingCircle");
-            else if (rating > 9)
+            else if (rating >= 9)
                 $(identifier).attr("class", "score-9 ratingCircle");
-            else if (rating > 8)
+            else if (rating >= 8)
                 $(identifier).attr("class", "score-8 ratingCircle");
-            else if (rating > 7)
+            else if (rating >= 7)
                 $(identifier).attr("class", "score-7 ratingCircle");
-            else if (rating > 6)
+            else if (rating >= 6)
                 $(identifier).attr("class", "score-6 ratingCircle");
-            else if (rating > 5)
+            else if (rating >= 5)
                 $(identifier).attr("class", "score-5 ratingCircle");
-            else if (rating > 4)
+            else if (rating >= 4)
                 $(identifier).attr("class", "score-4 ratingCircle");
-            else if (rating > 3)
+            else if (rating >= 3)
                 $(identifier).attr("class", "score-3 ratingCircle");
-            else if (rating > 2)
+            else if (rating >= 2)
                 $(identifier).attr("class", "score-2 ratingCircle");
-            else if (rating > 1)
+            else if (rating >= 1)
                 $(identifier).attr("class", "score-1 ratingCircle");
             else
                 $(identifier).attr("class", "score-0 ratingCircle");

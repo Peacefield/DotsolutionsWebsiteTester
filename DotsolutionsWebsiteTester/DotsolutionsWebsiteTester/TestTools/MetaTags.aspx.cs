@@ -465,6 +465,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var tCellContent = new TableCell();
             tCellContent.Text = content;
+            tCellContent.CssClass = "word-break";
             tRow.Cells.Add(tCellContent);
 
             MetaResultsTable.Rows.Add(tRow);
@@ -504,23 +505,23 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             if (rating == 10m)
                 MetaTagsRating.Attributes.Add("class", "score-10 ratingCircle");
-            else if (rating > 9m)
+            else if (rating >= 9m)
                 MetaTagsRating.Attributes.Add("class", "score-9 ratingCircle");
-            else if (rating > 8m)
+            else if (rating >= 8m)
                 MetaTagsRating.Attributes.Add("class", "score-8 ratingCircle");
-            else if (rating > 7m)
+            else if (rating >= 7m)
                 MetaTagsRating.Attributes.Add("class", "score-7 ratingCircle");
-            else if (rating > 6m)
+            else if (rating >= 6m)
                 MetaTagsRating.Attributes.Add("class", "score-6 ratingCircle");
-            else if (rating > 5m)
+            else if (rating >= 5m)
                 MetaTagsRating.Attributes.Add("class", "score-5 ratingCircle");
-            else if (rating > 4m)
+            else if (rating >= 4m)
                 MetaTagsRating.Attributes.Add("class", "score-4 ratingCircle");
-            else if (rating > 3m)
+            else if (rating >= 3m)
                 MetaTagsRating.Attributes.Add("class", "score-3 ratingCircle");
-            else if (rating > 2m)
+            else if (rating >= 2m)
                 MetaTagsRating.Attributes.Add("class", "score-2 ratingCircle");
-            else if (rating > 1m)
+            else if (rating >= 1m)
                 MetaTagsRating.Attributes.Add("class", "score-1 ratingCircle");
             else
                 MetaTagsRating.Attributes.Add("class", "score-0 ratingCircle");
