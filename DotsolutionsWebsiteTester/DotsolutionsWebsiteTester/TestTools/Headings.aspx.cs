@@ -109,7 +109,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 message = "<div class='well well-lg resultWell text-center'>"
                     + "<span class='largetext'>" + errorPercentage + "%</span><br/>"
-                    + "<span>van de headers zijn incorrect ingedeeld</span></div>"
+                    + "<span>van de headers is incorrect ingedeeld</span></div>"
                     + "<div class='resultDivider'></div>"
                     + "<div class='well well-lg resultWell text-center'>"
                     + "<i class='fa fa-header fa-3x'></i><i class='fa fa-header fa-2x'></i><i class='fa fa-header fa-1x'></i><br/>"

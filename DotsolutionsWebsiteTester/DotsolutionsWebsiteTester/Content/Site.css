@@ -163,6 +163,7 @@
     #MainContent_mobileImg {
         margin-left: 0;
     }
+
     .manualTest#prof, .manualTest#userX {
         width: 50%;
     }
@@ -313,6 +314,10 @@ h1 span {
 .emphasis {
     font-weight: 700;
     font-size: 1.5em;
+}
+
+tr:nth-child(2n+1) {
+    background-color: #F5F5F5;
 }
 
 .tableImg {

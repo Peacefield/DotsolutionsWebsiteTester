@@ -156,7 +156,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             message = "<div class='well well-lg resultWell text-center'>"
                 + "<span class='largetext'>" + percentageUsed + "%</span><br/>"
-                + "<span>van de pagina's gebruiken analytics</span></div>"
+                + "<span>van de pagina's gebruikt analytics</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
                 + "<i class='fa fa-search fa-3x'></i><br/>"

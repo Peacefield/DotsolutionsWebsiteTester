@@ -246,82 +246,90 @@ namespace DotsolutionsWebsiteTester.TestTools
                         select user;
             var returnedUser = users.ToList();
 
-            var TweetCount = GetTweetCount(returnedUser);
-            var FollowingCount = GetFollowingCount(returnedUser);
-            var FollowersCount = GetFollowerCount(returnedUser);
-
-            var TweetCountString = TweetCount.ToString("#,##0");
-            var FollowersCountString = FollowersCount.ToString("#,##0");
-            var FollowingCountString = FollowingCount.ToString("#,##0");
-            var ProfileImage = GetProfileImage(returnedUser);
-            var CoverImage = GetCoverImage(returnedUser);
-
-            var TweetAmountString = "";
-            var TweetAmountLastDays = GetTweetAmountLastDays(screenName);
-            
-            if (TweetAmountLastDays == 20)
-                TweetAmountString = "Dit account heeft in de afgelopen 7 dagen minimaal 20 tweets verzonden";
-            else if (TweetAmountLastDays == 1)
-                TweetAmountString = "Dit account heeft in de afgelopen 7 dagen 1 tweet verzonden";
-            else
-                TweetAmountString = "Dit account heeft in de afgelopen 7 dagen " + TweetAmountLastDays + " tweets verzonden";
-
-            if (TweetAmountLastDays < 3)
+            try
             {
-                if (TweetAmountLastDays == 2)
-                    rating = 8.0m;
+                var TweetCount = GetTweetCount(returnedUser);
+                var FollowingCount = GetFollowingCount(returnedUser);
+                var FollowersCount = GetFollowerCount(returnedUser);
+
+                var TweetCountString = TweetCount.ToString("#,##0");
+                var FollowersCountString = FollowersCount.ToString("#,##0");
+                var FollowingCountString = FollowingCount.ToString("#,##0");
+                var ProfileImage = GetProfileImage(returnedUser);
+                var CoverImage = GetCoverImage(returnedUser);
+
+                var TweetAmountString = "";
+                var TweetAmountLastDays = GetTweetAmountLastDays(screenName);
+
+                if (TweetAmountLastDays == 20)
+                    TweetAmountString = "Dit account heeft in de afgelopen 7 dagen minimaal 20 tweets verzonden";
                 else if (TweetAmountLastDays == 1)
-                    rating = 6.0m;
+                    TweetAmountString = "Dit account heeft in de afgelopen 7 dagen 1 tweet verzonden";
                 else
-                    rating = 4.0m;
-            }
-            
-            var percentage = ((decimal)FollowersCount / (decimal)TweetCount) * 100m;
-            Debug.WriteLine("percentage = " + percentage);
+                    TweetAmountString = "Dit account heeft in de afgelopen 7 dagen " + TweetAmountLastDays + " tweets verzonden";
 
-            if (percentage < 75)
-            {
-                if (percentage >= 50m)
+                if (TweetAmountLastDays < 3)
+                {
+                    if (TweetAmountLastDays == 2)
+                        rating = 8.0m;
+                    else if (TweetAmountLastDays == 1)
+                        rating = 6.0m;
+                    else
+                        rating = 4.0m;
+                }
+
+                var percentage = ((decimal)FollowersCount / (decimal)TweetCount) * 100m;
+                Debug.WriteLine("percentage = " + percentage);
+
+                if (percentage < 75)
+                {
+                    if (percentage >= 50m)
+                        rating = rating - 2m;
+                    else if (percentage >= 33m)
+                        rating = rating - 3m;
+                    else if (percentage >= 10m)
+                        rating = rating - 4m;
+                    else
+                        rating = rating - 5m;
+                }
+
+                if (FollowingCount > (0.75 * FollowersCount))
                     rating = rating - 2m;
-                else if (percentage >= 33m)
-                    rating = rating - 3m;
-                else if (percentage >= 10m)
-                    rating = rating - 4m;
-                else
-                    rating = rating - 5m;
+
+                if (CoverImage != null)
+                    message += "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><span class='well well-lg coverpicture' style='background-image: url(" + CoverImage + ")'></span></a>";
+
+                message += "<div class='socialResults'>"
+                    + "<div class='socialResultBox-3 row'>"
+                    + "<i class='fa fa-twitter-square fa-3x'></i>"
+                    + "<span> " + TweetAmountString + "</span></div>"
+                    + "<div class='socialResultBox-3 row'>"
+                    + "<i class='fa fa-retweet fa-3x'></i>"
+                    + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
+                    + "<div class='socialResultBox-3 row'>"
+                    + "<i class='fa fa-users fa-3x'></i>"
+                    + "<span> Dit account heeft " + FollowersCountString + " volgers en volgt " + FollowingCountString + " gebruikers</span></div>"
+                    + "</div>";
+
+                message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
+                    + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
+                    + "</div>";
             }
-
-            if (FollowingCount > (0.75 * FollowersCount))
-                rating = rating - 2m;
-
+            catch (AggregateException)
+            {
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er kon geen verbinding worden gemaakt met de <a href='https://dev.twitter.com/overview/status' target='_blank'>Twitter API</a>.</span></div>";
+            }
             if (rating == 10.0m)
                 rating = 10m;
             if (rating < 0)
                 rating = 0.0m;
 
-            if (CoverImage != null)
-                message += "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><span class='well well-lg coverpicture' style='background-image: url(" + CoverImage + ")'></span></a>";
-
-            message += "<div class='socialResults'>"
-                + "<div class='socialResultBox-3 row'>"
-                + "<i class='fa fa-twitter-square fa-3x'></i>"
-                + "<span> " + TweetAmountString + "</span></div>"
-                + "<div class='socialResultBox-3 row'>"
-                + "<i class='fa fa-retweet fa-3x'></i>"
-                + "<span> Dit account heeft " + TweetCountString + " tweets gemaakt </span></div>"
-                + "<div class='socialResultBox-3 row'>"
-                + "<i class='fa fa-users fa-3x'></i>"
-                + "<span> Dit account heeft " + FollowersCountString + " volgers en volgt " + FollowingCountString + " gebruikers</span></div>"
-                + "</div>";
-
-            message += "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
-                + "<a href='https://www.twitter.com/" + screenName + "' target='_blank'><img src='" + ProfileImage + "' alt='profileimage'/></a> "
-                + "<span> Twitter account <a href='https://www.twitter.com/" + screenName + "' target='_blank' font-size='large'>@" + screenName + "</a> gevonden</span>"
-                + "</div>";
-
             return rating;
         }
-        
+
         /// <summary>
         /// Find if the found name is a Twitteraccount with the URL in the description
         /// </summary>

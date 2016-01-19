@@ -12,7 +12,7 @@
                     <div id="PageTitleResults" class="results" runat="server"></div>
 
                     <div class="hidden" id="PageTitlesTableHidden" runat="server">
-                        <asp:Table ID="PageTitlesTable" CssClass="table table-hover" runat="server">
+                        <asp:Table ID="PageTitlesTable" CssClass="table" runat="server">
                             <asp:TableHeaderRow BackColor="#C7E5F4" runat="server">
                                 <asp:TableHeaderCell Scope="Column" Text="Titel" CssClass="col-md-6" />
                                 <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-6" />

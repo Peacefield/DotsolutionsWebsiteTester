@@ -42,8 +42,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             // http://www.socialmediatoday.com/content/longer-better-blog-content-truth-or-myth 1500 tot 2000 leidde tot positieve resultaten
 
             // Beoordeling is afhankelijk van aantal woorden per pagina.
-            // Uit bovenstaande artikelen is te halen dat 500 woorden een goed uitgangspunt is voor een minimum aantal woorden.
-            // Per pagina met minder dan 500 woorden geldt de volgende formule om de aftrek te berekenen van de huidige beoordeling
+            // Uit bovenstaande artikelen is te halen dat 400 woorden een goed uitgangspunt is voor een minimum aantal woorden.
+            // Per pagina met minder dan 400 woorden geldt de volgende formule om de aftrek te berekenen van de huidige beoordeling
             // 1/{aantal pagina's} * 10
 
             var rating = 10.0m;
@@ -86,9 +86,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-exclamation-sign glyphicons-lg messageIcon'></i>"
-                    + "<span class='messageText'> " + lowContentPageCnt.ToString("#,##0") + " pagina's met te weinig content gevonden."
-                    + "Doordat er bij minder inhoudelijk content minder kans is dat de website verschijnt in gerelateerde zoekopdrachten is dit slecht. "
-                    + "Er wordt dan ook een minimum van 500 woorden per pagina aangeraden.</span></div>";
+                    + "<span class='messageText'> " + lowContentPageCnt.ToString("#,##0") + " pagina's met te weinig content gevonden.<br/>"
+                    + "Dit is slecht doordat er bij minder inhoudelijk content minder kans is dat de website verschijnt in gerelateerde zoekopdrachten.<br/>"
+                    + "Er wordt dan ook een minimum van 400 woorden per pagina aangeraden.</span></div>";
             }
             else
             {
@@ -135,21 +135,23 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var webget = new HtmlWeb();
             var doc = webget.Load(page);
-            var bodycontent = doc.DocumentNode.SelectNodes("//p | //a");
             var innertext = "";
             var wordCount = 0;
 
-            foreach (var item in bodycontent)
+            if (doc.DocumentNode.SelectNodes("//p | //a") != null)
             {
-                innertext += item.InnerText + " ";
+                var bodycontent = doc.DocumentNode.SelectNodes("//p | //a");
+                foreach (var item in bodycontent)
+                {
+                    innertext += item.InnerText + " ";
+                }
+                Debug.WriteLine(innertext);
+                string[] content = innertext.Split(null);
+
+                foreach (var item in content)
+                    if (item.Length > 0)
+                        wordCount++;
             }
-            Debug.WriteLine(innertext);
-            string[] content = innertext.Split(null);
-
-            foreach (var item in content)
-                if (item.Length > 0)
-                    wordCount++;
-
             Debug.WriteLine("wordCount: " + wordCount);
 
             return wordCount;

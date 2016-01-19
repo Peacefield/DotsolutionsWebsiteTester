@@ -131,7 +131,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             message = "<div class='well well-lg resultWell text-center'>"
                 + "<span class='largetext'>" + percentageDeclared.ToString("#,0") + "%</span><br/>"
-                + "<span>van de afbeelding zijn incorrect gedefinieerd</span></div>"
+                + "<span>van de afbeelding is incorrect gedefinieerd</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
                 + "<i class='fa fa-picture-o fa-3x'></i><br/>"

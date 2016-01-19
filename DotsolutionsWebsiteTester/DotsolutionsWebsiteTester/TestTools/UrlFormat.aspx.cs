@@ -136,13 +136,13 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 resultMessage = "<div class='alert alert-success well-lg resultWell text-center'>"
                     + "<i class='fa fa-link fa-3x'></i><br/>"
-                    + "<span class='messageText'> Alle URLs zijn schoon en gebruiksvriendelijk.</span></div>";
+                    + "<span class='messageText'> Alle URLs zijn schoon en gebruiksvriendelijk.<br/>Dit houdt in dat de gebruikte URL's niet te lang zijn en geen rare tekens bevatten.</span></div>";
             }
             else
             {
                 resultMessage = "<div class='alert alert-danger well-lg resultWell text-center'>"
                     + "<i class='fa fa-chain-broken fa-3x'></i><br/>"
-                    + "<span class='messageText'> " + totalCount.ToString("#,##0") + " foutieve URLs gevonden.</span></div>";
+                    + "<span class='messageText'> " + totalCount.ToString("#,##0") + " foutieve URLs gevonden.<br/>Dit houdt in dat de gebruikte URL's te lang zijn en/of rare tekens bevatten.</span></div>";
             }
 
             message = resultMessage

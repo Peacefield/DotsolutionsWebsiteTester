@@ -83,7 +83,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                rating = rating - 3.3m;
+                rating = rating - 10m / 3m;
                 icon = "fa-times";
                 result = "De server geeft geen 404 terug wanneer een pagina niet kan worden gevonden. Dit is niet goed om meerdere redenen.<br/>"
                     + "Één van deze redenen is dat een website op deze manier niet duidelijk kan maken dat een website niet bestaat.<br/>"
@@ -159,7 +159,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                rating = rating - 3.3m;
+                rating = rating - 10m / 3m;
                 icon = "fa-times";
                 result = "De server ondersteund geen GZIP compressie. Dit is niet goed doordat GZIP compressie de snelheid van een website kan verbeteren.";
             }
@@ -222,7 +222,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                rating = rating - 3.3m;
+                rating = rating - 10m/3m;
                 icon = "fa-times";
                 result = "Er is geen permanente (HTTP 301) doorverwijzing ingesteld van " + before + " naar " + after + "."
                     + "Dit is slecht doordat beide versies beschouwd worden als verschillende websites en zoekmachines dit minder goed waarderen.";

@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <div id="PrintResults" class="results" runat="server"></div>
                     <div class="hidden" id="PrintabilityTableHidden" runat="server">
-                        <asp:Table ID="PrintabilityTable" CssClass="table table-hover" runat="server">
+                        <asp:Table ID="PrintabilityTable" CssClass="table" runat="server">
                             <asp:TableHeaderRow BackColor="#C7E5F4" runat="server">
                                 <asp:TableHeaderCell Scope="Column" Text="Melding" CssClass="col-md-6" />
                                 <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-3" />

@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <div id="w3ErrorsFound" class="results" runat="server"></div>
                     <div class="hidden" id="W3ResultsTableHidden" runat="server">
-                        <asp:Table ID="w3Table" CssClass="table table-hover" runat="server">
+                        <asp:Table ID="w3Table" CssClass="table" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">
                                 <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-3" />
                                 <asp:TableHeaderCell Scope="Column" Text="Type" CssClass="col-md-1" />

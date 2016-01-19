@@ -114,19 +114,21 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
                     + "<i class='fa fa-globe fa-3x'></i><br/>"
-                    + "<span>Er " + errorCntString + " gevonden van linken die niet goed gedeclareerd zijn en/of niet werken.</span></div>";
+                    + "<span>Er " + errorCntString + " gevonden van linken die te algemeen beschreven zijn, te lang zijn en/of niet werken.</span></div>";
             }
             else
             {
                 message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
                     + "<i class='fa fa-globe fa-3x'></i><br/>"
-                    + "<span class='messageText'> Alle gevonden linken zijn goed gedeclareerd en zijn werkend.</span></div>";
+                    + "<span class='messageText'> Alle gevonden linken hebben een goede beschrijving, zijn niet te lang en zijn werkend.</span></div>";
             }
 
             internalLinksErrorsFound.InnerHtml = message;
 
             //var rating = 10.0m - ((decimal)errorCnt / 5m);
-            var rating = 10.0m - (((decimal)errorCnt / (decimal)totalLinkCnt) * 10m);
+            var rating = 10m;
+            if (totalLinkCnt > 0)
+                rating = 10.0m - (((decimal)errorCnt / (decimal)totalLinkCnt) * 10m);
 
             if (rating < 0)
                 rating = 0.0m;

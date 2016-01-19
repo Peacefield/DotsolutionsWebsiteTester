@@ -12,7 +12,7 @@
                 <div class="panel-body">
                     <div id="internalLinksErrorsFound" runat="server"></div>
                     <div class="hidden" id="IntLinksHiddenTable" runat="server">
-                        <asp:Table ID="IntLinksTable" CssClass="table table-hover" runat="server">
+                        <asp:Table ID="IntLinksTable" CssClass="table" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow1" BackColor="#C7E5F4" runat="server">
                                 <asp:TableHeaderCell Scope="Column" Text="Link van URL" CssClass="col-md-6" />
                                 <asp:TableHeaderCell Scope="Column" Text="Melding" CssClass="col-md-5" />

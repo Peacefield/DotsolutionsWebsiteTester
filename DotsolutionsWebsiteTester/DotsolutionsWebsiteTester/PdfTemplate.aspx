@@ -332,6 +332,10 @@
             font-size: 1.5em;
         }
 
+        tr:nth-child(2n+1) {
+            background-color: #F5F5F5;
+        }
+
         .tableImg {
             max-width: 50px;
             max-height: 50px;
@@ -405,14 +409,12 @@
         }
 
         .title {
-            text-transform: uppercase;
             font-weight: bold;
             font-size: 2.3em;
             margin-left: 10px;
         }
 
         .subTitle {
-            text-transform: uppercase;
             font-size: 1.5em;
             margin-left: 10px;
         }

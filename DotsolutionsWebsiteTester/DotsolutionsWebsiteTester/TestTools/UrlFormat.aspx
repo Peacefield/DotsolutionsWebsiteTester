@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <div id="UrlFormatNotifications" runat="server"></div>
                     <div class="hidden" id="UrlFormatHiddenTable" runat="server">
-                        <asp:Table ID="UrlFormatTable" CssClass="table table-hover word-break" runat="server">
+                        <asp:Table ID="UrlFormatTable" CssClass="table word-break" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow1" BackColor="#C7E5F4" runat="server">
                                 <asp:TableHeaderCell Scope="Column" Text="Link van URL" CssClass="col-md-6" />
                                 <asp:TableHeaderCell Scope="Column" Text="Melding" CssClass="col-md-3" />

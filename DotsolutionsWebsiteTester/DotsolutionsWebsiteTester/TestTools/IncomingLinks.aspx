@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <div id="IncomingLinksResults" class="results" runat="server"></div>
                     <div class="hidden" id="IncomingLinksTableHidden" runat="server">
-                        <asp:Table ID="IncomingLinksTable" CssClass="table table-hover" runat="server">
+                        <asp:Table ID="IncomingLinksTable" CssClass="table" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">
                                 <asp:TableHeaderCell Scope="Column" Text="Pagina" CssClass="col-md-4" />
                                 <asp:TableHeaderCell Scope="Column" Text="Aantal verwijzende links" CssClass="col-md-3" />

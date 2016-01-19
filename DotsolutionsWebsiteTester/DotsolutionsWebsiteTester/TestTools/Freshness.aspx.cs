@@ -159,6 +159,10 @@ namespace DotsolutionsWebsiteTester.TestTools
 
         }
 
+        /// <summary>
+        /// Initiate looking for latest date on a page
+        /// </summary>
+        /// <param name="page">string page to be tested</param>
         private void GetLatestDate(string page)
         {
             //Debug.WriteLine("GetLatestDate");
@@ -233,11 +237,22 @@ namespace DotsolutionsWebsiteTester.TestTools
             return latestDate;
         }
 
+        /// <summary>
+        /// Compare delegate to be used to sort a list descending
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         static int Compare(KeyValuePair<string, DateTime> a, KeyValuePair<string, DateTime> b)
         {
             return a.Value.CompareTo(b.Value);
         }
-        
+
+        /// <summary>
+        /// Get a List<string> of content on a page
+        /// </summary>
+        /// <param name="site">string site to be crawled</param>
+        /// <returns>String List containing src/href to found content</returns>
         private List<string> GetContentList(string site)
         {
             var contentList = new List<string>();
@@ -310,6 +325,13 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             return contentList;
         }
+
+        /// <summary>
+        /// Check if a found URL is part of the user-entered url
+        /// </summary>
+        /// <param name="url">User-entered URL</param>
+        /// <param name="addition">Found URL</param>
+        /// <returns></returns>
         private bool IsOfDomain(string url, string addition)
         {
             if (addition.Contains(url))
@@ -346,6 +368,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return false;
         }
 
+        /// <summary>
+        /// Create a valid URL that can be used for a HttpWebRequest
+        /// </summary>
+        /// <param name="foundUrl">To be converted URL</param>
+        /// <returns>Converted URL</returns>
         private string CreateUrl(string foundUrl)
         {
             //Debug.WriteLine("CreateUrl");
@@ -501,12 +528,13 @@ namespace DotsolutionsWebsiteTester.TestTools
             tRow.Cells.Add(tCellDate);
 
             var tCellContentUrl = new TableCell();
+            tCellContentUrl.CssClass = "word-break";
             tCellContentUrl.Text = "<a href='" + contentUrl + "' target='_blank'>" + contentUrl + "</a>";
             tRow.Cells.Add(tCellContentUrl);
 
-            var tCellUrlOrigin = new TableCell();
-            tCellUrlOrigin.Text = "<a href='" + pageOfOrigin + "' target='_blank'>" + pageOfOrigin + "</a>";
-            tRow.Cells.Add(tCellUrlOrigin);
+            //var tCellUrlOrigin = new TableCell();
+            //tCellUrlOrigin.Text = "<a href='" + pageOfOrigin + "' target='_blank'>" + pageOfOrigin + "</a>";
+            //tRow.Cells.Add(tCellUrlOrigin);
 
             FreshnessTable.Rows.Add(tRow);
         }
