@@ -176,9 +176,7 @@ namespace DotsolutionsWebsiteTester
 
             bool isPresent = false;
             sitemap = FillSiteMap(0, 8);
-            Debug.WriteLine("sitemap.Count() voor = " + sitemap.Count());
             sitemap = sitemap.Union(FillSiteMap(8, 2)).ToList();
-            Debug.WriteLine("sitemap.Count() na = " + sitemap.Count());
 
             var url = Session["MainUrl"].ToString();
             System.Uri uri = new Uri(url);

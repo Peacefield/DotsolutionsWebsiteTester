@@ -316,7 +316,7 @@ h1 span {
     font-size: 1.5em;
 }
 
-tr:nth-child(2n+1) {
+table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):not(#MainContent_TestsCheckBoxList3) tr:nth-child(2n+1) {
     background-color: #F5F5F5;
 }
 

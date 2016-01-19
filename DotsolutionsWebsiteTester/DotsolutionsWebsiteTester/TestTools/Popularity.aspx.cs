@@ -37,29 +37,47 @@ namespace DotsolutionsWebsiteTester.TestTools
         private void StartPopularityTest()
         {
             var message = "";
-            var rating = 10m;
+            var rating = 5.5m;
             var mainUrl = Session["mainUrl"].ToString();
 
             var AlexaApiResponse = GetAlexaResponse(mainUrl);
 
-            var alexaRank = ReadRankFromXml(AlexaApiResponse);
-            var alexaDelta = ReadDeltaFromXml(AlexaApiResponse);
+            try
+            {
 
-            if (alexaRank <= 0)
-                message += "Geen rank kunnen vinden";
-            else
-                message += "Rank is: " + alexaRank.ToString("#,##0");
+                var alexaRank = ReadRankFromXml(AlexaApiResponse);
+                var alexaDelta = ReadDeltaFromXml(AlexaApiResponse);
 
-            message += GetDeltaMessage(alexaDelta);
+                if (alexaRank <= 0)
+                    message += "<div class='well well-lg resultWell text-center'>"
+                        + "<span>Geen rank kunnen vinden.</span></div>"
+                        + "<div class='resultDivider'></div>";
+                else
+                    message += "<div class='well well-lg resultWell text-center'>"
+                        + "<span class='largetext'>" + alexaRank.ToString("#,##0") + "</span><br/>"
+                        + "<span>Alexa ranking</span></div>"
+                        + "<div class='resultDivider'></div>";
 
+                message += GetDeltaMessage(alexaDelta);
+
+                rating = CalculateRating(alexaRank, alexaDelta);
+
+            }
+            catch (FormatException)
+            {
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er is geen populariteit-ranking bekend bij <a href='http://www.alexa.com/' target='_blank'>Alexa</a>.</span></div>";
+
+            }
             PopularityResults.InnerHtml = message;
 
+
             if (rating < 0m)
-            {
                 rating = 0.0m;
-            }
             if (rating == 10.0m)
                 rating = 10m;
+
             decimal rounded = decimal.Round(rating, 1);
             PopularityRating.InnerHtml = rounded.ToString();
             var ratingAccess = (decimal)Session["RatingUx"];
@@ -70,25 +88,84 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["PopularityRating"] = rounded;
         }
 
+        private decimal CalculateRating(int rank, string deltaStr)
+        {
+            var rating = 0.0m;
+            var delta = 0m;
+
+            if (deltaStr.Contains("+"))
+            {
+                delta = decimal.Parse(deltaStr.Replace("+", ""));
+                if (delta > 0)
+                {
+                    var percentage = delta / (decimal)rank * 100;
+                    Debug.WriteLine("percentage: " + percentage.ToString("#.##"));
+
+                    if (percentage > 75)
+                        rating = 10m;
+                    else if (percentage > 60)
+                        rating = 8.0m;
+                    else if (percentage > 50)
+                        rating = 7.0m;
+                    else if (percentage > 30)
+                        rating = 6.0m;
+                    else if (percentage > 25)
+                        rating = 5.5m;
+                    else if (percentage > 10)
+                        rating = 3.0m;
+                    else
+                        rating = 0.0m;
+                }
+            }
+            else if (deltaStr.Contains("-"))
+            {
+                delta = decimal.Parse(deltaStr.Replace("-", ""));
+
+                var percentage = delta / (decimal)rank * 100;
+                Debug.WriteLine("percentage: " + percentage.ToString("#.##"));
+
+                if (percentage > 75)
+                    rating = 0.0m;
+                else if (percentage > 60)
+                    rating = 3.0m;
+                else if (percentage > 50)
+                    rating = 5.5m;
+                else if (percentage > 30)
+                    rating = 6.0m;
+                else if (percentage > 25)
+                    rating = 7.0m;
+                else if (percentage > 10)
+                    rating = 8.0m;
+                else
+                    rating = 10m;
+            }
+
+            return rating;
+        }
+
         private string GetDeltaMessage(string alexaDelta)
         {
             var message = "";
             if (alexaDelta.Contains("+"))
             {
+                var delta = Int32.Parse(alexaDelta.Replace("+", ""));
 
-                var delta = Int32.Parse(alexaDelta.Replace("+",""));
-                Debug.WriteLine(delta);
                 if (delta == 0)
-                    message = "<br/>Deze website heeft over de afgelopen 3 maanden geen stijging in populariteit gehad.";
+                    message = "<div class='well well-lg resultWell text-center'>"
+                        + "<span>Deze website heeft over de afgelopen 3 maanden geen stijging in populariteit gehad</span></div>";
                 else
-                    message = "<br/>Deze website heeft over de afgelopen 3 maanden een stijging in populariteit gehad van " + delta.ToString("#,##0") + ".";
+                    message = "<div class='well well-lg resultWell text-center'>"
+                    + "<span class='largetext'>+ " + delta.ToString("#,##0") + "</span><br/>"
+                    + "<span>Posities gestegen over de afgelopen 3 maanden.</span></div>";
 
             }
             else if (alexaDelta.Contains("-"))
             {
-                var delta = Int32.Parse(alexaDelta.Remove(alexaDelta.IndexOf("-")));
-                message = "<br/>Deze website heeft over de afgelopen 3 maanden een daling in populariteit gehad van " + delta.ToString("#,##0");
-                Debug.WriteLine("Delta is -" + delta);
+                var delta = Int32.Parse(alexaDelta.Replace("-", ""));
+
+                message = "<div class='well well-lg resultWell text-center'>"
+                + "<span class='largetext'>- " + delta.ToString("#,##0") + "</span><br/>"
+                + "<span>Posities gedaald over de afgelopen 3 maanden.</span></div>";
             }
 
             return message;
