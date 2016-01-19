@@ -295,13 +295,12 @@ h1 span {
     }
 
 .navbar-custom {
-    background-color: #F5F5F5;
-    border-color: #FFF;
+    background-color: #FFF;
+    box-shadow: 0px 0px 15px #888888;
 }
 
     .navbar-custom a {
         color: #000;
-        border-radius: 10px;
     }
 
         .navbar-custom a:hover, .navbar-custom a:active,
@@ -311,7 +310,7 @@ h1 span {
 
         .navbar-custom a:hover {
             /*opacity: 0.5;*/
-            background-color: #fff;
+            background-color: #f5f5f5;
             transition: all .1s linear;
         }
 
