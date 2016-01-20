@@ -310,6 +310,72 @@
             margin-bottom: 4px;
         }
 
+        .pieContainer {
+            height: 100px;
+            margin-left: 35%;
+        }
+
+        .pieBackground {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            -moz-border-radius: 50px;
+            -webkit-border-radius: 50px;
+            -o-border-radius: 50px;
+            border-radius: 50px;
+        }
+
+        .pieInside {
+            background-color: #f5f5f5;
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            -moz-border-radius: 50px;
+            -webkit-border-radius: 50px;
+            -o-border-radius: 50px;
+            border-radius: 50px;
+            margin-top: 10px;
+            margin-left: 10px;
+            z-index: 1;
+            color: #000;
+        }
+
+            .pieInside span {
+                position: absolute;
+                top: 20px;
+                font-size: 30px;
+            }
+
+        .pie {
+            position: absolute;
+            -moz-border-radius: 50px;
+            -webkit-border-radius: 50px;
+            -o-border-radius: 50px;
+            border-radius: 50px;
+            clip: rect(0px, 50px, 100px, 0px);
+            width: 100px;
+            height: 100px;
+        }
+
+        .hold {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            -moz-border-radius: 50px;
+            -webkit-border-radius: 50px;
+            -o-border-radius: 50px;
+            border-radius: 50px;
+            clip: rect(0px, 100px, 100px, 50px);
+        }
+
+        .percentageContainer > div:first-child{
+            height: 200px;
+        }
+        .percentageContainer > div:nth-child(3){
+            height: 200px;
+            padding-top: 50px;
+        }
+
         .googleResult_title, .googleResult_url, .googleResult_desc {
             margin: 0 0 0 0;
             cursor: default;
@@ -400,21 +466,20 @@
             background-repeat: no-repeat;
         }
 
-
-        #MainContent_tabletImg {
-            position: absolute;
-            left: 33%;
-        }
-
         #MainContent_mobileImg {
             position: absolute;
-            left: 53%;
+            left: 45%;
             top: 100px;
         }
 
         #screenshotcontainer {
             height: 280px;
         }
+
+            #screenshotcontainer > div {
+                position: absolute;
+                left: 33%;
+            }
 
         .title {
             font-weight: bold;

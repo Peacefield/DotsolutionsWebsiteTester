@@ -46,6 +46,15 @@ function ChangeFontWeight(identifier) {
         }
     }
 }
+function ChangeFontWeightDetailedTestCheck() {
+    var input = document.getElementById('MainContent_TestCheckBox');
+    if (input.checked == true) {
+        $("label[for='" + input.id + "']").css("font-weight", "bold");
+    }
+    else {
+        $("label[for='" + input.id + "']").css("font-weight", "normal");
+    }
+}
 window.onload = function () {
     var ShowCheckboxes = document.getElementById("ShowCheckboxes");
     var CheckAllCheckboxes = document.getElementById("CheckAllCheckboxes");
@@ -62,6 +71,10 @@ window.onload = function () {
     }
 
     //CheckAll();
+    ChangeFontWeight('MainContent_TestsCheckBoxList1');
+    ChangeFontWeight('MainContent_TestsCheckBoxList2');
+    ChangeFontWeight('MainContent_TestsCheckBoxList3');
+    ChangeFontWeightDetailedTestCheck();
 
     CheckAllCheckboxes.onclick = function () {
         if ($(this).text() === "Alles selecteren")
@@ -87,17 +100,7 @@ window.onload = function () {
     document.getElementById('MainContent_TestsCheckBoxList1').onchange = function () { ChangeFontWeight('MainContent_TestsCheckBoxList1'); };
     document.getElementById('MainContent_TestsCheckBoxList2').onchange = function () { ChangeFontWeight('MainContent_TestsCheckBoxList2'); };
     document.getElementById('MainContent_TestsCheckBoxList3').onchange = function () { ChangeFontWeight('MainContent_TestsCheckBoxList3'); };
-    document.getElementById('MainContent_TestCheckBox').onchange = function () {
-        var input = document.getElementById('MainContent_TestCheckBox');
-        if (input.checked == true) {
-            $("label[for='" + input.id + "']").css("font-weight", "bold");
-        }
-        else {
-            $("label[for='" + input.id + "']").css("font-weight", "normal");
-        }
-    };
-
-    
+    document.getElementById('MainContent_TestCheckBox').onchange = function () { ChangeFontWeightDetailedTestCheck() };
 }
 
 $(document).ready(function () {

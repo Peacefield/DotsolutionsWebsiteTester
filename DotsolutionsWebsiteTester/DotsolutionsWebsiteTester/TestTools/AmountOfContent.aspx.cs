@@ -50,6 +50,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var sitemap = (List<string>)Session["selectedSites"];
             var isDetailed = (bool)Session["IsDetailedTest"];
             var lowContentPageCnt = 0;
+            var goodContentPageCnt = 0;
             var totalContentCount = 0;
             foreach (var page in sitemap)
             {
@@ -63,23 +64,29 @@ namespace DotsolutionsWebsiteTester.TestTools
                     lowContentPageCnt++;
                     icon = "<i class='fa fa-times fa-times-red'></i>";
                 }
+                else
+                    goodContentPageCnt++;
 
                 AddToTable(icon, page, wordCount.ToString("#,##0"));
                 totalContentCount += wordCount;
             }
 
-            var lowContentPageCntPercentage = ((decimal)lowContentPageCnt / (decimal)sitemap.Count) * 100m;
+
+            //var lowContentPageCntPercentage = ((decimal)lowContentPageCnt / (decimal)sitemap.Count) * 100m;
+            var goodContentPageCntPercentage = ((decimal)goodContentPageCnt / (decimal)sitemap.Count) * 100m;
             var averageCount = totalContentCount / sitemap.Count;
 
+            var pieGraph = GetPieGraphContent(goodContentPageCntPercentage);
+
             var message = "<div class='well well-lg resultWell text-center'>"
-                //+ "<div class='pieContainer'>"
-                // TODO: Insert pie graph here; inline to secure graph styling in PDF report
-                //+ "</div>"
-                + "<span class='largetext'>" + lowContentPageCntPercentage.ToString("#,##0.0") + "%</span><br/>"
-                + "<span>van de pagina's bevat te weinig content</span></div>"
+                + "<div class='pieContainer'>"
+                + pieGraph
+                + "</div>"
+                //+ "<span class='largetext'>" + lowContentPageCntPercentage.ToString("#,##0.0") + "%</span><br/>"
+                + "<br/><span>van de pagina's bevat voldoende content</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center'>"
-                + "<i class='fa fa-font fa-3x'></i><br/>"
+                + "<i class='fa fa-font fa-3x'></i><br/><br/><br/>"
                 + "<span>Gemiddeld " + averageCount.ToString("#,##0") + " woorden per pagina</span></div>";
 
             if (lowContentPageCnt > 0)
@@ -180,6 +187,50 @@ namespace DotsolutionsWebsiteTester.TestTools
 
 
             AmountOfContentTable.Rows.Add(tRow);
+        }
+
+        /// <summary>
+        /// Get the HTML snippet for a circle diagram that displays the percentage accordingly
+        /// </summary>
+        /// <param name="percentage">decimal percentage</param>
+        /// <returns>HTML snippet</returns>
+        private string GetPieGraphContent(decimal percentage)
+        {
+            var mainBckClr = "";
+            var pieBckClr = "";
+            var pieInsideLeft = "";
+            var holdTransform = "";
+            var pieTransform = "";
+
+            if (percentage > 50)
+            {
+                mainBckClr = "#54b721";
+                pieBckClr = "rgba(189, 195, 199,1)";
+                if (percentage == 100)
+                    pieInsideLeft = "1px";
+                else
+                    pieInsideLeft = "12px";
+                holdTransform = "180";
+            }
+            else
+            {
+                mainBckClr = "rgba(189, 195, 199,.5)";
+                pieBckClr = "#54b721";
+                if (percentage > 9)
+                    pieInsideLeft = "15px";
+                else
+                    pieInsideLeft = "20px";
+                holdTransform = "0";
+            }
+
+            pieTransform = Math.Round((percentage / 100m * 360m), 0).ToString();
+            var content = "<div class='pieBackground' style='background-color: " + mainBckClr + ";'></div>"
+                + "<div class='pieInside'><span style='left: " + pieInsideLeft + ";'>" + percentage.ToString("#,##0") + "%</span></div>"
+                + "<div id='pieSlice1' class='hold' style='-webkit-transform: rotate(" + holdTransform + "deg);-moz-transform: rotate(" + holdTransform + "deg);-o-transform: rotate(" + holdTransform + "deg);transform: rotate(" + holdTransform + "deg);'>"
+                + "<div class='pie' style='background-color: " + pieBckClr + ";-webkit-transform: rotate(" + pieTransform + "deg);-moz-transform: rotate(" + pieTransform + "deg);-o-transform: rotate(" + pieTransform + "deg);transform: rotate(" + pieTransform + "deg);'></div>"
+                + "</div>";
+
+            return content;
         }
 
         /// <summary>

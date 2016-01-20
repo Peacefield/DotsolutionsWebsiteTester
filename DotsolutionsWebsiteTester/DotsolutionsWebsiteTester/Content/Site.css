@@ -87,15 +87,8 @@
         background-repeat: no-repeat;
     }
 
-    #MainContent_tabletImg {
-        position: absolute;
-        left: 14%;
-    }
-
-    #MainContent_mobileImg {
-        position: absolute;
-        left: 53%;
-        top: 100px;
+    #screenshotcontainer > div {
+        left: 15%;
     }
 }
 
@@ -158,15 +151,8 @@
         background-repeat: no-repeat;
     }
 
-    #MainContent_tabletImg {
-        position: absolute;
+    #screenshotcontainer > div {
         left: 33%;
-    }
-
-    #MainContent_mobileImg {
-        position: absolute;
-        left: 53%;
-        top: 100px;
     }
 
     .manualTest#prof, .manualTest#userX {
@@ -726,6 +712,15 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
     height: 280px;
 }
 
+    #screenshotcontainer > div {
+        position: absolute;
+    }
+
+#MainContent_mobileImg {
+    position: absolute;
+    left: 45%;
+    top: 100px;
+}
 /* End Geautomatiseerde-Test CSS*/
 
 /* Start Handmatige-Test CSS*/
@@ -832,7 +827,6 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
     max-width: 60px;
     height: 50px;
     text-align: center;
-    /*text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black;*/
 }
 
 .ratingSquare {
@@ -846,8 +840,75 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
     border-radius: 5px;
     margin-right: 5px;
     margin-bottom: 4px;
-    /*text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black;*/
 }
+
+.percentageContainer > div:first-child {
+    height: 200px;
+}
+
+.percentageContainer > div:nth-child(3) {
+    height: 200px;
+    padding-top: 50px;
+}
+
+.pieContainer {
+    height: 100px;
+    margin-left: 35%;
+}
+
+.pieBackground {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;
+}
+
+.pieInside {
+    background-color: #f5f5f5;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;
+    margin-top: 10px;
+    margin-left: 10px;
+    z-index: 1;
+    color: #000;
+}
+
+    .pieInside span {
+        position: absolute;
+        top: 20px;
+        font-size: 30px;
+    }
+
+.pie {
+    position: absolute;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;
+    clip: rect(0px, 50px, 100px, 0px);
+    width: 100px;
+    height: 100px;
+}
+
+.hold {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;
+    clip: rect(0px, 100px, 100px, 50px);
+}
+
 
 .googleResult_title, .googleResult_url, .googleResult_desc {
     margin: 0 0 0 0;
