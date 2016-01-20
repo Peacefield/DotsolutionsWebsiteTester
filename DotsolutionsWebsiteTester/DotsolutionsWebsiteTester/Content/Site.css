@@ -4,7 +4,7 @@
     blauw   - #3fb2ab
     paars   - #a278d1
     geel    - #f6cd29
-    oranje  - #f9841b
+    oranje  - #f9841b - #f07c0d
 */
 
 /* 
@@ -79,20 +79,23 @@
     }
 
     .mobilecontainer {
-        width: 150px;
-        height: 250px;
+        width: 144px;
+        height: 200px;
         background-image: url("http://i.imgur.com/BDKytvF.png");
-        padding: 39px 30px 45px 9px;
+        padding: 31px 48px 36px 7px;
         background-size: contain;
         background-repeat: no-repeat;
     }
 
-    #MainContent_tabletImg, #MainContent_mobileImg {
-        margin-left: auto;
+    #MainContent_tabletImg {
+        position: absolute;
+        left: 14%;
     }
 
-    .manualTest#prof, .manualTest#userX {
-        width: 100%;
+    #MainContent_mobileImg {
+        position: absolute;
+        left: 53%;
+        top: 100px;
     }
 }
 
@@ -148,20 +151,22 @@
 
     .mobilecontainer {
         width: 144px;
-        height: 260px;
+        height: 200px;
         background-image: url("http://i.imgur.com/BDKytvF.png");
-        padding: 40px 19px 47px 10px;
+        padding: 31px 48px 36px 7px;
         background-size: contain;
         background-repeat: no-repeat;
     }
 
     #MainContent_tabletImg {
-        margin-left: 15%;
-        margin-bottom: 10px;
+        position: absolute;
+        left: 33%;
     }
 
     #MainContent_mobileImg {
-        margin-left: 0;
+        position: absolute;
+        left: 53%;
+        top: 100px;
     }
 
     .manualTest#prof, .manualTest#userX {
@@ -184,11 +189,6 @@
 
     .jumbotron {
         font-size: 1.1em;
-    }
-
-    #MainContent_tabletImg, #MainContent_mobileImg {
-        margin-left: 25%;
-        margin-bottom: 10px;
     }
 }
 
@@ -247,6 +247,7 @@ h1 span {
 
     .panel-custom .panel-heading span:not(.ratingCircle) {
         font-size: 1.3em;
+        border-bottom: 1px solid #BEBDBD;
     }
 
 .word-break {
@@ -321,15 +322,15 @@ h1 span {
 .btn-white {
     background-color: #fff;
     color: #000;
-    border-color: #3fb2ab !important;
+    border-color: #f07c0d !important;
     width: 100%;
 }
 
-    .btn-white.focus, .btn-white:focus, .btn-white:hover {
-        background-color: #3fb2ab;
-        color: #000;
-        transition: all .2s linear;
-    }
+.btn.btn-white.focus, .btn.btn-white:focus, .btn.btn-white:hover {
+    background-color: #f07c0d;
+    color: #fff;
+    transition: all .1s linear;
+}
 
 .largetext {
     font-size: 2em;
@@ -441,7 +442,7 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
         display: block;
     }
 
-        #checkboxHolder table tr td label {
+        #checkboxHolder table tr td label, .detailedTestCheckBox label {
             margin-left: 5px;
         }
 /* End Default Page CSS */
@@ -621,7 +622,6 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
     margin-top: 10px;
 }
 
-
 .manualTest {
     left: 2%;
     position: relative;
@@ -722,6 +722,9 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
             transition: all .2s linear;
         }
 
+#screenshotcontainer {
+    height: 280px;
+}
 
 /* End Geautomatiseerde-Test CSS*/
 

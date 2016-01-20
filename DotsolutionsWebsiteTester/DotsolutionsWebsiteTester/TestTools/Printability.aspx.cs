@@ -335,28 +335,30 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
+            var element = PrintabilityRating;
+
             if (rating == 10m)
-                PrintabilityRating.Attributes.Add("class", "score-10 ratingCircle");
+                element.Attributes.Add("class", "score-10 ratingCircle");
             else if (rating >= 9m)
-                PrintabilityRating.Attributes.Add("class", "score-9 ratingCircle");
+                element.Attributes.Add("class", "score-9 ratingCircle");
             else if (rating >= 8m)
-                PrintabilityRating.Attributes.Add("class", "score-8 ratingCircle");
+                element.Attributes.Add("class", "score-8 ratingCircle");
             else if (rating >= 7m)
-                PrintabilityRating.Attributes.Add("class", "score-7 ratingCircle");
+                element.Attributes.Add("class", "score-7 ratingCircle");
             else if (rating >= 6m)
-                PrintabilityRating.Attributes.Add("class", "score-6 ratingCircle");
+                element.Attributes.Add("class", "score-6 ratingCircle");
             else if (rating >= 5m)
-                PrintabilityRating.Attributes.Add("class", "score-5 ratingCircle");
+                element.Attributes.Add("class", "score-5 ratingCircle");
             else if (rating >= 4m)
-                PrintabilityRating.Attributes.Add("class", "score-4 ratingCircle");
+                element.Attributes.Add("class", "score-4 ratingCircle");
             else if (rating >= 3m)
-                PrintabilityRating.Attributes.Add("class", "score-3 ratingCircle");
+                element.Attributes.Add("class", "score-3 ratingCircle");
             else if (rating >= 2m)
-                PrintabilityRating.Attributes.Add("class", "score-2 ratingCircle");
+                element.Attributes.Add("class", "score-2 ratingCircle");
             else if (rating >= 1m)
-                PrintabilityRating.Attributes.Add("class", "score-1 ratingCircle");
+                element.Attributes.Add("class", "score-1 ratingCircle");
             else
-                PrintabilityRating.Attributes.Add("class", "score-0 ratingCircle");
+                element.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

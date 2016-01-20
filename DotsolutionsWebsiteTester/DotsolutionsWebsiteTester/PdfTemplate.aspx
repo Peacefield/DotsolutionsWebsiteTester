@@ -40,6 +40,7 @@
 
             .panel-custom .panel-heading span:not(.ratingCircle) {
                 font-size: 1.3em;
+                border-bottom: 1px solid #BEBDBD;
             }
 
         .resultWell {
@@ -392,27 +393,27 @@
 
         .mobilecontainer {
             width: 144px;
-            height: 260px;
+            height: 200px;
             background-image: url("http://i.imgur.com/BDKytvF.png");
-            padding: 40px 19px 47px 10px;
+            padding: 31px 48px 36px 7px;
             background-size: contain;
             background-repeat: no-repeat;
         }
 
 
         #MainContent_tabletImg {
-            margin-left: 15%;
-            margin-bottom: 10px;
+            position: absolute;
+            left: 33%;
         }
 
         #MainContent_mobileImg {
-            margin-left: 0;
+            position: absolute;
+            left: 53%;
+            top: 100px;
         }
 
-        @media (min-width: 1024px) {
-            #MainContent_tabletImg, #MainContent_mobileImg {
-                margin-left: 25%;
-            }
+        #screenshotcontainer {
+            height: 280px;
         }
 
         .title {

@@ -358,28 +358,30 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
+            var element = MobileCompatibilityRating;
+
             if (rating == 10m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-10 ratingCircle");
+                element.Attributes.Add("class", "score-10 ratingCircle");
             else if (rating >= 9m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-9 ratingCircle");
+                element.Attributes.Add("class", "score-9 ratingCircle");
             else if (rating >= 8m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-8 ratingCircle");
+                element.Attributes.Add("class", "score-8 ratingCircle");
             else if (rating >= 7m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-7 ratingCircle");
+                element.Attributes.Add("class", "score-7 ratingCircle");
             else if (rating >= 6m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-6 ratingCircle");
+                element.Attributes.Add("class", "score-6 ratingCircle");
             else if (rating >= 5m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-5 ratingCircle");
+                element.Attributes.Add("class", "score-5 ratingCircle");
             else if (rating >= 4m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-4 ratingCircle");
+                element.Attributes.Add("class", "score-4 ratingCircle");
             else if (rating >= 3m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-3 ratingCircle");
+                element.Attributes.Add("class", "score-3 ratingCircle");
             else if (rating >= 2m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-2 ratingCircle");
+                element.Attributes.Add("class", "score-2 ratingCircle");
             else if (rating >= 1m)
-                MobileCompatibilityRating.Attributes.Add("class", "score-1 ratingCircle");
+                element.Attributes.Add("class", "score-1 ratingCircle");
             else
-                MobileCompatibilityRating.Attributes.Add("class", "score-0 ratingCircle");
+                element.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }

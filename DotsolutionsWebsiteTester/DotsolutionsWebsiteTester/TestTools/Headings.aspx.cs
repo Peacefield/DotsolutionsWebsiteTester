@@ -282,28 +282,30 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="rating">decimal rating</param>
         private void SetRatingDisplay(decimal rating)
         {
+            var element = HeadingsRating;
+
             if (rating == 10m)
-                HeadingsRating.Attributes.Add("class", "score-10 ratingCircle");
+                element.Attributes.Add("class", "score-10 ratingCircle");
             else if (rating >= 9m)
-                HeadingsRating.Attributes.Add("class", "score-9 ratingCircle");
+                element.Attributes.Add("class", "score-9 ratingCircle");
             else if (rating >= 8m)
-                HeadingsRating.Attributes.Add("class", "score-8 ratingCircle");
+                element.Attributes.Add("class", "score-8 ratingCircle");
             else if (rating >= 7m)
-                HeadingsRating.Attributes.Add("class", "score-7 ratingCircle");
+                element.Attributes.Add("class", "score-7 ratingCircle");
             else if (rating >= 6m)
-                HeadingsRating.Attributes.Add("class", "score-6 ratingCircle");
+                element.Attributes.Add("class", "score-6 ratingCircle");
             else if (rating >= 5m)
-                HeadingsRating.Attributes.Add("class", "score-5 ratingCircle");
+                element.Attributes.Add("class", "score-5 ratingCircle");
             else if (rating >= 4m)
-                HeadingsRating.Attributes.Add("class", "score-4 ratingCircle");
+                element.Attributes.Add("class", "score-4 ratingCircle");
             else if (rating >= 3m)
-                HeadingsRating.Attributes.Add("class", "score-3 ratingCircle");
+                element.Attributes.Add("class", "score-3 ratingCircle");
             else if (rating >= 2m)
-                HeadingsRating.Attributes.Add("class", "score-2 ratingCircle");
+                element.Attributes.Add("class", "score-2 ratingCircle");
             else if (rating >= 1m)
-                HeadingsRating.Attributes.Add("class", "score-1 ratingCircle");
+                element.Attributes.Add("class", "score-1 ratingCircle");
             else
-                HeadingsRating.Attributes.Add("class", "score-0 ratingCircle");
+                element.Attributes.Add("class", "score-0 ratingCircle");
         }
     }
 }
