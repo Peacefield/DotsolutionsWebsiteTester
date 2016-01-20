@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -43,6 +44,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             message += GetGzipMessage(site);
             message += GetRedirectMessage(site);
             message += GetPageSpeedInisghts(site);
+            message += GetHttpsMessage(site);
             message += GetServerTypeMessage(site);
 
             ServerBehaviourResults.InnerHtml = message;
@@ -79,15 +81,15 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (Handles404(site))
             {
                 icon = "fa-check";
-                result = "De server geeft een 404 HTTP code wanneer een pagina niet gevonden kan worden. Dit is goed om meerdere redenen.<br/>"
+                result = "De server geeft een 404 HTTP code wanneer een pagina niet gevonden kan worden.<br/>Dit is goed om meerdere redenen.<br/>"
                     + "Één van deze redenen is dat een website op deze manier duidelijk kan maken aan de gebruiker dat de website niet bestaat.<br/>"
                     + "Verder wordt een pagina die 404 als antwoord geeft niet geïndexeerd door zoekmachine's waardoor er geen ongewenste resultaten verschijnen bij een zoekopdracht.";
             }
             else
             {
-                rating = rating - 10m / 3m;
+                rating = rating - 2m;
                 icon = "fa-times";
-                result = "De server geeft geen 404 terug wanneer een pagina niet kan worden gevonden. Dit is niet goed om meerdere redenen.<br/>"
+                result = "De server geeft geen 404 terug wanneer een pagina niet kan worden gevonden.<br/>Dit is niet goed om meerdere redenen.<br/>"
                     + "Één van deze redenen is dat een website op deze manier niet duidelijk kan maken dat een website niet bestaat.<br/>"
                     + "Verder wordt een pagina die 404 als antwoord geeft niet geïndexeerd door zoekmachine's waardoor er geen ongewenste resultaten verschijnen bij een zoekopdracht.";
             }
@@ -157,13 +159,13 @@ namespace DotsolutionsWebsiteTester.TestTools
             if (IsGzip(site))
             {
                 icon = "fa-check";
-                result = "De server ondersteund GZIP compressie. Dit is goed doordat dit de snelheid van de website verbeterd.";
+                result = "De server ondersteunt GZIP compressie. Dit is goed doordat dit de snelheid van de website verbeterd.";
             }
             else
             {
-                rating = rating - 10m / 3m;
+                rating = rating -2m;
                 icon = "fa-times";
-                result = "De server ondersteund geen GZIP compressie. Dit is niet goed doordat GZIP compressie de snelheid van een website kan verbeteren.";
+                result = "De server ondersteunt geen GZIP compressie. Dit is niet goed doordat GZIP compressie de snelheid van een website kan verbeteren.";
             }
 
             return "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>"
@@ -220,14 +222,14 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 icon = "fa-check";
                 result = "Er is een permanente (HTTP 301) doorverwijzing ingesteld van " + before + " naar " + after + "."
-                    + "Dit is goed doordat dit beter wordt gewaardeerd door zoekmachines. Beide versies worden namelijk beschouwd als verschillende websites wanneer dit niet wordt gedaan.";
+                    + "<br/>Dit is goed doordat dit beter wordt gewaardeerd door zoekmachines. Beide versies worden namelijk beschouwd als verschillende websites wanneer dit niet wordt gedaan.";
             }
             else
             {
-                rating = rating - 10m / 3m;
+                rating = rating - 2m;
                 icon = "fa-times";
                 result = "Er is geen permanente (HTTP 301) doorverwijzing ingesteld van " + before + " naar " + after + "."
-                    + "Dit is slecht doordat beide versies beschouwd worden als verschillende websites en zoekmachines dit minder goed waarderen.";
+                    + "<br/>Dit is slecht doordat beide versies beschouwd worden als verschillende websites en zoekmachines dit minder goed waarderen.";
             }
 
             return "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>"
@@ -346,15 +348,72 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             var icon = "fa-check";
 
-            if (Int32.Parse(score) < 55) 
+            if (Int32.Parse(score) < 55)
                 icon = "fa-times";
 
-            rating = rating - (2.5m - decimal.Parse(score) / 100m * 2.5m);
+            rating = rating - (2m - decimal.Parse(score) / 100m * 2m);
 
             return "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>"
                     + "<span class='fa-stack fa-3x'>"
                     + "<i class='fa " + icon + " fa-stack-2x'></i>"
                     + "<i class='fa fa-google fa-stack-1x'></i>"
+                    + "</span></div>"
+                    + "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>"
+                    + result
+                    + "</span></div>";
+        }
+
+        /// <summary>
+        /// Get a message displaying the speed-score via Google's pageSpeed Insights
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns>string message</returns>
+        private string GetHttpsMessage(string site)
+        {
+            var isHttps = false;
+            var result = "";
+            if (site.Contains("https:"))
+                isHttps = true;
+            else
+            {
+                var requestString = site.Replace("http:", "https:");
+
+                try
+                {
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestString);
+                    request.UserAgent = Session["userAgent"].ToString();
+                    request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                    Debug.WriteLine("GetHttpsMessage-Response.StatusCode" + response.StatusCode);
+                    Debug.WriteLine("GetHttpsMessage-(int)Response.StatusCode" + (int)response.StatusCode);
+
+                    if ((int)response.StatusCode == 200)
+                        isHttps = true;
+                }
+                catch (WebException ex)
+                {
+                    if (ex.Status == WebExceptionStatus.TrustFailure)
+                        isHttps = false;
+                }
+
+            }
+
+            var icon = "fa-check";
+            // HTTPS faster loading: https://www.httpvshttps.com/
+            if (!isHttps)
+            {
+                icon = "fa-times";
+                rating = rating - 2m;
+                result = "Deze website ondersteunt geen HTTPS. Dit is slecht.<br/>Veiligheid wordt steeds belangrijker en Google geeft zelfs voorrang aan websites die HTTPS ondersteunen.";
+            }
+            else
+                result = "Deze website ondersteunt HTTPS. Dit is uitstekend.<br/>Veiligheid wordt steeds belangrijker en Google geeft zelfs voorrang aan websites die HTTPS ondersteunen.";
+
+            return "<div class='resultBox-12 row'><div class='col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center'>"
+                    + "<span class='fa-stack fa-3x'>"
+                    + "<i class='fa " + icon + " fa-stack-2x'></i>"
+                    + "<i class='fa fa-lock fa-stack-1x'></i>"
                     + "</span></div>"
                     + "<span class='col-xs-10 col-sm-10 col-md-10 col-lg-10'>"
                     + result

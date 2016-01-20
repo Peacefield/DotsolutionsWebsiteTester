@@ -529,11 +529,11 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
 }
 
 .fa-check {
-    color: green;
+    color: #54b721;
 }
 
 .fa-check-circle {
-    color: green;
+    color: #54b721;
 }
 
 .fa-twitter-square {

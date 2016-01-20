@@ -134,11 +134,11 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             message = "<div class='well well-lg resultWell text-center'>"
                 + "<div class='pieContainer'>" + pieGraph1 + "</div>"
-                + "<br/><span>van de afbeelding is correct gedefinieerd</span></div>"
+                + "<br/><span>van de afbeeldingen is correct gedefinieerd</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center thirdPercentageChild'>"
                 + "<div class='pieContainer'>" + pieGraph2 + "</div>"
-                + "<br/><span>van de afbeelding worden niet vervormd</span></div>";
+                + "<br/><span>van de afbeeldingen wordt niet vervormd</span></div>";
 
             message += GetMessage();
 

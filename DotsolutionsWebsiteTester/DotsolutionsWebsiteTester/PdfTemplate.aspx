@@ -103,11 +103,11 @@
         }
 
         .fa-check {
-            color: green;
+            color: #54b721;
         }
 
         .fa-check-circle {
-            color: green;
+            color: #54b721;
         }
 
         .fa-twitter-square {
@@ -368,14 +368,14 @@
             clip: rect(0px, 100px, 100px, 50px);
         }
 
-        .percentageContainer > div:first-child {
+
+        .percentageContainer > div:first-child, .percentageContainer > div:nth-child(3) {
             height: 200px;
         }
 
-        .percentageContainer > div:nth-child(3) {
-            height: 200px;
-            padding-top: 50px;
-        }
+            .percentageContainer > div:nth-child(3):not(.thirdPercentageChild) {
+                padding-top: 50px;
+            }
 
         .googleResult_title, .googleResult_url, .googleResult_desc {
             margin: 0 0 0 0;

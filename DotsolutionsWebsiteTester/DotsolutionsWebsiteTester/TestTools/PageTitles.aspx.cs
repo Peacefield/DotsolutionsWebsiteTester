@@ -130,16 +130,16 @@ namespace DotsolutionsWebsiteTester.TestTools
             var goodTitlePerc = ((decimal)goodTitleCnt / (decimal)sitemap.Count) * 100m;
             var titleUsedPerc = (((decimal)sitemap.Count - (decimal)noTitles.Count) / (decimal)sitemap.Count) * 100m;
 
-            var pieGraph1 = GetPieGraphContent(goodTitlePerc);
-            var pieGraph2 = GetPieGraphContent(titleUsedPerc);
+            var pieGraph1 = GetPieGraphContent(titleUsedPerc);
+            var pieGraph2 = GetPieGraphContent(goodTitlePerc);
 
             message = "<div class='well well-lg resultWell text-center'>"
                 + "<div class='pieContainer'>" + pieGraph1 + "</div>"
-                + "<br/><span>van de pagina's heeft een goede titel</span></div>"
+                + "<br/><span>van de pagina's bevat een titel</span></div>"
                 + "<div class='resultDivider'></div>"
                 + "<div class='well well-lg resultWell text-center thirdPercentageChild'>"
                 + "<div class='pieContainer'>" + pieGraph2 + "</div>"
-                + "<br/><span>van de pagina's bevat een titel</span></div>"
+                + "<br/><span>van de pagina's heeft een goede titel</span></div>"
                 + message;
 
             PageTitleResults.InnerHtml = message;

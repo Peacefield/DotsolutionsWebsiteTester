@@ -87,6 +87,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             //message += "<div class='text-center'><span><i class='fa fa-clock-o fa-3x'></i></span><span class='fa-2x'> " + latestDate.ToString("d", culture) + "</span></div>";
 
+
             if (latestDate == new DateTime())
                 message += "<span>Er konden geen data worden gevonden op de geteste pagina's.</span><br/>";
             else if (FreshnessTable.Rows.Count > 1)
@@ -133,6 +134,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                 message += "Dit is uitstekend. Het is goed om de website maandelijks bij te werken.";
             }
             message += "</span>";
+
+
+            if (rating > 5.5m)
+                message = "<div class='alert alert-success col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>" + message + "</div>";
+            else
+                message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>" + message + "</div>";
+
 
             FreshnessResults.InnerHtml = message;
             if (isDetailed && FreshnessTable.Rows.Count > 1)
