@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
 <body>
     <form runat="server">
@@ -46,18 +46,8 @@
         <div class="navbar navbar-custom navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <%--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>--%>
                     <a class="navbar-brand" runat="server" href="~/"><span>Website</span> tester</a>
                 </div>
-                <%--<div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                    </ul>
-                </div>--%>
             </div>
         </div>
         <div class="container body-content">
@@ -69,12 +59,16 @@
             </div>
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - dotsolutions website tester</p>
-            </footer>
         </div>
 
+        <footer>
+            <div class="col-md-12 text-center">
+                <span class="text-muted">Ontwikkeld door</span>
+                <a href="http://www.dotsolutions.nl" target="_blank">
+                    <img src="/Content/images/logo.svg" alt="dotsolutions logo">
+                </a>
+            </div>
+        </footer>
     </form>
     <%: Scripts.Render("~/bundles/jqueryui") %>
     <script type="text/javascript" src="Scripts/Custom/ads.js"></script>
