@@ -126,16 +126,20 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "Dit is uitstekend doordat een gebruiker snel moet kunnen weten waar deze zich bevindt en doordat zoekmachines de titel weergeven op de resultatenpagina.</span></div>";
             }
 
-            var longTitlePerc = ((decimal)longTitles.Count / (decimal)sitemap.Count) * 100m;
+            var goodTitleCnt = sitemap.Count - longTitles.Count;
+            var goodTitlePerc = ((decimal)goodTitleCnt / (decimal)sitemap.Count) * 100m;
             var titleUsedPerc = (((decimal)sitemap.Count - (decimal)noTitles.Count) / (decimal)sitemap.Count) * 100m;
 
+            var pieGraph1 = GetPieGraphContent(goodTitlePerc);
+            var pieGraph2 = GetPieGraphContent(titleUsedPerc);
+
             message = "<div class='well well-lg resultWell text-center'>"
-                + "<i class='fa fa-text-width fa-3x'></i><br/>"
-                + "<span>" + longTitlePerc.ToString("#,0") + "% van de pagina's bevat een te lange titel</span></div>"
+                + "<div class='pieContainer'>" + pieGraph1 + "</div>"
+                + "<br/><span>van de pagina's heeft een goede titel</span></div>"
                 + "<div class='resultDivider'></div>"
-                + "<div class='well well-lg resultWell text-center'>"
-                + "<span class='largetext'>" + titleUsedPerc.ToString("#,0") + "%</span><br/>"
-                + "<span>van de pagina's bevat een titel</span></div>"
+                + "<div class='well well-lg resultWell text-center thirdPercentageChild'>"
+                + "<div class='pieContainer'>" + pieGraph2 + "</div>"
+                + "<br/><span>van de pagina's bevat een titel</span></div>"
                 + message;
 
             PageTitleResults.InnerHtml = message;
@@ -212,6 +216,50 @@ namespace DotsolutionsWebsiteTester.TestTools
             tRow.Cells.Add(tCellCssPage);
 
             PageTitlesTable.Rows.Add(tRow);
+        }
+
+        /// <summary>
+        /// Get the HTML snippet for a circle diagram that displays the percentage accordingly
+        /// </summary>
+        /// <param name="percentage">decimal percentage</param>
+        /// <returns>HTML snippet</returns>
+        private string GetPieGraphContent(decimal percentage)
+        {
+            var mainBckClr = "";
+            var pieBckClr = "";
+            var pieInsideLeft = "";
+            var holdTransform = "";
+            var pieTransform = "";
+
+            if (percentage > 50)
+            {
+                mainBckClr = "#54b721";
+                pieBckClr = "rgba(189, 195, 199,1)";
+                if (percentage == 100)
+                    pieInsideLeft = "7px";
+                else
+                    pieInsideLeft = "17px";
+                holdTransform = "180";
+            }
+            else
+            {
+                mainBckClr = "rgba(189, 195, 199,.5)";
+                pieBckClr = "#54b721";
+                if (percentage > 9)
+                    pieInsideLeft = "17px";
+                else
+                    pieInsideLeft = "24px";
+                holdTransform = "0";
+            }
+
+            pieTransform = Math.Round((percentage / 100m * 360m), 0).ToString();
+            var content = "<div class='pieBackground' style='background-color: " + mainBckClr + ";'></div>"
+                + "<div class='pieInside'><span style='left: " + pieInsideLeft + ";'>" + percentage.ToString("#,##0") + "%</span></div>"
+                + "<div id='pieSlice1' class='hold' style='-webkit-transform: rotate(" + holdTransform + "deg);-moz-transform: rotate(" + holdTransform + "deg);-o-transform: rotate(" + holdTransform + "deg);transform: rotate(" + holdTransform + "deg);'>"
+                + "<div class='pie' style='background-color: " + pieBckClr + ";-webkit-transform: rotate(" + pieTransform + "deg);-moz-transform: rotate(" + pieTransform + "deg);-o-transform: rotate(" + pieTransform + "deg);transform: rotate(" + pieTransform + "deg);'></div>"
+                + "</div>";
+
+            return content;
         }
 
         /// <summary>

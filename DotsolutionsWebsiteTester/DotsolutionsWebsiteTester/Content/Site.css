@@ -842,12 +842,11 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
     margin-bottom: 4px;
 }
 
-.percentageContainer > div:first-child {
+.percentageContainer > div:first-child, .percentageContainer > div:nth-child(3) {
     height: 200px;
 }
 
-.percentageContainer > div:nth-child(3) {
-    height: 200px;
+.percentageContainer > div:nth-child(3):not(.thirdPercentageChild) {
     padding-top: 50px;
 }
 
@@ -883,8 +882,8 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
 
     .pieInside span {
         position: absolute;
-        top: 20px;
-        font-size: 30px;
+        top: 22px;
+        font-size: 1.8em;
     }
 
 .pie {

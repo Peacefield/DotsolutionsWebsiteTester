@@ -105,21 +105,23 @@ namespace DotsolutionsWebsiteTester.TestTools
                         + "<span class='messageText'> Alle headers zijn correct ingedeeld. Dit is uitstekend aangezien dit de indeling van een pagina direct duidelijk kan maken voor bezoekers en zoekmachines kunnen de website zo beter indelen op inhoud.</span></div>";
                 }
 
-                var errorPercentage = decimal.Round((((decimal)errorCnt / (decimal)totalHeadingCnt) * 100m), 1);
+                var correctCnt = totalHeadingCnt - errorCnt;
+                var correctPerccentage = decimal.Round((((decimal)correctCnt / (decimal)totalHeadingCnt) * 100m), 1);
 
+                var pieGraph = GetPieGraphContent(correctPerccentage);
                 message = "<div class='well well-lg resultWell text-center'>"
-                    + "<span class='largetext'>" + errorPercentage + "%</span><br/>"
-                    + "<span>van de headers is incorrect ingedeeld</span></div>"
+                    + "<div class='pieContainer'>" + pieGraph + "</div>"
+                    + "<br/><span>van de headers is correct ingedeeld</span></div>"
                     + "<div class='resultDivider'></div>"
                     + "<div class='well well-lg resultWell text-center'>"
-                    + "<i class='fa fa-header fa-3x'></i><i class='fa fa-header fa-2x'></i><i class='fa fa-header fa-1x'></i><br/>"
+                    + "<i class='fa fa-header fa-3x'></i><i class='fa fa-header fa-2x'></i><i class='fa fa-header fa-1x'></i><br/><br/><br/>"
                     + "<span>" + totalHeadingCnt + " headers gevonden</span></div>"
                     + message;
             }
             else
             {
                 message = "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center' role='alert'>"
-                    + "<i class='fa fa-header fa-3x'></i><i class='fa fa-header fa-2x'></i><i class='fa fa-header fa-1x'></i><br/>"
+                    + "<i class='fa fa-header fa-3x'></i><i class='fa fa-header fa-2x'></i><i class='fa fa-header fa-1x'></i><br/><br/><br/>"
                     + "<span class='messageText'>Geen enkele geteste pagina bevat headers. Dit is zeer slecht doordat de gebruiker niet snel een idee krijgt van de indeling van een pagina, maar dit is ook slecht voor de SEO. "
                     + "Zoekmachines gebruiken headers namelijk om o.a. in te schatten waar de pagina over gaat.</span></div>";
             }
@@ -274,6 +276,50 @@ namespace DotsolutionsWebsiteTester.TestTools
             tRow.Cells.Add(tCellUrl);
 
             headingTable.Rows.Add(tRow);
+        }
+
+        /// <summary>
+        /// Get the HTML snippet for a circle diagram that displays the percentage accordingly
+        /// </summary>
+        /// <param name="percentage">decimal percentage</param>
+        /// <returns>HTML snippet</returns>
+        private string GetPieGraphContent(decimal percentage)
+        {
+            var mainBckClr = "";
+            var pieBckClr = "";
+            var pieInsideLeft = "";
+            var holdTransform = "";
+            var pieTransform = "";
+
+            if (percentage > 50)
+            {
+                mainBckClr = "#54b721";
+                pieBckClr = "rgba(189, 195, 199,1)";
+                if (percentage == 100)
+                    pieInsideLeft = "7px";
+                else
+                    pieInsideLeft = "17px";
+                holdTransform = "180";
+            }
+            else
+            {
+                mainBckClr = "rgba(189, 195, 199,.5)";
+                pieBckClr = "#54b721";
+                if (percentage > 9)
+                    pieInsideLeft = "17px";
+                else
+                    pieInsideLeft = "24px";
+                holdTransform = "0";
+            }
+
+            pieTransform = Math.Round((percentage / 100m * 360m), 0).ToString();
+            var content = "<div class='pieBackground' style='background-color: " + mainBckClr + ";'></div>"
+                + "<div class='pieInside'><span style='left: " + pieInsideLeft + ";'>" + percentage.ToString("#,##0") + "%</span></div>"
+                + "<div id='pieSlice1' class='hold' style='-webkit-transform: rotate(" + holdTransform + "deg);-moz-transform: rotate(" + holdTransform + "deg);-o-transform: rotate(" + holdTransform + "deg);transform: rotate(" + holdTransform + "deg);'>"
+                + "<div class='pie' style='background-color: " + pieBckClr + ";-webkit-transform: rotate(" + pieTransform + "deg);-moz-transform: rotate(" + pieTransform + "deg);-o-transform: rotate(" + pieTransform + "deg);transform: rotate(" + pieTransform + "deg);'></div>"
+                + "</div>";
+
+            return content;
         }
 
         /// <summary>

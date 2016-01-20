@@ -9,7 +9,7 @@
                     <span id="ImagesRating" runat="server">?</span><span class="title">Afbeeldingen</span>
                 </div>
                 <div class="panel-body">
-                    <div id="ImagesMessages" class="results" runat="server"></div>
+                    <div id="ImagesMessages" class="results percentageContainer" runat="server"></div>
                     <div class="hidden" id="ImagesTableHidden" runat="server">
                         <asp:Table ID="ImagesTable" CssClass="table word-break" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">

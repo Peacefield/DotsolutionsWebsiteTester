@@ -9,7 +9,7 @@
                     <span id="AmountOfContentRating" runat="server">?</span><span class="title">Hoeveelheid Content</span>
                 </div>
                 <div class="panel-body">
-                    <div id="AmountOfContentResults" class="results" runat="server"></div>
+                    <div id="AmountOfContentResults" class="results percentageContainer" runat="server"></div>
                     <div class="hidden" id="AmountOfContentTableHidden" runat="server">
                         <asp:Table ID="AmountOfContentTable" CssClass="table" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">

@@ -79,9 +79,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var pieGraph = GetPieGraphContent(goodContentPageCntPercentage);
 
             var message = "<div class='well well-lg resultWell text-center'>"
-                + "<div class='pieContainer'>"
-                + pieGraph
-                + "</div>"
+                + "<div class='pieContainer'>" + pieGraph + "</div>"
                 //+ "<span class='largetext'>" + lowContentPageCntPercentage.ToString("#,##0.0") + "%</span><br/>"
                 + "<br/><span>van de pagina's bevat voldoende content</span></div>"
                 + "<div class='resultDivider'></div>"
@@ -201,15 +199,15 @@ namespace DotsolutionsWebsiteTester.TestTools
             var pieInsideLeft = "";
             var holdTransform = "";
             var pieTransform = "";
-
+            
             if (percentage > 50)
             {
                 mainBckClr = "#54b721";
                 pieBckClr = "rgba(189, 195, 199,1)";
                 if (percentage == 100)
-                    pieInsideLeft = "1px";
+                    pieInsideLeft = "7px";
                 else
-                    pieInsideLeft = "12px";
+                    pieInsideLeft = "17px";
                 holdTransform = "180";
             }
             else
@@ -217,9 +215,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 mainBckClr = "rgba(189, 195, 199,.5)";
                 pieBckClr = "#54b721";
                 if (percentage > 9)
-                    pieInsideLeft = "15px";
+                    pieInsideLeft = "17px";
                 else
-                    pieInsideLeft = "20px";
+                    pieInsideLeft = "24px";
                 holdTransform = "0";
             }
 

@@ -9,8 +9,7 @@
                     <span id="PageTitlesRating" runat="server">?</span><span class="title">Pagina titels</span>
                 </div>
                 <div class="panel-body">
-                    <div id="PageTitleResults" class="results" runat="server"></div>
-
+                    <div id="PageTitleResults" class="results percentageContainer" runat="server"></div>
                     <div class="hidden" id="PageTitlesTableHidden" runat="server">
                         <asp:Table ID="PageTitlesTable" CssClass="table" runat="server">
                             <asp:TableHeaderRow BackColor="#C7E5F4" runat="server">

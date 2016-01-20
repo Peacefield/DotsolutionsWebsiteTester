@@ -9,7 +9,7 @@
                     <span id="AnalyticsRating" runat="server">?</span><span class="title">Analytics</span>
                 </div>
                 <div class="panel-body">
-                    <div id="AnalyticsResults" class="results" runat="server"></div>
+                    <div id="AnalyticsResults" class="results percentageContainer" runat="server"></div>
                     <div class="hidden" id="AnalyticsTableHidden" runat="server">
                         <asp:Table ID="AnalyticsTable" CssClass="table" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">

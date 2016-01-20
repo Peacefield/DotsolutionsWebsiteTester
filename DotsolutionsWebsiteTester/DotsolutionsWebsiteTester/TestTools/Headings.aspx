@@ -9,7 +9,7 @@
                     <span id="HeadingsRating" runat="server">?</span><span class="title">Headers</span>
                 </div>
                 <div class="panel-body">
-                    <div id="headingMessages" class="results" runat="server"></div>
+                    <div id="headingMessages" class="results percentageContainer" runat="server"></div>
                     <div class="hidden" id="headingTableHidden" runat="server">
                         <asp:Table ID="headingTable" CssClass="table" runat="server">
                             <asp:TableHeaderRow ID="TableHeaderRow" BackColor="#C7E5F4" runat="server">

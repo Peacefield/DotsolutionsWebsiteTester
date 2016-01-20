@@ -342,8 +342,8 @@
 
             .pieInside span {
                 position: absolute;
-                top: 20px;
-                font-size: 30px;
+                top: 22px;
+                font-size: 1.8em;
             }
 
         .pie {
@@ -368,10 +368,11 @@
             clip: rect(0px, 100px, 100px, 50px);
         }
 
-        .percentageContainer > div:first-child{
+        .percentageContainer > div:first-child {
             height: 200px;
         }
-        .percentageContainer > div:nth-child(3){
+
+        .percentageContainer > div:nth-child(3) {
             height: 200px;
             padding-top: 50px;
         }
