@@ -65,7 +65,7 @@
             <div class="col-md-12 text-center">
                 <span class="text-muted">Ontwikkeld door</span>
                 <a href="http://www.dotsolutions.nl" target="_blank">
-                    <img src="/Content/images/logo.svg" alt="dotsolutions logo">
+                    <img src="/Content/images/logo.svg" alt="dotsolutions logo" />
                 </a>
             </div>
         </footer>

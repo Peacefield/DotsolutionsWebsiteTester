@@ -26,6 +26,21 @@
             padding-right: 15px;
         }
 
+        footer {
+            height: 60px;
+            padding: 18px 0px;
+        }
+
+            footer span {
+                margin-right: 10px;
+            }
+
+            footer img {
+                height: 20px;
+                margin-bottom: 4px;
+                margin-left: 3px;
+            }
+
         .results {
             overflow-x: auto;
         }
@@ -575,6 +590,16 @@
             </div>
 
         </div>
+
+        
+        <footer>
+            <div class="col-md-12 text-center">
+                <span class="text-muted">Ontwikkeld door</span>
+                <a href="http://www.dotsolutions.nl" target="_blank">
+                    <img src="http://www.dotsolutions.nl/images/logo.svg" alt="dotsolutions logo" />
+                </a>
+            </div>
+        </footer>
     </form>
 </body>
 </html>
