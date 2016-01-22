@@ -13,10 +13,6 @@ namespace DotsolutionsWebsiteTester.TestTools
         List<DateTime> LatesDatesList = new List<DateTime>();
         List<string> contentCheckedContainer = new List<string>();
         List<KeyValuePair<string, DateTime>> ContentDateList = new List<KeyValuePair<string, DateTime>>();
-        static int Compare(KeyValuePair<string, DateTime> a, KeyValuePair<string, DateTime> b)
-        {
-            return a.Value.CompareTo(b.Value);
-        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,6 +33,17 @@ namespace DotsolutionsWebsiteTester.TestTools
             string htmlstring = sb.ToString();
 
             Session["Freshness"] = htmlstring;
+        }
+
+        /// <summary>
+        /// Compare delegate to be used to sort a list descending
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        static int Compare(KeyValuePair<string, DateTime> a, KeyValuePair<string, DateTime> b)
+        {
+            return b.Value.CompareTo(a.Value);
         }
 
         /// <summary>
