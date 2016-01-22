@@ -1,13 +1,9 @@
 ﻿using HtmlAgilityPack;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Threading;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester.TestTools
@@ -49,22 +45,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             var rating = 10.0m;
             var isDetailed = (bool)Session["IsDetailedTest"];
 
-            var threadpool = new List<Thread>();
-
             foreach (var page in sitemap)
-            {
-                Debug.WriteLine(" --------------------------------------------------------- Start werken aan ------------------------------- " + page + " --------------------------------------------------------- ");
-
-                //var ths = new ThreadStart(() => GetLatestDate(page));
-                //var th = new Thread(ths);
-                //th.Start();
-                //threadpool.Add(th);
-
                 GetLatestDate(page);
-            }
-
-            //foreach (var thread in threadpool)
-            //    thread.Join();
 
             if (isDetailed)
             {
@@ -84,9 +66,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             var culture = new System.Globalization.CultureInfo("nl-NL"); // Displays (D)D-(M)M-YYYY
-
-            //message += "<div class='text-center'><span><i class='fa fa-clock-o fa-3x'></i></span><span class='fa-2x'> " + latestDate.ToString("d", culture) + "</span></div>";
-
 
             if (latestDate == new DateTime())
                 message += "<span>Er konden geen data worden gevonden op de geteste pagina's.</span><br/>";

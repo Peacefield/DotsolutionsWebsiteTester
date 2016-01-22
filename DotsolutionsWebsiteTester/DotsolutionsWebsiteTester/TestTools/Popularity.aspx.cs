@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Xml;
 
 namespace DotsolutionsWebsiteTester.TestTools
@@ -39,12 +33,10 @@ namespace DotsolutionsWebsiteTester.TestTools
             var message = "";
             var rating = 5.5m;
             var mainUrl = Session["mainUrl"].ToString();
-
             var AlexaApiResponse = GetAlexaResponse(mainUrl);
 
             try
             {
-
                 var alexaRank = ReadRankFromXml(AlexaApiResponse);
                 var alexaDelta = ReadDeltaFromXml(AlexaApiResponse);
 
@@ -61,17 +53,14 @@ namespace DotsolutionsWebsiteTester.TestTools
                 message += GetDeltaMessage(alexaDelta);
 
                 rating = CalculateRating(alexaRank, alexaDelta);
-
             }
             catch (FormatException)
             {
                 message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                     + "<span class='messageText'> Er is geen populariteit-ranking bekend bij <a href='http://www.alexa.com/' target='_blank'>Alexa</a>.</span></div>";
-
             }
             PopularityResults.InnerHtml = message;
-
 
             if (rating < 0m)
                 rating = 0.0m;
@@ -93,13 +82,14 @@ namespace DotsolutionsWebsiteTester.TestTools
             var rating = 0.0m;
             var delta = 0m;
 
-            if (deltaStr.Contains("+"))
+            // negative delta means rise in rank
+            if (deltaStr.Contains("-"))
             {
-                delta = decimal.Parse(deltaStr.Replace("+", ""));
+                delta = decimal.Parse(deltaStr.Replace("-", ""));
                 if (delta > 0)
                 {
                     var percentage = delta / (decimal)rank * 100;
-                    Debug.WriteLine("percentage: " + percentage.ToString("#.##"));
+                    // Debug.WriteLine("percentage: " + percentage.ToString("#.##"));
 
                     if (percentage > 75)
                         rating = 10m;
@@ -128,12 +118,13 @@ namespace DotsolutionsWebsiteTester.TestTools
                         rating = 0.0m;
                 }
             }
-            else if (deltaStr.Contains("-"))
+            // positive delta means decline in rank
+            else if (deltaStr.Contains("+"))
             {
-                delta = decimal.Parse(deltaStr.Replace("-", ""));
+                delta = decimal.Parse(deltaStr.Replace("+", ""));
 
                 var percentage = delta / (decimal)rank * 100;
-                Debug.WriteLine("percentage: " + percentage.ToString("#.##"));
+                //Debug.WriteLine("percentage: " + percentage.ToString("#.##"));
 
                 if (percentage > 75)
                     rating = 0.0m;
@@ -157,9 +148,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         private string GetDeltaMessage(string alexaDelta)
         {
             var message = "";
-            if (alexaDelta.Contains("+"))
+            if (alexaDelta.Contains("-"))
             {
-                var delta = Int32.Parse(alexaDelta.Replace("+", ""));
+                var delta = Int32.Parse(alexaDelta.Replace("-", ""));
 
                 if (delta == 0)
                     message = "<div class='well well-lg resultWell text-center'>"
@@ -170,9 +161,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<span>Posities gestegen over de afgelopen 3 maanden.</span></div>";
 
             }
-            else if (alexaDelta.Contains("-"))
+            else if (alexaDelta.Contains("+"))
             {
-                var delta = Int32.Parse(alexaDelta.Replace("-", ""));
+                var delta = Int32.Parse(alexaDelta.Replace("+", ""));
 
                 message = "<div class='well well-lg resultWell text-center'>"
                 + "<span class='largetext'>- " + delta.ToString("#,##0") + "</span><br/>"
@@ -201,8 +192,9 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             using (XmlReader reader = XmlReader.Create(new StringReader(responseFromServer)))
             {
-                reader.ReadToFollowing("REACH");
+                reader.ReadToFollowing("POPULARITY");
                 reader.MoveToFirstAttribute();
+                reader.MoveToNextAttribute();
                 return Int32.Parse(reader.Value);
             }
         }

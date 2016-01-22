@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Text;
 using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester.TestTools

@@ -1,13 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace DotsolutionsWebsiteTester.TestTools
 {
@@ -35,10 +29,18 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["ServerBehaviour"] = htmlstring;
         }
 
+        /// <summary>
+        /// Start tests, add to page, save to session
+        /// </summary>
         private void GetServerBehaviour()
         {
             var site = Session["MainUrl"].ToString();
             var message = "";
+
+            // Rating/beoordeling wordt per getest onderdeel aangepast
+            // GetServerType geeft enkel informatie en past de beoordeling dan ook niet aan
+            // Per onderdeel is de maximale reductie 10/5 oftewel 2.
+            // 10/5 doordat er 5 testen worden uitgevoerd die de beoordeling aan kunnen passen.
 
             message += Get404Message(site);
             message += GetGzipMessage(site);
@@ -384,9 +386,6 @@ namespace DotsolutionsWebsiteTester.TestTools
                     request.UserAgent = Session["userAgent"].ToString();
                     request.Headers.Add("Accept-Language", "nl-NL,nl;q=0.8,en-US;q=0.6,en;q=0.4");
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-                    Debug.WriteLine("GetHttpsMessage-Response.StatusCode" + response.StatusCode);
-                    Debug.WriteLine("GetHttpsMessage-(int)Response.StatusCode" + (int)response.StatusCode);
 
                     if ((int)response.StatusCode == 200)
                         isHttps = true;
