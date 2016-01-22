@@ -10,7 +10,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class Freshness : System.Web.UI.Page
     {
-        List<DateTime> LatesDatesList = new List<DateTime>();
+        List<DateTime> LatestDatesList = new List<DateTime>();
         List<string> contentCheckedContainer = new List<string>();
         List<KeyValuePair<string, DateTime>> ContentDateList = new List<KeyValuePair<string, DateTime>>();
 
@@ -69,7 +69,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
             }
 
-            foreach (var newDate in LatesDatesList)
+            foreach (var newDate in LatestDatesList)
             {
                 if (newDate > latestDate)
                     latestDate = newDate;
@@ -180,7 +180,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
 
             }
-            LatesDatesList.Add(latestDate);
+            if (latestDate != new DateTime())
+                LatestDatesList.Add(latestDate);
         }
 
         /// <summary>

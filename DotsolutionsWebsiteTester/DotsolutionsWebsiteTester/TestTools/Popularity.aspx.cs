@@ -60,6 +60,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
                     + "<span class='messageText'> Er is geen populariteit-ranking bekend bij <a href='http://www.alexa.com/' target='_blank'>Alexa</a>.</span></div>";
             }
+            catch (ArgumentNullException)
+            {
+                message += "<div class='alert alert-danger col-md-12 col-lg-12 col-xs-12 col-sm-12' role='alert'>"
+                    + "<i class='glyphicon glyphicon-alert glyphicons-lg messageIcon'></i>"
+                    + "<span class='messageText'> Er is geen populariteit-ranking bekend bij <a href='http://www.alexa.com/' target='_blank'>Alexa</a>.</span></div>";
+            }
             PopularityResults.InnerHtml = message;
 
             if (rating < 0m)
@@ -193,9 +199,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             using (XmlReader reader = XmlReader.Create(new StringReader(responseFromServer)))
             {
                 reader.ReadToFollowing("POPULARITY");
-                reader.MoveToFirstAttribute();
-                reader.MoveToNextAttribute();
-                return Int32.Parse(reader.Value);
+                var popularity = reader.GetAttribute("TEXT");
+                return Int32.Parse(popularity);
             }
         }
 
