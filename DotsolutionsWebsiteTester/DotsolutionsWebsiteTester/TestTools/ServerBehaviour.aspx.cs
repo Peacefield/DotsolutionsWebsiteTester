@@ -7,7 +7,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class ServerBehaviour : System.Web.UI.Page
     {
-        decimal rating = 10.0m;
+        private decimal rating = 10.0m;
         protected void Page_Load(object sender, EventArgs e)
         {
             try

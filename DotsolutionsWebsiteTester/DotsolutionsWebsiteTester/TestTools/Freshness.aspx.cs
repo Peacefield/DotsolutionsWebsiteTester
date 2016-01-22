@@ -10,9 +10,9 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class Freshness : System.Web.UI.Page
     {
-        List<DateTime> LatestDatesList = new List<DateTime>();
-        List<string> contentCheckedContainer = new List<string>();
-        List<KeyValuePair<string, DateTime>> ContentDateList = new List<KeyValuePair<string, DateTime>>();
+        private List<DateTime> LatestDatesList = new List<DateTime>();
+        private List<string> contentCheckedContainer = new List<string>();
+        private List<KeyValuePair<string, DateTime>> ContentDateList = new List<KeyValuePair<string, DateTime>>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
