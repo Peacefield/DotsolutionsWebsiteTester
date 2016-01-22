@@ -10,11 +10,13 @@ namespace DotsolutionsWebsiteTester.TestTools
 {
     public partial class Freshness : System.Web.UI.Page
     {
-        //ConcurrentBag<DateTime> threadSafe = new ConcurrentBag<DateTime>();
-        List<DateTime> threadSafe = new List<DateTime>();
-        List<KeyValuePair<string, List<KeyValuePair<string, DateTime>>>> DateListContainer = new List<KeyValuePair<string, List<KeyValuePair<string, DateTime>>>>();
-        //ConcurrentBag<string> contentCheckedContainer = new ConcurrentBag<string>();
+        List<DateTime> LatesDatesList = new List<DateTime>();
         List<string> contentCheckedContainer = new List<string>();
+        List<KeyValuePair<string, DateTime>> ContentDateList = new List<KeyValuePair<string, DateTime>>();
+        static int Compare(KeyValuePair<string, DateTime> a, KeyValuePair<string, DateTime> b)
+        {
+            return a.Value.CompareTo(b.Value);
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,6 +39,9 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["Freshness"] = htmlstring;
         }
 
+        /// <summary>
+        /// Start tests, add to page, calculate rating, save to session
+        /// </summary>
         private void GetFreshness()
         {
             var message = "";
@@ -50,16 +55,14 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             if (isDetailed)
             {
-                var i = 0;
-                foreach (var overheadlist in DateListContainer)
+                ContentDateList.Sort(Compare);
+                foreach (var item in ContentDateList)
                 {
-                    foreach (var list in overheadlist.Value)
-                        AddToTable(list.Value.ToShortDateString(), list.Key, sitemap[i]);
-                    i++;
+                    AddToTable(item.Value.ToShortDateString(), item.Key);
                 }
             }
-            
-            foreach (var newDate in threadSafe)
+
+            foreach (var newDate in LatesDatesList)
             {
                 if (newDate > latestDate)
                     latestDate = newDate;
@@ -170,7 +173,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 }
 
             }
-            threadSafe.Add(latestDate);
+            LatesDatesList.Add(latestDate);
         }
 
         /// <summary>
@@ -184,7 +187,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             var dateList = new List<DateTime>();
             var contentList = GetContentList(site);
             var isDetailed = (bool)Session["IsDetailedTest"];
-            var list = new List<KeyValuePair<string, DateTime>>();
+            //var list = new List<KeyValuePair<string, DateTime>>();
             foreach (var item in contentList)
             {
                 var lastModifiedDate = GetDateByLastModified(item);
@@ -195,21 +198,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     // Add to key value pair; key: contentUrl - value: date
 
                     if (isDetailed)
-                        list.Add(new KeyValuePair<string, DateTime>(item, lastModifiedDate));
+                        ContentDateList.Add(new KeyValuePair<string, DateTime>(item, lastModifiedDate));
                 }
-            }
-
-            // add sorted key value pair as value to key value pair with key: page name
-            // used to fill table
-            if (isDetailed)
-            {
-                // sort key value pair on value(date)
-                // http://www.dotnetperls.com/sort-keyvaluepair
-                list.Sort(Compare);
-
-                Debug.WriteLine(" --- list.Sort --- ");
-
-                DateListContainer.Add(new KeyValuePair<string, List<KeyValuePair<string, DateTime>>>(site, list));
             }
 
             DateTime latestDate = new DateTime();
@@ -222,17 +212,6 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
 
             return latestDate;
-        }
-
-        /// <summary>
-        /// Compare delegate to be used to sort a list descending
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        static int Compare(KeyValuePair<string, DateTime> a, KeyValuePair<string, DateTime> b)
-        {
-            return a.Value.CompareTo(b.Value);
         }
 
         /// <summary>
@@ -508,7 +487,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="date">date found</param>
         /// <param name="contentUrl">URL of tested content (img, js, css)</param>
         /// <param name="pageOfOrigin">URL of page where content was found</param>
-        private void AddToTable(string date, string contentUrl, string pageOfOrigin)
+        private void AddToTable(string date, string contentUrl)
         {
             var tRow = new TableRow();
 
