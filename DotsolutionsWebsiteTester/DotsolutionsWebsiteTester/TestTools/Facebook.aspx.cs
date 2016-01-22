@@ -27,8 +27,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            var ClientId = System.Web.Configuration.WebConfigurationManager.AppSettings["FacebookAppId"];
             var AccesTokenSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["FacebookAppSecret"];
-
+            
             fbc = new FacebookClient();
             try
             {
@@ -36,7 +37,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 // Create App and fill in credentials
                 dynamic result = fbc.Get("oauth/access_token", new
                 {
-                    client_id = "1506552426310758", // App ID
+                    client_id = ClientId, // App ID
                     client_secret = AccesTokenSecret, // App Secret
                     grant_type = "client_credentials"
                 });

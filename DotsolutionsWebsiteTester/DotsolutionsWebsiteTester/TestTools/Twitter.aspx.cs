@@ -30,7 +30,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return;
             }
 
+            var ConsumerKey = System.Web.Configuration.WebConfigurationManager.AppSettings["TwitterConsumerKey"];
             var ConsumerSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["TwitterConsumerSecret"];
+            var AccessToken = System.Web.Configuration.WebConfigurationManager.AppSettings["TwitterAccessToken"];
             var AccesTokenSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["TwitterAccesTokenSecret"];
 
             this.authorizer = new SingleUserAuthorizer
@@ -39,11 +41,11 @@ namespace DotsolutionsWebsiteTester.TestTools
                        new SingleUserInMemoryCredentialStore
                        {
                            ConsumerKey =
-                               "lZiItDrOsCPBBIiKioA3QV6IS",
+                               ConsumerKey,
                            ConsumerSecret =
                               ConsumerSecret,
                            AccessToken =
-                              "39354153-VVOkgQxTdA8v34eInxOqPi5oY3GBp1nyNxV7TrTLZ",
+                              AccessToken,
                            AccessTokenSecret =
                               AccesTokenSecret
                        }
