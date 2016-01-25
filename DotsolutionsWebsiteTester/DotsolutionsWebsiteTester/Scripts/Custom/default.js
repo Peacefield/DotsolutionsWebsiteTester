@@ -73,12 +73,12 @@ window.onload = function () {
             $("#checkboxHolder").toggle("slide", { direction: 'up' }, 1000, null);
         }, 100); // Delay (in milliseconds)
         $(this).text(function (i, text) {
-            //return text === "Verberg tests" ? "Selecteer tests" : "Verberg tests";
-            return text === "Selecteer tests" ? "Verberg tests" : "Selecteer tests";
+            return text === "Verberg tests" ? "Selecteer tests" : "Verberg tests";
+            //return text === "Selecteer tests" ? "Verberg tests" : "Selecteer tests";
         })
     }
 
-    //CheckAll();
+    CheckAll();
     ChangeFontWeight('MainContent_TestsCheckBoxList1');
     ChangeFontWeight('MainContent_TestsCheckBoxList2');
     ChangeFontWeight('MainContent_TestsCheckBoxList3');

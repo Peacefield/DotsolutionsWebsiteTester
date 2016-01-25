@@ -45,7 +45,7 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4">
                 <div class="btn btn-white btn-sm" id="ShowCheckboxes">
-                    Verberg tests
+                    Selecteer tests
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
 
             <div class="row">
                 <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4">
-                    <div class="btn btn-white btn-sm" id="CheckAllCheckboxes">Alles selecteren</div>
+                    <div class="btn btn-white btn-sm" id="CheckAllCheckboxes">Alles deselecteren</div>
                 </div>
             </div>
 

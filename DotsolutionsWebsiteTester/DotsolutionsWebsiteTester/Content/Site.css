@@ -424,7 +424,7 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
         TODO: Weghalen in productie. Verberg tests -> Selecteer tests op default.aspx.
         display: none;
     */
-    display: block;
+    display: none;
 }
 
     #checkboxHolder td input,
