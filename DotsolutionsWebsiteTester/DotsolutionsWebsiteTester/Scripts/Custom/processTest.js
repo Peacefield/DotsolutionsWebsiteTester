@@ -273,17 +273,17 @@ window.onload = function () {
                         // Do something
                         finishedTests++;
                         var progress = ((finishedTests / array.length) * 100).toFixed(0);
-
-                        if (!isThreePageResult) {
-                            $("#result").append($(response).find('#result').html());
-                        }
-
+                        
                         $("#testprogressbar").css("width", progress + "%");
                         $("#progresstext").text(progress + "% compleet");
                         $("#overlay").css("height", $html.outerHeight());
 
                         $("#testsInProgress li:contains(" + value + ")").remove();
                         $("#testsComplete").append("<li>" + value + "</li>");
+
+                        if (!isThreePageResult) {
+                            $("#result").append($(response).find('#result').html());
+                        }
 
                         if (progress == 100) {
                             console.timeEnd("Execute tests");
