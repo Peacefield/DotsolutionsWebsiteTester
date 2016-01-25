@@ -11,7 +11,7 @@ namespace DotsolutionsWebsiteTester.TestTools
     public partial class Freshness : System.Web.UI.Page
     {
         private List<DateTime> LatestDatesList = new List<DateTime>();
-        private List<string> contentCheckedContainer = new List<string>();
+        private List<string> ContentCheckedContainer = new List<string>();
         private List<KeyValuePair<string, DateTime>> ContentDateList = new List<KeyValuePair<string, DateTime>>();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -239,9 +239,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (item.Attributes["src"] != null)
                     {
-                        if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
+                        if (!ContentCheckedContainer.Contains(item.Attributes["src"].Value))
                         {
-                            contentCheckedContainer.Add(item.Attributes["src"].Value);
+                            ContentCheckedContainer.Add(item.Attributes["src"].Value);
 
                             if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
                             {
@@ -262,9 +262,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (item.Attributes["src"] != null)
                     {
-                        if (!contentCheckedContainer.Contains(item.Attributes["src"].Value))
+                        if (!ContentCheckedContainer.Contains(item.Attributes["src"].Value))
                         {
-                            contentCheckedContainer.Add(item.Attributes["src"].Value);
+                            ContentCheckedContainer.Add(item.Attributes["src"].Value);
 
                             if ((!item.Attributes["src"].Value.StartsWith("http") && !item.Attributes["src"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["src"].Value))
                             {
@@ -283,9 +283,9 @@ namespace DotsolutionsWebsiteTester.TestTools
                 {
                     if (item.Attributes["href"] != null)
                     {
-                        if (!contentCheckedContainer.Contains(item.Attributes["href"].Value))
+                        if (!ContentCheckedContainer.Contains(item.Attributes["href"].Value))
                         {
-                            contentCheckedContainer.Add(item.Attributes["href"].Value);
+                            ContentCheckedContainer.Add(item.Attributes["href"].Value);
 
                             if ((!item.Attributes["href"].Value.StartsWith("http") && !item.Attributes["href"].Value.StartsWith("//")) || IsOfDomain(site, item.Attributes["href"].Value))
                             {

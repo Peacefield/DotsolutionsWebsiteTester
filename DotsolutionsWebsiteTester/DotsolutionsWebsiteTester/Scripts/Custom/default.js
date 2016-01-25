@@ -46,14 +46,22 @@ function ChangeFontWeight(identifier) {
         }
     }
 }
-function ChangeFontWeightDetailedTestCheck() {
-    var input = document.getElementById('MainContent_TestCheckBox');
+function ChangeFontWeightCheckBox(identifier) {
+    var input = document.getElementById(identifier);
     if (input.checked == true) {
         $("label[for='" + input.id + "']").css("font-weight", "bold");
     }
     else {
         $("label[for='" + input.id + "']").css("font-weight", "normal");
     }
+}
+function Toggle(self, identifier) {
+    var input = document.getElementById(identifier);
+    if (self.checked == true) {
+        document.getElementById(identifier).checked = false;
+    }
+    ChangeFontWeightCheckBox('MainContent_TestCheckBox');
+    ChangeFontWeightCheckBox('MainContent_ThreePageReportCheckBox');
 }
 window.onload = function () {
     var ShowCheckboxes = document.getElementById("ShowCheckboxes");
@@ -74,7 +82,10 @@ window.onload = function () {
     ChangeFontWeight('MainContent_TestsCheckBoxList1');
     ChangeFontWeight('MainContent_TestsCheckBoxList2');
     ChangeFontWeight('MainContent_TestsCheckBoxList3');
-    ChangeFontWeightDetailedTestCheck();
+
+    ChangeFontWeightCheckBox('MainContent_TestCheckBox');
+    ChangeFontWeightCheckBox('MainContent_ThreePageReportCheckBox');
+
 
     CheckAllCheckboxes.onclick = function () {
         if ($(this).text() === "Alles selecteren")
@@ -100,7 +111,14 @@ window.onload = function () {
     document.getElementById('MainContent_TestsCheckBoxList1').onchange = function () { ChangeFontWeight('MainContent_TestsCheckBoxList1'); };
     document.getElementById('MainContent_TestsCheckBoxList2').onchange = function () { ChangeFontWeight('MainContent_TestsCheckBoxList2'); };
     document.getElementById('MainContent_TestsCheckBoxList3').onchange = function () { ChangeFontWeight('MainContent_TestsCheckBoxList3'); };
-    document.getElementById('MainContent_TestCheckBox').onchange = function () { ChangeFontWeightDetailedTestCheck() };
+    document.getElementById('MainContent_TestCheckBox').onchange = function () {
+        ChangeFontWeightCheckBox('MainContent_TestCheckBox');
+        Toggle(this, 'MainContent_ThreePageReportCheckBox');
+    };
+    document.getElementById('MainContent_ThreePageReportCheckBox').onchange = function () {
+        ChangeFontWeightCheckBox('MainContent_ThreePageReportCheckBox');
+        Toggle(this, 'MainContent_TestCheckBox');
+    };
 }
 
 $(document).ready(function () {

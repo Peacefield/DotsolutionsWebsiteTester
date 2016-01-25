@@ -46,6 +46,15 @@ namespace DotsolutionsWebsiteTester
                 Session["IsDetailedTest"] = false;
                 Response.Redirect("Geautomatiseerde-Test");
             }
+
+            if (ThreePageReportCheckBox.Checked)
+            {
+                Session["ThreePageReport"] = true;
+                Session["ManualTest"] = false;
+                Session["IsDetailedTest"] = false;
+                Response.Redirect("Geautomatiseerde-Test");
+            }
+
             return;
         }
 

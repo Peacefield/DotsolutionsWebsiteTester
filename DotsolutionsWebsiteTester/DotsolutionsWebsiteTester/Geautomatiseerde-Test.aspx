@@ -100,6 +100,30 @@
         </div>
     </div>
 
+    <%--<div id="CriteriaSummaryHidden" class="hidden" runat="server">--%>
+        <div class="panel panel-custom" id="CriteriaSummary">
+            <div class="panel-heading">
+                <span>Geteste criteria</span>
+            </div>
+            <div class="panel-body">
+                <div>
+                    <span id="SummaryRatingOverall" class="mediocreScore ratingCircle">-</span><span class="subTitle">Totaal</span>
+                </div>
+                <hr />
+                <ul id="SummaryCritlistcontainer">
+                    <li id="SummaryRatingAccessTxt" runat="server"><span id="SummaryRatingAccess" class="ratingSquare emptyScore">-</span><span class="subTitle">Toegankelijkheid</span>
+                    </li>
+                    <li id="SummaryRatingUxTxt"><span id="SummaryRatingUx" class="ratingSquare emptyScore">-</span><span class="subTitle">Gebruikerservaring</span>
+                    </li>
+                    <li id="SummaryRatingMarketingTxt"><span id="SummaryRatingMarketing" class="ratingSquare emptyScore">-</span><span class="subTitle">Marketing</span>
+                    </li>
+                    <li id="SummaryRatingTechTxt"><span id="SummaryRatingTech" class="ratingSquare emptyScore">-</span><span class="subTitle">Technologie</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <%--</div>--%>
+
     <div class="panel panel-custom" id="automatedRatingList">
         <div class="panel-heading">
             <span>Beoordeling geautomatiseerde test</span>
