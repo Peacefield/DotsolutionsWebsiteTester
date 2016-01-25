@@ -38,22 +38,25 @@ namespace DotsolutionsWebsiteTester
             if (TestCheckBox.Checked)
             {
                 Session["IsDetailedTest"] = true;
+                Session["ThreePageReport"] = false;
                 Response.Redirect("Handmatige-Test");
             }
-            else
-            {
-                Session["ManualTest"] = false;
-                Session["IsDetailedTest"] = false;
-                Response.Redirect("Geautomatiseerde-Test");
-            }
-
-            if (ThreePageReportCheckBox.Checked)
+            else if (ThreePageReportCheckBox.Checked)
             {
                 Session["ThreePageReport"] = true;
                 Session["ManualTest"] = false;
                 Session["IsDetailedTest"] = false;
                 Response.Redirect("Geautomatiseerde-Test");
             }
+            else
+            {
+                Session["ManualTest"] = false;
+                Session["IsDetailedTest"] = false;
+                Session["ThreePageReport"] = false;
+                Response.Redirect("Geautomatiseerde-Test");
+            }
+
+            
 
             return;
         }

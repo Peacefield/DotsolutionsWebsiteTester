@@ -83,6 +83,12 @@ namespace DotsolutionsWebsiteTester.TestTools
             Session["PopularityRating"] = rounded;
         }
 
+        /// <summary>
+        /// Calculate the rating the score deserves
+        /// </summary>
+        /// <param name="rank">Alexa rank</param>
+        /// <param name="deltaStr">Alexa delta</param>
+        /// <returns>rating</returns>
         private decimal CalculateRating(int rank, string deltaStr)
         {
             var rating = 0.0m;
@@ -151,6 +157,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return rating;
         }
 
+        /// <summary>
+        /// Retrieve corresponding message for Alexa Delta
+        /// </summary>
+        /// <param name="alexaDelta"></param>
+        /// <returns></returns>
         private string GetDeltaMessage(string alexaDelta)
         {
             var message = "";
@@ -179,6 +190,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return message;
         }
 
+        /// <summary>
+        /// Retrieve xml from Alexa API
+        /// </summary>
+        /// <param name="mainUrl"></param>
+        /// <returns></returns>
         private string GetAlexaResponse(string mainUrl)
         {
             var requestString = "http://data.alexa.com/data?cli=10&url=" + mainUrl;
@@ -194,6 +210,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return responseFromServer;
         }
 
+        /// <summary>
+        /// Read Rank from XML retrieved from Alexa API
+        /// </summary>
+        /// <param name="responseFromServer"></param>
+        /// <returns></returns>
         private int ReadRankFromXml(string responseFromServer)
         {
             using (XmlReader reader = XmlReader.Create(new StringReader(responseFromServer)))
@@ -204,6 +225,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
         }
 
+        /// <summary>
+        /// Read Delta from XMl retrieved from Alexa API
+        /// </summary>
+        /// <param name="responseFromServer"></param>
+        /// <returns></returns>
         private string ReadDeltaFromXml(string responseFromServer)
         {
             using (XmlReader reader = XmlReader.Create(new StringReader(responseFromServer)))
@@ -213,8 +239,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                 return reader.Value;
             }
         }
-
-
+        
         /// <summary>
         /// Set the colour that indicates the rating accordingly
         /// </summary>

@@ -42,24 +42,37 @@ namespace DotsolutionsWebsiteTester
             if ((bool)Session["ManualTest"])
                 manualresults.InnerHtml += Session["ManualTestResults"].ToString();
 
+            if ((bool)Session["ThreePageReport"])
+                CriteriaSummaryContainer.InnerHtml = Session["CriteriaSummaryContents"].ToString();
+
+
             if (selectedTests.Count < 10)
                 critlistpagebreak.Attributes.Remove("class");
 
 
-            var orderedList = OrderByRating(selectedTests);
-            // Append HTML to the results div
-            foreach (var test in orderedList)
+            var isThreePageReport = (bool)Session["ThreePageReport"];
+
+            if (!isThreePageReport)
             {
-                try
+                var orderedList = OrderByRating(selectedTests);
+                // Append HTML to the results div
+                foreach (var test in orderedList)
                 {
-                    results.InnerHtml += "<div id='" + test.Key + "'>" + Session[test.Key].ToString() + "</div>";
+                    try
+                    {
+                        results.InnerHtml += "<div id='" + test.Key + "'>" + Session[test.Key].ToString() + "</div>";
+                    }
+                    catch (NullReferenceException)
+                    {
+                        results.InnerHtml += "<div class = 'panel panel-danger' id='" + test.Key + "'>"
+                            + "<div class = 'panel-heading'>" + test.Key + "</div>"
+                            + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>";
+                    }
                 }
-                catch (NullReferenceException)
-                {
-                    results.InnerHtml += "<div class = 'panel panel-danger' id='" + test.Key + "'>"
-                        + "<div class = 'panel-heading'>" + test.Key + "</div>"
-                        + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>";
-                }
+            }
+            else
+            {
+                // add summary from session
             }
         }
 
@@ -92,16 +105,20 @@ namespace DotsolutionsWebsiteTester
             RatingMarketingList.InnerHtml = Session["RatingMarketingList"].ToString();
             RatingTechList.InnerHtml = Session["RatingTechList"].ToString();
 
-            RatingOverall.Attributes.Add("class", Session["RatingOverallClasses"].ToString());
             RatingAccess.Attributes.Add("class", Session["RatingAccessClasses"].ToString());
             RatingUx.Attributes.Add("class", Session["RatingUxClasses"].ToString());
             RatingMarketing.Attributes.Add("class", Session["RatingMarketingClasses"].ToString());
             RatingTech.Attributes.Add("class", Session["RatingTechClasses"].ToString());
 
-            if (Session["RatingOverall"].ToString() == "-1")
-                RatingOverall.InnerHtml = "-";
-            else
-                RatingOverall.InnerHtml = Session["RatingOverall"].ToString();
+            if (!(bool)Session["ThreePageReport"])
+            {
+                RatingOverallHidden.Attributes.Remove("class");
+                RatingOverall.Attributes.Add("class", Session["RatingOverallClasses"].ToString());
+                if (Session["RatingOverall"].ToString() == "-1")
+                    RatingOverall.InnerHtml = "-";
+                else
+                    RatingOverall.InnerHtml = Session["RatingOverall"].ToString();
+            }
 
             if (RatingAccess.Attributes["class"].Contains("emptyScore"))
                 RatingAccess.InnerHtml = "-";
@@ -255,7 +272,7 @@ namespace DotsolutionsWebsiteTester
 
             writer.Write(sOut);
         }
-        
+
         protected override void SavePageStateToPersistenceMedium(object state)
         {
             //base.SavePageStateToPersistenceMedium(state);

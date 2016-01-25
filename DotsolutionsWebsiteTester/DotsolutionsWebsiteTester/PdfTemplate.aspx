@@ -184,22 +184,14 @@
             float: left;
         }
 
-        #automatedRatingList {
+        #automatedRatingList, #CriteriaSummaryContainer {
             display: block;
         }
 
-            #automatedRatingList ul {
+            #automatedRatingList ul, #CriteriaSummaryContainer ul {
                 display: inline-block;
                 width: 100%;
                 list-style: none;
-            }
-
-            #automatedRatingList.panel-custom {
-                padding-top: 15px;
-            }
-
-            #automatedRatingList .panel-body {
-                padding-top: 0px;
             }
 
             #automatedRatingList .ratingCircle {
@@ -213,6 +205,9 @@
             border-top: 1px solid #F5F5F5;
             padding-top: 5px;
             margin-top: 5px;
+            float: left;
+            width: 100%;
+            display: block;
         }
 
             #critlistcontainer > div:not(#critlistpagebreak) {
@@ -221,24 +216,35 @@
                 min-height: 120px;
             }
 
+        #critlistpagebreak {
+            width: 100%;
+            float: left;
+            min-height: 350px;
+        }
+
         .ratingList {
             display: block;
             width: 80%;
             margin-left: 50px;
         }
 
-            .ratingList li span {
-                margin-left: -40px;
+            .ratingList li {
+                margin-top: 10px;
             }
 
-            .ratingList li a {
-                cursor: pointer;
-                font-size: 1.3em;
-            }
-
-                .ratingList li a:hover, .ratingList li a.focus, .ratingList li a:focus {
-                    text-decoration: none;
+                .ratingList li span {
+                    margin-left: -40px;
                 }
+
+                .ratingList li a {
+                    cursor: pointer;
+                    font-size: 1.3em;
+                    margin-left: 5px;
+                }
+
+                    .ratingList li a:hover, .ratingList li a.focus, .ratingList li a:focus {
+                        text-decoration: none;
+                    }
 
         #testedsiteslist li {
             margin-bottom: 5px;
@@ -508,17 +514,9 @@
             margin-left: 10px;
         }
 
-        @media all {
-            .page-break {
-                display: none;
-            }
-        }
-
-        @media print {
-            .page-break {
-                display: block;
-                page-break-before: always;
-            }
+        .page-break {
+            display: block;
+            page-break-before: always;
         }
     </style>
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -532,13 +530,14 @@
         <div class="container body-content">
             <div id="sizeref" runat="server"></div>
             <div id="manualresults" runat="server"></div>
+            <div id="CriteriaSummaryContainer" runat="server"></div>
             <div class="page-break"></div>
             <div class="panel panel-custom" id="automatedRatingList">
                 <div class="panel-heading">
                     <span>Beoordeling geautomatiseerde test</span>
                 </div>
                 <div class="panel-body">
-                    <div>
+                    <div id="RatingOverallHidden" class="hidden" runat="server">
                         <span id="RatingOverall" class="mediocreScore ratingCircle" runat="server">...</span><span class="subTitle">Totaal</span>
                     </div>
                     <div id="critlistcontainer" runat="server">
@@ -591,7 +590,7 @@
 
         </div>
 
-        
+
         <footer>
             <div class="col-md-12 text-center">
                 <span class="text-muted">Ontwikkeld door</span>

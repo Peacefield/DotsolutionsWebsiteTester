@@ -665,15 +665,15 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
     cursor: pointer;
 }
 
-#automatedRatingList {
+#automatedRatingList, #CriteriaSummary {
     display: none;
 }
 
-    #automatedRatingList li {
+    #automatedRatingList li, #CriteriaSummary li {
         list-style: none;
     }
 
-    #automatedRatingList > #critlistcontainer > li {
+    #automatedRatingList > #critlistcontainer > li, #CriteriaSummary > #SummaryCritlistcontainer > li {
         margin-bottom: 10px;
     }
 

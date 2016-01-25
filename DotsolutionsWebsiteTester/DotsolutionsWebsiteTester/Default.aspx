@@ -21,7 +21,7 @@
                 <div class="center-block noselect detailedTestCheckBox">
                     <asp:CheckBox ID="TestCheckBox" runat="server" Text="Gedetailleerde testgegevens weergeven" Value="Freshness" />
                     <br />
-                    <asp:CheckBox ID="ThreePageReportCheckBox" runat="server" Text="3-pagina verslag" Value="Freshness" />
+                    <asp:CheckBox ID="ThreePageReportCheckBox" runat="server" Text="4-pagina verslag" Value="Freshness" />
                 </div>
             </div>
         </div>

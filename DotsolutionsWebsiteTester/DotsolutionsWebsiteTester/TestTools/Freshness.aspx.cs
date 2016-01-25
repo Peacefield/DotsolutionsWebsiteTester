@@ -41,7 +41,7 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        static int Compare(KeyValuePair<string, DateTime> a, KeyValuePair<string, DateTime> b)
+        private static int Compare(KeyValuePair<string, DateTime> a, KeyValuePair<string, DateTime> b)
         {
             return b.Value.CompareTo(a.Value);
         }
@@ -424,6 +424,11 @@ namespace DotsolutionsWebsiteTester.TestTools
             return date;
         }
 
+        /// <summary>
+        /// Get the int of a month
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         private int MonthToInt(string month)
         {
             switch (month)

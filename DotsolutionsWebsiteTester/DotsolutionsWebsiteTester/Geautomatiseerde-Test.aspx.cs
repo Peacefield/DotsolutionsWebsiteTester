@@ -380,6 +380,18 @@ namespace DotsolutionsWebsiteTester
         }
 
         /// <summary>
+        /// Add classes of criteria to Session so it is accessible from PdfTemplate
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="innerhtml"></param>
+        [System.Web.Services.WebMethod]
+        public static void AddCriteriaSummaryContents(string contents)
+        {
+            HttpContext.Current.Session["CriteriaSummaryContents"] = contents;
+        }
+
+
+        /// <summary>
         /// Add overall rating to Session so it is accessible from PdfTemplate
         /// </summary>
         /// <param name="rating"></param>
@@ -752,6 +764,13 @@ namespace DotsolutionsWebsiteTester
             return orderedList;
         }
 
+        [System.Web.Services.WebMethod]
+        public static bool GetIsThreePageResult()
+        {
+            Debug.WriteLine("ThreePageReport = " + HttpContext.Current.Session["ThreePageReport"]);
+
+            return (bool)HttpContext.Current.Session["ThreePageReport"];
+        }
         /// <summary>
         /// Get the name of the test that is familiair to the user
         /// </summary>

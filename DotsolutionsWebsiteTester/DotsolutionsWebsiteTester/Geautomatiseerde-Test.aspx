@@ -100,7 +100,7 @@
         </div>
     </div>
 
-    <%--<div id="CriteriaSummaryHidden" class="hidden" runat="server">--%>
+    <div id="CriteriaSummaryContainer">
         <div class="panel panel-custom" id="CriteriaSummary">
             <div class="panel-heading">
                 <span>Geteste criteria</span>
@@ -122,7 +122,7 @@
                 </ul>
             </div>
         </div>
-    <%--</div>--%>
+    </div>
 
     <div class="panel panel-custom" id="automatedRatingList">
         <div class="panel-heading">

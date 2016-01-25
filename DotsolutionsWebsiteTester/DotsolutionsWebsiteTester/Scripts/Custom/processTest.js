@@ -46,7 +46,7 @@ function SetRatingClass(identifier, rating, overall) {
         $(identifier).attr("class", "emptyScore ratingCircle");
     else {
         var rating = rating.replace(",", ".");
-        if (overall) {            
+        if (overall) {
             if (rating == 10)
                 $(identifier).attr("class", "score-10 ratingCircle");
             else if (rating >= 9)
@@ -103,30 +103,42 @@ var testedcriteria = 0;
 
 function OnAccessSuccess(response) {
     if (response !== "-1") {
-        $("#RatingAccess").text(response);
         testedcriteria++;
+        $("#RatingAccess").text(response);
         SetRatingClass("#RatingAccess", response);
+
+        $("#SummaryRatingAccess").text(response);
+        SetRatingClass("#SummaryRatingAccess", response);
     }
 }
 function OnUserxSuccess(response) {
     if (response !== "-1") {
-        $("#RatingUx").text(response);
         testedcriteria++;
+        $("#RatingUx").text(response);
         SetRatingClass("#RatingUx", response);
+
+        $("#SummaryRatingUx").text(response);
+        SetRatingClass("#SummaryRatingUx", response);
     }
 }
 function OnMarketingSuccess(response) {
     if (response !== "-1") {
-        $("#RatingMarketing").text(response);
         testedcriteria++;
+        $("#RatingMarketing").text(response);
         SetRatingClass("#RatingMarketing", response);
+
+        $("#SummaryRatingMarketing").text(response);
+        SetRatingClass("#SummaryRatingMarketing", response);
     }
 }
 function OnTechSuccess(response) {
     if (response !== "-1") {
-        $("#RatingTech").text(response);
         testedcriteria++;
+        $("#RatingTech").text(response);
         SetRatingClass("#RatingTech", response);
+
+        $("#SummaryRatingTech").text(response);
+        SetRatingClass("#SummaryRatingTech", response);
     }
 }
 
@@ -177,16 +189,19 @@ function GetOverallRating() {
         if (total !== 10) {
             total = total.toFixed(1);
             $("#RatingOverall").text(total.replace(".", ","));
+            $("#SummaryRatingOverall").text(total.replace(".", ","));
         }
         else {
             total = total.toFixed(0);
             $("#RatingOverall").text(total);
+            $("#SummaryRatingOverall").text(total);
         }
     }
 
     PageMethods.AddOverallRatingSession(total, OnSuccess, OnError);
 
     SetRatingClass("#RatingOverall", total, true);
+    SetRatingClass("#SummaryRatingOverall", total, true);
 }
 
 function OnAccesListSuccess(response) {
@@ -213,12 +228,15 @@ function OnError(error) {
 window.onresize = function () {
     setup_loading();
 }
-
+function OnThreePageSuccess(response) {
+    isThreePageResult = response;
+}
 // Execute on window.onload
 window.onload = function () {
     PageMethods.set_path('Geautomatiseerde-Test.aspx')
     PageMethods.ResetRating(OnSuccess, OnError);
     var url = $("#MainContent_UrlTesting").text();
+    PageMethods.GetIsThreePageResult(OnThreePageSuccess, OnError);
     if (url !== "") {
 
         var array = new Array();
@@ -256,7 +274,10 @@ window.onload = function () {
                         finishedTests++;
                         var progress = ((finishedTests / array.length) * 100).toFixed(0);
 
-                        $("#result").append($(response).find('#result').html());
+                        if (!isThreePageResult) {
+                            $("#result").append($(response).find('#result').html());
+                        }
+
                         $("#testprogressbar").css("width", progress + "%");
                         $("#progresstext").text(progress + "% compleet");
                         $("#overlay").css("height", $html.outerHeight());
@@ -305,11 +326,19 @@ window.onload = function () {
                                     PageMethods.AddCriteriaClassSession("RatingTechClasses", techClasses, OnSuccess, OnError);
                                     PageMethods.AddCriteriaClassSession("RatingOverallClasses", overallClasses, OnSuccess, OnError);
 
+                                    if (isThreePageResult) {
+                                        var CriteriaSummaryContents = document.getElementById("CriteriaSummaryContainer").innerHTML;
+                                        PageMethods.AddCriteriaSummaryContents(CriteriaSummaryContents, OnSuccess, OnError);
+                                    }
+
+
                                 }, 1000);
                             }, 1000);
 
                             setTimeout(function () {
                                 $("#overlay").fadeOut();
+                                if (isThreePageResult)
+                                    $("#CriteriaSummary").fadeIn();
                                 $("#automatedRatingList").fadeIn();
                                 $("#MainContent_CreatePdfBtn").css("display", "block");
                                 document.title = 'Resultaten - Website tester';
