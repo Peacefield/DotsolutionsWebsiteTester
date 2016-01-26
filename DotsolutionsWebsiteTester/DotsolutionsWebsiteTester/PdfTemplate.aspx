@@ -216,10 +216,13 @@
                 min-height: 120px;
             }
 
+        .page-break#critlistpagebreak {
+            min-height: 350px;
+        }
+
         #critlistpagebreak {
             width: 100%;
             float: left;
-            min-height: 350px;
         }
 
         .ratingList {
