@@ -46,7 +46,7 @@ namespace DotsolutionsWebsiteTester
                 CriteriaSummaryContainer.InnerHtml = Session["CriteriaSummaryContents"].ToString();
 
 
-            if (selectedTests.Count < 10)
+            if (selectedTests.Count < 8)
                 critlistpagebreak.Attributes.Remove("class");
 
 

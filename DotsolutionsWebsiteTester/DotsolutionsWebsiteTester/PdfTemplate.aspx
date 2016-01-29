@@ -251,7 +251,7 @@
             float: left;
         }
 
-        #critlistpagebreak .page-break{
+        .page-break#critlistpagebreak {
             min-height: 200px;
         }
 
