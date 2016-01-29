@@ -249,6 +249,9 @@
         #critlistpagebreak {
             width: 100%;
             float: left;
+        }
+
+        #critlistpagebreak .page-break{
             min-height: 200px;
         }
 
