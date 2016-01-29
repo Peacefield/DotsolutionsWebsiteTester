@@ -76,14 +76,21 @@ namespace DotsolutionsWebsiteTester.TestTools
                 threadList.Add(th);
                 th.Start();
 
-                var Webget = new HtmlWeb();
-                var doc = Webget.Load(url);
+                try
+                {
+                    var Webget = new HtmlWeb();
+                    var doc = Webget.Load(url);
 
-                if (IsTableLayout(doc))
-                    tableLayOutList.Add(url);
+                    if (IsTableLayout(doc))
+                        tableLayOutList.Add(url);
 
-                if (!IsUsingSemantics(doc))
-                    noSemanticList.Add(url);
+                    if (!IsUsingSemantics(doc))
+                        noSemanticList.Add(url);
+                }
+                catch (WebException)
+                {
+
+                }
             }
 
             // Show results from IsTableLayout()
@@ -95,7 +102,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             }
             else
             {
-                rating = rating - ((1m/(decimal)sitemap.Count) * 5);
+                rating = rating - ((1m / (decimal)sitemap.Count) * 5);
                 var unorderedlist = "<ul>";
                 foreach (var url in tableLayOutList)
                     unorderedlist += "<li><a href='" + url + "' target='_blank'>" + url + "</a></li>";

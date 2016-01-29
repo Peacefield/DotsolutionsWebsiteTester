@@ -103,8 +103,19 @@ namespace DotsolutionsWebsiteTester.TestTools
                 if (isDetailed)
                     IntLinksHiddenTable.Attributes.Remove("class");
 
+                Debug.WriteLine("IntLinksTable.Rows.Count = " + IntLinksTable.Rows.Count);
+
                 if (!isDetailed)
-                    IntLinksTable.Rows.Clear();
+                {
+                    try
+                    {
+                        IntLinksTable.Rows.Clear();
+                    }
+                    catch (NullReferenceException)
+                    {
+
+                    }
+                }
 
                 var errorCntString = "zijn " + errorCnt.ToString("#,##0") + " meldingen";
                 if (errorCnt == 1)

@@ -184,6 +184,29 @@
             float: left;
         }
 
+        #sizeref {
+            width: 40%;
+            float: left;
+        }
+
+        #CriteriaSummaryContainer {
+            width: 60%;
+            float: left;
+        }
+
+        #automatedRatingList, #testedpages, #results {
+            width: 100%;
+            float: left;
+        }
+
+            #automatedRatingList .panel-body {
+                padding-top: 0;
+            }
+
+            #automatedRatingList .panel-heading {
+                padding-bottom: 0;
+            }
+
         #automatedRatingList, #CriteriaSummaryContainer {
             display: block;
         }
@@ -208,6 +231,7 @@
             float: left;
             width: 100%;
             display: block;
+            font-size: .7em;
         }
 
             #critlistcontainer > div:not(#critlistpagebreak) {
@@ -216,13 +240,16 @@
                 min-height: 120px;
             }
 
-        .page-break#critlistpagebreak {
-            min-height: 350px;
-        }
+            #critlistcontainer .ratingSquare {
+                width: 30px;
+                height: 30px;
+                padding: 5px 2px 2px 2px;
+            }
 
         #critlistpagebreak {
             width: 100%;
             float: left;
+            min-height: 200px;
         }
 
         .ratingList {
@@ -231,29 +258,29 @@
             margin-left: 50px;
         }
 
-            .ratingList li {
-                margin-top: 10px;
+            .ratingList li span {
+                margin-left: -40px;
             }
 
-                .ratingList li span {
-                    margin-left: -40px;
+            .ratingList li a {
+                cursor: pointer;
+                font-size: 1.3em;
+                margin-left: 5px;
+            }
+
+                .ratingList li a:hover, .ratingList li a.focus, .ratingList li a:focus {
+                    text-decoration: none;
                 }
 
-                .ratingList li a {
-                    cursor: pointer;
-                    font-size: 1.3em;
-                    margin-left: 5px;
-                }
-
-                    .ratingList li a:hover, .ratingList li a.focus, .ratingList li a:focus {
-                        text-decoration: none;
-                    }
+        #testedpages .panel-body {
+            padding: 0;
+        }
 
         #testedsiteslist li {
             margin-bottom: 5px;
             list-style: none;
             margin-left: -25px;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .score-0 {
@@ -460,16 +487,15 @@
             }
 
         .laptopcontainer {
-            width: 330px;
+            width: 250px;
             height: 250px;
             background-image: url("http://i.imgur.com/AzbZXWr.png");
-            padding: 15px 47px 100px 47px;
+            padding: 10px 36px 137px 35px;
             display: block;
             background-size: contain;
             background-repeat: no-repeat;
             margin-right: auto;
             margin-left: auto;
-            float: right;
         }
 
         .tabletcontainer {
@@ -532,8 +558,11 @@
     <form runat="server">
         <div class="container body-content">
             <div id="sizeref" runat="server"></div>
-            <div id="manualresults" runat="server"></div>
+
             <div id="CriteriaSummaryContainer" runat="server"></div>
+
+            <div id="manualresults" runat="server"></div>
+
             <div class="page-break"></div>
             <div class="panel panel-custom" id="automatedRatingList">
                 <div class="panel-heading">
@@ -579,7 +608,7 @@
 
             <div class="page-break"></div>
 
-            <div class="panel panel-custom">
+            <div class="panel panel-custom" id="testedpages">
                 <div class="panel-heading">
                     <span>Deze pagina's van uw website hebben wij voor u getest</span>
                 </div>

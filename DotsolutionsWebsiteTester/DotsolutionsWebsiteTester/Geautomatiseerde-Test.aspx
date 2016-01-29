@@ -40,11 +40,11 @@
         <div class="panel-heading">
             <span>Rapport voor</span>
         </div>
-        <div class="panel-body">
+        <div class="panel-body text-center">
+            <h4 id="UrlTesting" runat="server"></h4>
             <asp:Image runat="server"
                 ID="laptopcontainer"
                 CssClass="laptopcontainer" />
-            <h4 id="UrlTesting" runat="server"></h4>
         </div>
     </div>
 

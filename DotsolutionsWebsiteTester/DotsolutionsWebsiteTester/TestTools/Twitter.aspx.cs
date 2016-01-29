@@ -177,21 +177,28 @@ namespace DotsolutionsWebsiteTester.TestTools
             Debug.WriteLine("GetScreenNamesFromPage <<< ");
             var screenNames = new List<string>();
 
-            var webget = new HtmlWeb();
-            var doc = webget.Load(url);
-            if (doc.DocumentNode.SelectNodes("//a[@href]") != null)
+            try
             {
-                foreach (var node in doc.DocumentNode.SelectNodes("//a[@href]"))
+                var webget = new HtmlWeb();
+                var doc = webget.Load(url);
+                if (doc.DocumentNode.SelectNodes("//a[@href]") != null)
                 {
-                    if (node.Attributes["href"].Value.Contains("twitter.com"))
+                    foreach (var node in doc.DocumentNode.SelectNodes("//a[@href]"))
                     {
-                        var temp = SliceScreenName(node.Attributes["href"].Value);
+                        if (node.Attributes["href"].Value.Contains("twitter.com"))
+                        {
+                            var temp = SliceScreenName(node.Attributes["href"].Value);
 
-                        Debug.WriteLine(temp + " aan lijst toevoegen!");
-                        if (temp != "")
-                            screenNames.Add(temp);
+                            Debug.WriteLine(temp + " aan lijst toevoegen!");
+                            if (temp != "")
+                                screenNames.Add(temp);
+                        }
                     }
                 }
+            }
+            catch (WebException)
+            {
+
             }
             return screenNames;
         }

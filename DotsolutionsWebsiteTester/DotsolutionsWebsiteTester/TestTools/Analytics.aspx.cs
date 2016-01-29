@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Threading;
 using System.Web.UI.WebControls;
 
@@ -145,7 +146,7 @@ namespace DotsolutionsWebsiteTester.TestTools
                     + "<ul>" + nothing + "</ul></span></div>";
 
             }
-            
+
             var percentageUsed = (yesAnalytics.Count / sitemap.Count) * 100;
             var amountFound = analyticslist.Count + " soorten";
             if (analyticslist.Count == 1)
@@ -198,21 +199,50 @@ namespace DotsolutionsWebsiteTester.TestTools
         /// <param name="url">URL to be tested</param>
         private void TestSite(int index, string url)
         {
-            var Webget = new HtmlWeb();
-            var doc = Webget.Load(url);
-            bool done = false;
-
-            if (doc.DocumentNode.SelectNodes("//script") != null)
+            try
             {
-                Debug.WriteLine("Scipts check for Analytics " + url);
-                foreach (var node in doc.DocumentNode.SelectNodes("//script"))
+                var Webget = new HtmlWeb();
+                var doc = Webget.Load(url);
+                bool done = false;
+
+                if (doc.DocumentNode.SelectNodes("//script") != null)
                 {
+                    Debug.WriteLine("Scipts check for Analytics " + url);
+                    foreach (var node in doc.DocumentNode.SelectNodes("//script"))
+                    {
+                        // if type from list is detected do this
+                        if (node.InnerHtml.Contains(analyticTypes[index].Key))
+                        {
+                            Debug.WriteLine("Scipts check for Analytics gevonden:" + analyticTypes[index].Value);
+                            found++;
+                            done = true;
+                            // Add to list that tested positive to some kind of analytics software if it's not already in there
+                            if (!yesAnalytics.Contains(url))
+                            {
+                                yesAnalytics.Add(url);
+                            }
+
+                            // remove url from noAnalytics list since current analytics search found something
+                            if (noAnalytics.Contains(url))
+                            {
+                                noAnalytics.Remove(url);
+                            }
+                            // Break in case they added the same type in multiple forms, e.g. //www.google-analytics.com/analytics.js and (the older version: ) https://ssl.google-analytics.com/ga.js
+                            break;
+                        }
+                    }
+                }
+
+                if (!done && doc.DocumentNode.SelectSingleNode("//html") != null)
+                {
+                    var node = doc.DocumentNode.SelectSingleNode("//html");
+                    Debug.WriteLine("HTML check for Analytics " + url);
+
                     // if type from list is detected do this
                     if (node.InnerHtml.Contains(analyticTypes[index].Key))
                     {
-                        Debug.WriteLine("Scipts check for Analytics gevonden:" + analyticTypes[index].Value);
+                        Debug.WriteLine("HTML check for Analytics gevonden:" + analyticTypes[index].Value);
                         found++;
-                        done = true;
                         // Add to list that tested positive to some kind of analytics software if it's not already in there
                         if (!yesAnalytics.Contains(url))
                         {
@@ -224,39 +254,17 @@ namespace DotsolutionsWebsiteTester.TestTools
                         {
                             noAnalytics.Remove(url);
                         }
-                        // Break in case they added the same type in multiple forms, e.g. //www.google-analytics.com/analytics.js and (the older version: ) https://ssl.google-analytics.com/ga.js
-                        break;
                     }
                 }
-            }
-
-            if (!done && doc.DocumentNode.SelectSingleNode("//html") != null)
-            {
-                var node = doc.DocumentNode.SelectSingleNode("//html");
-                Debug.WriteLine("HTML check for Analytics " + url);
-
-                // if type from list is detected do this
-                if (node.InnerHtml.Contains(analyticTypes[index].Key))
+                // Add to list of noAnalytics found if it's not already in there and has not tested postive to another kind yet
+                if (!yesAnalytics.Contains(url) && !noAnalytics.Contains(url))
                 {
-                    Debug.WriteLine("HTML check for Analytics gevonden:" + analyticTypes[index].Value);
-                    found++;
-                    // Add to list that tested positive to some kind of analytics software if it's not already in there
-                    if (!yesAnalytics.Contains(url))
-                    {
-                        yesAnalytics.Add(url);
-                    }
-
-                    // remove url from noAnalytics list since current analytics search found something
-                    if (noAnalytics.Contains(url))
-                    {
-                        noAnalytics.Remove(url);
-                    }
+                    noAnalytics.Add(url);
                 }
             }
-            // Add to list of noAnalytics found if it's not already in there and has not tested postive to another kind yet
-            if (!yesAnalytics.Contains(url) && !noAnalytics.Contains(url))
+            catch (WebException)
             {
-                noAnalytics.Add(url);
+
             }
         }
 
@@ -279,7 +287,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
             AnalyticsTable.Rows.Add(tRow);
         }
-        
+
         /// <summary>
         /// Get the HTML snippet for a circle diagram that displays the percentage accordingly
         /// </summary>

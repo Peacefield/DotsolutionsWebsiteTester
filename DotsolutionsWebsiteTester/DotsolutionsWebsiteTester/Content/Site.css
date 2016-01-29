@@ -608,6 +608,10 @@ table:not(#MainContent_TestsCheckBoxList1):not(#MainContent_TestsCheckBoxList2):
         float: left;
     }
 
+#MainContent_sizeref h4 {
+    float: left;
+}
+
 #MainContent_manualResultHidden h3 {
     font-weight: bold;
 }

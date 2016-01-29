@@ -237,126 +237,130 @@ window.onload = function () {
     PageMethods.ResetRating(OnSuccess, OnError);
     var url = $("#MainContent_UrlTesting").text();
     PageMethods.GetIsThreePageResult(OnThreePageSuccess, OnError);
-    if (url !== "") {
 
-        var array = new Array();
-        var finishedTests = 0;
+    setTimeout(function () {
 
-        // Start automatic testing
-        $("#MainContent_performedTests li").each(function (index) {
-            var test = $(this).text().replace(" ", "");
-            array.push(test);
+        if (url !== "") {
 
-            $("#testsInProgress").append("<li>" + test + "</li>");
-        });
+            var array = new Array();
+            var finishedTests = 0;
 
-        // Remove Analytics from array since it will be blocked because of adblockers
-        // Other tests will still be performed and Analytics will still be shown in the list of performed tests
-        if (window.canRunAds === undefined) {
-            var removeItem = "Analytics";
-            array = jQuery.grep(array, function (value) {
-                return value != removeItem;
+            // Start automatic testing
+            $("#MainContent_performedTests li").each(function (index) {
+                var test = $(this).text().replace(" ", "");
+                array.push(test);
+
+                $("#testsInProgress").append("<li>" + test + "</li>");
             });
-            $("#result").append("<div class = 'panel panel-danger' id='" + removeItem + "'>"
-                + "<div class = 'panel-heading'>" + removeItem + "</div>"
-                + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>");
-        }
 
-        console.time("Execute tests");
-        if (array.length !== 0) {
-            $.each(array, function (index, value) {
-                $.ajax({
-                    url: "/TestTools/" + value + ".aspx",
-                    cache: false,
-                    async: true,
-                    success: function (response) {
-                        // Do something
-                        finishedTests++;
-                        var progress = ((finishedTests / array.length) * 100).toFixed(0);
-                        
-                        $("#testprogressbar").css("width", progress + "%");
-                        $("#progresstext").text(progress + "% compleet");
-                        $("#overlay").css("height", $html.outerHeight());
-
-                        $("#testsInProgress li:contains(" + value + ")").remove();
-                        $("#testsComplete").append("<li>" + value + "</li>");
-
-                        if (!isThreePageResult) {
-                            $("#result").append($(response).find('#result').html());
-                        }
-
-                        if (progress == 100) {
-                            console.timeEnd("Execute tests");
-                            $("#progresstext").text("Totaalscore's berekenen");
-
-                            PageMethods.GetAccessRating(OnAccessSuccess, OnError);
-                            PageMethods.GetUserxRating(OnUserxSuccess, OnError);
-                            PageMethods.GetMarketingRating(OnMarketingSuccess, OnError);
-                            PageMethods.GetTechRating(OnTechSuccess, OnError);
-
-                            PageMethods.GetRatingAccessList(OnAccesListSuccess, OnError);
-                            PageMethods.GetRatingUxList(OnUxListSuccess, OnError);
-                            PageMethods.GetRatingMarketingList(OnMarketingListSuccess, OnError);
-                            PageMethods.GetRatingTechList(OnTechListSuccess, OnError);
-
-                            // Timeout because it has to be executed after WebMethods
-                            setTimeout(function () {
-                                GetOverallRating();
-                                setTimeout(function () {
-                                    // Set InnerHTML of Rating Lists in Session for PDF
-                                    var accessInner = document.getElementById("RatingAccessList").innerHTML;
-                                    var uxInner = document.getElementById("RatingUxList").innerHTML;
-                                    var marketInner = document.getElementById("RatingMarketingList").innerHTML;
-                                    var techInner = document.getElementById("RatingTechList").innerHTML;
-
-                                    PageMethods.AddCriteriaListSession("RatingAccessList", accessInner, OnSuccess, OnError);
-                                    PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
-                                    PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
-                                    PageMethods.AddCriteriaListSession("RatingTechList", techInner, OnSuccess, OnError);
-
-                                    var accessClasses = document.getElementById("RatingAccess").className;
-                                    var uXClasses = document.getElementById("RatingUx").className;
-                                    var marketClasses = document.getElementById("RatingMarketing").className;
-                                    var techClasses = document.getElementById("RatingTech").className;
-                                    var overallClasses = document.getElementById("RatingOverall").className;
-
-                                    PageMethods.AddCriteriaClassSession("RatingAccessClasses", accessClasses, OnSuccess, OnError);
-                                    PageMethods.AddCriteriaClassSession("RatingUxClasses", uXClasses, OnSuccess, OnError);
-                                    PageMethods.AddCriteriaClassSession("RatingMarketingClasses", marketClasses, OnSuccess, OnError);
-                                    PageMethods.AddCriteriaClassSession("RatingTechClasses", techClasses, OnSuccess, OnError);
-                                    PageMethods.AddCriteriaClassSession("RatingOverallClasses", overallClasses, OnSuccess, OnError);
-
-                                    if (isThreePageResult) {
-                                        var CriteriaSummaryContents = document.getElementById("CriteriaSummaryContainer").innerHTML;
-                                        PageMethods.AddCriteriaSummaryContents(CriteriaSummaryContents, OnSuccess, OnError);
-                                    }
-
-
-                                }, 1000);
-                            }, 1000);
-
-                            setTimeout(function () {
-                                $("#overlay").fadeOut();
-                                if (isThreePageResult)
-                                    $("#CriteriaSummary").fadeIn();
-                                $("#automatedRatingList").fadeIn();
-                                $("#MainContent_CreatePdfBtn").css("display", "block");
-                                document.title = 'Resultaten - Website tester';
-                            }, 5000);
-                        }
-                    },
-                    error: function (response) {
-                        // Show error within results
-                        $("#result").append($(response).text);
-                    }
+            // Remove Analytics from array since it will be blocked because of adblockers
+            // Other tests will still be performed and Analytics will still be shown in the list of performed tests
+            if (window.canRunAds === undefined) {
+                var removeItem = "Analytics";
+                array = jQuery.grep(array, function (value) {
+                    return value != removeItem;
                 });
-            });
+                $("#result").append("<div class = 'panel panel-danger' id='" + removeItem + "'>"
+                    + "<div class = 'panel-heading'>" + removeItem + "</div>"
+                    + "<div class = 'panel-body'>Test niet uitgevoerd, mogelijk in verband met adblocker</div></div>");
+            }
+
+            console.time("Execute tests");
+            if (array.length !== 0) {
+                $.each(array, function (index, value) {
+                    $.ajax({
+                        url: "/TestTools/" + value + ".aspx",
+                        cache: false,
+                        async: true,
+                        success: function (response) {
+                            // Do something
+                            finishedTests++;
+                            var progress = ((finishedTests / array.length) * 100).toFixed(0);
+
+                            $("#testprogressbar").css("width", progress + "%");
+                            $("#progresstext").text(progress + "% compleet");
+                            $("#overlay").css("height", $html.outerHeight());
+
+                            $("#testsInProgress li:contains(" + value + ")").remove();
+                            $("#testsComplete").append("<li>" + value + "</li>");
+
+                            if (!isThreePageResult) {
+                                $("#result").append($(response).find('#result').html());
+                            }
+
+                            if (progress == 100) {
+                                console.timeEnd("Execute tests");
+                                $("#progresstext").text("Totaalscore's berekenen");
+
+                                PageMethods.GetAccessRating(OnAccessSuccess, OnError);
+                                PageMethods.GetUserxRating(OnUserxSuccess, OnError);
+                                PageMethods.GetMarketingRating(OnMarketingSuccess, OnError);
+                                PageMethods.GetTechRating(OnTechSuccess, OnError);
+
+                                PageMethods.GetRatingAccessList(OnAccesListSuccess, OnError);
+                                PageMethods.GetRatingUxList(OnUxListSuccess, OnError);
+                                PageMethods.GetRatingMarketingList(OnMarketingListSuccess, OnError);
+                                PageMethods.GetRatingTechList(OnTechListSuccess, OnError);
+
+                                // Timeout because it has to be executed after WebMethods
+                                setTimeout(function () {
+                                    GetOverallRating();
+                                    setTimeout(function () {
+                                        // Set InnerHTML of Rating Lists in Session for PDF
+                                        var accessInner = document.getElementById("RatingAccessList").innerHTML;
+                                        var uxInner = document.getElementById("RatingUxList").innerHTML;
+                                        var marketInner = document.getElementById("RatingMarketingList").innerHTML;
+                                        var techInner = document.getElementById("RatingTechList").innerHTML;
+
+                                        PageMethods.AddCriteriaListSession("RatingAccessList", accessInner, OnSuccess, OnError);
+                                        PageMethods.AddCriteriaListSession("RatingUxList", uxInner, OnSuccess, OnError);
+                                        PageMethods.AddCriteriaListSession("RatingMarketingList", marketInner, OnSuccess, OnError);
+                                        PageMethods.AddCriteriaListSession("RatingTechList", techInner, OnSuccess, OnError);
+
+                                        var accessClasses = document.getElementById("RatingAccess").className;
+                                        var uXClasses = document.getElementById("RatingUx").className;
+                                        var marketClasses = document.getElementById("RatingMarketing").className;
+                                        var techClasses = document.getElementById("RatingTech").className;
+                                        var overallClasses = document.getElementById("RatingOverall").className;
+
+                                        PageMethods.AddCriteriaClassSession("RatingAccessClasses", accessClasses, OnSuccess, OnError);
+                                        PageMethods.AddCriteriaClassSession("RatingUxClasses", uXClasses, OnSuccess, OnError);
+                                        PageMethods.AddCriteriaClassSession("RatingMarketingClasses", marketClasses, OnSuccess, OnError);
+                                        PageMethods.AddCriteriaClassSession("RatingTechClasses", techClasses, OnSuccess, OnError);
+                                        PageMethods.AddCriteriaClassSession("RatingOverallClasses", overallClasses, OnSuccess, OnError);
+
+                                        //if (isThreePageResult) {
+                                            var CriteriaSummaryContents = document.getElementById("CriteriaSummaryContainer").innerHTML;
+                                            PageMethods.AddCriteriaSummaryContents(CriteriaSummaryContents, OnSuccess, OnError);
+                                        //}
+
+
+                                    }, 1000);
+                                }, 1000);
+
+                                setTimeout(function () {
+                                    $("#overlay").fadeOut();
+                                    //if (isThreePageResult)
+                                        $("#CriteriaSummary").fadeIn();
+                                    $("#automatedRatingList").fadeIn();
+                                    $("#MainContent_CreatePdfBtn").css("display", "block");
+                                    document.title = 'Resultaten - Website tester';
+                                }, 5000);
+                            }
+                        },
+                        error: function (response) {
+                            // Show error within results
+                            $("#result").append($(response).text);
+                        }
+                    });
+                });
+            }
+            else {
+                $("#overlay").fadeOut();
+                document.title = 'Resultaten - Website tester';
+            }
         }
-        else {
-            $("#overlay").fadeOut();
-            document.title = 'Resultaten - Website tester';
-        }
-    }
+    }, 2000);
 };
 
 // Hide Back to top button

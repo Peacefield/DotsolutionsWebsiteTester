@@ -245,8 +245,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                     //rating = rating - ((1m / (decimal)imagelistCount) * 10m);
                     rating = rating - ((1m / (decimal)imagelistCount) * (3.3m / (decimal)sitemap.Count));
                     //if (missingSize < 5)
-                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + " zonder height en/of width attribuut' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                            "Geen height en/of width attributen aanwezig.");
+                    AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + " zonder height en/of width attribuut' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                        "Geen height en/of width attributen aanwezig.");
                     missingSize++;
                 }
                 else
@@ -256,8 +256,8 @@ namespace DotsolutionsWebsiteTester.TestTools
                         imgFaultyDeclare = true;
                         rating = rating - ((1m / (decimal)imagelistCount) * (3.3m / (decimal)sitemap.Count));
                         //if (imgResized < 5)
-                            AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + " gedeclareerde grootte is incorrect' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                                "In HTML gedeclareerde grootte komt niet overeen met originele grootte van de afbeelding.");
+                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + " gedeclareerde grootte is incorrect' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                            "In HTML gedeclareerde grootte komt niet overeen met originele grootte van de afbeelding.");
                         imgResized++;
                     }
                 }
@@ -267,10 +267,10 @@ namespace DotsolutionsWebsiteTester.TestTools
                     imgFaultyDeclare = true;
                     rating = rating - ((1m / (decimal)imagelistCount) * (3.3m / (decimal)sitemap.Count));
                     //if (missingDesc < 5)
-                        //AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                        //    "Geen alt en/of title attributen aanwezig.");
-                        AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + " heeft geen alt attribuut' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
-                            "Geen alt attribuut aanwezig.");
+                    //AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + "' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                    //    "Geen alt en/of title attributen aanwezig.");
+                    AddToTable(page, "<a href='" + imageUrl + "' target='_blank'><img src='" + imageUrl + "' title='" + imageUrl + " heeft geen alt attribuut' alt='" + imageUrl + "' class='tableImg center-block' /></a>",
+                        "Geen alt attribuut aanwezig.");
                     missingDesc++;
                 }
 
@@ -285,7 +285,7 @@ namespace DotsolutionsWebsiteTester.TestTools
 
                     img404Count++;
                     //if (img404Count < 5)
-                        AddToTable(page, imageUrl, "Afbeelding niet gevonden.");
+                    AddToTable(page, imageUrl, "Afbeelding niet gevonden.");
                     rating = rating - ((1m / (decimal)imagelistCount) * 10m);
 
                     Debug.WriteLine("Added " + imageUrl + " to imgNotFound list which has " + imgNotFoundList.Count + " entries.");
@@ -328,17 +328,23 @@ namespace DotsolutionsWebsiteTester.TestTools
         {
             var list = new List<HtmlNode>();
             // Get images using html agility pack
-
-            var webget = new HtmlWeb();
-            var doc = webget.Load(page);
-
-            if (doc.DocumentNode.SelectNodes("//img") != null)
+            try
             {
-                foreach (var item in doc.DocumentNode.SelectNodes("//img"))
+                var webget = new HtmlWeb();
+                var doc = webget.Load(page);
+
+                if (doc.DocumentNode.SelectNodes("//img") != null)
                 {
-                    if (item.Attributes["src"] != null)
-                        list.Add(item);
+                    foreach (var item in doc.DocumentNode.SelectNodes("//img"))
+                    {
+                        if (item.Attributes["src"] != null)
+                            list.Add(item);
+                    }
                 }
+            }
+            catch (WebException)
+            {
+
             }
 
             return list;
@@ -370,7 +376,7 @@ namespace DotsolutionsWebsiteTester.TestTools
             //        return true;
 
             if (item.Attributes["alt"] != null && item.Attributes["alt"].Value != "")
-                    return true;
+                return true;
 
             return false;
         }

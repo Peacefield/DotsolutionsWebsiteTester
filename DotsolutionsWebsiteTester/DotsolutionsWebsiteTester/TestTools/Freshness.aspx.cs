@@ -399,7 +399,8 @@ namespace DotsolutionsWebsiteTester.TestTools
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "HEAD";
-                request.Timeout = 1000;
+                request.Timeout = 1000; 
+                request.UserAgent = Session["userAgent"].ToString();
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
                 if (response.Headers["Last-Modified"] != null)

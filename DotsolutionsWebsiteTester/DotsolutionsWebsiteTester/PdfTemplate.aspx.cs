@@ -42,7 +42,7 @@ namespace DotsolutionsWebsiteTester
             if ((bool)Session["ManualTest"])
                 manualresults.InnerHtml += Session["ManualTestResults"].ToString();
 
-            if ((bool)Session["ThreePageReport"])
+            //if ((bool)Session["ThreePageReport"])
                 CriteriaSummaryContainer.InnerHtml = Session["CriteriaSummaryContents"].ToString();
 
 

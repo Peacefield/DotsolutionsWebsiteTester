@@ -134,11 +134,13 @@ namespace DotsolutionsWebsiteTester.TestTools
         private int GetContentCount(string page)
         {
             Debug.WriteLine(" ----- Testing " + page + " ----- ");
+            var wordCount = 0;
+            try
+            {
 
             var webget = new HtmlWeb();
             var doc = webget.Load(page);
             var innertext = "";
-            var wordCount = 0;
 
             if (doc.DocumentNode.SelectNodes("//p | //a") != null)
             {
@@ -155,6 +157,12 @@ namespace DotsolutionsWebsiteTester.TestTools
                         wordCount++;
             }
             Debug.WriteLine("wordCount: " + wordCount);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
             return wordCount;
         }

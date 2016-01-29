@@ -332,7 +332,15 @@ namespace DotsolutionsWebsiteTester.TestTools
             var fbLikes = result.likes.ToString("#,##0");
             var fbPicture = result.picture.data["url"];
             var fbTalking = result.talking_about_count.ToString("#,##0");
-            var fbCover = result.cover["source"];
+            var fbCover= "";
+            try
+            {
+                fbCover = result.cover["source"];
+            }
+            catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException)
+            {
+
+            }
 
             var percentage = ((decimal)result.talking_about_count / (decimal)result.likes) * 100;
             if (percentage >= 10m)
